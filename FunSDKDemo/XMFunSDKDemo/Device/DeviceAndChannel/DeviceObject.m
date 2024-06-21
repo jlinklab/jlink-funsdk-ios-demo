@@ -25,6 +25,7 @@
         _channelArray = [[NSMutableArray alloc] initWithCapacity:0];
         _info = [[ObSysteminfo alloc] init];
         _sysFunction = [[ObSystemFunction alloc] init];
+        _enableEpitomeRecord = NO;
     }
     return self;
 }

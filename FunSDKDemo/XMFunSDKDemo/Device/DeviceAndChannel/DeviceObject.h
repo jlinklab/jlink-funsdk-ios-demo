@@ -59,6 +59,7 @@ enum device_type {
 @property (nonatomic, assign) int centerOffsetY;  //Y轴偏移量
 @property (nonatomic, assign) int centerOffsetX;  //X轴偏移量
 @property (nonatomic, assign) int imgradius; //半径
+@property (nonatomic, assign) BOOL enableEpitomeRecord;
 
 ///是否为低功耗设备
 -(BOOL)getDeviceTypeLowPowerConsumption;

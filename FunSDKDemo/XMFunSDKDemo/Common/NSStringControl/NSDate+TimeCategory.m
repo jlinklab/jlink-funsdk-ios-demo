@@ -48,6 +48,8 @@ static NSDateFormatter *dateFormatter;
 + (NSString *)datestrFromDate:(NSDate *)date withDateFormat:(NSString *)format {
     NSDateFormatter* dateFormat = [NSDate defaultFormatter];
     [dateFormat setDateFormat:format];
+    NSCalendar *calender = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    [dateFormat setLocale:[[NSLocale alloc] initWithLocaleIdentifier:calender.locale.localeIdentifier]];
     return [dateFormat stringFromDate:date];
 }
 

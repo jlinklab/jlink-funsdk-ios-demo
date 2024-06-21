@@ -206,9 +206,10 @@
                     vWidth = wh[0];
                     vHeight = wh[1];
                 }
-                //获取宽高
-                [self.delegate mediaPlayer: self width: vWidth htight:vHeight];
-                [self.delegate mediaPlayer:self buffering:NO ratioDetail:ratioDetail];
+                if ([self.delegate respondsToSelector:@selector(mediaPlayer:width:htight:)]) {
+                    [self.delegate mediaPlayer: self width: vWidth htight:vHeight];
+                    [self.delegate mediaPlayer:self buffering:NO ratioDetail:ratioDetail];
+                }
             }
         }
             break;

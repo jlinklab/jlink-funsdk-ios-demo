@@ -42,6 +42,7 @@
 @property (nonatomic) UISegmentedControl *segmentedControl;//筛选录像类型
 
 @property (nonatomic,assign) Video_Type selectVideoType;//选中的录像类型
+@property(nonatomic, strong) UIButton *epBUtton;
 
 //@property (nonatomic) NSMutableArray <XMResourceItem *>* fileList;//录像列表
 
@@ -85,6 +86,12 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    // 默认关闭
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
+    dev.enableEpitomeRecord = NO;
+}
+
 //MARK: - 设备旋转处理
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self layoutWithDeviceOrientation:toInterfaceOrientation];
@@ -126,6 +133,11 @@
     
     videoConfig = [[VideoFileConfig alloc] init];
     videoConfig.delegate = self;
+    
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
+    if (dev.sysFunction.supportEpitomeRecord) {
+        self.epBUtton.hidden = NO;
+    }
 }
 
 -(FishPlayControl*)feyeControl{
@@ -138,12 +150,19 @@
 - (void)createPlayView {
     pVIew = [[PlayView alloc] initWithFrame:CGRectMake(0, NavAndStatusHight, ScreenWidth, realPlayViewHeight)];
     [self.view addSubview:pVIew];
-    
+    [self.view addSubview:self.epBUtton];
     [pVIew mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self);
         make.right.equalTo(self);
         make.top.equalTo(self).mas_offset(NavAndStatusHight);
         make.height.mas_equalTo(realPlayViewHeight);
+    }];
+    
+    [self.epBUtton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self);
+        make.right.equalTo(self).offset(-50);
+        make.height.equalTo(@40);
+        make.width.equalTo(@80);
     }];
     
     [pVIew refreshView:0];
@@ -420,6 +439,14 @@
     }
 }
 
+#pragma mark 收到视频宽高比信息
+-(void)mediaPlayer:(MediaplayerControl*)mediaPlayer width:(int)width htight:(int)height {
+    NSLog(@"width = %d; height = %d",width, height);
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: mediaPlayer.devID];
+    dev.imageWidth = width;
+    dev.imageHeight = height;
+}
+
 #pragma mark - 开始预览结果回调
 -(void)mediaPlayer:(MediaplayerControl*)mediaPlayer startResult:(int)result DSSResult:(int)dssResult {
     if (result < 0) {
@@ -585,6 +612,31 @@
         [formater setLocale:[[NSLocale alloc] initWithLocaleIdentifier:calender.locale.localeIdentifier]];
         return [formater dateFromString:timeStr];
     }
+}
+
+- (void)btnEPBUttonClick{
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
+    dev.enableEpitomeRecord = !dev.enableEpitomeRecord;
+    [self.epBUtton setSelected: ![self.epBUtton isSelected]];
+    //停止当前回放
+    [mediaPlayer stopRecord];
+    [self closeSound];
+    [mediaPlayer refresh];
+    [mediaPlayer stop];
+    [self startSearchFile];
+}
+
+- (UIButton *)epBUtton{
+    if (!_epBUtton) {
+        _epBUtton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _epBUtton.frame = CGRectMake(0, 0, 80, 40);
+        _epBUtton.backgroundColor = [UIColor orangeColor];
+        [_epBUtton setTitle: TS("EpitomeRecord_Open") forState:UIControlStateNormal];
+        [_epBUtton setTitle:TS("EpitomeRecord_Close") forState:UIControlStateSelected];
+        [_epBUtton addTarget:self action:@selector(btnEPBUttonClick) forControlEvents:UIControlEventTouchUpInside];
+        _epBUtton.hidden = YES;
+    }
+    return _epBUtton;
 }
 
 @end

@@ -56,6 +56,8 @@
 #import "DeviceAudioPlayViewController.h"
 
 #import "DeviceRandomPwdManager.h"
+#import "EpitomeRecordViewController.h"
+#import "SerialPortViewController.h"
 
 @interface DeviceConfigViewController ()<UITableViewDelegate,UITableViewDataSource,SystemInfoConfigDelegate,SystemFunctionConfigDelegate,MFMailComposeViewControllerDelegate>
 
@@ -395,7 +397,20 @@
         vc.devID = channel.deviceMac;
         vc.channelNum = channel.channelNumber;
         [self.navigationController pushViewController:vc animated:YES];
-    }else{
+    }else if ([titleStr isEqualToString: TS("EpitomeRecord")]){  //缩影录像配置
+        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+        DeviceObject *devObject = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
+        if (!devObject.sysFunction.supportEpitomeRecord) {
+            [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
+            return;
+        }
+        EpitomeRecordViewController *epvc = [[EpitomeRecordViewController alloc] init];
+        [self.navigationController pushViewController: epvc animated: YES];
+    }else if([titleStr isEqualToString:TS("Serial Port")]){  //串口命令
+        SerialPortViewController *vc = [[SerialPortViewController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else{
         return;
     }
     
@@ -447,6 +462,7 @@
         @{@"title":TS("Network_setting"),@"detailInfo":@""},
         @{@"title":@"GB配置",@"detailInfo":@""},
         @{@"title":@"Json和DevCmd调试",@"detailInfo":@""},
+        @{@"title":TS("Serial Port"),@"detailInfo":TS("Serial port configuration, transparent command transmission")},
         @{@"title":@"鱼眼信息",@"detailInfo":@""},
         @{@"title":TS("Sensor_Config"),@"detailInfo":@""},
         @{@"title":TS("One_Key_To_Cover"),@"detailInfo":@""},
@@ -454,6 +470,7 @@
         @{@"title":TS("TR_Voice_Broadcasting"),@"detailInfo":@""},
         @{@"title":TS("MQTT"),@"detailInfo":@""},
         @{@"title":TS("TR_DeviceAudioPlay"),@"detailInfo":@""},
+        @{@"title":TS("EpitomeRecord"),@"detailInfo":@""},
     ] mutableCopy];
 }
 

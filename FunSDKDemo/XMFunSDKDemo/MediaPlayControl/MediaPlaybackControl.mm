@@ -16,8 +16,12 @@
 
 #pragma -mark 根据选择的日期调用回放接口
 -(void)startPlayBack:(NSDate *)date{
+    DeviceObject *dev = [[DeviceControl getInstance]GetDeviceObjectBySN: self.devID];
     struct H264_DVR_FINDINFO requestInfo;
     memset(&requestInfo, 0, sizeof(H264_DVR_FINDINFO));
+    if (dev.enableEpitomeRecord) {
+        requestInfo.StreamType = 5;
+    }
     requestInfo.nChannelN0 = self.channel;
     requestInfo.nFileType = 0;
     requestInfo.startTime.dwYear = [NSDate getYearFormDate:date];

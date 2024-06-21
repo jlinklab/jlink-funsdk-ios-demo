@@ -32,13 +32,16 @@
     
     //获取通道
     ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-    
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
     NSDateComponents* components = [[NSCalendar currentCalendar] components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
     //开内存
     H264_DVR_FINDINFO info;
     memset(&info, 0, sizeof(info));
     info.nChannelN0 = channel.channelNumber;
     info.nFileType  = SDK_RECORD_ALL; //查询全部类型的录像
+    if (dev.enableEpitomeRecord) {
+        info.StreamType = 5;
+    }
     //开始时间
     info.startTime.dwYear = (int)[components year];
     info.startTime.dwMonth = (int)[components month];

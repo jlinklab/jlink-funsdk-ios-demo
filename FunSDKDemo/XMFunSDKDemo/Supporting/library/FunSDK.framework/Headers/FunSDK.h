@@ -296,7 +296,7 @@ using EAVTalkSendMediaType = enum EAVTalkSendMediaType
 };
 
 /**
- * @enum ECloudDownloadNetPtl
+ * @enum ERPSProtocolMode
  * @brief 标识设备端和APP端连接RPSAccess服务器的协议模式
  */
 using ERPSProtocolMode = enum ERPSProtocolMode
@@ -304,6 +304,20 @@ using ERPSProtocolMode = enum ERPSProtocolMode
 	E_RPS_PTL_MODE_AUTO = 0, ///< 优先采用KCP协议，如果KCP失败，则自动切换为TCP协议
 	E_RPS_PTL_MODE_TCP = 1, ///< 只采用 TCP 方式	只采用TCP方式访问RPSAccess，失败之后不进行自动切换
 	E_RPS_PTL_MODE_KCP = 2, ///< 只采用 KCP 方式访问RPSAccess， 失败之后不进行自动切换
+};
+
+/**
+ * @enum ESDCardPlayBackStreamType
+ * @brief SD卡录像回放码流类型
+ */
+using ESDCardPlayBackStreamType = enum ESDCardPlayBackStreamType
+{
+    E_SDCARD_PLAYBACK_STREAMTYPE_MAIN = 0, ///< 主码流
+    E_SDCARD_PLAYBACK_STREAMTYPE_EXTRA = 1, ///< 辅码流
+    E_SDCARD_PLAYBACK_STREAMTYPE_ALL_RECORD = 2, ///< 所有录像
+    E_SDCARD_PLAYBACK_STREAMTYPE_BREVIARY_JPG = 3, ///< 缩略图图片码流
+    E_SDCARD_PLAYBACK_STREAMTYPE_NORMAL_JPG = 4, ///< 大图图片码流
+    E_SDCARD_PLAYBACK_STREAMTYPE_EPITOME_RECORD = 5, ///< 缩影录像
 };
 
 typedef struct SInitParam
@@ -2343,6 +2357,7 @@ int Fun_DevIsSearched(const char *szDevId, SDK_CONFIG_NET_COMMON_V2 *devInfo);
  * @param szDevSN 设备序列号(不支持IP或域名)
  * @param nTimeout 超时时间
  * @param[out] pOutDevInfo 搜索到的设备信息(IOS需分配对象空间)
+ * @return <=0:未搜到设备 1:搜索到设备（需要结合结构体的sn等信息判断设备存在）
  */
  int Fun_DevLANSearch(const char *szDevSN, int nTimeout, SDK_CONFIG_NET_COMMON_V2 *pOutDevInfo);
 
