@@ -63,5 +63,18 @@ enum device_type {
 
 ///是否为低功耗设备
 -(BOOL)getDeviceTypeLowPowerConsumption;
+/**设备云台反转配置缓存 key="channel" value="0:0:0" 左往右第一位表示上下 第二位表示左右 第三位表示ModifyCfg */
+@property (nonatomic,copy) NSString *sPTZReverseCfg;
+
+
+/**缓存的上下反转配置 -1:未缓存 0:关闭 1:开启*/
+- (int)PTZUpsideDown:(int)channel;
+/**缓存的左右反转配置 -1:未缓存 0:关闭 1:开启*/
+- (int)PTZLeftRightReverse:(int)channel;
+/**缓存的是否修改配置 -1:未缓存 0:否 1:是*/
+- (int)PTZModifyCfgReverse:(int)channel;
+/**缓存上下左右反转配置*/
+- (void)setPTZUpsideDownValue:(int)valueUD leftRightReverseValue:(int)valueLR modifyCfg:(int)valueModify channel:(int)channel;
+
 
 @end

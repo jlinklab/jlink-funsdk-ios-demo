@@ -75,7 +75,7 @@
     
     //先判断当前配置是模拟通道还是数字通道
     DeviceObject *device = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
-    //选中通道号>模拟通道数   此通道为数字通道。数字通道配置时，需要减去前面的模拟通道数量
+    //选中通道号>模拟通道数   此通道为数字通道。数字通道配置时，需要减去前面的模拟通道数量 //(模拟通道数量，通过systeminfo配置获取)
     NSInteger digChannel = channel.channelNumber-device.info.nVideoInChanNum;
     if (channel.channelNumber>(device.info.nVideoInChanNum-1)) {
         //设置方法名

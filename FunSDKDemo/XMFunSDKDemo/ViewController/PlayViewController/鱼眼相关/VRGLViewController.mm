@@ -57,8 +57,8 @@
     if(self.iSceneType == XMVR_TYPE_TWO_LENSES){
         long long doubleClickTime = [[NSDate date] timeIntervalSince1970] * 1000;
         self.lastDoubleClickTime = doubleClickTime;
-        if ( self.vrglViewControllerDelegateDelegate && [self.vrglViewControllerDelegateDelegate respondsToSelector:@selector(vrglViewControllerDoubleClicked:)]) {
-            [self.vrglViewControllerDelegateDelegate vrglViewControllerDoubleClicked: [sender locationInView:self.view]];
+        if ( self.vrglDelegate && [self.vrglDelegate respondsToSelector:@selector(vrglViewControllerDoubleClicked:)]) {
+            [self.vrglDelegate vrglViewControllerDoubleClicked: [sender locationInView:self.view]];
         }
     }
 }
@@ -340,6 +340,7 @@
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    [super touchesBegan:touches withEvent:event];
     NSLog(@"---> touchesBegan");
     if(self.iSceneType == XMVR_TYPE_TWO_LENSES){
         self.firstTouchPoint = [touches.anyObject locationInView:self.view];
@@ -352,6 +353,14 @@
         mTouchDownY = locInSelf.y;
         mTimeTouchDown = [self getTimeMS];
         break;
+    }
+    
+    CGPoint point;
+    for(UITouch *touch in event.allTouches) {
+        point = [touch locationInView:self.view];
+    }
+    if (self.vrglDelegate && [self.vrglDelegate respondsToSelector:@selector(pointWithTouchesBegin:)]) {
+        [self.vrglDelegate pointWithTouchesBegin:point];
     }
 }
 
@@ -377,6 +386,14 @@
     if ( pointerCount == 1 ) {
         VRSoft_OnTouchMove(mVRHandle, values[0], values[1]);
     }
+    
+    CGPoint point;
+    for(UITouch *touch in event.allTouches) {
+        point = [touch locationInView:self.view];
+    }
+    if (self.vrglDelegate && [self.vrglDelegate respondsToSelector:@selector(pointWithTouchesBegin:)]) {
+        [self.vrglDelegate pointWithTouchesMoved:point];
+    }
 }
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -386,8 +403,8 @@
             
         long long recognizeTime = [[NSDate date] timeIntervalSince1970] * 1000;
         if (recognizeTime - self.lastDoubleClickTime >= 500) {
-            if (self.vrglViewControllerDelegateDelegate && [self.vrglViewControllerDelegateDelegate respondsToSelector:@selector(vrglViewController:firstPoint:)]) {
-                [self.vrglViewControllerDelegateDelegate vrglViewController:point firstPoint:self.firstTouchPoint];
+            if (self.vrglDelegate && [self.vrglDelegate respondsToSelector:@selector(vrglViewController:firstPoint:)]) {
+                [self.vrglDelegate vrglViewController:point firstPoint:self.firstTouchPoint];
             }
         }
         return;
@@ -414,19 +431,29 @@
     }
     
     [self performSelector:@selector(delayAutoAdjust) withObject:nil afterDelay:0.12f];
+    
+    CGPoint point;
+    for(UITouch *touch in event.allTouches) {
+        point = [touch locationInView:self.view];
+    }
+    if (self.vrglDelegate && [self.vrglDelegate respondsToSelector:@selector(pointWithTouchesBegin:)]) {
+        [self.vrglDelegate pointWithTouchesEnded:point];
+    }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [super touchesCancelled:touches withEvent:event];
+    CGPoint point = [[touches anyObject] locationInView:self.view];
     if(self.iSceneType == XMVR_TYPE_TWO_LENSES){
-        CGPoint point = [[touches anyObject] locationInView:self.view];
-            
         long long recognizeTime = [[NSDate date] timeIntervalSince1970] * 1000;
         if (recognizeTime - self.lastDoubleClickTime >= 500) {
-            if (self.vrglViewControllerDelegateDelegate && [self.vrglViewControllerDelegateDelegate respondsToSelector:@selector(vrglViewController:firstPoint:)]) {
-                [self.vrglViewControllerDelegateDelegate vrglViewController:point firstPoint:self.firstTouchPoint];
+            if (self.vrglDelegate && [self.vrglDelegate respondsToSelector:@selector(vrglViewController:firstPoint:)]) {
+                [self.vrglDelegate vrglViewController:point firstPoint:self.firstTouchPoint];
             }
         }
+    }
+    if (self.vrglDelegate && [self.vrglDelegate respondsToSelector:@selector(pointWithTouchsCanceled:)]) {
+        [self.vrglDelegate pointWithTouchsCanceled:point];
     }
 }
 

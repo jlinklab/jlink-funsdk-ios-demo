@@ -350,6 +350,13 @@
         FUN_DevWakeUp(self.msgHandle, SZSTR(deviceMac), 0);
 }
 
+//唤醒设备
+-(void)devWakeUp:(WakeUpBlock)block
+{
+    self.wakeUpBlock = block;
+    
+    FUN_DevWakeUp(self.msgHandle, CSTR(deviceMac), 0);
+}
 
 #pragma mark - 获取设备通道
 - (void)getDeviceChannel:(NSString *)devMac {
@@ -765,6 +772,19 @@ BOOL canRank = NO;
             //回调结束刷新，deviceMac是开始唤醒设备时保存的
                 if (self.delegate && [self.delegate respondsToSelector:@selector(deviceWeakUp:result:)]) {
                     [self.delegate deviceWeakUp:deviceMac result:msg->param1];
+            }
+            
+            if (msg->param1 < 0) {
+                Fun_Log("精确唤醒:唤醒返回失败");
+                if (self.wakeUpBlock) {
+                    self.wakeUpBlock(msg->param1);
+                }
+            }
+            else{
+                Fun_Log("精确唤醒:唤醒返回成功");
+                if (self.wakeUpBlock) {
+                    self.wakeUpBlock(msg->param1);
+                }
             }
         }
             break;

@@ -139,6 +139,48 @@ NSDate *YYNSDateFromString(__unsafe_unretained NSString *string) {
     return jsonString;
 }
 
+//MARK: 字符串转字典
++ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString{
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    if (![jsonString isKindOfClass:[NSString class]]) {
+        return nil;
+    }
+
+    //过滤非法字符
+    jsonString = [self removeUnescapedCharacter:jsonString];
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err){
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    
+    return dic;
+}
+
+//MARK: json字符串转字典前 先过滤非法的字符
++ (NSString *)removeUnescapedCharacter:(NSString *)inputStr{
+    NSCharacterSet *controlChars = [NSCharacterSet controlCharacterSet];//获取那些特殊字符
+    NSRange range = [inputStr rangeOfCharacterFromSet:controlChars];//寻找字符串中有没有这些特殊字符
+    if (range.location != NSNotFound)
+    {
+        NSMutableString *mutableString = [NSMutableString stringWithString:inputStr];
+        while (range.location != NSNotFound)
+        {
+            [mutableString deleteCharactersInRange:range];//去掉这些特殊字符
+            range = [mutableString rangeOfCharacterFromSet:controlChars];
+        }
+        return mutableString;
+    }
+    return inputStr;
+}
+
 +(NSString *)stringWithUTF8String_OutNil:(const char *)nullTerminatedCString
 {
     return nullTerminatedCString?[self stringWithUTF8String:nullTerminatedCString]:nil;

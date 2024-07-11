@@ -12,6 +12,9 @@
  * EncodeCapability  编码配置能力级   获取设备可以进行选择的配置
  * General_Location  通用配置    判断当前设备视频制式，对分辨率和帧率有些影响
  *
+ *判断设备是否支持编码配置有两种方式。第一种，直接获取编码配置数据，回调-11406，说明设备不支持。第二种：通过设备能力集判断
+ *
+ *
  *****/
 @protocol EncodeConfigDelegate <NSObject>
 //获取编码配置代理回调

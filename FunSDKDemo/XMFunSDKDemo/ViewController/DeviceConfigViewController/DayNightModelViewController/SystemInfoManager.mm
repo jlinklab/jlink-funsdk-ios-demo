@@ -13,7 +13,6 @@ typedef void(^SystemInfoCompletion)(NSDictionary *responseDic, NSInteger errCode
 
 @interface SystemInfoManager ()
 
-@property (nonatomic, strong) NSMutableDictionary *systemInfoDic;
 /** 数据回传block */
 @property (nonatomic, copy) SystemInfoCompletion sysInfoCompletion;
 
@@ -156,6 +155,7 @@ typedef void(^SystemInfoCompletion)(NSDictionary *responseDic, NSInteger errCode
                         }
                     }else{
                         self.systemInfoDic = [systemInfo mutableCopy];
+                        self.softWareVersionInfo = [systemInfo objectForKey: @"SoftWareVersion"];
                         if (self.getSystemInfo) {
                             self.getSystemInfo(msg->param1);
                         }

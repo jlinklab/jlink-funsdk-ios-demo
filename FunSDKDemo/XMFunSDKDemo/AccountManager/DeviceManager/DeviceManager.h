@@ -48,6 +48,8 @@
 #import "FunMsgListener.h"
 #import "DeviceObject.h"
 
+typedef void (^WakeUpBlock)(int result);
+
 @interface NSMessage : NSObject
 
 @property(nonatomic, strong) NSObject *nsObj;
@@ -68,6 +70,8 @@
 @property (nonatomic, assign) id <DeviceManagerDelegate> delegate;
 
 @property(readwrite, copy)NSString *loginToken;
+
+@property (copy, nonatomic) WakeUpBlock wakeUpBlock;
 
 + (instancetype)getInstance;
 - (void)resiveDevicelist2:(MsgContent *)msg;
@@ -104,6 +108,9 @@
 
 #pragma mark - 唤醒睡眠中的设备
 - (void)deviceWeakUp:(NSString*)deviceMac;
+
+//唤醒设备
+-(void)devWakeUp:(WakeUpBlock)block;
 
 #pragma mark - 获取设备通道
 - (void)getDeviceChannel:(NSString *)devMac;

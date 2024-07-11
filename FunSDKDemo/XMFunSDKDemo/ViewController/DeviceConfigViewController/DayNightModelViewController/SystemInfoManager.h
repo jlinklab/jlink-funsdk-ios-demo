@@ -13,6 +13,12 @@ typedef void(^GetSystemInfoBlock)(int result);
 @interface SystemInfoManager : FunSDKBaseObject
 
 @property (nonatomic, copy) GetSystemInfoBlock getSystemInfo;
+@property (nonatomic, strong) NSMutableDictionary *systemInfoDic;
+
+/**
+ 系统软件版本号
+ */
+@property (nonatomic,copy) NSString *softWareVersionInfo;
 
 -(void)getSystemInfo:(NSString *)devId Completion:(GetSystemInfoBlock)completion;
 /** 获取设备system info */

@@ -95,8 +95,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     int section = indexPath.section;
-    ItemTableviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ItemTableviewCell"];
-    cell = [[ItemTableviewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ItemTableviewCell"];
+    ItemTableviewCell *cell = [[ItemTableviewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ItemTableviewCell"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     NSString *title = [self.epitomeRecordArray objectAtIndex:indexPath.row];
     cell.textLabel.text = title;

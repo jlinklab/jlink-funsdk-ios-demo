@@ -161,6 +161,19 @@
         if (functionCfg.mOtherFunction.SupportAlarmVoiceTipsType.Value() == YES) {
             object.sysFunction.supportAlarmVoiceTipsType = functionCfg.mOtherFunction.SupportAlarmVoiceTipsType.Value();
         }
+        //是否支持传统ptz方向控制
+        if (functionCfg.mOtherFunction.SupportTraditionalPtzNormalDirect.Value() == YES) {
+            object.sysFunction.supportTraditionalPtzNormalDirect = functionCfg.mOtherFunction.SupportTraditionalPtzNormalDirect.Value();
+        }
+        
+        if (functionCfg.mNetServerFunction.NetWifi.Value() == YES) {
+            object.sysFunction.netWifi = functionCfg.mNetServerFunction.NetWifi.Value();
+        }
+        // 是否支持云台校正
+        if (functionCfg.mOtherFunction.SupportPtzAutoAdjust.Value() == YES) {
+            object.sysFunction.SupportPtzAutoAdjust = functionCfg.mOtherFunction.SupportPtzAutoAdjust.Value();
+        }
+        
         
         //获取能力级之后的结果回调
         if ([self.delegate respondsToSelector:@selector(SystemFunctionConfigGetResult:)]) {

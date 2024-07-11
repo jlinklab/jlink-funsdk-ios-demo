@@ -28,6 +28,8 @@
 		1F1DBCD7233067AB0025C27A /* 文件说明-README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1F1DBCD6233067AB0025C27A /* 文件说明-README.rtf */; };
 		1F1DBCD9233069020025C27A /* 说明-README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1F1DBCD8233069020025C27A /* 说明-README.rtf */; };
 		1F1DBCDB233069F60025C27A /* 配置说明-README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1F1DBCDA233069F60025C27A /* 配置说明-README.rtf */; };
+		1F24F46E2C3684C400B16A26 /* PTZCorrectionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F24F46C2C3684C400B16A26 /* PTZCorrectionViewController.mm */; };
+		1F24F46F2C3684C400B16A26 /* PTZCorrectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F24F46D2C3684C400B16A26 /* PTZCorrectionViewController.xib */; };
 		1F3A5ACC22B379E600E3139B /* NetworkViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A5ACB22B379E600E3139B /* NetworkViewController.mm */; };
 		1F3A5AD222B379F400E3139B /* ChangeWifiConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A5ACE22B379F400E3139B /* ChangeWifiConfig.mm */; };
 		1F3A5AD322B379F400E3139B /* WifiConfigDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A5AD122B379F400E3139B /* WifiConfigDataSource.m */; };
@@ -323,6 +325,16 @@
 		203BD12821DF7515005B91E9 /* BuzzerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 203BD12621DF7515005B91E9 /* BuzzerViewController.mm */; };
 		223C3FE82BF5E2CE00EB17E0 /* AudioUnitAECRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 223C3FE22BF5E2CE00EB17E0 /* AudioUnitAECRecorder.m */; };
 		2282ADA92C1C32B2004ABF74 /* EpitomeRecordConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2282ADA82C1C32B2004ABF74 /* EpitomeRecordConfig.mm */; };
+		22D1255D2C2AA3DF00632D0D /* CameraLinkHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D125592C2AA3DF00632D0D /* CameraLinkHomeView.m */; };
+		22D1255E2C2AA3DF00632D0D /* CameraLinkHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1255A2C2AA3DF00632D0D /* CameraLinkHomeVC.m */; };
+		22D125622C2AA41900632D0D /* GunBallManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22D125602C2AA41900632D0D /* GunBallManager.mm */; };
+		22D125652C2AA56A00632D0D /* PTZLocateViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22D125632C2AA56A00632D0D /* PTZLocateViewController.mm */; };
+		22D125682C2AA5A400632D0D /* PTZLocateView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22D125662C2AA5A400632D0D /* PTZLocateView.mm */; };
+		22D1256B2C2AA66600632D0D /* PTZProcessManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22D1256A2C2AA66600632D0D /* PTZProcessManager.mm */; };
+		22D1256E2C2AA68900632D0D /* MaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1256C2C2AA68900632D0D /* MaskView.m */; };
+		22D125712C2AA7CE00632D0D /* UartPTZControlCmdManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22D125702C2AA7CE00632D0D /* UartPTZControlCmdManager.mm */; };
+		22D125742C2AB42200632D0D /* UIViewController+JFForbiddenSwipeRight.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D125732C2AB42200632D0D /* UIViewController+JFForbiddenSwipeRight.m */; };
+		22D1258A2C2BAC7200632D0D /* FunSDKBaseView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22D125892C2BAC7200632D0D /* FunSDKBaseView.mm */; };
 		22DFA4332C1FD0F50054AC4E /* EpitomeRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DFA4322C1FD0F50054AC4E /* EpitomeRecordViewController.m */; };
 		22FAE1292BF4908700FA1C8C /* JFScreenCameraCallVc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22FAE1182BF4908600FA1C8C /* JFScreenCameraCallVc.mm */; };
 		22FAE12A2BF4908700FA1C8C /* JFHangUpPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FAE11A2BF4908600FA1C8C /* JFHangUpPopView.m */; };
@@ -393,6 +405,10 @@
 		7A810B342BDB479C00979CD0 /* DeviceAudioPlayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A810B332BDB479C00979CD0 /* DeviceAudioPlayViewController.mm */; };
 		7AAF251F24E228680011B238 /* WirelessScanQRCodeViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF251E24E228680011B238 /* WirelessScanQRCodeViewController.mm */; };
 		7AAF252224E23ADF0011B238 /* QRCodeImageShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF252124E23ADF0011B238 /* QRCodeImageShowView.m */; };
+		7ADBA83C2C255DA200782CE2 /* ManuIntellAlertAlarmViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7ADBA83B2C255DA200782CE2 /* ManuIntellAlertAlarmViewController.mm */; };
+		7ADBA8402C25630400782CE2 /* ManuIntelAlarmManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7ADBA83F2C25630300782CE2 /* ManuIntelAlarmManager.mm */; };
+		7ADBA8482C2A61DF00782CE2 /* LowPowerRecordConfigViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7ADBA8472C2A61DF00782CE2 /* LowPowerRecordConfigViewController.mm */; };
+		7ADBA84C2C2A953400782CE2 /* LowPowerRecordConfigManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7ADBA84B2C2A953400782CE2 /* LowPowerRecordConfigManager.mm */; };
 		7ADC933729F520860055A341 /* DevicePairingNetworkManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7ADC933529F520860055A341 /* DevicePairingNetworkManager.mm */; };
 		7ADC933A29F522EE0055A341 /* DeviceBindedManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7ADC933829F522EE0055A341 /* DeviceBindedManager.mm */; };
 		7ADC933D29F524250055A341 /* NSDictionary+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ADC933C29F524250055A341 /* NSDictionary+Extension.m */; };
@@ -797,6 +813,9 @@
 		1F1DBCD8233069020025C27A /* 说明-README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "说明-README.rtf"; sourceTree = "<group>"; };
 		1F1DBCDA233069F60025C27A /* 配置说明-README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "配置说明-README.rtf"; sourceTree = "<group>"; };
 		1F2250B122C386A100FA513C /* PTZTour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTZTour.h; sourceTree = "<group>"; };
+		1F24F46B2C3684C400B16A26 /* PTZCorrectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTZCorrectionViewController.h; sourceTree = "<group>"; };
+		1F24F46C2C3684C400B16A26 /* PTZCorrectionViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PTZCorrectionViewController.mm; sourceTree = "<group>"; };
+		1F24F46D2C3684C400B16A26 /* PTZCorrectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PTZCorrectionViewController.xib; sourceTree = "<group>"; };
 		1F3A5ACA22B379E600E3139B /* NetworkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkViewController.h; sourceTree = "<group>"; };
 		1F3A5ACB22B379E600E3139B /* NetworkViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NetworkViewController.mm; sourceTree = "<group>"; };
 		1F3A5ACE22B379F400E3139B /* ChangeWifiConfig.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChangeWifiConfig.mm; sourceTree = "<group>"; };
@@ -1416,6 +1435,26 @@
 		2282ADA52C1C284E004ABF74 /* SupportEpitomeRecord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SupportEpitomeRecord.h; sourceTree = "<group>"; };
 		2282ADA72C1C32B2004ABF74 /* EpitomeRecordConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EpitomeRecordConfig.h; sourceTree = "<group>"; };
 		2282ADA82C1C32B2004ABF74 /* EpitomeRecordConfig.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EpitomeRecordConfig.mm; sourceTree = "<group>"; };
+		22D125592C2AA3DF00632D0D /* CameraLinkHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraLinkHomeView.m; sourceTree = "<group>"; };
+		22D1255A2C2AA3DF00632D0D /* CameraLinkHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraLinkHomeVC.m; sourceTree = "<group>"; };
+		22D1255B2C2AA3DF00632D0D /* CameraLinkHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraLinkHomeView.h; sourceTree = "<group>"; };
+		22D1255C2C2AA3DF00632D0D /* CameraLinkHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraLinkHomeVC.h; sourceTree = "<group>"; };
+		22D125602C2AA41900632D0D /* GunBallManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GunBallManager.mm; sourceTree = "<group>"; };
+		22D125612C2AA41900632D0D /* GunBallManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GunBallManager.h; sourceTree = "<group>"; };
+		22D125632C2AA56A00632D0D /* PTZLocateViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PTZLocateViewController.mm; sourceTree = "<group>"; };
+		22D125642C2AA56A00632D0D /* PTZLocateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTZLocateViewController.h; sourceTree = "<group>"; };
+		22D125662C2AA5A400632D0D /* PTZLocateView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PTZLocateView.mm; sourceTree = "<group>"; };
+		22D125672C2AA5A400632D0D /* PTZLocateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTZLocateView.h; sourceTree = "<group>"; };
+		22D125692C2AA66500632D0D /* PTZProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTZProcessManager.h; sourceTree = "<group>"; };
+		22D1256A2C2AA66600632D0D /* PTZProcessManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PTZProcessManager.mm; sourceTree = "<group>"; };
+		22D1256C2C2AA68900632D0D /* MaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaskView.m; sourceTree = "<group>"; };
+		22D1256D2C2AA68900632D0D /* MaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaskView.h; sourceTree = "<group>"; };
+		22D1256F2C2AA7CE00632D0D /* UartPTZControlCmdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UartPTZControlCmdManager.h; sourceTree = "<group>"; };
+		22D125702C2AA7CE00632D0D /* UartPTZControlCmdManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UartPTZControlCmdManager.mm; sourceTree = "<group>"; };
+		22D125722C2AB42200632D0D /* UIViewController+JFForbiddenSwipeRight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+JFForbiddenSwipeRight.h"; sourceTree = "<group>"; };
+		22D125732C2AB42200632D0D /* UIViewController+JFForbiddenSwipeRight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+JFForbiddenSwipeRight.m"; sourceTree = "<group>"; };
+		22D125882C2BAC7200632D0D /* FunSDKBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FunSDKBaseView.h; sourceTree = "<group>"; };
+		22D125892C2BAC7200632D0D /* FunSDKBaseView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FunSDKBaseView.mm; sourceTree = "<group>"; };
 		22DFA4312C1FD0F50054AC4E /* EpitomeRecordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EpitomeRecordViewController.h; sourceTree = "<group>"; };
 		22DFA4322C1FD0F50054AC4E /* EpitomeRecordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EpitomeRecordViewController.m; sourceTree = "<group>"; };
 		22F99D102C2529210037AF98 /* FunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FunSDK.framework; path = ../../FunSDK.framework; sourceTree = "<group>"; };
@@ -1570,6 +1609,14 @@
 		7AAF251E24E228680011B238 /* WirelessScanQRCodeViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WirelessScanQRCodeViewController.mm; sourceTree = "<group>"; };
 		7AAF252024E23ADF0011B238 /* QRCodeImageShowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRCodeImageShowView.h; sourceTree = "<group>"; };
 		7AAF252124E23ADF0011B238 /* QRCodeImageShowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRCodeImageShowView.m; sourceTree = "<group>"; };
+		7ADBA83A2C255DA200782CE2 /* ManuIntellAlertAlarmViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManuIntellAlertAlarmViewController.h; sourceTree = "<group>"; };
+		7ADBA83B2C255DA200782CE2 /* ManuIntellAlertAlarmViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ManuIntellAlertAlarmViewController.mm; sourceTree = "<group>"; };
+		7ADBA83E2C25630300782CE2 /* ManuIntelAlarmManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManuIntelAlarmManager.h; sourceTree = "<group>"; };
+		7ADBA83F2C25630300782CE2 /* ManuIntelAlarmManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ManuIntelAlarmManager.mm; sourceTree = "<group>"; };
+		7ADBA8462C2A61DF00782CE2 /* LowPowerRecordConfigViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LowPowerRecordConfigViewController.h; sourceTree = "<group>"; };
+		7ADBA8472C2A61DF00782CE2 /* LowPowerRecordConfigViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LowPowerRecordConfigViewController.mm; sourceTree = "<group>"; };
+		7ADBA84A2C2A953400782CE2 /* LowPowerRecordConfigManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LowPowerRecordConfigManager.h; sourceTree = "<group>"; };
+		7ADBA84B2C2A953400782CE2 /* LowPowerRecordConfigManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LowPowerRecordConfigManager.mm; sourceTree = "<group>"; };
 		7ADC933529F520860055A341 /* DevicePairingNetworkManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DevicePairingNetworkManager.mm; sourceTree = "<group>"; };
 		7ADC933629F520860055A341 /* DevicePairingNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicePairingNetworkManager.h; sourceTree = "<group>"; };
 		7ADC933829F522EE0055A341 /* DeviceBindedManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DeviceBindedManager.mm; sourceTree = "<group>"; };
@@ -2417,6 +2464,16 @@
 				1F1DBCD2233066870025C27A /* WorkMode_CapturePriority.h */,
 			);
 			path = CapturePriorityCfg;
+			sourceTree = "<group>";
+		};
+		1F24F46A2C3684A900B16A26 /* PTZCorrectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1F24F46B2C3684C400B16A26 /* PTZCorrectionViewController.h */,
+				1F24F46C2C3684C400B16A26 /* PTZCorrectionViewController.mm */,
+				1F24F46D2C3684C400B16A26 /* PTZCorrectionViewController.xib */,
+			);
+			path = PTZCorrectionViewController;
 			sourceTree = "<group>";
 		};
 		1F3A5AC922B379E600E3139B /* NetWorkViewController */ = {
@@ -3575,6 +3632,36 @@
 			path = EpitomeRecordManager;
 			sourceTree = "<group>";
 		};
+		22D125582C2AA3C600632D0D /* CameraLinkHomeVC */ = {
+			isa = PBXGroup;
+			children = (
+				22D1256D2C2AA68900632D0D /* MaskView.h */,
+				22D1256C2C2AA68900632D0D /* MaskView.m */,
+				22D125672C2AA5A400632D0D /* PTZLocateView.h */,
+				22D125662C2AA5A400632D0D /* PTZLocateView.mm */,
+				22D125642C2AA56A00632D0D /* PTZLocateViewController.h */,
+				22D125632C2AA56A00632D0D /* PTZLocateViewController.mm */,
+				22D1255C2C2AA3DF00632D0D /* CameraLinkHomeVC.h */,
+				22D1255A2C2AA3DF00632D0D /* CameraLinkHomeVC.m */,
+				22D1255B2C2AA3DF00632D0D /* CameraLinkHomeView.h */,
+				22D125592C2AA3DF00632D0D /* CameraLinkHomeView.m */,
+			);
+			path = CameraLinkHomeVC;
+			sourceTree = "<group>";
+		};
+		22D1255F2C2AA41900632D0D /* GunBallManager */ = {
+			isa = PBXGroup;
+			children = (
+				22D1256F2C2AA7CE00632D0D /* UartPTZControlCmdManager.h */,
+				22D125702C2AA7CE00632D0D /* UartPTZControlCmdManager.mm */,
+				22D125692C2AA66500632D0D /* PTZProcessManager.h */,
+				22D1256A2C2AA66600632D0D /* PTZProcessManager.mm */,
+				22D125602C2AA41900632D0D /* GunBallManager.mm */,
+				22D125612C2AA41900632D0D /* GunBallManager.h */,
+			);
+			path = GunBallManager;
+			sourceTree = "<group>";
+		};
 		22DFA4302C1FD0CD0054AC4E /* EpitomeRecordViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -3983,6 +4070,42 @@
 				7A810B332BDB479C00979CD0 /* DeviceAudioPlayViewController.mm */,
 			);
 			path = DeviceAudioPlayViewController;
+			sourceTree = "<group>";
+		};
+		7ADBA8392C255D3400782CE2 /* ManuIntellAlertAlarmViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7ADBA83A2C255DA200782CE2 /* ManuIntellAlertAlarmViewController.h */,
+				7ADBA83B2C255DA200782CE2 /* ManuIntellAlertAlarmViewController.mm */,
+			);
+			path = ManuIntellAlertAlarmViewController;
+			sourceTree = "<group>";
+		};
+		7ADBA83D2C2562ED00782CE2 /* ManuIntelAlarmManager */ = {
+			isa = PBXGroup;
+			children = (
+				7ADBA83E2C25630300782CE2 /* ManuIntelAlarmManager.h */,
+				7ADBA83F2C25630300782CE2 /* ManuIntelAlarmManager.mm */,
+			);
+			path = ManuIntelAlarmManager;
+			sourceTree = "<group>";
+		};
+		7ADBA8452C2A61AD00782CE2 /* LowPowerRecordConfigViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7ADBA8462C2A61DF00782CE2 /* LowPowerRecordConfigViewController.h */,
+				7ADBA8472C2A61DF00782CE2 /* LowPowerRecordConfigViewController.mm */,
+			);
+			path = LowPowerRecordConfigViewController;
+			sourceTree = "<group>";
+		};
+		7ADBA8492C2A951500782CE2 /* LowPowerRecordConfigManager */ = {
+			isa = PBXGroup;
+			children = (
+				7ADBA84A2C2A953400782CE2 /* LowPowerRecordConfigManager.h */,
+				7ADBA84B2C2A953400782CE2 /* LowPowerRecordConfigManager.mm */,
+			);
+			path = LowPowerRecordConfigManager;
 			sourceTree = "<group>";
 		};
 		7ADC933429F520860055A341 /* DevicePairingNetworkManager */ = {
@@ -4408,6 +4531,8 @@
 		96C6B29C21BB6867000B32E7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				22D125722C2AB42200632D0D /* UIViewController+JFForbiddenSwipeRight.h */,
+				22D125732C2AB42200632D0D /* UIViewController+JFForbiddenSwipeRight.m */,
 				1FF6AC282A3208100012A0CE /* UIImage+Ex.h */,
 				1FF6AC292A3208100012A0CE /* UIImage+Ex.m */,
 				96C6B29D21BB6867000B32E7 /* UIView+Layout.h */,
@@ -4463,7 +4588,10 @@
 		96C6B2B021BB6867000B32E7 /* DeviceConfigManager */ = {
 			isa = PBXGroup;
 			children = (
+				22D1255F2C2AA41900632D0D /* GunBallManager */,
 				1FB43A972C254EA8000FAFCE /* SerialPortManager */,
+				7ADBA8492C2A951500782CE2 /* LowPowerRecordConfigManager */,
+				7ADBA83D2C2562ED00782CE2 /* ManuIntelAlarmManager */,
 				2282ADA62C1C3281004ABF74 /* EpitomeRecordManager */,
 				7A810B242BD8F82000979CD0 /* DeviceAudioPlayManager */,
 				C1E557DC2A736AE9006F5171 /* deviceBluetoothConfigHelper */,
@@ -4732,6 +4860,8 @@
 				96C6B3A921BB6868000B32E7 /* FunMsgListener.mm */,
 				1FF6C29126DF0A85007927A3 /* DataEncrypt.h */,
 				1FF6C29226DF0A85007927A3 /* DataEncrypt.mm */,
+				22D125882C2BAC7200632D0D /* FunSDKBaseView.h */,
+				22D125892C2BAC7200632D0D /* FunSDKBaseView.mm */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -5052,6 +5182,9 @@
 		96C6B42F21BB6868000B32E7 /* DeviceConfigViewController */ = {
 			isa = PBXGroup;
 			children = (
+				22D125582C2AA3C600632D0D /* CameraLinkHomeVC */,
+				7ADBA8452C2A61AD00782CE2 /* LowPowerRecordConfigViewController */,
+				7ADBA8392C255D3400782CE2 /* ManuIntellAlertAlarmViewController */,
 				22DFA4302C1FD0CD0054AC4E /* EpitomeRecordViewController */,
 				7A810B312BDB475200979CD0 /* DeviceAudioPlayViewController */,
 				1F7192342ABD95F8008E3414 /* HumanDetectionViewController */,
@@ -5093,6 +5226,7 @@
 				203BD12121DF74EA005B91E9 /* BuzzerViewController */,
 				1F71922E2ABD9478008E3414 /* MQTTViewController */,
 				1FB43A9B2C254EC8000FAFCE /* SerialPortViewController */,
+				1F24F46A2C3684A900B16A26 /* PTZCorrectionViewController */,
 				96C6B44321BB6868000B32E7 /* DeviceconfigTableViewCell.h */,
 				96C6B44421BB6868000B32E7 /* DeviceconfigTableViewCell.m */,
 				96C6B46421BB6868000B32E7 /* ItemTableviewCell.h */,
@@ -6013,6 +6147,7 @@
 				96EFBD1D21BB966A005EBA5A /* offline.png in Resources */,
 				1F1DBCD9233069020025C27A /* 说明-README.rtf in Resources */,
 				96EFBCFA21BB966A005EBA5A /* VR-four_sel.png in Resources */,
+				1F24F46F2C3684C400B16A26 /* PTZCorrectionViewController.xib in Resources */,
 				96EFBCFE21BB966A005EBA5A /* VR-tow_sel.png in Resources */,
 				96EFBCFC21BB966A005EBA5A /* VR-rectangle_sel.png in Resources */,
 				96EFBCD221BB966A005EBA5A /* icon_funsdk.png in Resources */,
@@ -6125,6 +6260,7 @@
 				1F7241CD2328F264002A6EDA /* NetWorkCfgManager.mm in Sources */,
 				1FF6AC122A3207620012A0CE /* ZXURIParsedResult.m in Sources */,
 				1FF6AC102A3207620012A0CE /* ZXExpandedProductResultParser.m in Sources */,
+				7ADBA83C2C255DA200782CE2 /* ManuIntellAlertAlarmViewController.mm in Sources */,
 				96C6B59821BB6869000B32E7 /* QuickConfigurationView.m in Sources */,
 				96C6B5C621BB6869000B32E7 /* CYGLKView.m in Sources */,
 				1FF6AB942A3207620012A0CE /* ZXIntArray.m in Sources */,
@@ -6142,6 +6278,7 @@
 				1FF6ABDF2A3207620012A0CE /* ZXAI01320xDecoder.m in Sources */,
 				22FE68CA2B999EA8003EC7A3 /* XMDeviceOrientationManager.m in Sources */,
 				1FF6AB9A2A3207620012A0CE /* ZXPDF417Dimensions.m in Sources */,
+				7ADBA8402C25630400782CE2 /* ManuIntelAlarmManager.mm in Sources */,
 				22FAE12B2BF4908700FA1C8C /* VideoIntercomView.m in Sources */,
 				1FC0F14823A0DBC40076F742 /* InterInterfaceControl.mm in Sources */,
 				1FF6ABCD2A3207620012A0CE /* ZXITFWriter.m in Sources */,
@@ -6155,6 +6292,7 @@
 				1F71923A2ABD95F8008E3414 /* IPCHumanDetectionViewController.mm in Sources */,
 				96C6B58A21BB6869000B32E7 /* PasswordSaveViewController.m in Sources */,
 				96C6B5B321BB6869000B32E7 /* ParamViewController.mm in Sources */,
+				22D1256E2C2AA68900632D0D /* MaskView.m in Sources */,
 				6CD87DFE224A1EF30095B337 /* XYShowAlertView.m in Sources */,
 				6C6275C9227FCB8000E6C73F /* BaseConfigListCell.m in Sources */,
 				1FF6AB702A3207620012A0CE /* ZXQRCodeVersion.m in Sources */,
@@ -6262,6 +6400,7 @@
 				0EA2BE35290A5806008052E1 /* ShareDeviceGatherVC.m in Sources */,
 				1FF6ABAD2A3207620012A0CE /* ZXPDF417Reader.m in Sources */,
 				96C6B5CE21BB6869000B32E7 /* TalkView.m in Sources */,
+				1F24F46E2C3684C400B16A26 /* PTZCorrectionViewController.mm in Sources */,
 				96C6B5BA21BB6869000B32E7 /* UpgradeDeviceViewController.mm in Sources */,
 				96C6B5A221BB6869000B32E7 /* AlarmConfigTableViewCell.m in Sources */,
 				C1D50C8B2A774452002DA8A6 /* JFBluetoothSearchResultPresenter.m in Sources */,
@@ -6298,6 +6437,7 @@
 				6C21E545224DE6B500F2F4EA /* SensorDeviceModel.m in Sources */,
 				96C6B4EC21BB6869000B32E7 /* AlarmMessageConfig.mm in Sources */,
 				1FF6AB6F2A3207620012A0CE /* ZXQRCodeDecoder.m in Sources */,
+				22D125622C2AA41900632D0D /* GunBallManager.mm in Sources */,
 				1FF6AC002A3207620012A0CE /* ZXEmailAddressResultParser.m in Sources */,
 				1FF6ABD02A3207620012A0CE /* ZXUPCEWriter.m in Sources */,
 				7AAF252224E23ADF0011B238 /* QRCodeImageShowView.m in Sources */,
@@ -6376,6 +6516,7 @@
 				1FF6AB732A3207620012A0CE /* ZXQRCodeMode.m in Sources */,
 				0EA2BE30290A5806008052E1 /* ShareModel.mm in Sources */,
 				96C6B5B421BB6869000B32E7 /* PasswordView.m in Sources */,
+				22D1258A2C2BAC7200632D0D /* FunSDKBaseView.mm in Sources */,
 				96B8A8FB21CE1C9D00206580 /* AnalyzeDataSource.m in Sources */,
 				CF6A2E20299CDD84005663A7 /* DayNightModelViewController.mm in Sources */,
 				6C65F4DD228D424300AE6BB0 /* CYFunSDKObject.mm in Sources */,
@@ -6393,6 +6534,7 @@
 				1FF6ABF72A3207620012A0CE /* ZXEAN8Writer.m in Sources */,
 				96A0FFFB21CDCCBD00D3F459 /* AnalyzeConfig.mm in Sources */,
 				96C6B4F221BB6869000B32E7 /* PictureInfo.m in Sources */,
+				7ADBA8482C2A61DF00782CE2 /* LowPowerRecordConfigViewController.mm in Sources */,
 				7A04282129F7B29F004F95CA /* ShadowServicesManager.mm in Sources */,
 				1FF6ABC72A3207620012A0CE /* ZXCode93Reader.m in Sources */,
 				1FF6AB602A3207620012A0CE /* ZXAztecDecoder.m in Sources */,
@@ -6403,6 +6545,7 @@
 				1F9BA8C322C1BBC800D7E6BA /* CruiseDataSource.m in Sources */,
 				96EFBD2B21BB966A005EBA5A /* main.mm in Sources */,
 				96C6B4F521BB6869000B32E7 /* VideoFileConfig.mm in Sources */,
+				22D1256B2C2AA66600632D0D /* PTZProcessManager.mm in Sources */,
 				1F60551822A647630043061E /* qrinput.m in Sources */,
 				6C05D90122D31E8C00BCDB07 /* AutoCruiseConfig.mm in Sources */,
 				1FF6AC1B2A3207620012A0CE /* ZXBookmarkDoCoMoResultParser.m in Sources */,
@@ -6433,6 +6576,7 @@
 				96C6B5D321BB6869000B32E7 /* PlayViewController.mm in Sources */,
 				1FE52D5F2B8DB31E00C00A79 /* DoubleEyesManager.mm in Sources */,
 				96C6B5C821BB6869000B32E7 /* PhotosViewController.mm in Sources */,
+				22D125682C2AA5A400632D0D /* PTZLocateView.mm in Sources */,
 				1FF6AC182A3207620012A0CE /* ZXEmailAddressParsedResult.m in Sources */,
 				1FF6ABA22A3207620012A0CE /* ZXPDF417DecodedBitStreamParser.m in Sources */,
 				1FF6ABB92A3207620012A0CE /* ZXDataMatrixDefaultPlacement.m in Sources */,
@@ -6475,6 +6619,7 @@
 				299F048824B70A930072D4C2 /* AlarmVoiceChoseVC.m in Sources */,
 				22FAE12C2BF4908700FA1C8C /* YUVPlayer.m in Sources */,
 				1FF6ABF12A3207620012A0CE /* ZXUPCEANReader.m in Sources */,
+				7ADBA84C2C2A953400782CE2 /* LowPowerRecordConfigManager.mm in Sources */,
 				1F60551E22A6487C0043061E /* ScanViewController.mm in Sources */,
 				96EFBD3321BB97C9005EBA5A /* SDKInitializeModel.mm in Sources */,
 				96C6B5B821BB6869000B32E7 /* StorageViewController.mm in Sources */,
@@ -6522,6 +6667,7 @@
 				96C6B58D21BB6869000B32E7 /* RegisterViewController.mm in Sources */,
 				96C6B5B521BB6869000B32E7 /* PasswordViewController.mm in Sources */,
 				6C5DC30A22D488CF00BFDA2F /* AlarmSwitchCell.m in Sources */,
+				22D125652C2AA56A00632D0D /* PTZLocateViewController.mm in Sources */,
 				1FF6AB712A3207620012A0CE /* ZXQRCodeBitMatrixParser.m in Sources */,
 				1F3A5AD322B379F400E3139B /* WifiConfigDataSource.m in Sources */,
 				1FF6AB542A3207620012A0CE /* ZXBinaryBitmap.m in Sources */,
@@ -6608,6 +6754,7 @@
 				1FF6AB7C2A3207620012A0CE /* ZXQRCodeDetector.m in Sources */,
 				1F66F2922A5FC4DA00463303 /* VoiceTimeSwitchCell.m in Sources */,
 				1F66F2942A5FC4DA00463303 /* VoiceBroadcastingViewController.mm in Sources */,
+				22D125712C2AA7CE00632D0D /* UartPTZControlCmdManager.mm in Sources */,
 				96B8A90321CE256400206580 /* AnalyzerViewController.mm in Sources */,
 				96C6B5D721BB6869000B32E7 /* VRFunctionView.mm in Sources */,
 				96C6B5B021BB6869000B32E7 /* EncodeViewController.mm in Sources */,
@@ -6659,11 +6806,13 @@
 				7AEB789D29F0DD4B00E0C77D /* AddLANCameraViewController.mm in Sources */,
 				96C6B5A721BB6869000B32E7 /* PictureSearchViewController.mm in Sources */,
 				96C6B4D921BB6869000B32E7 /* LoginShowControl.m in Sources */,
+				22D1255E2C2AA3DF00632D0D /* CameraLinkHomeVC.m in Sources */,
 				96C6B5A421BB6869000B32E7 /* DeviceConfigViewController.mm in Sources */,
 				2943D9B121C77F6F00073507 /* EncodingFormatViewController.mm in Sources */,
 				6C65F4D4228D3BC500AE6BB0 /* AudioOutputConfig.mm in Sources */,
 				6C21E52C224DE4D000F2F4EA /* UIColor+Util.m in Sources */,
 				2939951321CA1BE2004FC87C /* WaterMarkViewController.mm in Sources */,
+				22D125742C2AB42200632D0D /* UIViewController+JFForbiddenSwipeRight.m in Sources */,
 				1FF6AC052A3207620012A0CE /* ZXTelResultParser.m in Sources */,
 				1FF6ABAE2A3207620012A0CE /* ZXPDF417ResultMetadata.m in Sources */,
 				1FC0F15823A0DBC40076F742 /* GTMNSString+HTML.m in Sources */,
@@ -6675,6 +6824,7 @@
 				1FF6AC0C2A3207620012A0CE /* ZXURLTOResultParser.m in Sources */,
 				1FB43AA02C254EC8000FAFCE /* SerialPortViewController.mm in Sources */,
 				1FF6ABCE2A3207620012A0CE /* ZXMultiFormatUPCEANReader.m in Sources */,
+				22D1255D2C2AA3DF00632D0D /* CameraLinkHomeView.m in Sources */,
 				96C6B4FE21BB6869000B32E7 /* StorageConfig.mm in Sources */,
 				1FF6AB812A3207620012A0CE /* ZXGridSampler.m in Sources */,
 				96C6B59B21BB6869000B32E7 /* SerialNumAddViewController.mm in Sources */,
@@ -6933,7 +7083,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -7021,7 +7171,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = R6S652TPCM;

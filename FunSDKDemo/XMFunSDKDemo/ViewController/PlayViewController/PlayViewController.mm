@@ -156,6 +156,8 @@
             playMenuView.btnVideoCall.hidden = !wSelf.deviceAbilityManager.supportVideoTalkV2;
             //是否支持缩影对讲
             dev.sysFunction.supportEpitomeRecord = wSelf.deviceAbilityManager.supportEpitomeRecord;
+            //是否支持手动警戒
+            dev.sysFunction.supportManuIntellAlertAlarm = wSelf.deviceAbilityManager.supportManuIntellAlertAlarm;
         }
     }];
 }
@@ -1267,7 +1269,7 @@ switch (msg->id) {
 -(VRGLViewController *)vrglVC{
     if (!_vrglVC) {
         _vrglVC = [[VRGLViewController alloc] init];
-        _vrglVC.vrglViewControllerDelegateDelegate = self;
+        _vrglVC.vrglDelegate = self;
     }
     return _vrglVC;
 }

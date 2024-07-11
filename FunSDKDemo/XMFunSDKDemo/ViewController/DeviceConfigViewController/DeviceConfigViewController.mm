@@ -58,6 +58,11 @@
 #import "DeviceRandomPwdManager.h"
 #import "EpitomeRecordViewController.h"
 #import "SerialPortViewController.h"
+#import "CameraLinkHomeVC.h"
+#import "PTZCorrectionViewController.h"
+
+#import "ManuIntellAlertAlarmViewController.h"
+#import "LowPowerRecordConfigViewController.h"
 
 @interface DeviceConfigViewController ()<UITableViewDelegate,UITableViewDataSource,SystemInfoConfigDelegate,SystemFunctionConfigDelegate,MFMailComposeViewControllerDelegate>
 
@@ -178,13 +183,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+    DeviceObject *devObject = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
     NSString *titleStr = [self.configTitleArray[indexPath.row] objectForKey:@"title"];
     if ([titleStr isEqualToString:TS("alarm_config")]) {
         AlarmDetectViewController *alarmDetectVC = [[AlarmDetectViewController alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:alarmDetectVC animated:NO];
     }else if ([titleStr isEqualToString:TS("分享设备")]){ //分享设置
-        
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
         ShareDeviceGatherVC * vc = [ShareDeviceGatherVC new];
         vc.devId = channel.deviceMac;
         [self.navigationController pushViewController:vc animated:YES];
@@ -195,6 +200,12 @@
     }else if ([titleStr isEqualToString:TS("Record_config")]){ //录像配置
         RecordViewController *encodeVC = [[RecordViewController alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:encodeVC animated:NO];
+    }else if ([titleStr isEqualToString:TS("Record_config_LowPower")]){ //低功耗录像配置
+        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+        
+        LowPowerRecordConfigViewController *vc = [[LowPowerRecordConfigViewController alloc] initWithNibName:nil bundle:nil];
+        vc.devID = channel.deviceMac;
+        [self.navigationController pushViewController:vc animated:NO];
     }else if ([titleStr isEqualToString:TS("picture_vonfig")]){ //图像配置
         ParamViewController *encodeVC = [[ParamViewController alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:encodeVC animated:NO];
@@ -215,18 +226,14 @@
         StorageViewController *storageVC = [[StorageViewController alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:storageVC animated:NO];
     }else if ([titleStr isEqualToString:TS("preset_tour")]){ //巡航 (巡航功能另外需要设备支持云台功能才可以，这个设备出厂时已经确定，一般都支持，部分客户定制设备可能会根据客户要求去掉能力级，默认支持或者不支持，根据支持情况可以无需判断能力级）
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *object  = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
-        if(object.sysFunction.SupportPTZTour == NO){
+        if(devObject.sysFunction.SupportPTZTour == NO){
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
         }
         CruiseViewController *cruiseVC = [[CruiseViewController alloc]init];
         [self.navigationController pushViewController:cruiseVC animated:NO];
     }else if([titleStr isEqualToString:TS("Timed_Cruise")]){
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *object  = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
-        if(object.sysFunction.SupportTimingPtzTour == NO){
+        if(devObject.sysFunction.SupportTimingPtzTour == NO){
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
         }
@@ -245,18 +252,14 @@
         [self.navigationController pushViewController:alarmMessageVC animated:NO];
         
     }else if ([titleStr isEqualToString:TS("AnalyzeConfig")]){ //智能分析
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *object  = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
-        if(object.sysFunction.NewVideoAnalyze == NO){
+        if(devObject.sysFunction.NewVideoAnalyze == NO){
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
         }
         AnalyzerViewController *analyzeVC = [[AnalyzerViewController alloc] init];
         [self.navigationController pushViewController:analyzeVC animated:NO];
     }else if ([titleStr isEqualToString:TS("Encoding_format")]){ //视频格式
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *object  = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
-        if(object.sysFunction.SupportSmartH264 == NO){
+        if(devObject.sysFunction.SupportSmartH264 == NO){
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
         }
@@ -288,9 +291,7 @@
         HumanDetectionViewController *humandetectVC = [[HumanDetectionViewController alloc] init];
         [self.navigationController pushViewController:humandetectVC animated:NO];
     }else if([titleStr isEqualToString:TS("HumanDetectAlarm_IPC")]){ //人行检测 IPC，简易版本
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *object  = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
-        if(object.sysFunction.PEAInHumanPed == NO && [[DeviceControl getInstance] getSelectChannelArray].count <=1){
+        if(devObject.sysFunction.PEAInHumanPed == NO && [[DeviceControl getInstance] getSelectChannelArray].count <=1){
             //单品设备并且不支持人形检测时，提示设备不支持
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
@@ -299,8 +300,6 @@
         [self.navigationController pushViewController:IPCHumandetectVC animated:NO];
     }else if([titleStr isEqualToString:TS("Intelligent_Vigilance")]){
         //智能警戒 完全体版本的IPC人形检测，根据需求判断使用简易版的还是完全版本的
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *devObject = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
         if (devObject.sysFunction.PEAInHumanPed == NO) {
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
@@ -311,9 +310,7 @@
         controller.channelNum = 0;
         [self.navigationController pushViewController:controller animated:YES];
     }else if([titleStr isEqualToString:TS("AlarmPIR")]){
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *object  = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
-        if(object.sysFunction.SupportPirAlarm == NO){
+        if(devObject.sysFunction.SupportPirAlarm == NO){
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
         }
@@ -326,9 +323,7 @@
         DoorViewController *vc = [[DoorViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([titleStr isEqualToString:TS("Network_setting")]){
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *object  = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
-        if(object.sysFunction.WifiModeSwitch == NO){
+        if(devObject.sysFunction.WifiModeSwitch == NO){
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
         }
@@ -338,8 +333,6 @@
         BaseConfigVC *vc = [[BaseConfigVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if([titleStr isEqualToString:TS("One_Key_To_Cover")]){
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *devObject = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
         if (devObject.sysFunction.SupportOneKeyMaskVideo == NO) {
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
@@ -349,15 +342,12 @@
         vc.devId = channel.deviceMac;
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([titleStr isEqualToString:TS("DoorBell_Cfg")]){
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
         DoorBellCfgVC *vc = [[DoorBellCfgVC alloc] init];
         vc.devID = channel.deviceMac;
         
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([titleStr isEqualToString:TS("LightBulb_Cfg")]){
         //灯泡配置
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *devObject = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
         if (devObject.sysFunction.iSupportCameraWhiteLight == NO) {
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
@@ -375,14 +365,12 @@
         ChangeChannelTitleViewController *vc = [[ChangeChannelTitleViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([titleStr isEqualToString:TS("TR_DayNightMode")]){ //日夜模式
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
         DayNightModelViewController *vc = [[DayNightModelViewController alloc] init];
         vc.devID = channel.deviceMac;
         vc.channelNum = channel.channelNumber;
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if([titleStr isEqualToString:TS("TR_Voice_Broadcasting")]){ //语音播报功能
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
         VoiceBroadcastingViewController *vc = [[VoiceBroadcastingViewController alloc]init];
         vc.devID = channel.deviceMac;
         vc.channelNum = channel.channelNumber;
@@ -392,14 +380,11 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if([titleStr isEqualToString:TS("TR_DeviceAudioPlay")]){
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
         DeviceAudioPlayViewController *vc = [[DeviceAudioPlayViewController alloc]init];
         vc.devID = channel.deviceMac;
         vc.channelNum = channel.channelNumber;
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([titleStr isEqualToString: TS("EpitomeRecord")]){  //缩影录像配置
-        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-        DeviceObject *devObject = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
         if (!devObject.sysFunction.supportEpitomeRecord) {
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
             return;
@@ -409,6 +394,33 @@
     }else if([titleStr isEqualToString:TS("Serial Port")]){  //串口命令
         SerialPortViewController *vc = [[SerialPortViewController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
+    }else if ([titleStr isEqualToString: TS("TR_Camera_Linkage")]){  //相机联动
+        if(!devObject.sysFunction.iSupportGunBallTwoSensorPtzLocate){
+            [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
+            return;
+        }
+        CameraLinkHomeVC *cameravc = [[CameraLinkHomeVC alloc] init];
+        cameravc.devID = channel.deviceMac;
+        [self.navigationController pushViewController: cameravc animated: YES];
+    }else if([titleStr isEqualToString:TS("PTZ_Correction")]){  //云台校正
+        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+        DeviceObject *devObject = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
+        if (!devObject.sysFunction.SupportPtzAutoAdjust) {
+            [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
+            return;
+        }
+        PTZCorrectionViewController *ptzcVC = [[PTZCorrectionViewController alloc] init];
+        [self.navigationController pushViewController: ptzcVC animated: YES];
+    }else if ([titleStr isEqualToString: TS("ManualAlert")]){  //手动警戒配置
+        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+        DeviceObject *devObject = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
+        if (!devObject.sysFunction.supportManuIntellAlertAlarm) {
+            [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
+            return;
+        }
+        ManuIntellAlertAlarmViewController *vc = [[ManuIntellAlertAlarmViewController alloc] init];
+        vc.devID = channel.deviceMac;
+        [self.navigationController pushViewController: vc animated: YES];
     }
     else{
         return;
@@ -434,6 +446,7 @@
         @{@"title":TS("Encode_config"),@"detailInfo":@"在这里,你可以配置分辨率,帧数,音频,视频"},
         @{@"title":TS("alarm_config"),@"detailInfo":@"设备支持各种报警触发和联动,您可以在这里进行配置"},
         @{@"title":TS("Record_config"),@"detailInfo":@"设备主辅码流录像配置"},
+        @{@"title":TS("Record_config_LowPower"),@"detailInfo":@""},
         @{@"title":TS("picture_vonfig"),@"detailInfo":@"设备视频画面图像反转"},
         @{@"title":TS("time_syn"),@"detailInfo":@"在这里可以显示和同步设备时间"},
         @{@"title":TS("device_storage"),@"detailInfo":@"该选项允许您查看和管理设备的存储空间"},
@@ -470,7 +483,10 @@
         @{@"title":TS("TR_Voice_Broadcasting"),@"detailInfo":@""},
         @{@"title":TS("MQTT"),@"detailInfo":@""},
         @{@"title":TS("TR_DeviceAudioPlay"),@"detailInfo":@""},
+        @{@"title":TS("PTZ_Correction"),@"detailInfo":@""},
         @{@"title":TS("EpitomeRecord"),@"detailInfo":@""},
+        @{@"title":TS("TR_Camera_Linkage"),@"detailInfo":@""},
+        @{@"title":TS("ManualAlert"),@"detailInfo":@""},
     ] mutableCopy];
 }
 

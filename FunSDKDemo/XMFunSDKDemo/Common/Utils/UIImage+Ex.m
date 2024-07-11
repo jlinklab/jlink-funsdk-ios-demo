@@ -194,4 +194,42 @@
     return @[@(red), @(green), @(blue)];
 }
 
+//MARK: 抓取截图
++ (UIImage *_Nonnull)snapshotView:(UIView *_Nonnull)view{
+    UIImage *image = nil;
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0.0);
+    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+    image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+//MARK: 接受一个UIImage对象、一个CGPoint类型的中心点、一个CGFloat类型的半径和一个放大倍数，返回一个基于中心点和半径的圆形图片，并且已经按照指定的放大倍数进行了缩放。点的坐标是相对于整个图片的宽高百分比的，范围是0-1
++ (UIImage *_Nonnull)zoomInCircleImageWithImage:(UIImage *_Nonnull)image centerPoint:(CGPoint)centerPoint radius:(CGFloat)radius scale:(CGFloat)scale {
+    // 计算圆形画面的位置和半径
+    CGFloat imageWidth = image.size.width;
+    CGFloat imageHeight = image.size.height;
+    CGFloat centerX = centerPoint.x * imageWidth;
+    CGFloat centerY = centerPoint.y * imageHeight;
+    CGFloat diameter = radius * 2;
+    CGRect frame = CGRectMake(centerX - radius, centerY - radius, diameter, diameter);
+    // 绘制圆形画面
+    UIGraphicsBeginImageContextWithOptions(frame.size, NO, 0.0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextAddEllipseInRect(context, CGRectMake(0, 0, frame.size.width, frame.size.height));
+    CGContextClip(context);
+    [image drawInRect:CGRectMake(-centerX + radius, -centerY + radius, imageWidth, imageHeight)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    // 对新图像进行缩放
+    CGSize newSize = CGSizeMake(newImage.size.width * scale, newImage.size.height * scale);
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [newImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 @end

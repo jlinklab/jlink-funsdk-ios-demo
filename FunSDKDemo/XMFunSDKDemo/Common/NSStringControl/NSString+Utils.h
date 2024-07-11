@@ -22,6 +22,9 @@ NSDate *YYNSDateFromString(__unsafe_unretained NSString *string);
 //MARK:字典转字符串
 +(NSString*)convertToJSONData:(id)infoDict;
 
+//MARK: 字符串转字典
++ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
+
 //避免因为nullTerminatedCString 为空导致崩溃问题
 +(NSString *)stringWithUTF8String_OutNil:(const char *)nullTerminatedCString;
 

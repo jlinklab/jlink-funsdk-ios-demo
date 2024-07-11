@@ -47,6 +47,9 @@
 @property (nonatomic, assign) int iSupportGunBallTwoSensorPtzLocate;  //是否支持多目枪球云台定位 和Android统一用来判断是否是指哪看哪设备
 @property (nonatomic, assign) BOOL supportVideoTalkV2;  //带屏摇头机视频对讲
 @property (nonatomic, assign)BOOL supportEpitomeRecord;  // 是否支持缩影录像
-
+@property (nonatomic, assign)BOOL supportTraditionalPtzNormalDirect; // 是否支持传统ptz方向控制
+@property (nonatomic, assign)BOOL netWifi;
+@property (nonatomic, assign)BOOL SupportPtzAutoAdjust;  // 是否支持云台校正
+@property (nonatomic, assign)BOOL supportManuIntellAlertAlarm;  // 是否支持手动警戒
 
 @end

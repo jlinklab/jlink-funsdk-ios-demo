@@ -45,7 +45,6 @@
     //16进制格式数据发送
     NSData *temp = [self stringToByte:data];
     ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-    const char *str = [data UTF8String];
     FUN_DevOption(self.msgHandle,[channel.deviceMac UTF8String], EDA_DEV_TANSPORT_COM_WRITE,(char *)temp.bytes, temp.length, type, self.msgHandle,0,"", seq);
     
     //字符串格式数据发送：
@@ -55,7 +54,7 @@
 
 
 /*
- 读取设备回调的串口数据
+ 读取设备回调的串口数据 （实际串口协议数据可能有多种格式，这里只做了读取字符串数据的示例）
  */
 - (NSString*)readData{
     return serialString;
@@ -93,8 +92,11 @@
             //MARK:APP接收设备串口数据回调，也就是设备发送给APP的数据回调
             //说明：回调数据在msg->pObject中，回调数据的格式和具体的协议有关，这里是取string数据的示例，实际协议数据不一定是string，需要自己取出。另外同一个命令的数据回调，有可能分多次回调，需要自己判断数据是否完整。如果当前接收的数据不完整，则需要拼接数据
             NSString *tmpOption = [NSString stringWithUTF8String:msg->pObject];
+            
             if (tmpOption == nil || tmpOption.length == 0) {
-                //回调数据为空
+                //回调数据为空或非字符串格式
+                NSData *jsonData = [NSData dataWithBytes:msg->pObject length:msg->param1];
+                
                 serialString = @"";
             }
             serialString = tmpOption;

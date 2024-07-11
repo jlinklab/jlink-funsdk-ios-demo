@@ -37,4 +37,67 @@
         return NO;
     }
 }
+
+/**缓存的上下反转配置 -1:未缓存 0:关闭 1:开启*/
+- (int)PTZUpsideDown:(int)channel{
+    return [self PTZReverse:channel index:0];
+}
+
+/**缓存的左右反转配置 -1:未缓存 0:关闭 1:开启*/
+- (int)PTZLeftRightReverse:(int)channel{
+    return [self PTZReverse:channel index:1];
+}
+
+/**缓存的是否修改配置 -1:未缓存 0:否 1:是*/
+- (int)PTZModifyCfgReverse:(int)channel{
+    return [self PTZReverse:channel index:2];
+}
+
+/**缓存上下左右反转配置*/
+- (void)setPTZUpsideDownValue:(int)valueUD leftRightReverseValue:(int)valueLR modifyCfg:(int)valueModify channel:(int)channel{
+    NSMutableDictionary *dicCfg = [[self dicPTZReverse] mutableCopy];
+    if (!dicCfg){
+        dicCfg = [NSMutableDictionary dictionaryWithCapacity:0];
+    }
+    
+    NSString *key = [NSString stringWithFormat:@"%i",channel];
+    [dicCfg setObject:[NSString stringWithFormat:@"%i:%i:%i",valueUD,valueLR,valueModify] forKey:key];
+    NSString *strCfg = [NSString convertToJSONData:dicCfg];
+    self.sPTZReverseCfg = strCfg;
+}
+
+- (int)PTZReverse:(int)channel index:(int)index{
+    NSDictionary *dicCfg = [self dicPTZReverse];
+    if (dicCfg){
+        NSString *key = [NSString stringWithFormat:@"%i",channel];
+        NSString *strContent = [dicCfg objectForKey:key];
+        if (strContent.length > 0){
+            NSArray *array = [strContent componentsSeparatedByString:@":"];
+            if (array.count > 1){
+                NSString *strValue = [array objectAtIndex:index];
+                if (strValue){
+                    return [strValue intValue];
+                }
+            }
+        }
+    }
+    
+    return -1;
+}
+
+
+- (NSDictionary *)dicPTZReverse{
+    //判断是否有缓存值
+    NSString *strCfg = self.sPTZReverseCfg;
+    if (strCfg.length > 0){
+        //配置转成字典
+        NSDictionary *dicCfg = [NSString dictionaryWithJsonString:strCfg];
+        if (dicCfg && [dicCfg isKindOfClass:[NSDictionary class]]){
+            return dicCfg;
+        }
+    }
+    
+    return nil;
+}
+
 @end

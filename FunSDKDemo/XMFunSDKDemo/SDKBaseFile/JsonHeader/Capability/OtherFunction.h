@@ -101,6 +101,8 @@ public:
     JBoolObj        SupportGunBallTwoSensorPtzLocate; //是否支持多目枪球云台定位
     JBoolObj        SupportVideoTalkV2;                    //支持视频对讲（新加）
     JBoolObj        SupportEpitomeRecord;               //是否支持缩影录像
+    JBoolObj        SupportTraditionalPtzNormalDirect;  // 是否支持传统ptz方向控制
+    JBoolObj        SupportPtzAutoAdjust;        //是否支持云台校正
 public:
     OtherFunction(JObject *pParent = NULL, const char *szName = JK_OtherFunction):
     JObject(pParent,szName),
@@ -199,6 +201,8 @@ public:
     SupportGunBallTwoSensorPtzLocate(this,"SupportGunBallTwoSensorPtzLocate"),
     SupportOneKeyMaskVideo(this,"SupportOneKeyMaskVideo"),
     SupportVideoTalkV2(this,"SupportVideoTalkV2"),
+    SupportTraditionalPtzNormalDirect(this,"SupportTraditionalPtzNormalDirect"),
+    SupportPtzAutoAdjust(this,"SupportPtzAutoAdjust"),
     SupportEpitomeRecord(this,"SupportEpitomeRecord"){
 	};
 

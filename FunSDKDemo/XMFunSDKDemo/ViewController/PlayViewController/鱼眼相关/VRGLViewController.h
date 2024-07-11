@@ -42,6 +42,12 @@ typedef std::queue<SYUVData *> QUEUE_YUV_DATA;
 @protocol VRGLViewControllerDelegate <NSObject>
 - (void)vrglViewController: (CGPoint)point firstPoint:(CGPoint)firstPoint;
 - (void)vrglViewControllerDoubleClicked:(CGPoint)point; //双击显示单画面
+//MARK: 手势开始拖动
+- (void)pointWithTouchesBegin:(CGPoint)point;
+//MARK: 手势拖动中
+- (void)pointWithTouchesMoved:(CGPoint)point;
+- (void)pointWithTouchsCanceled:(CGPoint)point;
+- (void)pointWithTouchesEnded:(CGPoint)point;
 
 @end
 
@@ -52,7 +58,7 @@ typedef std::queue<SYUVData *> QUEUE_YUV_DATA;
 @property (nonatomic,assign) int iCodecType;    //软硬解
 @property (nonatomic,assign) int iSceneType;    //场景
 @property (nonatomic,assign) int lensType;
-@property (nonatomic,weak) id <VRGLViewControllerDelegate> vrglViewControllerDelegateDelegate;
+@property (nonatomic,weak) id <VRGLViewControllerDelegate> vrglDelegate;
 @property (nonatomic,assign) float lastVRScreenWidth;//最近一次初始化鱼眼窗口宽度
 @property (nonatomic, strong) NSString *devID;
 @property (nonatomic,assign) CGFloat hwRatio;//画面高宽比

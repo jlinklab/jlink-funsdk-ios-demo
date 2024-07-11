@@ -44,6 +44,11 @@ typedef void(^GetDeviceAbilityCallBack)(int result);
  */
 @property (nonatomic, assign)BOOL supportEpitomeRecord;
 
+/**
+ 是否支持手动警戒
+ */
+@property (nonatomic, assign)BOOL supportManuIntellAlertAlarm;
+
 
 //MARK:获取设备能力集
 - (void)getSystemFunctionConfig:(GetDeviceAbilityCallBack)callBack;

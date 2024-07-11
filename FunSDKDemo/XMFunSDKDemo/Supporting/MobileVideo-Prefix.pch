@@ -31,6 +31,7 @@
 #import "BlueToothManager.h"
 #import "XMSearchedDev.h"
 #import "JFRouterSettingController.h"
+#import "UIImage+Ex.h"
 
 //开放平台App信息，需要在开放平台上面创建APP来生成，每一个APP对应一组不同并且唯一的平台信息，不能重复,如果直接使用下面参数，则后续可能会出现各种问题
 #define APPUUID "e0534f3240274897821a126be19b6d46"   //客户唯一标识
@@ -149,6 +150,8 @@ enum LanguageTypes
 //通知消息key
 #define MasterAccount @"MasterAccount"
 #define PushNotification @"PushNotification"
+
+#define WeakSelf(weakSelf)  __weak __typeof(&*self)weakSelf = self
 
 #pragma mark - 设备类型定义
 NS_ENUM(NSInteger,XM_DEV_TYPE)

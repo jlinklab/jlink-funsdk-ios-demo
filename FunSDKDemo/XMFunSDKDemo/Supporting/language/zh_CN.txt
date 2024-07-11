@@ -971,6 +971,7 @@ EpitomeRecord_Interval_modify=1~86400，单位为秒（最大值为一天）
 EpitomeRecord_Interval_empty=抽帧间隔不能为空
 EpitomeRecord_Open=缩影开启
 EpitomeRecord_Close=缩影关闭
+<<<<<<< HEAD
 Serial Port=串口
 Serial port configuration, transparent command transmission=串口配置，透传命令
 Please confirm if the serial port type is correct=请确认串行端口类型是否正确。如果确认串行端口类型正确，则可以删除此处理错误的逻辑
@@ -980,3 +981,21 @@ Send data=发送串口数据
 Input serial port type=输入串口类型
 Input serial port data=输入串口输入
 serial port Description=接口说明：\n第一步：需要进行串口通信时，先打开串口。\n第二步：输入串口数据发送串口命令。\n第三步：串口命令发送完毕，业务结束，关闭串口。
+<<<<<<< HEAD
+TR_Camera_Linkage=相机联动
+TR_Camera_Linkage_Tip=1.在图B中，把图标拖至与图 A 圈出画面的相同位置，点击“确认”即可完成校对。\n2.光标移至边界处时可继续拖动，使枪、球机的视野 最大化重合。
+TR_Device_camera_link_switch=开启联动
+TR_Device_camera_link_aiming=联动校准
+TR_Camera_initialization=相机正在初始化中，请勿操作
+TR_Reset=复位
+=======
+PTZ_Correction=云台校正
+PTZ_Correction_Tips=功能说明：云台长时间运行后可能会出现坐标不准问题，需要让设备执行自检，以重新定位坐标系。云台校正可能需要较长时间，请保持设备正常运行，不要断电。
+>>>>>>> origin/master
+=======
+ManualAlert=手动警戒
+ManualAlert_Open=手动警戒开启
+ManualAlert_Close=手动警戒关闭
+Record_config_LowPower=录像配置（低功耗）
+Record_Config_Switch=录像开关
+>>>>>>> origin/dev-plf
