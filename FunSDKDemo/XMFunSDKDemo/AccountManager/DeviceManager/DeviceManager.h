@@ -47,6 +47,7 @@
 #import <Foundation/Foundation.h>
 #import "FunMsgListener.h"
 #import "DeviceObject.h"
+#import "DeviceBindedManager.h"
 
 typedef void (^WakeUpBlock)(int result);
 
@@ -129,6 +130,9 @@ typedef void (^WakeUpBlock)(int result);
 - (void)checkMasterAccount:(NSString *)devMac;
 #pragma mark - 解析二维码
 -(NSArray *)decodeDevInfo:(NSString*)info;
++(NSArray*)decodeDevInfo:(NSString*)info;
+#pragma mark - 添加设备(非Wi-Fi配置添加)
+-(void)addDevice:(NSString*)name Id:(NSString *)sID type:(int)type username:(NSString*)username password:(NSString*)pwd addStyle:(AddDeviceStyle)style Pid:(NSString *)pid;
 
 
 #pragma mark - 修改设备本地用户名密码 设置用户名密码会将支持token登录的设备token清空 注意设置顺序

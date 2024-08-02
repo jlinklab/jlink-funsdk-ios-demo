@@ -33,6 +33,11 @@ typedef NS_ENUM(NSInteger,VideoOrPicCloudState) {
 @property (nonatomic, assign) CloudState cloudState;
 @property (nonatomic, assign) VideoOrPicCloudState VideoOrPicState;
 
+@property (nonatomic, copy) NSString *chipOemId;  //用来判断设备制造方式
+@property (nonatomic, copy) NSString *OEMID;
+@property (nonatomic, copy) NSString *ICCID;
+@property (nonatomic, copy) NSString *IMEI;
+
 #pragma mark - 根据能力级读取云服务状态
 - (NSString *)getCloudString;
 

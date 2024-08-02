@@ -173,7 +173,10 @@
         if (functionCfg.mOtherFunction.SupportPtzAutoAdjust.Value() == YES) {
             object.sysFunction.SupportPtzAutoAdjust = functionCfg.mOtherFunction.SupportPtzAutoAdjust.Value();
         }
-        
+        //宽动态
+        if (functionCfg.mOtherFunction.SupportBT.Value() == YES) {
+            object.sysFunction.SupportBT = functionCfg.mOtherFunction.SupportBT.Value();
+        }
         
         //获取能力级之后的结果回调
         if ([self.delegate respondsToSelector:@selector(SystemFunctionConfigGetResult:)]) {

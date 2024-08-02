@@ -45,6 +45,7 @@
             self.supportVideoTalkV2 = systemFunction.mOtherFunction.SupportVideoTalkV2.Value();
             self.supportEpitomeRecord = systemFunction.mOtherFunction.SupportEpitomeRecord.Value();
             self.supportManuIntellAlertAlarm = systemFunction.mAlarmFunction.ManuIntellAlertAlarm.Value();
+            self.SupportBT = systemFunction.mOtherFunction.SupportBT.Value();
         }
         
         if (self.callBack) {

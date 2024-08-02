@@ -122,6 +122,8 @@
 
 - (void)initScanView {
     self.view.backgroundColor = [UIColor lightGrayColor];
+    UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"new_back.png"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController)];
+    self.navigationItem.leftBarButtonItem = leftBtn;
     //初始化扫描画面
     UIView *backVIew = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 240, 240)];
     backVIew.center = CGPointMake(ScreenWidth/2.0, 250);
@@ -138,6 +140,14 @@
     tipLab.numberOfLines = 0;
     
     [self.view addSubview:tipLab];
+}
+
+#pragma mark - button event
+-(void)popViewController{
+    if([SVProgressHUD isVisible]){
+        [SVProgressHUD dismiss];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

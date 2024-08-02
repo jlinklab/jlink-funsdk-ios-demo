@@ -118,70 +118,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BC22CFE1-627B-4AC2-BC50-38524CAE21F6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XMFunSDKDemo/ViewController/DeviceConfigViewController/MQTTViewController/MQTTViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "-initSubscribeServerDelegateResult:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4DF23355-E3AE-45B4-84E0-4B5B996079C7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XMFunSDKDemo/ViewController/DeviceConfigViewController/MQTTViewController/MQTTViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "-uninitSubscribeServerDelegateResult:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6941F83B-8289-41C3-9EAE-92C40586695F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XMFunSDKDemo/ViewController/DeviceConfigViewController/MQTTViewController/MQTTViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "-SubscribeFromServerDelegate:Result:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "171880A0-1FE9-4328-8683-80EF48AA3956"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XMFunSDKDemo/ViewController/DeviceConfigViewController/MQTTViewController/MQTTViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "-UnSubscribeFromServerDelegate:Result:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "BE098011-B054-4F9B-918A-AB897F913FE8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -191,8 +127,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "886"
             endingLineNumber = "886"
-            landmarkName = "PlayViewController"
-            landmarkType = "3">
+            landmarkName = "-presentTalkView"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "BE098011-B054-4F9B-918A-AB897F913FE8 - 7aafc113d1393010"
@@ -287,6 +223,69 @@
             endingLineNumber = "45"
             landmarkName = "-startPtzCorrection:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4C8B8CDD-B37B-4FDA-AA6C-25466E9E2932"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/DeviceConfigManager/CloudAbilityConfig/CloudAbilityConfig.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "-OnFunSDKResult:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4C8B8CDD-B37B-4FDA-AA6C-25466E9E2932 - 5d5c1ee142bbf272"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CloudAbilityConfig OnFunSDKResult:]"
+                  moduleName = "FunSDKDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/Sourcetree/FunSDKDemo/FunSDKDemo/XMFunSDKDemo/DeviceConfigManager/CloudAbilityConfig/CloudAbilityConfig.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "229"
+                  endingLineNumber = "229"
+                  offsetFromSymbolStart = "3084">
+               </Location>
+               <Location
+                  uuid = "4C8B8CDD-B37B-4FDA-AA6C-25466E9E2932 - 5d5c1ee142bbf272"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CloudAbilityConfig OnFunSDKResult:]"
+                  moduleName = "FunSDKDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/Sourcetree/FunSDKDemo/FunSDKDemo/XMFunSDKDemo/DeviceConfigManager/CloudAbilityConfig/CloudAbilityConfig.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "229"
+                  endingLineNumber = "229"
+                  offsetFromSymbolStart = "3088">
+               </Location>
+               <Location
+                  uuid = "4C8B8CDD-B37B-4FDA-AA6C-25466E9E2932 - 5d5c1ee142bbf272"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CloudAbilityConfig OnFunSDKResult:]"
+                  moduleName = "FunSDKDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/Sourcetree/FunSDKDemo/FunSDKDemo/XMFunSDKDemo/DeviceConfigManager/CloudAbilityConfig/CloudAbilityConfig.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "229"
+                  endingLineNumber = "229"
+                  offsetFromSymbolStart = "3048">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

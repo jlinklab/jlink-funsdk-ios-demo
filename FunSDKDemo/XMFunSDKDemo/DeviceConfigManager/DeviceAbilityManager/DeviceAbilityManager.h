@@ -48,6 +48,8 @@ typedef void(^GetDeviceAbilityCallBack)(int result);
  是否支持手动警戒
  */
 @property (nonatomic, assign)BOOL supportManuIntellAlertAlarm;
+//是否支持宽动态 WDR
+@property (nonatomic,assign) BOOL SupportBT;
 
 
 //MARK:获取设备能力集

@@ -13,6 +13,7 @@
 #import "QuickConfigurationViewController.h"
 #import "WirelessScanQRCodeViewController.h"
 #import "JFBluetoothModeAddDevController.h"
+#import "ScanViewController.h"
 
 @interface DeviceAddViewController () <UITableViewDelegate,UITableViewDataSource>
 {
@@ -40,7 +41,7 @@
 
 - (void)initData {
     titleArray =  (NSMutableArray*)@[TS("Connect_DevMac"), TS("add_by_ip/domain"), TS("Connect_localNetwork"),
-                                     TS("Connect_WiFi"), TS("code_Config_WiFi"), TS("TR_Bluetooth_Add_Dev_Mode")];
+                                     TS("Connect_WiFi"), TS("code_Config_WiFi"), TS("TR_Bluetooth_Add_Dev_Mode"), TS("TR_Title_Add_Dev_By_4G")];
 }
 - (void)configSubView {
     [self.view addSubview:self.mainTableView];
@@ -95,6 +96,18 @@
         controller.navigationItem.title = TS("TR_Bluetooth_Add_Dev_Mode");
         controller.navigationItem.titleView = [[UILabel alloc] initWithTitle:controller.navigationItem.title name:NSStringFromClass([controller class])];
         [self.navigationController pushViewController:controller animated:YES];
+    }
+    if([title isEqualToString: TS("TR_Title_Add_Dev_By_4G")]){
+        //扫描添加4G摄像机
+        ScanViewController *scanVC = [[ScanViewController alloc] init];
+        scanVC.block = ^(NSString * text) {
+            SerialNumAddViewController *addVC = [[SerialNumAddViewController alloc] init];
+            addVC.hidesBottomBarWhenPushed = YES;
+            addVC.directNavBackLastVC = YES;
+            [addVC dealWithScanerCode:text delay:YES];
+            [self.navigationController pushViewController: addVC animated: YES];
+        };
+        [self.navigationController pushViewController:scanVC animated:YES];
     }
 }
 - (UITableView *)mainTableView {

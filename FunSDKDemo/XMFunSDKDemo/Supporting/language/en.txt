@@ -926,7 +926,6 @@ EpitomeRecord_Interval_empty=The frame extraction interval cannot be empty
 EpitomeRecord_Open=Miniature on
 EpitomeRecord_Close=Miniature Off
 EpitomeRecord-Open=Miniature On
-<<<<<<< HEAD
 Serial Port=Serial Port
 Serial port configuration, transparent command transmission=Serial port configuration, transparent command transmission
 Please confirm if the serial port type is correct=Please confirm if the serial port type is correct. If you confirm that the serial port type is correct, you can remove this logic for handling errors
@@ -936,21 +935,21 @@ Send data=Send data
 Input serial port type=Input serial port type
 Input serial port data=Input serial port data
 serial port Description=Description:\n Step 1: When serial communication is required, open the serial port first.\n Step 2: Input serial port data，then serial port commands can be sent.\n Step 3: After the serial command is sent, the business ends, and the serial port is closed.
-<<<<<<< HEAD
 TR_Camera_Linkage=Camera Linkage
 TR_Camera_Linkage_Tip=1. Drag the icon in Figure B to the position framed on the screen in Figure A, and click Confirm for calibration.\n2. Move the cursor to the boundary until the fields of view of bullet camera and speed dome camera are overlapped to the maximum extent.
 TR_Device_camera_link_switch=Enable Linkage
 TR_Device_camera_link_aiming=Linkage Calibration
 TR_Camera_initialization=Please wait while the camera is initializing
 TR_Reset=Reset
-=======
 PTZ_Correction=PTZ Correction
 PTZ_Correction_Tips=After long-term operation of the gimbal, there may be coordinate inaccuracies, and the device needs to perform a self check to reposition the coordinate system.
->>>>>>> origin/master
-=======
 ManualAlert=Manual Alert
 ManualAlert_Open=Manual Alert Open
 ManualAlert_Close=Manual Alert Close
 Record_config_LowPower=recording configuration（LowPower）
 Record_Config_Switch=Video recording switch
->>>>>>> origin/dev-plf
+TR_Broad_Thrends_Config=WDR Config
+TR_Broad_Thrends_Config_Tips=This function can help the device take high-quality images in high-contrast light conditions. The image effect is as follows:
+TR_Broad_Thrends_Switch=WDR switch
+about_source=Manufacturing Method
+TR_Title_Add_Dev_By_4G=Scan to add 4G camera

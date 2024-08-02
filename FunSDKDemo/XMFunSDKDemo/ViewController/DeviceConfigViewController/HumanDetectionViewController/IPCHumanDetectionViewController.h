@@ -7,7 +7,7 @@
 //
 
 /*****
- * 人形检测配置 IPC  简易版本的
+ * 人形检测配置 IPC  简易版本 （完整版本查看 HumanDetectionForIPCViewController ）
  * 需要先获取能力级，判断是否支持人形检测  SystemFunction.AlarmFunction.PEAInHumanPed
  
  *DVR人形检测和IPC人形检测 不是同一个功能。

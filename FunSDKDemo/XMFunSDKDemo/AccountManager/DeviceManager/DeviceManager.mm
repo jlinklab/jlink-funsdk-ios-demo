@@ -40,6 +40,7 @@
 @property (nonatomic,strong) NSMutableDictionary *dicCloudCryNum;
 
 @property (nonatomic,strong) DeviceBindedManager *bindManager;
+@property (nonatomic, copy) NSString *devPID; // 设备PID: 读取途径 1.设备二维码携带
 
 
 @end
@@ -272,6 +273,51 @@
     
 }
 
+#pragma mark - 添加设备
+-(void)addDevice:(NSString*)name Id:(NSString *)sID type:(int)type username:(NSString*)username password:(NSString*)pwd addStyle:(AddDeviceStyle)style Pid:(NSString *)pid{
+    //如果为空 需要一个默认值 不然服务器返回错误
+    if (username.length == 0 || username == nil) {
+        username = @"admin";
+    }
+    //临时存储pid
+    if (pid.length > 0) {
+        self.devPID = pid;
+    }
+    SDBDeviceInfo devInfo = {0};
+    strncpy(devInfo.Devmac, CSTR(sID), 64);
+    strncpy(devInfo.Devname, CSTR(name), 128);
+    if ([name hasPrefix:@"xmjp_idr"]) {
+        devInfo.nType = 21;
+    }
+    else if ([name hasPrefix:@"xmjp_idr"]){
+        devInfo.nType = CZ_DOORBELL;
+    }
+    else
+    {
+        devInfo.nType = type;
+    }
+    strncpy(devInfo.loginName, CSTR(username), 16);
+    strncpy(devInfo.loginPsw, CSTR(pwd), 64);
+        Fun_Log((char *)"快速配置流程：不是门铃 直接添加 \n");
+        self.bindManager.devID = sID;
+        __weak typeof(self) weakSelf = self;
+    [self.bindManager getBindConfig:^(AddDeviceStyle style) {
+            if (style == AddDeviceStyleNormal) {
+                [weakSelf addDeviceNormal:devInfo];
+            }
+            [weakSelf.bindManager cleanContent];
+        } bindResult:^(BOOL ifBinded) {
+            if (!ifBinded) {
+                [weakSelf addDeviceSpecify: sID];
+            }
+            else{
+                [weakSelf addDeviceNormal:devInfo];
+            }
+            
+            [weakSelf.bindManager cleanContent];
+        }];
+}
+
 #pragma mark - 停止快速配置
 -(void)stopConfig{
     FUN_DevStopAPConfig();
@@ -294,6 +340,10 @@
         param = [NSString stringWithFormat:@"cryNum=%@",[self.dicCloudCryNum objectForKey:OCSTR(devInfo.Devmac)]];
         [self.dicCloudCryNum removeAllObjects];
     }
+    if (self.devPID.length > 0){
+        param = [NSString stringWithFormat:@"%@%@pid=%@",param,param.length > 0 ? @"&" : @"",self.devPID];
+    }
+    
     if([[LoginShowControl getInstance] getLoginType] == loginTypeNone){
         [self AddDeviceByTypeLoginNone: devInfo];
     }else{
@@ -310,6 +360,40 @@
     int time = 0;
     FUN_DecDevInfo([info UTF8String], szDevId, szUserName, szPassword, nType, time);
     NSArray* array = [[NSArray alloc] initWithObjects:[NSString stringWithUTF8String:szDevId], [NSString stringWithUTF8String:szUserName],[NSString stringWithUTF8String:szPassword], [NSString stringWithFormat:@"%d", nType], nil];
+    return array;
+}
+
++(NSArray*)decodeDevInfo:(NSString*)info{
+    /*
+     兼容新的二维码格式 不加密方式的二维码信息位会超过5位 使用老的方式无法完全解析 需要先用明文方式尝试解析内容
+     */
+    NSMutableArray *arrayUnencrypted = [[info componentsSeparatedByString:@","] mutableCopy];
+    NSString *devID = [DataSafeService safeObjectAtIndex:0 fromArray: arrayUnencrypted];
+    if ([NSString legalSN:devID]) {
+        NSUInteger count = arrayUnencrypted.count;
+        if (count < 5) {
+            NSArray *defaultValues = @[devID, @"admin", @"", @"0", @"0"];
+            NSUInteger numberOfValuesToAdd = 5 - count;
+            if (numberOfValuesToAdd > 0 && numberOfValuesToAdd <= 4) {
+                NSIndexSet *indexesToAdd = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(count, numberOfValuesToAdd)];
+                [arrayUnencrypted insertObjects:[defaultValues subarrayWithRange:NSMakeRange(count, numberOfValuesToAdd)] atIndexes:indexesToAdd];
+            }
+        }
+        NSString *devLoginName = [DataSafeService safeObjectAtIndex:1 fromArray: arrayUnencrypted];
+        if (devLoginName.length <= 0) {
+            [arrayUnencrypted replaceObjectAtIndex:1 withObject:@"admin"];
+        }
+        
+        return arrayUnencrypted;
+    }
+    
+    char szDevId[512] = {0};
+    char szUserName[64] = {0};
+    char szPassword[80] = {0};
+    int nType = 0;
+    int time = 0;
+    FUN_DecDevInfo(CSTR(info), szDevId, szUserName, szPassword, nType, time);
+    NSArray* array = [[NSArray alloc] initWithObjects:OCSTR(szDevId), OCSTR(szUserName), OCSTR(szPassword), [NSString stringWithFormat:@"%d", nType], [NSString stringWithFormat:@"%d", time], nil];
     return array;
 }
 
@@ -591,6 +675,9 @@
     devObject.loginPsw = [NSString stringWithUTF8String:(pInfo->loginPsw)];
     devObject.nPort = pInfo->nPort;
     devObject.nType = pInfo->nType;
+    if (self.devPID.length > 0) {
+        devObject.sPid = self.devPID;
+    }
     return devObject;
 }
 
@@ -999,6 +1086,10 @@ BOOL canRank = NO;
                 if ([self.dicCloudCryNum objectForKey:OCSTR(wifiDevInfo.Devmac)]) {
                     param = [NSString stringWithFormat:@"%@&cryNum=%@",param,[self.dicCloudCryNum objectForKey:OCSTR(wifiDevInfo.Devmac)]];
                     [self.dicCloudCryNum removeAllObjects];
+                }
+                DeviceObject *devDB = [[DeviceControl getInstance] GetDeviceObjectBySN: OCSTR(wifiDevInfo.Devmac)];
+                if (devDB.sPid.length > 0){
+                    param = [NSString stringWithFormat:@"%@%@pid=%@",param,param.length > 0 ? @"&" : @"",devDB.sPid];
                 }
                 if([[LoginShowControl getInstance] getLoginType] == loginTypeNone){
                     [self AddDeviceByTypeLoginNone: wifiDevInfo];

@@ -391,7 +391,10 @@
         mDefaultName = TS("门铃锁");
     }else if (type == CZ_DOORBELL) {
         mDefaultName = TS("创泽门铃");
-    }else{
+    }else if (type == XM_DEV_LOW_POWER){
+        mDefaultName = TS("低功耗设备");
+    }
+    else{
         mDefaultName = [NSString stringWithFormat:@"%@%d",TS("device_type"),type];
     }
     return mDefaultName;
@@ -430,6 +433,7 @@
     [array addObject:[NSNumber numberWithLong:XM_DEV_NSEYE]]; //直播小雨点
     [array addObject:[NSNumber numberWithLong:XM_DEV_INTELLIGENT_LOCK]]; //门铃所
     [array addObject:[NSNumber numberWithLong:CZ_DOORBELL]]; //创泽
+    [array addObject:[NSNumber numberWithLong:XM_DEV_LOW_POWER]];//低功耗设备
     
     return array;
 }

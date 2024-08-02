@@ -298,12 +298,12 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }else if (indexPath.row == 1) {
             if (self.supportLine) {
-            cell.textLabel.text = TS("alert_line");
-            if (self.RuleType == 0) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            }else{
-                cell.accessoryType = UITableViewCellAccessoryNone;
-            }
+                cell.textLabel.text = TS("alert_line");
+                if (self.RuleType == 0) {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }else{
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                }
             }else if(self.supportArea && !self.supportLine){
                 cell.textLabel.text = TS("alert_area");
                 if (self.RuleType == 1) {
@@ -326,20 +326,24 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1 && (indexPath.row == 1 || indexPath.row == 2)) {
+        
         IntelViewController *indelVC = [[IntelViewController alloc] init];
         indelVC.humanDetection = YES;
-        indelVC.drawType = (DrawType)(indexPath.row - 1);
-        if (indelVC.drawType == DrawType_PEA_Line) {
-            indelVC.navTitle = TS("alert_line");
-            indelVC.directArray = [self.lineDirectArray mutableCopy];
-            indelVC.alarmDirection = self.alarmDirection;
-            indelVC.areaPointNum = -1;
-        }else if(indelVC.drawType == DrawType_PEA_Area){
+        
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if ([cell.textLabel.text isEqualToString: TS("alert_area")]) {
+            indelVC.drawType = DrawType_PEA_Area;
             indelVC.navTitle = TS("alert_area");
             indelVC.directArray = [self.areaDirectArray mutableCopy];
             indelVC.areaShapeArray = [self.areaLineArray mutableCopy];
             indelVC.alarmDirection = -1;
             indelVC.areaPointNum = self.areaPointNum;
+        }else if ([cell.textLabel.text isEqualToString: TS("alert_line")]) {
+            indelVC.drawType = DrawType_PEA_Line;
+            indelVC.navTitle = TS("alert_line");
+            indelVC.directArray = [self.lineDirectArray mutableCopy];
+            indelVC.alarmDirection = self.alarmDirection;
+            indelVC.areaPointNum = -1;
         }
         indelVC.devID = self.devID;
         indelVC.humanDetectionDic = self.humanDetectionDic;

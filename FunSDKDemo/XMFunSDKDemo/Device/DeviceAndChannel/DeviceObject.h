@@ -60,6 +60,8 @@ enum device_type {
 @property (nonatomic, assign) int centerOffsetX;  //X轴偏移量
 @property (nonatomic, assign) int imgradius; //半径
 @property (nonatomic, assign) BOOL enableEpitomeRecord;
+//MARK: 设备厂家信息 服务器接口可能会用到
+@property (nonatomic,copy) NSString *sPid;
 
 ///是否为低功耗设备
 -(BOOL)getDeviceTypeLowPowerConsumption;

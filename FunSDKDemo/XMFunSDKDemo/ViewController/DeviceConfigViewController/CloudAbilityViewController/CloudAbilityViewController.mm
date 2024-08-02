@@ -48,8 +48,6 @@
     }
     //调用获取云服务状态的接口
     [_cloudConfig getCloudAbilityServer];
-    //获取云视频和云图片的状态
-    [_cloudConfig getVideoOrPicAbilityServer];
 }
 
 #pragma mark 获取云服务能力级回调

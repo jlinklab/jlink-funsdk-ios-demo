@@ -51,5 +51,5 @@
 @property (nonatomic, assign)BOOL netWifi;
 @property (nonatomic, assign)BOOL SupportPtzAutoAdjust;  // 是否支持云台校正
 @property (nonatomic, assign)BOOL supportManuIntellAlertAlarm;  // 是否支持手动警戒
-
+@property (nonatomic,assign) BOOL SupportBT;//是否支持宽动态 WDR
 @end

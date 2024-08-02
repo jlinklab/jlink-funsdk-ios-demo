@@ -10,6 +10,18 @@
 
 @implementation CloudAbilityDataSource
 
+
+- (id)init {
+    self = [super init];
+    
+    self.OEMID = @"";
+    self.ICCID = @"";
+    self.IMEI = @"";
+    self.chipOemId = @"-1";
+    
+    return self;
+}
+
 #pragma mark - 根据能力级读取云服务状态
 - (NSString *)getCloudString {
     NSArray *array = [self getCloudArray];

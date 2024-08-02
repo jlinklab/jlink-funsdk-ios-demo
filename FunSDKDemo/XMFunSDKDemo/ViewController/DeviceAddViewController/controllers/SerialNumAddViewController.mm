@@ -26,12 +26,21 @@
 }
 @property (nonatomic,strong)UITableView *listTableView;         //输入列表
 @property (nonatomic,strong)UIButton *addBtn;                   //添加按钮
+@property (nonatomic, assign) time_t time;
+@property (nonatomic, copy) NSString *devPID; // 设备PID: 读取途径 1.设备二维码携带
+@property (nonatomic, assign) int devType;
+@property (nonatomic,assign) BOOL needDealScanCode;
+@property (nonatomic,copy) NSString *lastScanCode;
+
 @end
 
 @implementation SerialNumAddViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.devType = 0;
+    self.devPID = @"";
     
     self.view.backgroundColor = [UIColor whiteColor];
     //设备管理器
@@ -46,6 +55,15 @@
     
     //控件布局
     [self configSubView];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    if (self.needDealScanCode) {
+        self.needDealScanCode = NO;
+        [self dealWithScanerCodeStr:self.lastScanCode];
+    }
 }
 
 - (void)setNaviStyle {
@@ -224,6 +242,82 @@
     }
     
     return cell;
+}
+
+//MARK: 处理扫描返回的二维码
+- (void)dealWithScanerCode:(NSString *)code delay:(BOOL)delay{
+    if (delay) {
+        self.needDealScanCode = YES;
+        self.lastScanCode = code;
+    }else{
+        [self dealWithScanerCodeStr:code];
+    }
+}
+
+-(void)dealWithScanerCodeStr:(NSString *)code{
+    //判断是否仅仅是序列号 如果仅仅是序列号 就不自动进入设置名称界面
+    BOOL onlyDeviceMac = NO;
+    if ([NSString legalSN:code]) {
+        onlyDeviceMac = YES;
+    }
+    
+    NSArray* arrayInfo = [DeviceManager decodeDevInfo:code];
+    
+    self.time = [arrayInfo[4] intValue];
+    time_t now = time(NULL);
+    double diff = difftime(now, self.time);
+    
+    NSString *devMac = [arrayInfo[0] lowercaseString];
+    //二维码异常判断
+    if (![NSString legalSN:devMac]) {
+        devSerialTF.text = @"";
+        [SVProgressHUD showErrorWithStatus:TS("sn_invalid")];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        });
+        return;
+    }
+    
+    if (diff > 1800 && self.time != 0) {
+        devSerialTF.text = @"";
+        [SVProgressHUD showErrorWithStatus:TS("Msg_Code_Invalid")];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        });
+        return;
+    }
+    
+    devSerialTF.text = devMac;
+    devNameTF.text = devMac;
+    loginNameTF.text = [DataSafeService safeObjectAtIndex:1 fromArray: arrayInfo];
+    devPswTF.text = [DataSafeService safeObjectAtIndex:2 fromArray: arrayInfo];;
+    self.devType = [[DataSafeService safeObjectAtIndex:3 fromArray: arrayInfo] intValue];
+    self.devPID = [DataSafeService safeObjectAtIndex:5 fromArray: arrayInfo];
+    
+    devTypeTF.text = [NSString stringWithFormat:@"%@",[NSString getDeviceType: self.devType]];
+    
+    if (!onlyDeviceMac) {
+        
+        //判断设备是否已存在
+        for (int i = 0; i < [[DeviceControl getInstance] currentDeviceArray].count; i++) {
+            DeviceObject *dev = [[[DeviceControl getInstance] currentDeviceArray] objectAtIndex:i];
+            if ([dev.deviceMac isEqualToString:devMac]) {
+                [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_USEREXIST")];
+                [self.navigationController popViewControllerAnimated:YES];
+                return;
+            }
+        }
+        
+        DeviceManager *account = [DeviceManager getInstance];
+            account.delegate = self;
+            [SVProgressHUD show];
+            
+            if (devPswTF.text.length <= 0) {
+                DeviceManager *account = [DeviceManager getInstance];
+                [account changeDeviceUserNamePasswordLocal:devSerialTF.text userName: loginNameTF.text password:@""];
+            }
+        [account addDevice:devNameTF.text Id:devSerialTF.text type:self.devType username:loginNameTF.text password:devPswTF.text addStyle: AddDeviceStyleNormal Pid:self.devPID];
+    }
 }
 
 #pragma mark - funsdk 回调处理

@@ -10,8 +10,9 @@
 #import "DeviceconfigTableViewCell.h"
 #import "SystemInfoConfig.h"
 #import "SystemResetConfig.h"
+#import "CloudAbilityConfig.h"
 
-@interface AboutDeviceViewController () <UITableViewDelegate,UITableViewDataSource,SystemInfoConfigDelegate>
+@interface AboutDeviceViewController () <UITableViewDelegate,UITableViewDataSource,SystemInfoConfigDelegate,CloudStateRequestDelegate>
 
 @property (nonatomic, strong) UITableView *devConfigTableView;
 
@@ -20,6 +21,8 @@
 @property (nonatomic, strong) SystemInfoConfig *config;
 
 @property (nonatomic, strong) SystemResetConfig *resetConfig;
+
+@property (nonatomic, strong) CloudAbilityConfig *abilityConfig;
 
 @end
 
@@ -51,6 +54,9 @@
     
     //获取设备信息systeminfo
     [self getSysteminfo];
+    
+    //获取OEMID、IMEI、ICCID等信息
+    [self getOEMIDInfo];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -80,6 +86,34 @@
         //获取失败
         [MessageUI ShowErrorInt:(int)result];
     }
+}
+
+- (void)getOEMIDInfo {
+    [SVProgressHUD show];
+    if (_abilityConfig == nil) {
+        _abilityConfig = [[CloudAbilityConfig alloc] init];
+        _abilityConfig.delegate = self;
+    }
+    [_abilityConfig getCloudAbilityServer];
+    [_abilityConfig getOEMInfo];
+}
+
+//获取云服务能力级回调
+- (void)getCloudAbilityResult:(NSInteger)result {
+    if (result < 0) {
+        [MessageUI ShowError:TS("Error")];
+    }
+    [SVProgressHUD dismiss];
+    [self.devConfigTableView reloadData];
+}
+
+//获取OEMID回调 （OEMID可以从服务端获取，也可以从设备端获取）
+- (void)getOEMIDResult:(NSInteger)result {
+    if (result < 0) {
+        [MessageUI ShowError:TS("Error")];
+    }
+    [SVProgressHUD dismiss];
+    [self.devConfigTableView reloadData];
 }
 
 
@@ -115,6 +149,29 @@
     }
     if ([title isEqualToString:TS("video_format")]) {
         cell.detailLabel.text = [NSString getDeviceNetType:device.info.netType];
+    }
+    if ([title isEqualToString:TS("OEMID")]) {
+        cell.detailLabel.text = [self.abilityConfig getOEMID];
+    }
+    if ([title isEqualToString:TS("ICCID")]) {
+        cell.detailLabel.text = [self.abilityConfig getICCID];
+    }
+    if ([title isEqualToString:TS("IMEI")]) {
+        cell.detailLabel.text = [self.abilityConfig getIMEI];
+    }
+    if ([title isEqualToString:TS("about_source")]) {
+        int oemID = [[self.abilityConfig getchipOemId] intValue];
+        NSString *info = @"";
+        if (oemID >= 0 && oemID <= 8) {
+            info = [NSString stringWithFormat:@"%@[%i]",@"original",oemID];
+        }
+        else  if (oemID > 8){
+            info = [NSString stringWithFormat:@"%@[%i]",@"licensee",oemID];
+        }
+        else{
+            info = TS("Unknown_Error");
+        }
+        cell.detailLabel.text = info;
     }
     return cell;
 }
@@ -154,6 +211,10 @@
                               @{@"title":TS("hard_version"),@"detailInfo":@""},
                               @{@"title":TS("lastUpgreade_time"),@"detailInfo":@""},
                               @{@"title":TS("video_format"),@"detailInfo":@""},
+                              @{@"title":TS("OEMID"),@"detailInfo":@""},
+                              @{@"title":TS("ICCID"),@"detailInfo":@""},
+                              @{@"title":TS("IMEI"),@"detailInfo":@""},
+                              @{@"title":TS("about_source"),@"detailInfo":@""},
                               @{@"title":TS("about_tip"),@"detailInfo":@""}];
 }
 - (void)didReceiveMemoryWarning {

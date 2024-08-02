@@ -18,6 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SerialNumAddViewController : UIViewController
 
+//MARK: - 是否直接返回上一层界面 导航栏推出方式返回
+@property (nonatomic,assign) BOOL directNavBackLastVC;
+
+
+//MARK: 处理扫描返回的二维码
+- (void)dealWithScanerCode:(NSString *)code delay:(BOOL)delay;
+
 @end
 
 NS_ASSUME_NONNULL_END

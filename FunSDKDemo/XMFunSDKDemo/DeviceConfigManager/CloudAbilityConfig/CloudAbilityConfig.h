@@ -19,6 +19,8 @@
 - (void)getCloudAbilityResult:(NSInteger)result;
 //获取云视频和云图片能力级回调
 -(void)getVideoOrPicAbilityResult:(NSInteger)result;
+//获取OEMID回调 （OEMID可以从服务端获取，也可以从设备端获取）
+- (void)getOEMIDResult:(NSInteger)result;
 @end
 
 // 云存储能力集字段解释
@@ -33,13 +35,20 @@
 #pragma mark 请求服务器端云存储能力集
 -(void)getCloudAbilityServer;
 
-#pragma mark  是否支持云视频或云图片
--(void)getVideoOrPicAbilityServer;
+#pragma mark 请求OEMID、IMEI、ICCID等信息
+- (void)getOEMInfo;
+
 
 #pragma mark   读取云服务状态
 - (NSString*)getCloudState; //获取云存储状态
 - (NSString*)getVideoEnable; //获取云视频支持情况
 - (NSString*)getPicEnable; //获取云图片支持情况
+
+#pragma mark   读取设备其他信息
+- (NSString*)getOEMID; //获取设备OEMID
+- (NSString*)getICCID; //获取设备流量卡ICCID
+- (NSString*)getIMEI; //获取设备流量卡IMEI
+- (NSString*)getchipOemId; //获取设备chipOemId
 
 @end
 

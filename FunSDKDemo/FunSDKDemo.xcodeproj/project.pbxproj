@@ -34,6 +34,8 @@
 		1F3A5AD222B379F400E3139B /* ChangeWifiConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A5ACE22B379F400E3139B /* ChangeWifiConfig.mm */; };
 		1F3A5AD322B379F400E3139B /* WifiConfigDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A5AD122B379F400E3139B /* WifiConfigDataSource.m */; };
 		1F43FE3E2563C837000FB5D2 /* UILabel+Nav.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F43FE3D2563C837000FB5D2 /* UILabel+Nav.m */; };
+		1F4828F02C47945B00721A22 /* WDRViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F4828EE2C47945B00721A22 /* WDRViewController.mm */; };
+		1F4828F12C47945B00721A22 /* WDRViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4828EF2C47945B00721A22 /* WDRViewController.xib */; };
 		1F4BB50722CD8A5800D9D50F /* IPCHumanDetectionConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F4BB50622CD8A5800D9D50F /* IPCHumanDetectionConfig.mm */; };
 		1F60551422A647630043061E /* bitstream.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F60550622A647630043061E /* bitstream.m */; };
 		1F60551522A647630043061E /* qrencode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F60550722A647630043061E /* qrencode.m */; };
@@ -335,6 +337,7 @@
 		22D125712C2AA7CE00632D0D /* UartPTZControlCmdManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22D125702C2AA7CE00632D0D /* UartPTZControlCmdManager.mm */; };
 		22D125742C2AB42200632D0D /* UIViewController+JFForbiddenSwipeRight.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D125732C2AB42200632D0D /* UIViewController+JFForbiddenSwipeRight.m */; };
 		22D1258A2C2BAC7200632D0D /* FunSDKBaseView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22D125892C2BAC7200632D0D /* FunSDKBaseView.mm */; };
+		22DDAA132C4F4E5C005F702E /* DataSafeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DDAA122C4F4E5C005F702E /* DataSafeService.m */; };
 		22DFA4332C1FD0F50054AC4E /* EpitomeRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DFA4322C1FD0F50054AC4E /* EpitomeRecordViewController.m */; };
 		22FAE1292BF4908700FA1C8C /* JFScreenCameraCallVc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22FAE1182BF4908600FA1C8C /* JFScreenCameraCallVc.mm */; };
 		22FAE12A2BF4908700FA1C8C /* JFHangUpPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FAE11A2BF4908600FA1C8C /* JFHangUpPopView.m */; };
@@ -825,6 +828,9 @@
 		1F3A5AD522B37A0D00E3139B /* NetWork_Wifi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWork_Wifi.h; sourceTree = "<group>"; };
 		1F43FE3C2563C837000FB5D2 /* UILabel+Nav.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+Nav.h"; sourceTree = "<group>"; };
 		1F43FE3D2563C837000FB5D2 /* UILabel+Nav.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Nav.m"; sourceTree = "<group>"; };
+		1F4828ED2C47945B00721A22 /* WDRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WDRViewController.h; sourceTree = "<group>"; };
+		1F4828EE2C47945B00721A22 /* WDRViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WDRViewController.mm; sourceTree = "<group>"; };
+		1F4828EF2C47945B00721A22 /* WDRViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WDRViewController.xib; sourceTree = "<group>"; };
 		1F4BB50522CD8A5800D9D50F /* IPCHumanDetectionConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPCHumanDetectionConfig.h; sourceTree = "<group>"; };
 		1F4BB50622CD8A5800D9D50F /* IPCHumanDetectionConfig.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IPCHumanDetectionConfig.mm; sourceTree = "<group>"; };
 		1F4BB50922CDC72100D9D50F /* RuleLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuleLine.h; sourceTree = "<group>"; };
@@ -1455,6 +1461,8 @@
 		22D125732C2AB42200632D0D /* UIViewController+JFForbiddenSwipeRight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+JFForbiddenSwipeRight.m"; sourceTree = "<group>"; };
 		22D125882C2BAC7200632D0D /* FunSDKBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FunSDKBaseView.h; sourceTree = "<group>"; };
 		22D125892C2BAC7200632D0D /* FunSDKBaseView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FunSDKBaseView.mm; sourceTree = "<group>"; };
+		22DDAA112C4F4E5C005F702E /* DataSafeService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataSafeService.h; sourceTree = "<group>"; };
+		22DDAA122C4F4E5C005F702E /* DataSafeService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataSafeService.m; sourceTree = "<group>"; };
 		22DFA4312C1FD0F50054AC4E /* EpitomeRecordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EpitomeRecordViewController.h; sourceTree = "<group>"; };
 		22DFA4322C1FD0F50054AC4E /* EpitomeRecordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EpitomeRecordViewController.m; sourceTree = "<group>"; };
 		22F99D102C2529210037AF98 /* FunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FunSDK.framework; path = ../../FunSDK.framework; sourceTree = "<group>"; };
@@ -2502,6 +2510,16 @@
 				1F3A5AD522B37A0D00E3139B /* NetWork_Wifi.h */,
 			);
 			path = NetWork_Wifi;
+			sourceTree = "<group>";
+		};
+		1F4828EC2C4793FF00721A22 /* WDRVireController */ = {
+			isa = PBXGroup;
+			children = (
+				1F4828ED2C47945B00721A22 /* WDRViewController.h */,
+				1F4828EE2C47945B00721A22 /* WDRViewController.mm */,
+				1F4828EF2C47945B00721A22 /* WDRViewController.xib */,
+			);
+			path = WDRVireController;
 			sourceTree = "<group>";
 		};
 		1F4BB50822CDC72100D9D50F /* HumanDetectionIPC */ = {
@@ -3662,6 +3680,15 @@
 			path = GunBallManager;
 			sourceTree = "<group>";
 		};
+		22DDAA102C4F4E53005F702E /* DataSafeService */ = {
+			isa = PBXGroup;
+			children = (
+				22DDAA112C4F4E5C005F702E /* DataSafeService.h */,
+				22DDAA122C4F4E5C005F702E /* DataSafeService.m */,
+			);
+			path = DataSafeService;
+			sourceTree = "<group>";
+		};
 		22DFA4302C1FD0CD0054AC4E /* EpitomeRecordViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -4441,6 +4468,7 @@
 		96C6B27921BB6867000B32E7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				22DDAA102C4F4E53005F702E /* DataSafeService */,
 				22FE68CB2B999EE5003EC7A3 /* Phone */,
 				22FE68C72B999EA8003EC7A3 /* XMDeviceOrientationManager */,
 				C1EDEF7B2A75092F008F7ABE /* vendor */,
@@ -5227,6 +5255,7 @@
 				1F71922E2ABD9478008E3414 /* MQTTViewController */,
 				1FB43A9B2C254EC8000FAFCE /* SerialPortViewController */,
 				1F24F46A2C3684A900B16A26 /* PTZCorrectionViewController */,
+				1F4828EC2C4793FF00721A22 /* WDRVireController */,
 				96C6B44321BB6868000B32E7 /* DeviceconfigTableViewCell.h */,
 				96C6B44421BB6868000B32E7 /* DeviceconfigTableViewCell.m */,
 				96C6B46421BB6868000B32E7 /* ItemTableviewCell.h */,
@@ -5528,7 +5557,6 @@
 		96C6B4BE21BB6868000B32E7 /* 鱼眼相关 */ = {
 			isa = PBXGroup;
 			children = (
-				22FE68CF2B99A313003EC7A3 /* VRGLViewController.mm */,
 				96C6B4BF21BB6868000B32E7 /* errordef.h */,
 				96C6B4C021BB6868000B32E7 /* fisheye.h */,
 				96C6B4C121BB6868000B32E7 /* fisheye_errordef.h */,
@@ -5544,6 +5572,7 @@
 				96C6B4CB21BB6868000B32E7 /* VRFunctionView.h */,
 				96C6B4CC21BB6868000B32E7 /* VRFunctionView.mm */,
 				96C6B4CD21BB6868000B32E7 /* VRGLViewController.h */,
+				22FE68CF2B99A313003EC7A3 /* VRGLViewController.mm */,
 				96C6B4CF21BB6868000B32E7 /* VRSoft.h */,
 				96C6B4D021BB6868000B32E7 /* VRSoftDef.h */,
 			);
@@ -6207,6 +6236,7 @@
 				1FF7FDB222E1E3D70036373B /* Test.jpg in Resources */,
 				96EFBCF321BB966A005EBA5A /* VR-ball bowl_sel.png in Resources */,
 				96EFBD0121BB966A005EBA5A /* VR_ball hat_nor.png in Resources */,
+				1F4828F12C47945B00721A22 /* WDRViewController.xib in Resources */,
 				96EFBCE921BB966A005EBA5A /* btn_SD_F.png in Resources */,
 				C1D50C842A7740E9002DA8A6 /* bluetooth_radar_search_icon.png in Resources */,
 				96EFBD0E21BB966A005EBA5A /* press_talk_sp.png in Resources */,
@@ -6646,6 +6676,7 @@
 				1FC0F14523A0DBC40076F742 /* SmartAnalyticsViewController.mm in Sources */,
 				96C6B4E221BB6869000B32E7 /* NSUserDefaultData.m in Sources */,
 				1FF6AC212A3207620012A0CE /* ZXCalendarParsedResult.m in Sources */,
+				22DDAA132C4F4E5C005F702E /* DataSafeService.m in Sources */,
 				C1EDEF812A7510C8008F7ABE /* XMSearchedDev.m in Sources */,
 				2939951B21CA2504004FC87C /* WaterMarkConfig.mm in Sources */,
 				7ADC933729F520860055A341 /* DevicePairingNetworkManager.mm in Sources */,
@@ -6753,6 +6784,7 @@
 				1F1DBCD02330664E0025C27A /* DeviceAbilityManager.mm in Sources */,
 				1FF6AB7C2A3207620012A0CE /* ZXQRCodeDetector.m in Sources */,
 				1F66F2922A5FC4DA00463303 /* VoiceTimeSwitchCell.m in Sources */,
+				1F4828F02C47945B00721A22 /* WDRViewController.mm in Sources */,
 				1F66F2942A5FC4DA00463303 /* VoiceBroadcastingViewController.mm in Sources */,
 				22D125712C2AA7CE00632D0D /* UartPTZControlCmdManager.mm in Sources */,
 				96B8A90321CE256400206580 /* AnalyzerViewController.mm in Sources */,

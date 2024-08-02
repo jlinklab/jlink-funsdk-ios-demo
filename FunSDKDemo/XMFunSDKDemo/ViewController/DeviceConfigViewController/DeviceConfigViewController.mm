@@ -63,6 +63,7 @@
 
 #import "ManuIntellAlertAlarmViewController.h"
 #import "LowPowerRecordConfigViewController.h"
+#import "WDRViewController.h"
 
 @interface DeviceConfigViewController ()<UITableViewDelegate,UITableViewDataSource,SystemInfoConfigDelegate,SystemFunctionConfigDelegate,MFMailComposeViewControllerDelegate>
 
@@ -422,6 +423,15 @@
         vc.devID = channel.deviceMac;
         [self.navigationController pushViewController: vc animated: YES];
     }
+    else if ([titleStr isEqualToString:TS("TR_Broad_Thrends_Config")]){
+        //宽动态配置
+        if (devObject.sysFunction.SupportBT == NO) {
+            [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
+            return;
+        }
+        WDRViewController *vc = [[WDRViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     else{
         return;
     }
@@ -467,6 +477,7 @@
         @{@"title":TS("IDR_BATTERY"),@"detailInfo":@""},
         @{@"title":TS("appEventHumanDetectAlarm"),@"detailInfo":@"DVR设备人形检测报警"},
         @{@"title":TS("HumanDetectAlarm_IPC"),@"detailInfo":@"IPC和NVR设备人形检测报警"},
+        @{@"title":TS("Intelligent_Vigilance"),@"detailInfo":@"IPC和NVR设备人形检测报警"},
         @{@"title":TS("AlarmPIR"),@"detailInfo":@"检测到有人物徘徊时，触发报警"},
         @{@"title":TS("DoorBell_Cfg"),@"detailInfo":@""},
         @{@"title":TS("LightBulb_Cfg"),@"detailInfo":@""},
@@ -486,6 +497,7 @@
         @{@"title":TS("PTZ_Correction"),@"detailInfo":@""},
         @{@"title":TS("EpitomeRecord"),@"detailInfo":@""},
         @{@"title":TS("TR_Camera_Linkage"),@"detailInfo":@""},
+        @{@"title":TS("TR_Broad_Thrends_Config"),@"detailInfo":@""},
         @{@"title":TS("ManualAlert"),@"detailInfo":@""},
     ] mutableCopy];
 }

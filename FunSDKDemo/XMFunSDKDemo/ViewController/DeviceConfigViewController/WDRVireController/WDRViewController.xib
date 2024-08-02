@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WDRViewController">
+            <connections>
+                <outlet property="WDR_Switch" destination="cLk-tu-Oxc" id="REP-Dg-yjr"/>
+                <outlet property="detaillabel" destination="VvS-yY-nPU" id="RRh-cd-7mp"/>
+                <outlet property="titlelabel" destination="8ak-VZ-kHB" id="sFY-wi-faK"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cLk-tu-Oxc">
+                    <rect key="frame" x="326" y="79" width="49" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="duJ-QH-Bkj"/>
+                        <constraint firstAttribute="width" constant="47" id="oUY-LI-kVT"/>
+                    </constraints>
+                </switch>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开启宽动态可以帮助设备在搞对比度的光线条件下拍摄高质量的图像" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VvS-yY-nPU">
+                    <rect key="frame" x="20" y="120" width="353" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="LJq-We-ggv"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宽动态开关" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ak-VZ-kHB">
+                    <rect key="frame" x="20" y="69.666666666666671" width="296" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="2jh-uP-dkd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="cLk-tu-Oxc" secondAttribute="trailing" constant="20" id="1jC-Mu-hVT"/>
+                <constraint firstItem="VvS-yY-nPU" firstAttribute="top" secondItem="cLk-tu-Oxc" secondAttribute="bottom" constant="10" id="5Ml-Od-qp0"/>
+                <constraint firstItem="8ak-VZ-kHB" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="6aE-RG-FfE"/>
+                <constraint firstItem="8ak-VZ-kHB" firstAttribute="centerY" secondItem="cLk-tu-Oxc" secondAttribute="centerY" id="Hdh-Zk-PDS"/>
+                <constraint firstItem="VvS-yY-nPU" firstAttribute="trailing" secondItem="cLk-tu-Oxc" secondAttribute="trailing" id="uMc-m9-vL8"/>
+                <constraint firstItem="VvS-yY-nPU" firstAttribute="leading" secondItem="8ak-VZ-kHB" secondAttribute="leading" id="uNw-Fi-vR2"/>
+                <constraint firstItem="cLk-tu-Oxc" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="20" id="vXR-am-vAv"/>
+                <constraint firstItem="cLk-tu-Oxc" firstAttribute="leading" secondItem="8ak-VZ-kHB" secondAttribute="trailing" constant="10" id="x4Y-oE-7AT"/>
+            </constraints>
+            <point key="canvasLocation" x="136.64122137404578" y="20.422535211267608"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
