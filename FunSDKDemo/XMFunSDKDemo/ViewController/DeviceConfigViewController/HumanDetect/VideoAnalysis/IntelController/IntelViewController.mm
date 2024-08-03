@@ -124,7 +124,8 @@
     }
     
     [_disPlayView setDispStatus:DisplayViewStatusBuffering];
-    FUN_MediaRealPlay(self.msgHandle, [self.devID UTF8String], self.channelNum, self.stream, (__bridge void*)_disPlayView);
+    
+    self.playHandle = FUN_MediaRealPlay(self.msgHandle, [self.devID UTF8String], self.channelNum, self.stream, (__bridge LP_WND_OBJ)_disPlayView, 0);
     
     [self.view addSubview:self.alarmView];
     
@@ -341,6 +342,7 @@
         return;
     }
     FUN_MediaStop(self.playHandle);
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

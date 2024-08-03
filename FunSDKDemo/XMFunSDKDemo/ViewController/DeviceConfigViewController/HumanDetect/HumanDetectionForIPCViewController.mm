@@ -84,11 +84,12 @@
     [self initParam];
     
     FUN_DevCmdGeneral(self.msgHandle, [self.devID UTF8String], 1360, "HumanRuleLimit", 4096, 20000, NULL, 0, -1, -1);
+    
+    [self getHumanDetection];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self getHumanDetection];
 }
 
 -(void)getHumanDetection{
@@ -129,7 +130,7 @@
                 [SVProgressHUD showErrorWithStatus:TS("get_config_f")];
                 [self btnBackClicked];
             }
-            [SVProgressHUD dismiss];
+            
             NSString* strConfigName = [appData valueForKey:@"Name"];
             if ([strConfigName containsString:[NSString stringWithFormat:@"Detect.HumanDetection.[%d]",self.channelNum]]) {
                 self.humanDetectionDic = [[appData objectForKey:strConfigName] mutableCopy];
@@ -148,6 +149,7 @@
                 
                 [self.ruleTableView reloadData];
             }
+            [SVProgressHUD dismiss];
         }
     }else if (msg->id ==EMSG_DEV_SET_CONFIG_JSON){
         [SVProgressHUD dismiss];
@@ -243,13 +245,6 @@
     return 2;
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
-        return nil;
-    }else{
-        return nil;
-    }
-}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -285,16 +280,16 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             cell.textLabel.text = TS("Human_Detection");
-            cell.accessoryView = self.humanDetectionSwitch;
+            [cell addSubview:self.humanDetectionSwitch];
         }else if (indexPath.row == 1){
             cell.textLabel.text = TS("Show_traces");
-            cell.accessoryView = self.showTrackSwitch;
+            [cell addSubview:self.showTrackSwitch];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }else if (indexPath.section == 1){
         if (indexPath.row == 0) {
             cell.textLabel.text = TS("Perimeter_alert");
-            cell.accessoryView = self.pedRuleSwitch;
+            [cell addSubview:self.pedRuleSwitch];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }else if (indexPath.row == 1) {
             if (self.supportLine) {
@@ -378,7 +373,7 @@
 
 -(UISwitch *)humanDetectionSwitch{
     if (!_humanDetectionSwitch) {
-        _humanDetectionSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+        _humanDetectionSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth - 80, 10, 50, 30)];
         [_humanDetectionSwitch addTarget:self action:@selector(openHumanDetection:) forControlEvents:UIControlEventValueChanged];
     }
     return _humanDetectionSwitch;
@@ -390,7 +385,7 @@
 
 -(UISwitch *)showTrackSwitch{
     if (!_showTrackSwitch) {
-        _showTrackSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+        _showTrackSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth - 80, 10, 50, 30)];
         [_showTrackSwitch addTarget:self action:@selector(openShowTrack:) forControlEvents:UIControlEventValueChanged];
     }
     return _showTrackSwitch;
@@ -403,7 +398,7 @@
 
 -(UISwitch *)pedRuleSwitch{
     if (!_pedRuleSwitch) {
-        _pedRuleSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+        _pedRuleSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth - 80, 10, 50, 30)];
         [_pedRuleSwitch addTarget:self action:@selector(openPedRuleAbility:) forControlEvents:UIControlEventValueChanged];
     }
     return _pedRuleSwitch;
