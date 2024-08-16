@@ -226,6 +226,11 @@ typedef enum CustomRecordingStatus
         self.timer = nil;
     }
     
+    if (self.backForwardVCAction) {
+        self.backForwardVCAction();
+        self.backForwardVCAction = nil;
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

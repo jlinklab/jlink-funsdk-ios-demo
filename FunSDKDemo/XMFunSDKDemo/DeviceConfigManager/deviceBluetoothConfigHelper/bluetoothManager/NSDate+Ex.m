@@ -74,4 +74,35 @@
     return [dateFormat dateFromString:dateTimeStr];
 }
 
++ (NSString *)timeStringWithDate:(NSDate *)date{
+    if (!date){
+        return @"";
+    }
+    // 不同地区日历 都转化为标准日历输出
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond  fromDate:date];
+    NSInteger h = [components hour];
+    NSInteger m = [components minute];
+    NSInteger s = [components second];
+    NSString *formattedDate = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)h, (long)m, (long)s];
+    return formattedDate;
+}
+
++ (NSString *)dateTimeStringWithDate:(NSDate *)date{
+    if (!date){
+        return @"";
+    }
+    // 不同地区日历 都转化为标准日历输出
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond  fromDate:date];
+    NSInteger year = [components year];
+    NSInteger month = [components month];
+    NSInteger day = [components day];
+    NSInteger h = [components hour];
+    NSInteger m = [components minute];
+    NSInteger s = [components second];
+    NSString *formattedDate = [NSString stringWithFormat:@"%04ld-%02ld-%02ld %02ld:%02ld:%02ld", (long)year, (long)month, (long)day, (long)h, (long)m, (long)s];
+    return formattedDate;
+}
+
 @end

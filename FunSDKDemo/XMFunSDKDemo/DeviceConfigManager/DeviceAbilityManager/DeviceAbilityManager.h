@@ -39,18 +39,38 @@ typedef void(^GetDeviceAbilityCallBack)(int result);
 @property (nonatomic,assign) int iSupportGunBallTwoSensorPtzLocate;
 //带屏摇头机
 @property (nonatomic, assign)BOOL supportVideoTalkV2;
-/**
- 是否支持缩影录像
- */
+ //是否支持缩影录像
 @property (nonatomic, assign)BOOL supportEpitomeRecord;
-
-/**
- 是否支持手动警戒
- */
+ //是否支持手动警戒
 @property (nonatomic, assign)BOOL supportManuIntellAlertAlarm;
 //是否支持宽动态 WDR
 @property (nonatomic,assign) BOOL SupportBT;
-
+// 是否支持红外白光切换
+@property (nonatomic, assign) int iSupportLP4GSupportDoubleLightSwitch;
+//支持白光灯控制
+@property (nonatomic, assign) int iSupportCameraWhiteLight;
+// 是否支持智能警戒
+@property (nonatomic,assign) int iIntellAlertAlarm;
+// 是否支持低电量和常电模式切换
+@property (nonatomic,assign) int iSupportLPWorkModeSwitchV2;
+//是否支持红蓝报警灯开关
+@property (nonatomic, assign) int iSupportLowPowerSetAlarmLed;
+// 是否支持双光警戒
+@property (nonatomic, assign) int iSupportLPDoubleLightAlert;
+// 仅支持白光灯开关
+@property (nonatomic, assign) int iNotSupportAutoAndIntelligent;
+// BoxCameraBulb
+@property (nonatomic, assign) int iSupportBoxCameraBulb;
+@property (nonatomic, assign) int iSupportDoubleLightBoxCamera;
+//支持双光灯
+@property (nonatomic, assign) int iSupportDoubleLightBul;
+// 是否支持人形检测
+@property (nonatomic,assign) int iPEAInHumanPed;
+// 是否支持音量设置
+@property (nonatomic,assign) BOOL ifSupportSetVolume;
+//是否支持红外白光切换转照明开关
+@property (nonatomic, assign) int iSupportLowPowerDoubleLightToLightingSwitch;
+@property (nonatomic, assign) int iSupportMusicLightBulb;//支持音乐灯
 
 //MARK:获取设备能力集
 - (void)getSystemFunctionConfig:(GetDeviceAbilityCallBack)callBack;

@@ -22,5 +22,6 @@ IPC人形检测则主要包括报警开关、设置报警拌线、设置报警�
 @property (nonatomic) int channelNum;               // 选中通道号
 
 @property (nonatomic,strong) NSString *devID;       // 设备id
+@property (nonatomic,copy) void (^RequestHumanDetectConfigAction)();
 
 @end

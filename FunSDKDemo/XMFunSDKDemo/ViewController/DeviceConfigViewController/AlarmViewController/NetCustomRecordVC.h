@@ -13,8 +13,11 @@
 
 @interface NetCustomRecordVC : UIViewController
 
+typedef void(^BackForwardVCAction)();
+
 @property (nonatomic,copy) NSString *devID;
 
 @property (nonatomic,assign) int fileNumber;
+@property (nonatomic,copy) BackForwardVCAction backForwardVCAction;
 
 @end

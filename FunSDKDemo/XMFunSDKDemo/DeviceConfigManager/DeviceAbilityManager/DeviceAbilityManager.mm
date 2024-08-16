@@ -46,6 +46,20 @@
             self.supportEpitomeRecord = systemFunction.mOtherFunction.SupportEpitomeRecord.Value();
             self.supportManuIntellAlertAlarm = systemFunction.mAlarmFunction.ManuIntellAlertAlarm.Value();
             self.SupportBT = systemFunction.mOtherFunction.SupportBT.Value();
+            self.iSupportCameraWhiteLight = systemFunction.mOtherFunction.SupportCameraWhiteLight.Value()?1:0;
+            self.iSupportLP4GSupportDoubleLightSwitch = systemFunction.mOtherFunction.LP4GSupportDoubleLightSwitch.Value()?1 :0;
+            self.iIntellAlertAlarm = systemFunction.mAlarmFunction.IntellAlertAlarm.ToBool()?1:0;
+            self.iSupportLPWorkModeSwitchV2 = systemFunction.mOtherFunction.SupportLPWorkModeSwitchV2.Value()?1:0;
+            self.iSupportLowPowerSetAlarmLed = systemFunction.mOtherFunction.SupportLowPowerSetAlarmLed.Value()?1:0;
+            self.iSupportLPDoubleLightAlert = systemFunction.mOtherFunction.SupportLPDoubleLightAlert.Value()?1:0;
+            self.iNotSupportAutoAndIntelligent = systemFunction.mOtherFunction.NotSupportAutoAndIntelligent.Value()?1:0;
+            self.iSupportBoxCameraBulb = systemFunction.mOtherFunction.SupportBoxCameraBulb.Value()?1:0;
+            self.iSupportDoubleLightBoxCamera = systemFunction.mOtherFunction.SupportDoubleLightBoxCamera.Value()?1:0;
+            self.iSupportDoubleLightBul = systemFunction.mOtherFunction.SupportDoubleLightBulb.Value()?1:0;
+            self.iPEAInHumanPed = systemFunction.mAlarmFunction.PEAInHumanPed.Value()?1:0;
+            self.ifSupportSetVolume = systemFunction.mOtherFunction.SupportSetVolume.Value()?1:0;
+            self.iSupportLowPowerDoubleLightToLightingSwitch = systemFunction.mOtherFunction.SupportLowPowerDoubleLightToLightingSwitch.Value()?1:0;
+            self.iSupportMusicLightBulb = systemFunction.mOtherFunction.SupportMusicLightBulb.Value()?1:0;
         }
         
         if (self.callBack) {

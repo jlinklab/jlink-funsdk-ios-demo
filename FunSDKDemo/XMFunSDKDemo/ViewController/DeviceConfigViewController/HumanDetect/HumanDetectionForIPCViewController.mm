@@ -426,6 +426,10 @@
 }
 
 -(void)btnBackClicked{
+    if (self.RequestHumanDetectConfigAction) {
+        self.RequestHumanDetectConfigAction();
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

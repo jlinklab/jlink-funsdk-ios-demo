@@ -25,16 +25,20 @@
 #import "DeviceAbilityManager.h"
 #import "SVProgressHUD.h"
 #import "UIView+Layout.h"
-
 //双目相关
 #import "DoubleEyesManager.h"
 #import <Masonry/Masonry.h>
 #import <FunSDK/VRSoft.h>
 #import "VRGLViewController.h"
 #import "XMDeviceOrientationManager.h"
-
 //视频对讲
 #import "VideoIntercomVC.h"
+//声光报警
+#import "IntellAlertView.h"
+#import "HumanDetectionForIPCViewController.h"
+#import "NetCustomRecordVC.h"
+#import "SmartSecurityVC.h"
+
 
 #define PlayViewNumberFour [[DeviceControl getInstance] getSelectChannelArray].count == 4 ? YES : NO
 #define NSNumber_Four 4
@@ -83,6 +87,7 @@
 //是否需要配置软解环境
 @property (nonatomic,assign) BOOL needConfigSoftEAGLContext;
 @property (nonatomic, assign) BOOL bFull; //全屏
+@property (nonatomic, strong)IntellAlertView *interAlertView;
 
 
 @end
@@ -154,10 +159,27 @@
             //是否支持视频对讲
             dev.sysFunction.supportVideoTalkV2 = wSelf.deviceAbilityManager.supportVideoTalkV2;
             playMenuView.btnVideoCall.hidden = !wSelf.deviceAbilityManager.supportVideoTalkV2;
-            //是否支持缩影对讲
+            //是否支持缩影配置
             dev.sysFunction.supportEpitomeRecord = wSelf.deviceAbilityManager.supportEpitomeRecord;
             //是否支持手动警戒
             dev.sysFunction.supportManuIntellAlertAlarm = wSelf.deviceAbilityManager.supportManuIntellAlertAlarm;
+            //灯光配置
+            dev.sysFunction.iSupportCameraWhiteLight = wSelf.deviceAbilityManager.iSupportCameraWhiteLight;
+            dev.sysFunction.iSupportLP4GSupportDoubleLightSwitch = wSelf.deviceAbilityManager.iSupportLP4GSupportDoubleLightSwitch;
+            dev.sysFunction.iIntellAlertAlarm = wSelf.deviceAbilityManager.iIntellAlertAlarm;
+            dev.sysFunction.iSupportLPWorkModeSwitchV2 = wSelf.deviceAbilityManager.iSupportLPWorkModeSwitchV2;
+            dev.sysFunction.iSupportLowPowerSetAlarmLed = wSelf.deviceAbilityManager.iSupportLowPowerSetAlarmLed;
+            dev.sysFunction.iSupportLPDoubleLightAlert = wSelf.deviceAbilityManager.iSupportLPDoubleLightAlert;
+            dev.sysFunction.iSupportBoxCameraBulb = wSelf.deviceAbilityManager.iSupportBoxCameraBulb;
+            dev.sysFunction.iSupportDoubleLightBoxCamera = wSelf.deviceAbilityManager.iSupportDoubleLightBoxCamera;
+            dev.sysFunction.iSupportDoubleLightBul = wSelf.deviceAbilityManager.iSupportDoubleLightBul;
+            dev.sysFunction.PEAInHumanPed = wSelf.deviceAbilityManager.iPEAInHumanPed;
+            dev.sysFunction.ifSupportSetVolume = wSelf.deviceAbilityManager.ifSupportSetVolume;
+            dev.sysFunction.iSupportLowPowerDoubleLightToLightingSwitch = wSelf.deviceAbilityManager.iSupportLowPowerDoubleLightToLightingSwitch;
+            dev.sysFunction.iSupportMusicLightBulb = wSelf.deviceAbilityManager.iSupportMusicLightBulb;
+            if((dev.nType == EE_DEV_LAMP_FISHEYE || dev.sysFunction.iSupportCameraWhiteLight == 1 || dev.sysFunction.iSupportLP4GSupportDoubleLightSwitch == 1 || dev.sysFunction.iIntellAlertAlarm == 1) && (dev.ret == 0)){
+                playMenuView.btnLightAlarm.hidden = NO;
+            }
         }
     }];
 }
@@ -1093,7 +1115,7 @@ UIPinchGestureRecognizer *twoFingerPinch;//硬解码捏合手势
     }
 }
 
-//MARK: - 全屏按钮
+//MARK: - 全屏
 - (void)fullScreenEvent{
     // 根据设备方向重新布局
     [XMDeviceOrientationManager deviceOrientationPortraitAndUpsideDownSwitching];
@@ -1127,7 +1149,7 @@ UIPinchGestureRecognizer *twoFingerPinch;//硬解码捏合手势
     }
 }
 
-//MARK: 带屏相机点击视频
+//MARK: - 带屏相机点击视频
 - (void)btnVideoCallClicked{
     VideoIntercomVC *xmller = [[VideoIntercomVC alloc]init];
     ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
@@ -1138,6 +1160,31 @@ UIPinchGestureRecognizer *twoFingerPinch;//硬解码捏合手势
      
     xmller.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:xmller animated:YES completion:nil];
+}
+
+//MARK: - 声光报警
+- (void)btnLightAlarmClicked{
+    [self.view addSubview: self.interAlertView];
+    ChannelObject *channel = [[[DeviceControl getInstance] getSelectChannelArray] firstObject];
+    [self.interAlertView dispalyAlertView:channel.deviceMac channel:-1 index:0];
+}
+
+- (void)clickedGotoDetectVC{
+    float delay = 0;
+    //强制竖屏
+    if ([XMDeviceOrientationManager tryChangeDeviceOrientationPortrait]) {
+        delay = 0.3;
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //先关闭界面 返回再显示
+        [self.interAlertView removeFromSuperview];
+        
+        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+        HumanDetectionForIPCViewController *controller = [[HumanDetectionForIPCViewController alloc]init];
+        controller.devID = channel.deviceMac;
+        controller.channelNum = 0;
+        [self.navigationController pushViewController:controller animated:YES];
+    });
 }
 
 
@@ -1273,5 +1320,43 @@ switch (msg->id) {
     }
     return _vrglVC;
 }
+
+- (IntellAlertView *)interAlertView{
+    if (!_interAlertView) {
+        ChannelObject *channel = [[[DeviceControl getInstance] getSelectChannelArray] firstObject];
+        NSMutableArray *arrayDevIds = [NSMutableArray arrayWithCapacity:0];
+        [arrayDevIds addObject:channel.deviceMac];
+        _interAlertView = [[IntellAlertView alloc] initWithFrame:CGRectMake(0, ScreenHeight-200, ScreenWidth, 200) arrayDeviceID:arrayDevIds];
+        _interAlertView.channel = -1;
+        _interAlertView.bottomOffset = 0;
+        
+        __weak typeof(self) weakSelf = self;
+        _interAlertView.ClickJumpVCSign = ^(NSString * _Nonnull sign) {
+            if ([sign isEqualToString:@"BaseStationPirAlarmViewController"]) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    SmartSecurityVC *vc = [[SmartSecurityVC alloc] init];
+                    vc.devID = channel.deviceMac;
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                });
+            }else if ([sign isEqualToString:@"HumanDetectionForIPCViewController"]){
+                //人性检测
+                [weakSelf clickedGotoDetectVC];
+            }else if ([sign isEqualToString:@"NetCustomRecordVC"]){
+                //自定义语音编辑页面
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    //展示自定义报警界面时关闭 返回时重新显示
+                    NetCustomRecordVC *vc = [[NetCustomRecordVC alloc] init];
+                    vc.devID = channel.deviceMac;
+                    
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                });
+                
+            }
+        };
+
+    }
+    return _interAlertView;
+}
+
 @end
 

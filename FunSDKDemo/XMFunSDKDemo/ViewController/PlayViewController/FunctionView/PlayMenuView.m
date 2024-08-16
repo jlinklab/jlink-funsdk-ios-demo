@@ -103,10 +103,11 @@
 -(UIButton *)btnFull{
     if (!_btnFull) {
         _btnFull = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
-        _btnFull.center = CGPointMake(self.playYUVBtn.center.x, 70*2);
+        _btnFull.center = CGPointMake(self.controlBtn.center.x, 70*3);
         [_btnFull addTarget:self action:@selector(fullScreenEvent) forControlEvents:UIControlEventTouchUpInside];
         [_btnFull setTitle:TS("TR_FullScreen") forState:UIControlStateNormal];
         [_btnFull setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
         _btnFull.titleLabel.font = [UIFont systemFontOfSize:12.0];
         _btnFull.titleLabel.numberOfLines = 0;
         _btnFull.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -119,7 +120,7 @@
 -(UIButton *)btnVideoCall{
     if (!_btnVideoCall) {
         _btnVideoCall = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
-        _btnVideoCall.center = CGPointMake(self.playYUVBtn.center.x, 70*2);
+        _btnVideoCall.center = CGPointMake(self.controlBtn.center.x, 70*3);
         [_btnVideoCall addTarget:self action:@selector(btnVideoCallClicked) forControlEvents:UIControlEventTouchUpInside];
         [_btnVideoCall setTitle:TS("TR_VideoCall") forState:UIControlStateNormal];
         [_btnVideoCall setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -129,6 +130,22 @@
         _btnVideoCall.hidden = YES;
     }
     return _btnVideoCall;
+}
+
+//声光报警
+- (UIButton *)btnLightAlarm{
+    if (!_btnLightAlarm) {
+        _btnLightAlarm = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
+        _btnLightAlarm.center = CGPointMake(self.playYUVBtn.center.x, 70*2);
+        [_btnLightAlarm addTarget:self action:@selector(btnLightAlarmClicked) forControlEvents:UIControlEventTouchUpInside];
+        [_btnLightAlarm setTitle:TS("TR_Alarm_By_Voice_Light") forState:UIControlStateNormal];
+        [_btnLightAlarm setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _btnLightAlarm.titleLabel.font = [UIFont systemFontOfSize:12.0];
+        _btnLightAlarm.titleLabel.numberOfLines = 0;
+        _btnLightAlarm.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _btnLightAlarm.hidden = YES;
+    }
+    return _btnLightAlarm;
 }
 
 
@@ -151,6 +168,7 @@
     [self addSubview:self.corridorModelBtn];
     [self addSubview: self.btnFull];
     [self addSubview: self.btnVideoCall];
+    [self addSubview: self.btnLightAlarm];
 }
 
 -(void)PTZBtnClick:(UIButton *)sender{
@@ -262,6 +280,13 @@
         [self.delegate btnVideoCallClicked];
     }
 }
+
+- (void)btnLightAlarmClicked{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(btnLightAlarmClicked)]){
+        [self.delegate btnLightAlarmClicked];
+    }
+}
+
 
 
 @end

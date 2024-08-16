@@ -43,6 +43,8 @@
 - (void)fullScreenEvent;
 //带瓶摇头机视频对讲
 - (void)btnVideoCallClicked;
+//声光报警
+- (void)btnLightAlarmClicked;
 
 
 @end
@@ -85,5 +87,7 @@
 @property (nonatomic, strong) UIButton *btnFull;
 //MARK: - 视屏对讲按钮
 @property (nonatomic, strong) UIButton *btnVideoCall;
+//MARK: - 声光报警按钮
+@property (nonatomic, strong) UIButton *btnLightAlarm;
 
 @end

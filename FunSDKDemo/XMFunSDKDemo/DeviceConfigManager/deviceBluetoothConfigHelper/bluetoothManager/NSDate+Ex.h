@@ -25,5 +25,7 @@
 +(NSDate*)dateWithTimeString:(NSString*)timeStr;
 
 +(NSDate*)dateWithDateTimeString:(NSString*)dateTimeStr;
++ (NSString *)dateTimeStringWithDate:(NSDate *)date;
++ (NSString *)timeStringWithDate:(NSDate *)date;
 
 @end

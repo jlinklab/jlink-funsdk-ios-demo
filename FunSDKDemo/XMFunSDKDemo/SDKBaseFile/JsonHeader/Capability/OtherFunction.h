@@ -103,6 +103,17 @@ public:
     JBoolObj        SupportEpitomeRecord;               //是否支持缩影录像
     JBoolObj        SupportTraditionalPtzNormalDirect;  // 是否支持传统ptz方向控制
     JBoolObj        SupportPtzAutoAdjust;        //是否支持云台校正
+    JBoolObj        LP4GSupportDoubleLightSwitch;       // 是否支持白光红外切换
+    JBoolObj        SupportLPWorkModeSwitchV2;          // 低功耗是否支持低常模式
+    JBoolObj        SupportLowPowerSetAlarmLed;         // 是否支持使用报警输出作为灯的亮度即控制红蓝报警灯开关
+    JBoolObj        SupportLPDoubleLightAlert;          // 低功耗双光警戒 支持这个就会多一个双光警戒选项
+    JBoolObj        NotSupportAutoAndIntelligent;       // 白光灯是不是仅支持开关
+    JBoolObj        SupportBoxCameraBulb;               // BoxCamera灯泡能力集
+    JBoolObj        SupportLowPowerDoubleLightToLightingSwitch; // 是否支持白光红外切换配置项转变成照明开关配置项 两个同时支持才是显示照明开关
+    JBoolObj        SupportHidePirCheckTime;            // 是否隐藏PIR检测时间
+    JBoolObj        SupportPirSensitive;                // 是否支持PIR灵敏度设置
+    JBoolObj        SupportPIRMicrowaveAlarm;           // 是否支持PIR微波报警组合
+    JBoolObj        SupportLowPowerLongAlarmRecord;        //支持低功耗设备录像时间设置10 20  30
 public:
     OtherFunction(JObject *pParent = NULL, const char *szName = JK_OtherFunction):
     JObject(pParent,szName),
@@ -203,7 +214,18 @@ public:
     SupportVideoTalkV2(this,"SupportVideoTalkV2"),
     SupportTraditionalPtzNormalDirect(this,"SupportTraditionalPtzNormalDirect"),
     SupportPtzAutoAdjust(this,"SupportPtzAutoAdjust"),
-    SupportEpitomeRecord(this,"SupportEpitomeRecord"){
+    SupportEpitomeRecord(this,"SupportEpitomeRecord"),
+    LP4GSupportDoubleLightSwitch(this, "LP4GSupportDoubleLightSwitch"),
+    SupportLPWorkModeSwitchV2(this, "SupportLPWorkModeSwitchV2"),
+    SupportLowPowerSetAlarmLed(this, "SupportLowPowerSetAlarmLed"),
+    SupportLPDoubleLightAlert(this, "SupportLPDoubleLightAlert"),
+    NotSupportAutoAndIntelligent(this, "NotSupportAutoAndIntelligent"),
+    SupportBoxCameraBulb(this, "SupportBoxCameraBulb"),
+    SupportLowPowerDoubleLightToLightingSwitch(this, "SupportLowPowerDoubleLightToLightingSwitch"),
+    SupportHidePirCheckTime(this, "SupportHidePirCheckTime"),
+    SupportPirSensitive(this, "SupportPirSensitive"),
+    SupportPIRMicrowaveAlarm(this, "SupportPIRMicrowaveAlarm"),
+    SupportLowPowerLongAlarmRecord(this, "SupportLowPowerLongAlarmRecord"){
 	};
 
     ~OtherFunction(void){};

@@ -52,4 +52,13 @@
 @property (nonatomic, assign)BOOL SupportPtzAutoAdjust;  // 是否支持云台校正
 @property (nonatomic, assign)BOOL supportManuIntellAlertAlarm;  // 是否支持手动警戒
 @property (nonatomic,assign) BOOL SupportBT;//是否支持宽动态 WDR
+@property (nonatomic, assign) int iSupportLP4GSupportDoubleLightSwitch; // 是否支持红外白光切换
+@property (nonatomic, assign) int iSupportLowPowerDoubleLightToLightingSwitch;//是否支持红外白光切换转照明开关
+@property (nonatomic, assign) int iSupportLowPowerSetBrightness;//是否支持设置照明灯亮度
+@property (nonatomic,assign) int iIntellAlertAlarm;             // 是否支持智能警戒
+@property (nonatomic,assign) int iSupportLPWorkModeSwitchV2;   // 是否支持低电量和常电模式切换
+@property (nonatomic, assign) int iSupportLowPowerSetAlarmLed;//是否支持红蓝报警灯开关
+@property (nonatomic, assign) int iSupportLPDoubleLightAlert; // 是否支持双光警戒
+@property (nonatomic, assign) int iNotSupportAutoAndIntelligent;// 仅支持白光灯开关
+@property (nonatomic, assign) int iSupportBoxCameraBulb;  // BoxCameraBulb
 @end
