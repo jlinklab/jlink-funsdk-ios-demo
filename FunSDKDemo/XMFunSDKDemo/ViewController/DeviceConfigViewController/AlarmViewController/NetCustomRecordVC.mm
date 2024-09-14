@@ -294,7 +294,7 @@ typedef enum CustomRecordingStatus
 //    //判断是否是中文
 //    if (![self isValidated:[self.tfContent.text stringByReplacingOccurrencesOfString:@" " withString:@""]]) {
 //        [SVProgressHUD setMinimumDismissTimeInterval:2];
-//        [SVProgressHUD showErrorWithStatus:TS(@"TR_Please_Enter_Right_Alarm_Tips")];
+//        [SVProgressHUD showErrorWithStatus:TS("TR_Please_Enter_Right_Alarm_Tips")];
 //        return;
 //    }
     

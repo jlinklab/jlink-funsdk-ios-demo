@@ -777,14 +777,14 @@ static NSString *const kLeftTextRightArrowTableViewCell = @"LeftTextRightArrowTa
 //        };
 //        
 //        return cell;
-//    }else if ([item.titleName isEqualToString:TS(@"open_line_alarm")]){
+//    }else if ([item.titleName isEqualToString:TS("open_line_alarm")]){
 //        TitleSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:kTitleSwitchCell];
 //        cell.titleLeftBorder = -5;
 //        [cell enterFilletMode];
-//        cell.titleLabel.text = TS(@"open_line_alarm");
+//        cell.titleLabel.text = TS("open_line_alarm");
 //        [cell subTitleVisible:YES ContentRich:NO];
 //        cell.lbDetail.numberOfLines = 2;
-//        cell.lbDetail.text = TS(@"line_alarm_tip");
+//        cell.lbDetail.text = TS("line_alarm_tip");
 //        
 //        cell.toggleSwitch.on = self.lineNotifyManager.open;
 //        __weak typeof(self) weakSelf = self;
@@ -1022,7 +1022,7 @@ static NSString *const kLeftTextRightArrowTableViewCell = @"LeftTextRightArrowTa
         cell.toggleLabel.text = @"";
         [cell makeRightLableLarge:YES];
         [cell displayArrow];
-//        cell.toggleLabel.text = [NSString stringWithFormat:@"%i%@",duration,TS(@"s")];
+//        cell.toggleLabel.text = [NSString stringWithFormat:@"%i%@",duration,TS("s")];
 //        cell.toggleLabel.hidden = NO;
 //        //防止Cell复用
 //        [cell makeRightLableLarge:NO];

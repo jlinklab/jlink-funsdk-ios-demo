@@ -12,6 +12,7 @@
 
 @interface PirTimeSectionViewController : FunSDKBaseViewController
 
+@property (nonatomic,copy) NSString *navTitle;
 //PIR报警数据源
 @property (nonatomic,strong) PirAlarmManager *pirAlarmManager;
 

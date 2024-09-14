@@ -76,7 +76,7 @@
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat: @"%d", result]];
             weakSelf.contentView.cameraLinkEnable = !weakSelf.contentView.cameraLinkEnable;
         }else{
-            [SVProgressHUD showSuccessWithStatus:TS(@"Save_Success")];
+            [SVProgressHUD showSuccessWithStatus:TS("Save_Success")];
         }
     }];
 }

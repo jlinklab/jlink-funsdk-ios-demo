@@ -50,7 +50,19 @@
     self.mySwitch.hidden = YES;
     
     if (style == BaseConfigListCellStyleNone) {
-        
+        self.lbTitle.hidden = NO;
+        self.lbDetail.hidden = NO;
+        [self.lbTitle mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self).mas_offset(10);
+            make.centerY.equalTo(self);
+            make.width.equalTo(@120);
+            make.height.mas_equalTo(30);
+        }];
+        [self.lbDetail mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self);
+            make.right.equalTo(self).mas_offset(-10);
+            make.left.equalTo(self.lbTitle.mas_right);
+        }];
     }else if (style == BaseConfigListCellStyleSwitch){
         self.lbTitle.hidden = NO;
         self.lbDetail.hidden = NO;
@@ -106,8 +118,8 @@
 - (UILabel *)lbDetail{
     if (!_lbDetail) {
         _lbDetail = [[UILabel alloc] init];
-        _lbDetail.font = [UIFont systemFontOfSize:10];
-        _lbDetail.textColor = [UIColor lightGrayColor];
+        _lbDetail.font = [UIFont systemFontOfSize:15];
+        _lbDetail.textColor = [UIColor blackColor];
     }
     
     return _lbDetail;

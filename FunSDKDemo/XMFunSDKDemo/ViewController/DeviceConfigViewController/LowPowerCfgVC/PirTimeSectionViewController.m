@@ -45,7 +45,7 @@ static NSString *const kJFLeftTitleRightTitleArrowCell = @"JFLeftTitleRightTitle
 
 //MARK: - ConfigNav
 - (void)myConfigNav{
-    self.navigationItem.title = TS(@"TR_Detection_Schedule");
+    self.navigationItem.title = TS("TR_Detection_Schedule");
     
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame = CGRectMake(0, 0, 32, 32);
@@ -56,7 +56,7 @@ static NSString *const kJFLeftTitleRightTitleArrowCell = @"JFLeftTitleRightTitle
     self.navigationItem.leftBarButtonItem = leftBarBtn;
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setTitle:TS(@"finish") forState:UIControlStateNormal];
+    [rightBtn setTitle:TS("finish") forState:UIControlStateNormal];
     [rightBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     rightBtn.frame = CGRectMake(0, 0, 48, 32);
     [rightBtn addTarget:self action:@selector(saveBtnClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -65,7 +65,7 @@ static NSString *const kJFLeftTitleRightTitleArrowCell = @"JFLeftTitleRightTitle
 }
 
 //-(void)myLoadData{
-//    self.dataSource =[@[TS(@"PIR_Detect_Time_Period"),TS(@"Start_End_Time"),TS(@"Repeat")] mutableCopy];
+//    self.dataSource =[@[TS("PIR_Detect_Time_Period"),TS("Start_End_Time"),TS("Repeat")] mutableCopy];
 //}
 
 //MARK: - ConfigSubview
@@ -106,13 +106,13 @@ static NSString *const kJFLeftTitleRightTitleArrowCell = @"JFLeftTitleRightTitle
     //重复时间
     int weekMask = [self.pirAlarmManager getPirTimeSectionWeekMask:indexPath.row];
     NSString *strWeekMask = [self getSelectedWeekStr:weekMask];
-     if ([strWeekMask isEqualToString:[NSString stringWithFormat:@"%@ %@",TS(@"Saturday"),TS(@"Sunday")]]){
-         strWeekMask = TS(@"TR_Alarm_Weekend");
-    }else if ([strWeekMask isEqualToString:[NSString stringWithFormat:@"%@ %@ %@ %@ %@",TS(@"Monday"), TS(@"Tuesday"), TS(@"Wednesday"), TS(@"Thursday"), TS(@"Friday")]]){
-        strWeekMask = TS(@"TR_Alarm_Workday");
+     if ([strWeekMask isEqualToString:[NSString stringWithFormat:@"%@ %@",TS("Saturday"),TS("Sunday")]]){
+         strWeekMask = TS("TR_Alarm_Weekend");
+    }else if ([strWeekMask isEqualToString:[NSString stringWithFormat:@"%@ %@ %@ %@ %@",TS("Monday"), TS("Tuesday"), TS("Wednesday"), TS("Thursday"), TS("Friday")]]){
+        strWeekMask = TS("TR_Alarm_Workday");
     }
     
-    [cell showTitle:[NSString stringWithFormat:@"%@-%@", beginTime, endTime] description:strWeekMask rightTitle:isValid?TS(@"Already_Open"):TS(@"Not_Open")];
+    [cell showTitle:[NSString stringWithFormat:@"%@-%@", beginTime, endTime] description:strWeekMask rightTitle:isValid?TS("Already_Open"):TS("Not_Open")];
     cell.bottomLine.hidden = indexPath.row == 1? YES : NO;
     
     return cell;
@@ -124,45 +124,45 @@ static NSString *const kJFLeftTitleRightTitleArrowCell = @"JFLeftTitleRightTitle
     
     int selectedNum = 0;
     if (mask & 0x01) {
-        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS(@"Sunday")];
+        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS("Sunday")];
         selectedNum++;
     }
     
     if (mask & 0x02) {
-        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS(@"Monday")];
+        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS("Monday")];
         selectedNum++;
     }
     
     if (mask & 0x04) {
-        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS(@"Tuesday")];
+        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS("Tuesday")];
         selectedNum++;
     }
     
     if (mask & 0x08) {
-        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS(@"Wednesday")];
+        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS("Wednesday")];
         selectedNum++;
     }
     
     if (mask & 0x10) {
-        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS(@"Thursday")];
+        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS("Thursday")];
         selectedNum++;
     }
     
     if (mask & 0x20) {
-        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS(@"Friday")];
+        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS("Friday")];
         selectedNum++;
     }
     
     if (mask & 0x40) {
-        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS(@"Saturday")];
+        result = [result stringByAppendingFormat:@"%@%@",result.length > 0 ? @"、" : @"",TS("Saturday")];
         selectedNum++;
     }
     
     if (selectedNum == 7) {
-        return TS(@"every_day");
+        return TS("every_day");
     } 
     else{
-        return result.length == 0 ? TS(@"Never") : result;
+        return result.length == 0 ? TS("Never") : result;
     }
 }
 

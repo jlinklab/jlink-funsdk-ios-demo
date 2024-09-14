@@ -16,6 +16,8 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self){
+        self.extraBorderLeft = 0;
+        self.bottomLineHeight = 1;
         [self.contentView addSubview:self.lbRight];
         [self.lbRight mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.contentView).offset(-cTableViewFilletContentLRBorder);
@@ -25,9 +27,9 @@
         [self.contentView addSubview:self.lbTitle];
         [self.lbTitle mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).mas_offset(cTableViewFilletContentLRBorder);
-            make.top.equalTo(self.contentView).mas_offset(cTableViewFilletContentLRBorder);
+            make.top.equalTo(self.contentView).mas_offset(10);
             make.right.equalTo(self.lbRight.mas_left);
-            make.bottom.equalTo(self.contentView).mas_offset(-cTableViewFilletContentLRBorder);
+            make.bottom.equalTo(self.contentView).mas_offset(-10);
         }];
         
         [self.contentView addSubview:self.lbDescription];
@@ -59,7 +61,7 @@
             make.bottom.equalTo(self);
             make.right.equalTo(self);
             make.left.equalTo(self);
-            make.height.equalTo(@1);
+            make.height.mas_equalTo(self.bottomLineHeight);
         }];
     }
     
@@ -74,7 +76,9 @@
     }
 }
 
-- (void)showTitle:(NSString *)title description:(NSString *)description rightTitle:(NSString *)rightTitle{
+- (void)showTitle:(NSString *)title description:( NSString * _Nullable )description rightTitle:(NSString * _Nullable )rightTitle{
+    self.lbTitle.textAlignment = NSTextAlignmentLeft;
+    self.imageViewArrow.hidden = NO;
     if (title){
         self.lbTitle.text = title;
     }else{
@@ -95,10 +99,10 @@
     
     if (!description || description.length <= 0){
         [self.lbTitle mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.contentView).mas_offset(cTableViewFilletContentLRBorder);
-            make.top.equalTo(self.contentView).mas_offset(cTableViewFilletContentLRBorder);
+            make.left.equalTo(self.contentView).mas_offset(self.extraBorderLeft +  cTableViewFilletContentLRBorder);
+            make.top.equalTo(self.contentView).mas_offset(10);
             make.right.equalTo(self.lbRight.mas_left);
-            make.bottom.equalTo(self.contentView).mas_offset(-cTableViewFilletContentLRBorder);
+            make.bottom.equalTo(self.contentView).mas_offset(-10);
         }];
         
         [self.lbDescription mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -109,20 +113,46 @@
         }];
     }else{
         [self.lbTitle mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.contentView).mas_offset(cTableViewFilletContentLRBorder);
-            make.top.equalTo(self.contentView).mas_offset(cTableViewFilletContentLRBorder);
+            make.left.equalTo(self.contentView).mas_offset(self.extraBorderLeft + cTableViewFilletContentLRBorder);
+            make.top.equalTo(self.contentView).mas_offset(10);
             make.right.equalTo(self.lbRight.mas_left);
         }];
         
         [self.lbDescription mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.lbTitle);
-            make.top.equalTo(self.lbTitle.mas_bottom).mas_offset(cTableViewFilletTitleAndSubTitleBorder);
+            make.top.equalTo(self.lbTitle.mas_bottom).mas_offset(self.extraBorderLeft + cTableViewFilletTitleAndSubTitleBorder);
             make.right.equalTo(self.lbRight.mas_left);
-            make.bottom.equalTo(self.contentView).mas_offset(-cTableViewFilletContentLRBorder);
+            make.bottom.equalTo(self.contentView).mas_offset(-10);
         }];
     }
+    
+    [self.bottomLine mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self);
+        make.right.equalTo(self);
+        make.left.equalTo(self);
+        make.height.mas_equalTo(self.bottomLineHeight);
+    }];
 }
-
+- (void)showOnlyTitle:(NSString *)title {
+    self.lbTitle.text = title;
+    self.lbTitle.textAlignment = NSTextAlignmentCenter;
+    self.lbDescription.text = @"";
+    self.lbRight.text = @"";
+    self.imageViewArrow.hidden = YES;
+    [self.lbTitle mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).mas_offset(0);
+        make.top.equalTo(self.contentView).mas_offset(10);
+        make.right.equalTo(self.contentView).mas_offset(0);
+        make.bottom.equalTo(self.contentView).mas_offset(-10);
+    }];
+    
+    [self.bottomLine mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self);
+        make.right.equalTo(self);
+        make.left.equalTo(self);
+        make.height.mas_equalTo(self.bottomLineHeight);
+    }];
+}
 //MARK: - LazyLoad
 - (UILabel *)lbTitle{
     if (!_lbTitle){

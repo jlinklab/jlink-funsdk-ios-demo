@@ -103,12 +103,12 @@
         //播放本地视频文件，先获取文件路径
         NSString *path = [videoArray objectAtIndex:indexPath.row];
         //如果录像类型是 .h265文件,特殊处理
-        if ([fileControl getVideoTypeH265:path]) {
-            XMPlayerVC *playerVC = [[XMPlayerVC alloc] init];
-            playerVC.filePath = path;
-            [self presentViewController:playerVC animated:YES completion:nil];
-            return;
-        }
+//        if ([fileControl getVideoTypeH265:path]) {
+//            XMPlayerVC *playerVC = [[XMPlayerVC alloc] init];
+//            playerVC.filePath = path;
+//            [self presentViewController:playerVC animated:YES completion:nil];
+//            return;
+//        }
         //如果是鱼眼视频文件，需要使用鱼眼播放器来播放
         if ([fileControl getVideoTypeFish:path]) {
             FishEyeVideoVC *fishvc = [[FishEyeVideoVC alloc]init];

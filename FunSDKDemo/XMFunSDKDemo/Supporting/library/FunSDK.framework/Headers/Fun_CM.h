@@ -18,7 +18,7 @@ Action:Create
  * @return 异步回调消息：id:EMSG_MC_SearchMediaByMoth = 6202, ///< 按月查询录像
  *                    param1: >=0 成功，否则失败
  */
-int MC_SearchMediaByMoth(UI_HANDLE hUser, const char *devId, int nChannel, const char *szStreamType, int nDate, int nSeq = 0);
+XSDK_API int MC_SearchMediaByMoth(UI_HANDLE hUser, const char *devId, int nChannel, const char *szStreamType, int nDate, int nSeq = 0);
 
 /**
  * @brief 查询时间段内的报警视频片段
@@ -31,7 +31,7 @@ int MC_SearchMediaByMoth(UI_HANDLE hUser, const char *devId, int nChannel, const
  *                    param1: <0失败，详见错误码
  *                    Str:查询到的结果，json信息
  */
-int MC_SearchMediaByTime(UI_HANDLE hUser, const char *devId, int nChannel, const char *szStreamType, int nStartTime, int nEndTime, int nSeq = 0);
+XSDK_API int MC_SearchMediaByTime(UI_HANDLE hUser, const char *devId, int nChannel, const char *szStreamType, int nStartTime, int nEndTime, int nSeq = 0);
 
 /**
  * @brief 云存储视频查询
@@ -48,7 +48,7 @@ int MC_SearchMediaByTime(UI_HANDLE hUser, const char *devId, int nChannel, const
  *                    param1: <0失败，详见错误码
  *                    Str:查询到的结果，json信息
  */
-int MC_SearchMediaByTimeV2(UI_HANDLE hUser, const char *sDevId, int nChannel, const char *sStreamType, int nStartTime, int nEndTime, const char* sMessageType, Bool bTimePoint = FALSE, int nSeq = 0);
+XSDK_API int MC_SearchMediaByTimeV2(UI_HANDLE hUser, const char *sDevId, int nChannel, const char *sStreamType, int nStartTime, int nEndTime, const char* sMessageType, Bool bTimePoint = FALSE, int nSeq = 0);
 
 /**
  * @brief 下载录像等媒体的缩略图
@@ -61,7 +61,7 @@ int MC_SearchMediaByTimeV2(UI_HANDLE hUser, const char *sDevId, int nChannel, co
  * @return 异步回调消息：id:EMSG_MC_DownloadMediaThumbnail = 6204, ///< 下载媒体缩略图
  *                    param1: <0失败，详见错误码
  */
-int MC_DownloadThumbnail(UI_HANDLE hUser, const char *devId, const char *szJson, const char *szFileName, int nWidth = 0, int nHeight = 0, int nSeq = 0);
+XSDK_API int MC_DownloadThumbnail(UI_HANDLE hUser, const char *devId, const char *szJson, const char *szFileName, int nWidth = 0, int nHeight = 0, int nSeq = 0);
 
 /**
  * @brief 云视频片段缩略图下载
@@ -82,19 +82,19 @@ int MC_DownloadThumbnail(UI_HANDLE hUser, const char *devId, const char *szJson,
  * @return 异步回调消息：id:EMSG_MC_DownloadMediaThumbnail = 6204, ///< 下载媒体缩略图
  *                    param1: <0失败，详见错误码
  */
-int MC_DownloadThumbnailByTime(UI_HANDLE hUser, const char *sDevId, const char *sFileName, const char *sStreamType, const char *sMessageType, int nChannel, int nStartTime, int nEndTime, int nWidth = 0, int nHeight = 0, Bool bTimePoint = FALSE, int nSeq = 0);
+XSDK_API int MC_DownloadThumbnailByTime(UI_HANDLE hUser, const char *sDevId, const char *sFileName, const char *sStreamType, const char *sMessageType, int nChannel, int nStartTime, int nEndTime, int nWidth = 0, int nHeight = 0, Bool bTimePoint = FALSE, int nSeq = 0);
 
 /**
  * @brief 设置缩略图下载的最大任务数量
  * @details 默认任务数量为 N_MAX_DOWNLOAD_QUEUE_SIZE 32
  * @param nMaxQueueSize 设置最大任务数
  */
-int MC_SetDownloadThumbnailMaxQueue(int nMaxQueueSize);
+XSDK_API int MC_SetDownloadThumbnailMaxQueue(int nMaxQueueSize);
 
 /**
  * @brief 取消全部缩略图下载任务
  */
-void MC_StopDownloadThumbnail();
+XSDK_API void MC_StopDownloadThumbnail();
 
 /**
  * @brief 云存储视频时间轴查询
@@ -108,4 +108,4 @@ void MC_StopDownloadThumbnail();
  *                    param1: <0失败，详见错误码
  *                    Str:查询到的结果，json信息
  */
-int MC_SearchMediaTimeAxis(UI_HANDLE hUser, const char *sDevId, const char *sStreamType, int nChannel, int nStartTime, int nEndTime, int nSeq = 0);
+XSDK_API int MC_SearchMediaTimeAxis(UI_HANDLE hUser, const char *sDevId, const char *sStreamType, int nChannel, int nStartTime, int nEndTime, int nSeq = 0);

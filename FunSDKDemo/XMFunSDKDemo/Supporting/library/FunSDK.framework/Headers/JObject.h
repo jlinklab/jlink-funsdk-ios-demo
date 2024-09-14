@@ -11,7 +11,7 @@ NS_BEGIN(JsonObj)
 #define NTS(x) #x
 typedef void* PJSON_DATA;
 typedef void* PJSON_STRING;
-class JObject
+class XSDK_API JObject
 {
 public:
     JObject(JObject *pParent = NULL, const char *szName = "");
@@ -43,7 +43,7 @@ protected:
 };
 
 
-class JIntObj : public JObject
+class XSDK_API JIntObj : public JObject
 {
 public:
     JIntObj(JObject *pParent = NULL, const char *szName = "");
@@ -54,7 +54,7 @@ public:
     virtual void operator=(const int nValue);
 };
 
-class JDoubleObj : public JObject
+class XSDK_API JDoubleObj : public JObject
 {
 public:
     JDoubleObj(JObject *pParent = NULL, const char *szName = "");
@@ -65,7 +65,7 @@ public:
     virtual void operator=(const double nValue);
 };
 
-class JStrObj : public JObject
+class XSDK_API JStrObj : public JObject
 {
 public:
     JStrObj(JObject *pParent = NULL, const char *szName = "");
@@ -79,7 +79,7 @@ protected:
     void *_sValue;
 };
 
-class JIntHex : public JStrObj
+class XSDK_API JIntHex : public JStrObj
 {
 public:
     JIntHex(JObject *pParent = NULL, const char *szName = "");
@@ -93,7 +93,7 @@ public:
     virtual void operator=(int);
 };
 
-class JBoolObj : public JObject
+class XSDK_API JBoolObj : public JObject
 {
 public:
     JBoolObj(JObject *pParent = NULL, const char *szName = "");
@@ -105,7 +105,7 @@ public:
 };
 
 template <class T>
-class JObjArray : public JObject
+class XSDK_API JObjArray : public JObject
 {
 public:
     JObjArray(JObject *pParent = NULL, const char *szName = ""):

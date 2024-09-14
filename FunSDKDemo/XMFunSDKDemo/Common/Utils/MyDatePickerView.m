@@ -261,21 +261,21 @@
         if (self.ifChoseStart) {
             if ([self.compareDate timeIntervalSince1970] < [choseDate timeIntervalSince1970]){
                 self.lbWarning.hidden = NO;
-                self.lbWarning.text = TS(@"TR_Alarm_Period_Start_Time_Can_Not_Great_Than_Or_Equal_To_End_Time");
+                self.lbWarning.text = TS("TR_Alarm_Period_Start_Time_Can_Not_Great_Than_Or_Equal_To_End_Time");
                 return;
             } else if ([self.compareDate timeIntervalSince1970] == [choseDate timeIntervalSince1970]) {
                 self.lbWarning.hidden = NO;
-                self.lbWarning.text = TS(@"TR_Alarm_Period_Repeat_Time");
+                self.lbWarning.text = TS("TR_Alarm_Period_Repeat_Time");
                 return;
             }
         }else{
             if ([self.compareDate timeIntervalSince1970] > [choseDate timeIntervalSince1970]){
                 self.lbWarning.hidden = NO;
-                self.lbWarning.text = TS(@"TR_Alarm_Period_End_Time_Can_Not_Less_Than_Or_Equal_To_Start_Time");
+                self.lbWarning.text = TS("TR_Alarm_Period_End_Time_Can_Not_Less_Than_Or_Equal_To_Start_Time");
                 return;
             }else if ([self.compareDate timeIntervalSince1970] == [choseDate timeIntervalSince1970]) {
                 self.lbWarning.hidden = NO;
-                self.lbWarning.text = TS(@"TR_Alarm_Period_Repeat_Time");
+                self.lbWarning.text = TS("TR_Alarm_Period_Repeat_Time");
                 return;
             }
         }
@@ -380,7 +380,7 @@
 
 -(NSArray *)weekArr {
     if (!_weekArr) {
-        _weekArr = @[TS(@"Monday"), TS(@"Tuesday"), TS(@"Wednesday"), TS(@"Thursday"), TS(@"Friday"), TS(@"Saturday"), TS(@"Sunday")];
+        _weekArr = @[TS("Monday"), TS("Tuesday"), TS("Wednesday"), TS("Thursday"), TS("Friday"), TS("Saturday"), TS("Sunday")];
     }
     return _weekArr;
 }
@@ -420,7 +420,7 @@
         _lbTitle = [[UILabel alloc] init];
         _lbTitle.textAlignment = NSTextAlignmentCenter;
         _lbTitle.font = [UIFont boldSystemFontOfSize:cTableViewFilletTitleFont + 1];
-        _lbTitle.text = TS(@"TR_Alarm_Period_Repeat_Time");
+        _lbTitle.text = TS("TR_Alarm_Period_Repeat_Time");
         _lbTitle.numberOfLines = 2;
     }
     
@@ -445,7 +445,7 @@
         _btnCancel.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
         _btnCancel.layer.cornerRadius = 8;
         [_btnCancel setTitleColor:kDefaultTitleColor forState:UIControlStateNormal];
-        [_btnCancel setTitle:TS(@"cancel") forState:UIControlStateNormal];
+        [_btnCancel setTitle:TS("cancel") forState:UIControlStateNormal];
         [_btnCancel addTarget:self action:@selector(btnCancelClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _btnCancel;

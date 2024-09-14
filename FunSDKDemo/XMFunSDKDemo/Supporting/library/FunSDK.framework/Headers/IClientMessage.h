@@ -35,42 +35,42 @@ typedef struct SClientMessageInfo
 }SClientMessageInfo;
 
 // 初始化函数
-int CM_Init(const SClientMessageInfo *pInfo);
+XSDK_API int CM_Init(const SClientMessageInfo *pInfo);
 
 // 更新广告，自定义消息等（调用后会更新广告等到本地） // 支持客户定制+通用版本
-void CM_UpdateMessage();
+XSDK_API void CM_UpdateMessage();
 
 // 获取视频广告路径,本地没有视频时没有返回""
-const char *CM_GetVideoPath();
+XSDK_API const char *CM_GetVideoPath();
 
 // 获取图片广告路径,本地没有图片时没有返回""
-const char *CM_GetPicPath();
+XSDK_API const char *CM_GetPicPath();
 
 // 获取点击图片后跳转的URL
-const char *CM_GetADUrl();
+XSDK_API const char *CM_GetADUrl();
 
 // 获取广告播放时长
-int CM_GetTimeLong();
+XSDK_API int CM_GetTimeLong();
 
 
 // 更新广告 版本2
-void CM_UpdateADV2();
-const char *CM_GetADContent();
+XSDK_API void CM_UpdateADV2();
+XSDK_API const char *CM_GetADContent();
 
-const char *CM_GetValue(const char *szKey, const char *szDefault = "");
-int CM_GetIntValue(const char *szKey, int nDelfault = 0);
+XSDK_API const char *CM_GetValue(const char *szKey, const char *szDefault = "");
+XSDK_API int CM_GetIntValue(const char *szKey, int nDelfault = 0);
 
 //////////////////////////系统消息功能接口/////////////////////////////
 // 更新当前最新的系统消息
 // < 0失败 >=0成功
 // 获取当前最新消息,EMSG_CM_ON_GET_SYS_MSG返回结果
-int CM_UpdateSysMsg(UI_HANDLE hUser);
-int CM_NoShowMsg(uint64 nMsgId);        // 不再显示当前最新消息
+XSDK_API int CM_UpdateSysMsg(UI_HANDLE hUser);
+XSDK_API int CM_NoShowMsg(uint64 nMsgId);        // 不再显示当前最新消息
 
 // 获取系统
 // < 0失败 >=0成功
 // 获取当前最新消息,EMSG_CM_ON_GET_SYS_MSG_LIST返回结果
-int CM_GetSysMsgList(UI_HANDLE hUser);
+XSDK_API int CM_GetSysMsgList(UI_HANDLE hUser);
 /////////////////////////////////////////////////////////////////////
 
 

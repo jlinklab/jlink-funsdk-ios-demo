@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString* devID;
 @property (nonatomic, assign) int channelNum;
-@property (nonatomic) NSMutableArray* arrayCfgReqs;
+@property (nonatomic, strong) NSMutableArray* arrayCfgReqs;
+@property (nonatomic,strong) UIView *tb_Container;
+
 
 #pragma mark - 请求获取配置
 -(void)requestGetConfig:(DeviceConfig*)config;

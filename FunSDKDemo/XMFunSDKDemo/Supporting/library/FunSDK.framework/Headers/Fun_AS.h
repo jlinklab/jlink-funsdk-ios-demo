@@ -24,7 +24,7 @@
  * @return 异步回调消息：id:EMSG_AS_INIT_INFO = 6400 ///<报警服务初始化
  *                    param1: >=0 成功，否则失败
  */
-int AS_Init(UI_HANDLE hUser, const char *szInitInfo, int nSeq);
+XSDK_API int AS_Init(UI_HANDLE hUser, const char *szInitInfo, int nSeq);
 
 /**
  * @brief 报警订阅
@@ -33,6 +33,7 @@ int AS_Init(UI_HANDLE hUser, const char *szInitInfo, int nSeq);
  * @example
  * {
  *    "msg" : "alarm_subscribe",
+ *    "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *    "snlist" :
  *    [
  *      {
@@ -57,7 +58,7 @@ int AS_Init(UI_HANDLE hUser, const char *szInitInfo, int nSeq);
  *                    param1: >=0 成功，否则失败
  *                    Str():订阅成功序列号集合
  */
-int AS_DevsAlarmSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
+XSDK_API int AS_DevsAlarmSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
 
 /**
  * @brief 取消报警订阅
@@ -66,9 +67,10 @@ int AS_DevsAlarmSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
  * @example
  * {
  *    "msg" : "alarm_unsubscribe",
+ *    "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *    "all": "0",                  ///<【可选】 0或者无该字段表示:只删除指定Token的订阅关系 1表示:删除该设备的所有订阅关系（此时不需要AppToken字段）,
  *                                              2表示: 只保留UserId对应的订阅关系  3表示: 只清除UserId对应的订阅关系
-*     "ut": 123456,     ///<【可选】 utc时间，如果晚于这个时间订阅的才会删除，用于删除指定时间前的订阅（仅用于根据userid删除订阅情况）
+ *     "ut": 123456,     ///<【可选】 utc时间，如果晚于这个时间订阅的才会删除，用于删除指定时间前的订阅（仅用于根据userid删除订阅情况）
  *    "snlist" :
  *    [
  *      {
@@ -86,7 +88,7 @@ int AS_DevsAlarmSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
  *                    param1: >=0 成功，否则失败
  *                    Str():取消订阅成功序列号集合
  */
-int AS_DevsAlarmUnSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
+XSDK_API int AS_DevsAlarmUnSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
 
 /**
  * @brief 报警订阅(UserID)
@@ -95,6 +97,7 @@ int AS_DevsAlarmUnSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
  * @example
  * {
  *    "msg" : "userid_subscribe"(客服系统),  ///< userid_adv_subscribe（广告推送）
+ *    "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *    "uslist" :  ///< 暂不支持多个。。userid数组只能传一个
  *    [
  *      {
@@ -113,7 +116,7 @@ int AS_DevsAlarmUnSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
  *                    param1: >=0 成功，否则失败
  *                    Str():订阅成功序列号集合
  */
-int AS_UserIDAlarmSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
+XSDK_API int AS_UserIDAlarmSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
 
 /**
  * @brief 取消报警订阅(UserID)
@@ -122,6 +125,7 @@ int AS_UserIDAlarmSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
  * @example
  * {
  *    "msg" : "userid_unsubscribe"(客服系统),  ///< userid_adv_unsubscribe（广告推送）
+ *    "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *    "all": "1",                  //【可选】 //1表示:删除该userid的所有订阅关系（此时不需要tklist）
  *    "uslist" :
  *    [
@@ -140,7 +144,7 @@ int AS_UserIDAlarmSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
  *                    param1: >=0 成功，否则失败
  *                    Str():取消订阅成功序列号集合
  */
-int AS_UserIDAlarmUnSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
+XSDK_API int AS_UserIDAlarmUnSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
 
 /**
  * @brief 查询报警消息列表
@@ -149,6 +153,7 @@ int AS_UserIDAlarmUnSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
  * @example
  * {
  *   "msg": "alarm_query",
+ *   "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *   "sn": "c142dd39f8222e1d",
  *   "am": "1",    ///<【可选】未携带此字段则不下发图片url，协议标识（用于标识客户端是否支持https，1 表示支持https下发的下载地址为https，0 表示不支持http下发的下载地址为http，其他将返回错误）
  *   "wd": "80",   ///<【可选】缩略图宽 整数字符串 未携带下发原图url
@@ -161,6 +166,7 @@ int AS_UserIDAlarmUnSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
  *   "label" : ["",""],  ///<【可选】报警标签，即ai检测类型
  *   "labelfttp":"or",   ///<【可选】针对报警标签的过滤方式，and为与判断，or为或判断，不传则默认为and，传则只允许值为and和or
  *   "labeldet":true,    ///<【可选】用于表示是否需要详细标签信息，需要标签详细信息则传值且值为true
+ *   "at":ture,              ///< 可选】用于区分多图片响应协议，true时，则按picinfos格式响应，否则统一按picinfo多图片则选一张有图的返回，没有则依旧响应picerr
  *   "usercheck" : 1  ///<【可选】为1表示要进行userid校验，其余情况则按原有逻辑走
  *  }
  * @return 异步回调消息：id:EMSG_AS_QUERY_ALARM_MSG_LIST = 6403, ///< 查询报警消息列表
@@ -168,7 +174,7 @@ int AS_UserIDAlarmUnSubscribe(UI_HANDLE hUser, const char *szReqJson, int nSeq);
  *                    Str:设备序列号
  *                    pData：消息列表信息
  */
-int AS_QueryAlarmMsgList(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_QueryAlarmMsgList(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 按时间查询报警消息列表
@@ -177,6 +183,7 @@ int AS_QueryAlarmMsgList(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
  * @example
  * {
  *   "msg": "alarm_query",
+ *   "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *   "sn": "4ad15e3168fb9061",
  *   "am": "1",    ///<【可选】未携带此字段则不下发图片url，协议标识（用于标识客户端是否支持https，1 表示支持https下发的下载地址为https，0 表示不支持http下发的下载地址为http，其他将返回错误）
  *   "wd": "80",   ///<【可选】缩略图宽 整数字符串 未携带下发原图url
@@ -191,6 +198,7 @@ int AS_QueryAlarmMsgList(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
  *   "label" : ["",""],  ///<【可选】报警标签，即ai检测类型
  *   "labelfttp":"or",   ///<【可选】针对报警标签的过滤方式，and为与判断，or为或判断，不传则默认为and，传则只允许值为and和or
  *   "labeldet":true,    ///<【可选】用于表示是否需要详细标签信息，需要标签详细信息则传值且值为true
+ *   "at":ture,              ///< 可选】用于区分多图片响应协议，true时，则按picinfos格式响应，否则统一按picinfo多图片则选一张有图的返回，没有则依旧响应picerr
  *   "usercheck" : 1  ///<【可选】为1表示要进行userid校验，其余情况则按原有逻辑走
  *  }
  * @return 异步回调消息：id:EMSG_AS_QUERY_ALARM_MSG_LIST_BY_TIME = 6404, ///< 按时间查询报警消息列表
@@ -198,7 +206,7 @@ int AS_QueryAlarmMsgList(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
  *                    Str:设备序列号
  *                    pData：消息列表信息
  */
-int AS_QueryAlarmMsgListByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_QueryAlarmMsgListByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
 * @brief 报警消息图片下载
@@ -209,7 +217,7 @@ int AS_QueryAlarmMsgListByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq 
 *   "msg": "download_alarm_image",
 *   "sn": "4ad15e3168fb9061",
 *   "filename": "", ///< 文件存储绝对路径
-*  "downloadbyurl" : "0", ///< 是否通过url下载图片，"1"：通过url直接下载图片，alarmmsg需要包含picinfo/url字段 "0":通过其他信息下载图片
+*   "downloadbyurl" : "0", ///< 是否通过url下载图片，"1"：通过url直接下载图片，alarmmsg需要包含picinfo/url字段 "0":通过其他信息下载图片
 *   "wd": "80",   ///<【可选】缩略图宽 整数字符串 未携带下载原图
 *   "hg": "80",  ///<【可选】缩略图高 整数字符串 未携带下载原图
 *   "alarminfo": ///< 报警信息，查询返回的数据，只支持单个报警消息图片下载
@@ -221,7 +229,7 @@ int AS_QueryAlarmMsgListByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq 
  *                   param1: >=0 成功，否则失败
  *                   Str:图片存储地址
 */
-int AS_DownloadAlarmMsgImage(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_DownloadAlarmMsgImage(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 取消等待队列中所有未下载的图片
@@ -229,7 +237,7 @@ int AS_DownloadAlarmMsgImage(UI_HANDLE hUser, const char *szReqJson, int nSeq = 
  * @return 异步回调消息：id:EMSG_AS_STOP_DOWNLOAD_ALARM_MSG_IMAGE = 6415, ///< 取消等待队列中所有未下载的图片
  *                    param1: >=0 成功，否则失败
  */
-int AS_StopDownloadAlarmMsgImage(UI_HANDLE hUser, int nSeq = 0);
+XSDK_API int AS_StopDownloadAlarmMsgImage(UI_HANDLE hUser, int nSeq = 0);
 
 /**
  * @brief 是否有报警消息产生
@@ -237,6 +245,7 @@ int AS_StopDownloadAlarmMsgImage(UI_HANDLE hUser, int nSeq = 0);
  * @example
  * {
  *   "msg": "nmq", ///< new message query
+ *   "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *   "time": "2022-07-12 20:03:06", ///< 【可选】从当前time开始是否有新的报警消息（当多个设备查一个时间点时使用该字段）,此字段存在优先使用此字段
  *   "snlist":
  *   [
@@ -251,7 +260,7 @@ int AS_StopDownloadAlarmMsgImage(UI_HANDLE hUser, int nSeq = 0);
  *                    Str:结果信息
  *                    pData:查询成功的序列号集合
  */
-int AS_WhetherAnAlarmMsgIsGenerated(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_WhetherAnAlarmMsgIsGenerated(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 根据时间点查询云视频片段信息
@@ -260,6 +269,7 @@ int AS_WhetherAnAlarmMsgIsGenerated(UI_HANDLE hUser, const char *szReqJson, int 
  * @example
  * {
  *  "msg": "video_clip", 或者 "msg": "short_video_clip"  ///< 查看短视频的请求
+ *  "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *  "sn": "xx", ///< 设备序列号
  * 	"ch": 0, ///< 【可选】不填写此字段表示查询所有通道
  * 	"time":[ "2023-02-28 17:00:00","2023-02-28 18:00:00","2023-02-28 19:00:00"....], ///< 报警时间点
@@ -269,7 +279,7 @@ int AS_WhetherAnAlarmMsgIsGenerated(UI_HANDLE hUser, const char *szReqJson, int 
  *                    param1: >=0 成功，否则失败
  *                    Str:结果信息
  */
-int AS_QueryCloudVideoClipInfoByPoint(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_QueryCloudVideoClipInfoByPoint(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 日历功能
@@ -278,6 +288,7 @@ int AS_QueryCloudVideoClipInfoByPoint(UI_HANDLE hUser, const char *szReqJson, in
  * @example
  * {
  *  "msg": "calendar",
+ *  "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *  "sn": "c142dd39f8222e1d", ///< 设备序列号
  *  "dt": "2017-11",  ///< 按月查询，如果按天查询则Data对应的value为json数组，例："dt": [{"tm": "2017-11-01"},{"tm": "2017-11-02"}]  如果支持最新一条消息 Date：Last
  *  "ty": "VIDEO",  ///< VIDEO：查询视频日历节点 MSG：查询报警消息日历节点
@@ -287,7 +298,7 @@ int AS_QueryCloudVideoClipInfoByPoint(UI_HANDLE hUser, const char *szReqJson, in
  *                    param1: >=0 成功，否则失败
  *                    Str:结果信息
  */
-int AS_QueryCalendarByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_QueryCalendarByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 删除报警信息
@@ -296,6 +307,7 @@ int AS_QueryCalendarByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0)
  * @example
  * {
  *	"msg": "alarm_delete",
+ *	"timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *	"sn": "14005d42a45417d7",
  *	"delty": "MSG",          ///< 删除消息和图片为:MSG  删除视频:VIDEO
  *	"ids": [ --【可选】 如果没有ids会全部清空
@@ -308,7 +320,7 @@ int AS_QueryCalendarByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0)
  *                    param1: >=0 成功，否则失败
  *                    Str:结果信息
  */
-int AS_DeleteAlarm(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_DeleteAlarm(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 查询订阅状态
@@ -316,6 +328,7 @@ int AS_DeleteAlarm(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
  * @example
  * {
  *	 "msg": "query_subscribe",
+ *	 "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *	 "tks": ["token1", "token2"], ///< 根据token查询   *subty和tks同时存在，优先使用subty
  *	 "subty": "Android"       ///< 根据设备类型查询，subty目前包括: Android Hook IOS Google XG HuaWei Third  ALL(表示查询所有订阅类型)
  *	 "snlist": [{
@@ -326,7 +339,7 @@ int AS_DeleteAlarm(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
  *                    param1: >=0 成功，否则失败
  *                    Str:结果信息
  */
-int AS_QuerySubscribeStatus(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_QuerySubscribeStatus(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 查询状态历史记录
@@ -335,6 +348,7 @@ int AS_QuerySubscribeStatus(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0
  * @example
  * {
  *   "msg": "status_history",
+ *   "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *	 "sort": "asc", ///< 升序排列  降序使用"desc"
  *	 "count" : 200, ///< 查询条数，默认500，最多500（因为设备可能分配在不同的服务器，实际客户端收到的的最大条数是500的成倍增加）
  *	 "startTm": 1664001721, ///< utc时间，默认0   *批量设备只能查询同一个时间范围
@@ -348,7 +362,7 @@ int AS_QuerySubscribeStatus(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0
  *                    Str()：结果信息(Json格式，数据内容APP需重新按时间排序)
  *                    pData:查询成功的设备序列号集合
  */
-int AS_QueryStatusHistoryRecord(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_QueryStatusHistoryRecord(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 查询云视频播放地址
@@ -357,6 +371,7 @@ int AS_QueryStatusHistoryRecord(UI_HANDLE hUser, const char *szReqJson, int nSeq
  * @example
  * {
  *   "msg": "query_hls_url",
+ *   "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *	 "sn": "xxxx",
  *	 "ch": 0,      ///<【可选】不填写此字段表示查询所有通道
  *	 "last" : "1",   ///< 【可选】如果有此字段，则表示更新最新的m3u8文件
@@ -367,7 +382,7 @@ int AS_QueryStatusHistoryRecord(UI_HANDLE hUser, const char *szReqJson, int nSeq
  *                    param1: >=0 成功，否则失败
  *                    Str()：结果信息(Json格式)
  */
-int AS_QueryCloudVideoHlsUrl(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_QueryCloudVideoHlsUrl(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 设置报警消息已读标志
@@ -375,13 +390,14 @@ int AS_QueryCloudVideoHlsUrl(UI_HANDLE hUser, const char *szReqJson, int nSeq = 
  * @example
  * {
  *  "msg": "msgstatus_record", ///< 接口标识
+ *  "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *  "sn": "xxxxxxxxx",         ///< 设备序列号
  *  "ids": ["","",""]          ///< alarmid列表
  * }
  * @return 异步回调消息：id:EMSG_AS_SET_ALARM_MSG_READ_FLAG = 6416, ///< 设置报警消息已读标志
  *                    param1: >=0 成功，否则失败
  */
-int AS_SetAlarmMsgReadFlag(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_SetAlarmMsgReadFlag(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 根据时间段获取存储信息条数（可选择消息条数还是视频条数）
@@ -389,13 +405,17 @@ int AS_SetAlarmMsgReadFlag(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0)
  * @example
  * {
  *  "msg": "get_storage_count", ///< 接口标识
+ *  "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *  "st" : "2023-11-29 00:00:00", ///< 开始时间 格式必须为年-月-日 时:分:秒
  *  "et" : "2023-11-29 23:59:59", ///< 结束时间 格式必须为年-月-日 时:分:秒
  *  "type" : "MSG", ///< 查询消息类型 消息为MSG，视频为VIDEO
  *	"snlist": [{
  *		 "sn": "027995bbc8d6491b",
  *		 "events":["appEventHumanDetectAlarm"],   ///< 查询报警类型【可选】
-         "ch": 0                                  ///< 通道号【可选】
+ *       "ch": 0                                  ///< 通道号【可选】
+ *       "labels":["",""]，                       ///< 报警标签，即ai检测类型【可选】
+ *       "fttp":"and",                           ///< 用于决定event与label条件同时出现时是or还是and过滤，默认为and【可选】
+ *       "lf":"or",                              ///< 用于决定label条件是or还是and过滤，默认为or【可选】
  *	 }]
  * }
  * @return 异步回调消息：id:EMSG_AS_GET_STORAGE_INFO_COUNT = 6417, ///< 根据时间段获取存储信息条数
@@ -403,7 +423,7 @@ int AS_SetAlarmMsgReadFlag(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0)
  *                    Str()：结果信息(Json格式)
  *                    pData:查询成功的序列号集合
  */
-int AS_GetStorageInfoCount(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_GetStorageInfoCount(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 按文件名称查询对应的云存储视频片段信息
@@ -411,11 +431,34 @@ int AS_GetStorageInfoCount(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0)
  * @example
  * {
  *   "msg": "gvi",           ///< 此接口固定为gvi
+ *   "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *   "sn": "a6a2a89ab9ec7f0d",
  *   "vids":["003_a6a2a89ab9ec7f0d_240511153516_1715422917-1.m3u8","003_a6a2a89ab9ec7f0d_240511153516_1715422917-1.m3u8"],  ///< 云视频文件名称
  * }
  * @return 异步回调消息：ID: EMSG_AS_QUERY_VIDEO_CLIP_BY_NAME  = 6418； param1: >=0 成功，否则失败；Str()：结果信息(Json格式)
  */
-int AS_QueryVideoClipsByFileName(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int AS_QueryVideoClipsByFileName(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+
+/**
+ * @brief 获取报警消息翻译与图标
+ * @param szReqJson 请求参数信息(JSON),格式如下：
+ * @example
+ * {
+ *   "msg": "get_translate_icon",  ///< 此接口固定为get_translate_icon
+ *   "timeout" : 8000,                    ///<【可选】超时时间 默认:8000ms
+ *   "tlvs":                                     ///< 报警翻译版本号  *不传此字段或为空字符串则表示获取全量，同时图标也会返回全量，如果传版本号，则返回增量，即传入版本号到最新版本号之间所有变动的报警翻译
+ *   {
+ *         "ZH" :"v1",
+ *         "ZHTW":"v1"
+ *   },
+ *   "icvs":"v1",                            ///< 图标版本号 当传icvs但不传tlvs时，返回传入版本号到最新版本号间所有变动的图标下载地址，不传icvs时返回全量图标下载地址
+ *   "app":"",                                ///< app标识，可以使用包名，仅在需查询图标时起作用，不传默认default
+ *   "st":"",                                   ///< 系统类型：IOS|AND（苹果|安卓），仅在需查询图标时起作用，不传默认default
+ *   "appvs":"",                            ///< APP版本
+ *   "lt":["ZH"]                              ///< 仅在lg情况下生效，可查询多种语言类型翻译
+ * }
+ * @return 异步回调消息：ID: EMSG_AS_GET_ALARM_MSG_TRANSLATION_AND_ICON  = 6419； param1: >=0 成功，否则失败；Str()：结果信息(Json格式)
+ */
+XSDK_API int AS_GetAlarmMsgTranslationAndIcon(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 #endif //__FUN_AS_H_

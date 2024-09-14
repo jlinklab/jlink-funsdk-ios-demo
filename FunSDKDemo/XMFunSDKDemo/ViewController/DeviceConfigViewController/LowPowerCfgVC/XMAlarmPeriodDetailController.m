@@ -42,7 +42,7 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
 
     
     
-    self.navigationItem.title = TS(@"time_diy");
+    self.navigationItem.title = TS("time_diy");
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame = CGRectMake(0, 0, 32, 32);
     [leftBtn setBackgroundImage:[UIImage imageNamed:@"UserLoginView-back-nor"] forState:UIControlStateNormal];
@@ -139,7 +139,7 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
         case 0:
         {
             AlarmSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:kTitleSwitchCell];
-            cell.titleLabel.text = TS(@"set_open");
+            cell.titleLabel.text = TS("set_open");
             cell.toggleSwitch.on = self.alarmPeriod.isValid;
             __weak typeof(self) weakSelf = self;
             cell.toggleSwitchStateChangedAction = ^(BOOL switchOn){
@@ -155,7 +155,7 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
                 cell.titleLeftBorder = -5;
                 [cell enterFilletMode];
                 [cell noDisplayArrow];
-                NSString *titleLeft = [NSString stringWithFormat:@"%@:   ",TS(@"set_start")];
+                NSString *titleLeft = [NSString stringWithFormat:@"%@:   ",TS("set_start")];
                 NSString *titleRight = self.alarmPeriod.startTime;
                 NSString *title = [NSString stringWithFormat:@"%@%@",titleLeft,titleRight];
                 NSMutableAttributedString *maStr = [[NSMutableAttributedString alloc] initWithString:title];
@@ -171,7 +171,7 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
                 cell.titleLeftBorder = -5;
                 [cell enterFilletMode];
                 [cell noDisplayArrow];
-                NSString *titleLeft = [NSString stringWithFormat:@"%@:   ",TS(@"set_finish")];
+                NSString *titleLeft = [NSString stringWithFormat:@"%@:   ",TS("set_finish")];
                 NSString *titleRight = self.alarmPeriod.endTime;
                 NSString *title = [NSString stringWithFormat:@"%@%@",titleLeft,titleRight];
                 NSMutableAttributedString *maStr = [[NSMutableAttributedString alloc] initWithString:title];
@@ -184,11 +184,11 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
             }
             TitleComboBoxCell *cell = [tableView dequeueReusableCellWithIdentifier:kTitleComboBoxCell];
             [cell enterFilletMode];
-            cell.titleLabel.text = TS(@"set_week");
+            cell.titleLabel.text = TS("set_week");
             
             NSInteger weekBit = self.alarmPeriod.weekBit;
             
-            NSArray *array = @[TS(@"Monday"), TS(@"Tuesday"), TS(@"Wednesday"), TS(@"Thursday"), TS(@"Friday"), TS(@"Saturday"), TS(@"Sunday")];
+            NSArray *array = @[TS("Monday"), TS("Tuesday"), TS("Wednesday"), TS("Thursday"), TS("Friday"), TS("Saturday"), TS("Sunday")];
             
             NSString *sWeekBit = @"";
             int selectedDyaNum = 0;
@@ -208,7 +208,7 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
             }
             
             if (selectedDyaNum == 7) {
-                sWeekBit = TS(@"every_day");
+                sWeekBit = TS("every_day");
             }
             
             cell.toggleLabel.text = sWeekBit;
@@ -219,7 +219,7 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
         case 2:
         {
             CircleWeekChoseCell *cell = [tableView dequeueReusableCellWithIdentifier:kCircleWeekChoseCell];
-            cell.lbLeft.text = TS(@"TR_Alarm_Period_Repeat_Time");
+            cell.lbLeft.text = TS("TR_Alarm_Period_Repeat_Time");
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             NSMutableArray *state = [NSMutableArray arrayWithCapacity:0];
@@ -255,7 +255,7 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
             timeStr = @"00:00:00";
         }
         pickerView.ifChoseStart = indexPath.row == 0 ? YES : NO;
-        pickerView.title = indexPath.row == 0 ? TS(@"TR_Alarm_Period_Select_Start_Time") : TS(@"TR_Alarm_Period_Select_End_Time");
+        pickerView.title = indexPath.row == 0 ? TS("TR_Alarm_Period_Select_Start_Time") : TS("TR_Alarm_Period_Select_End_Time");
         
         if ([timeStr isEqualToString:@"24:00:00"]){
             timeStr = @"00:00:00";
@@ -280,7 +280,7 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
 
 -(void)leftBtnClicked {
     if (self.alarmPeriod.isValid && self.alarmPeriod.weekBit <= 0) {
-        [SVProgressHUD showErrorWithStatus:TS(@"please_select_week")];
+        [SVProgressHUD showErrorWithStatus:TS("please_select_week")];
         return;
     }
     self.clickBack = YES;
@@ -353,7 +353,7 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
             //最好判断下时间
 //            if ([CYCalenderManager getSecondsFromTime:self.alarmPeriod.endTime style:CY_TIME_STRING_STYLE_HM] <= [CYCalenderManager getSecondsFromTime:dateTime style:CY_TIME_STRING_STYLE_HM]) {
 //                
-//                [SVProgressHUD showErrorText:TS(@"End_Time_Greater_Than_Begin_Time")];
+//                [SVProgressHUD showErrorText:TS("End_Time_Greater_Than_Begin_Time")];
 //                return;
 //            }
 //            else
@@ -369,7 +369,7 @@ static NSString *const kCircleWeekChoseCell = @"CircleWeekChoseCell";
             //最好判断下时间
 //            if ([CYCalenderManager getSecondsFromTime:dateTime style:CY_TIME_STRING_STYLE_HM] <= [CYCalenderManager getSecondsFromTime:self.alarmPeriod.startTime style:CY_TIME_STRING_STYLE_HM]) {
 //                
-//                [SVProgressHUD showErrorText:TS(@"End_Time_Greater_Than_Begin_Time")];
+//                [SVProgressHUD showErrorText:TS("End_Time_Greater_Than_Begin_Time")];
 //                return;
 //            }
 //            else

@@ -44,11 +44,11 @@ typedef struct MediaDates
 }MediaDates;
 
 // API废弃，不再使用
-int CD_MediaRecordDates(UI_HANDLE hUser, const char *devId, int nChnId, int nStreamType, int nSeq = 0);
+XSDK_API int CD_MediaRecordDates(UI_HANDLE hUser, const char *devId, int nChnId, int nStreamType, int nSeq = 0);
 
 // API废弃，不再使用
-int CD_MediaTimeSect(UI_HANDLE hUser, const char *devId, int nChnId, int nStreamType, int date, int nSeq = 0);
+XSDK_API int CD_MediaTimeSect(UI_HANDLE hUser, const char *devId, int nChnId, int nStreamType, int date, int nSeq = 0);
 
 
-//int CD_CloudDowonLoadRecord(UI_HANDLE hUser, const SMediaFileInfo *media, int nBeign, int nEnd, const char *szFileName, int nSeq = 0);
+//XSDK_API int CD_CloudDowonLoadRecord(UI_HANDLE hUser, const SMediaFileInfo *media, int nBeign, int nEnd, const char *szFileName, int nSeq = 0);
 

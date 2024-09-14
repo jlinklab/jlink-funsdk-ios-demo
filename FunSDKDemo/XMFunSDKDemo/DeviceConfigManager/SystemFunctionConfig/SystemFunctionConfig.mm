@@ -177,6 +177,31 @@
         if (functionCfg.mOtherFunction.SupportBT.Value() == YES) {
             object.sysFunction.SupportBT = functionCfg.mOtherFunction.SupportBT.Value();
         }
+        // AOV功能
+        object.sysFunction.AovMode = functionCfg.mOtherFunction.AovMode.Value();
+        //AOV 工作模式
+        object.sysFunction.AovWorkModeIndieControl = functionCfg.mOtherFunction.AovWorkModeIndieControl.Value();
+        
+        // AOV报警抑制，限制设备不能频繁触发报警
+        object.sysFunction.AovAlarmHold = functionCfg.mOtherFunction.AovAlarmHold.Value();
+        
+        //是否支持灯光亮度：目前AOV设备使用
+        object.sysFunction.supportSetBrightness = functionCfg.mOtherFunction.SupportSetBrightness.Value();
+        
+        //是否支持状态灯
+        object.sysFunction.SupportStatusLed = functionCfg.mOtherFunction.SupportStatusLed.Value();
+        
+        //是否支持微光控制
+        object.sysFunction.MicroFillLight = functionCfg.mOtherFunction.MicroFillLight.Value();
+        
+        //支持自动灯光模式下的灵敏度设置，取值范围固定为1~5 目前AOV设备使用
+        object.sysFunction.SoftLedThr = functionCfg.mOtherFunction.SoftLedThr.Value();
+        
+        //是否支持低功耗设备唤醒和预览时长 目前AOV设备使用
+        object.sysFunction.LowPowerWorkTime = functionCfg.mOtherFunction.LowPowerWorkTime.Value();
+        
+        //是否支持低功耗设备电池管理
+        object.sysFunction.BatteryManager = functionCfg.mOtherFunction.BatteryManager.Value();
         
         //获取能力级之后的结果回调
         if ([self.delegate respondsToSelector:@selector(SystemFunctionConfigGetResult:)]) {

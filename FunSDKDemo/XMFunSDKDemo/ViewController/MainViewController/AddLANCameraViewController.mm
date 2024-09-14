@@ -13,6 +13,7 @@
 #import "DeviceRandomPwdManager.h"
 #import "DeviceManager.h"
 #import "SystemInfoManager.h"
+#import "XMSecurity/Security.h"
 
 @interface AddLANCameraViewController ()<UITableViewDelegate,UITableViewDataSource, DeviceManagerDelegate>
 
@@ -244,8 +245,13 @@
     
     NSString *devUser = [self getCameraLoginName];
     NSString *devPwd = [self getCameraLoginPassword];
+    
+    BOOL autoChangeEnable = [self.dataSourceDic[@"AutoChangeRandomAcc"] boolValue];
+    BOOL randomEnable = [self.dataSourceDic[@"random"] boolValue];
+        
+    
     if (JFConfigType_Wifi == self.configType || !self.deviceInfo.devTokenEnable) {
-        if ([[self.dataSourceDic objectForKey:@"random"] boolValue]){
+        if (randomEnable && autoChangeEnable) {
             //修改随即用户名密码设备需要用到ChangeRandomUser接口，和普通设备的接口不同
             //校验一下设备账户名是否符合要求
             if (devUser.length <= 0) {
@@ -474,7 +480,6 @@
     return _tipLab;
 }
 
-void MD5Encrypt(signed char *strOutput, unsigned char *strInput);
 
 -(UILabel *)lbNewPwdTips{
     if (!_lbNewPwdTips) {

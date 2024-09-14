@@ -102,7 +102,27 @@
         [self.dicCfg setObject:dicEventHandler forKey:@"EventHandler"];
     }
 }
+//MARK: 获取警铃间隔
+- (int)getAlarmVoiceInterval{
+    NSDictionary *dicEventHandler = [self.dicCfg objectForKey:@"EventHandler"];
+    if (dicEventHandler && [dicEventHandler isKindOfClass:[NSDictionary class]]) {
+        NSNumber *EventLatch = [dicEventHandler objectForKey:@"VoiceTipInterval"];
+        if (EventLatch && ![EventLatch isKindOfClass:[NSNull class]]) {
+            return [EventLatch intValue];
+        }
+    }
+    
+    return 0;
+}
 
+//MARK: 设置警铃间隔
+- (void)setAlarmVoiceInterval:(int)interval{
+    NSMutableDictionary *dicEventHandler = [[self.dicCfg objectForKey:@"EventHandler"] mutableCopy];
+    if (dicEventHandler && [dicEventHandler isKindOfClass:[NSMutableDictionary class]]) {
+        [dicEventHandler setObject:[NSNumber numberWithInt:interval] forKey:@"VoiceTipInterval"];
+        [self.dicCfg setObject:dicEventHandler forKey:@"EventHandler"];
+    }
+}
 //MARK: 获取通道联动报警状态
 - (BOOL)getRemoteEnableChannel:(int)channel{
     NSArray *RemoteEnable = [self.dicCfg objectForKey:@"RemoteEnable"];
@@ -135,6 +155,46 @@
     return NO;
 }
 
+//MARK: 获取和设置【TimeSection】配置项
+- (NSArray *)timeSection{
+    if (self.dicCfg) {
+        NSDictionary *dicEventHandler = [self.dicCfg objectForKey:@"EventHandler"];
+        if (dicEventHandler && [dicEventHandler isKindOfClass:[NSDictionary class]]) {
+            NSArray * timeSection = [dicEventHandler objectForKey:@"TimeSection"];
+            return timeSection;
+        }
+    }
+
+    return nil;
+}
+
+- (void)setTimeSection:(NSArray *)timeSection{
+    if (self.dicCfg) {
+        NSMutableDictionary *dicEventHandler = [[self.dicCfg objectForKey:@"EventHandler"] mutableCopy];
+        if (dicEventHandler && [dicEventHandler isKindOfClass:[NSDictionary class]]) {
+            [dicEventHandler setObject:timeSection forKey:@"TimeSection"];
+            [self.dicCfg setObject:dicEventHandler forKey:@"EventHandler"];
+        }
+    }
+}
+
+//MARK: 判断报警方式
+- (int)getAlarmTimePeriod{
+    int result = -1;
+    NSArray *timeSection = [self timeSection];
+    if (timeSection) {
+        result = 1;
+        NSString *sData = timeSection[0][0];
+        if ( sData.length ) {
+            if ([[sData substringWithRange:NSMakeRange(0, 1)] boolValue]) {
+                result = 0;
+            }
+        }
+    }
+    
+    return result;
+}
+
 //MARK: 设置报警灯开关状态
 - (void)setAlarmOutEnable:(BOOL)enable{
     NSMutableDictionary *dicEventHandler = [[self.dicCfg objectForKey:@"EventHandler"] mutableCopy];
@@ -143,7 +203,26 @@
         [self.dicCfg setObject:dicEventHandler forKey:@"EventHandler"];
     }
 }
-
+//MARK: 获取声音报警状态
+- (BOOL)getVoiceEnable {
+    NSDictionary *dicEventHandler = [self.dicCfg objectForKey:@"EventHandler"];
+    if (dicEventHandler && [dicEventHandler isKindOfClass:[NSDictionary class]]) {
+        NSNumber *enable = [dicEventHandler objectForKey:@"VoiceEnable"];
+        if (enable && ![enable isKindOfClass:[NSNull class]]) {
+            return [enable boolValue];
+        }
+    }
+    
+    return NO;
+}
+//MARK: 设置声音报警状态
+- (void)setVoiceEnable:(BOOL)enable {
+    NSMutableDictionary *dicEventHandler = [[self.dicCfg objectForKey:@"EventHandler"] mutableCopy];
+    if (dicEventHandler && [dicEventHandler isKindOfClass:[NSMutableDictionary class]]) {
+        [dicEventHandler setObject:[NSNumber numberWithBool:enable] forKey:@"VoiceEnable"];
+        [self.dicCfg setObject:dicEventHandler forKey:@"EventHandler"];
+    }
+}
 - (void)sendGetResult:(int)result{
     if (self.getIntellAlertAlarmCallBack) {
         self.getIntellAlertAlarmCallBack(result,self.channelNumber);

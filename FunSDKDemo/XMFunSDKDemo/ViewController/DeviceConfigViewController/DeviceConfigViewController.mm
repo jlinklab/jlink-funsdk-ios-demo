@@ -65,6 +65,10 @@
 #import "LowPowerRecordConfigViewController.h"
 #import "WDRViewController.h"
 
+#import "JFAOVModeOfWorkVC.h"
+#import "JFAOVLightSettingVc.h"
+#import "JFAOVBatteryManagementVC.h"
+
 @interface DeviceConfigViewController ()<UITableViewDelegate,UITableViewDataSource,SystemInfoConfigDelegate,SystemFunctionConfigDelegate,MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UITableView *devConfigTableView;
@@ -432,6 +436,45 @@
         WDRViewController *vc = [[WDRViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
+    else if ([titleStr isEqualToString:TS("TR_Setting_Mode_Of_Work")]){
+        //工作模式
+        if (devObject.sysFunction.AovMode == NO) {
+            //设备不支持AOV模式，不能进入工作模式配置 （开发本功能时，只有支持AOV模式的设备支持本功能，本功能包含一些新的配置项）
+            [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
+            return;
+        }
+        JFAOVModeOfWorkVC *vc = [[JFAOVModeOfWorkVC alloc] init];
+        vc.supportDoubleLightBoxCamera = devObject.sysFunction.iSupportDoubleLightBoxCamera;
+        vc.supportAovAlarmHold = devObject.sysFunction.AovAlarmHold;
+        vc.supportAovWorkModeIndieControl = devObject.sysFunction.AovWorkModeIndieControl;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if ([titleStr isEqualToString:TS("TR_Light_Settings")]){
+        //灯光设置
+        if (devObject.sysFunction.AovMode == NO) {
+            //设备不支持AOV模式时，一般来说会只支持灯光设置中的部分功能，或完全不支持，这里没有做功能入口限制，内部功能基本需要看设备能力集（iSupportDoubleLightBoxCamera、supportSetBrightness等这些能力集）
+        }
+        JFAOVLightSettingVc *vc = [[JFAOVLightSettingVc alloc] init];
+        vc.supportDoubleLightBoxCamera = devObject.sysFunction.iSupportDoubleLightBoxCamera;
+        vc.supportSetBrightness = devObject.sysFunction.supportSetBrightness;
+        vc.supportStatusLed = devObject.sysFunction.SupportStatusLed;
+        vc.supportMicroFillLight = devObject.sysFunction.MicroFillLight;
+        vc.SoftLedThr = devObject.sysFunction.SoftLedThr;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if ([titleStr isEqualToString:TS("TR_Setting_Battery_Management")]){
+        //电池管理
+        if (devObject.sysFunction.BatteryManager == NO) {
+            //设备不支持低功耗设备电池管理,AOV设备一般支持完整的功能，其他低功耗设备可能只支持电池电量
+            [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
+            return;
+        }
+        JFAOVBatteryManagementVC *vc = [[JFAOVBatteryManagementVC alloc] init];
+        vc.supportLowPowerWorkTime = devObject.sysFunction.LowPowerWorkTime;
+        vc.notAOVDevice = !devObject.sysFunction.AovMode;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
     else{
         return;
     }
@@ -499,6 +542,10 @@
         @{@"title":TS("TR_Camera_Linkage"),@"detailInfo":@""},
         @{@"title":TS("TR_Broad_Thrends_Config"),@"detailInfo":@""},
         @{@"title":TS("ManualAlert"),@"detailInfo":@""},
+        @{@"title":TS("TR_Light_Settings"),@"detailInfo":@""},
+        @{@"title":TS("TR_Setting_Battery_Management"),@"detailInfo":@""},
+        @{@"title":TS("TR_Setting_Mode_Of_Work"),@"detailInfo":@""},
+        
     ] mutableCopy];
 }
 

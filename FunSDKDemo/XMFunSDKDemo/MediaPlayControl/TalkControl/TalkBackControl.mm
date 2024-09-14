@@ -120,6 +120,10 @@
     }
     //app播放设备端音频
     FUN_MediaSetSound(_hTalk, 100, 0);
+    
+    //test
+   // FUN_SetIntAttr(_hTalk, EOA_SET_DEV_TALK_DATA_USER, self.msgHandle);
+    
 }
 - (void)stopDouTalk {
     [self closeTalk];
@@ -164,6 +168,18 @@
     NSInteger nAddr = [pParam integerValue];
     MsgContent *msg = (MsgContent *)nAddr;
     switch (msg->id) {
+        case EMSG_ON_TALK_PCM_DATA: {
+            NSData *data = [NSData dataWithBytes:msg->pObject length:msg->param1];
+            //test
+            if (data && data.length > 0) {
+                //[aecRecorder appendPCMData:data];
+            } else {
+
+            }
+            //test
+            
+        }
+            break;
         case EMSG_DEV_START_TALK: {//对讲失败
             if(_hTalk != 0 && msg->param1 != EE_OK){
                 [MessageUI ShowErrorInt:msg->param1];

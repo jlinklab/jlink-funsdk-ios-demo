@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  列表排序对象
  */
-@interface OrderListItem : NSObject
+@interface OrderListItem : NSObject <NSItemProviderWriting, NSItemProviderReading>
 
 //MARK: 主标题
 @property (nonatomic, copy) NSString *titleName;
@@ -34,19 +34,29 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL autoSwitchSelectState;
 //MARK: 是否仅仅展示选中状态 不自动切换
 @property (nonatomic, assign) BOOL showSelectStateOnly;
+//MARK: 预加载cell的高度
+@property (nonatomic, assign) CGFloat preCellHeight;
 
 @property (nonatomic, assign) int cellStyle;
 //MARK: 是否隐藏
 @property (nonatomic, assign) BOOL hidden;
+///滑动排序使用 是否要固定
+@property (nonatomic,assign) BOOL isFixed;
 
 //MARK: 数据标记
 @property (nonatomic, assign) int iMarker;
+//MARK: 临时数据
+@property (nonatomic, assign) int tempValue;
+@property (nonatomic, copy) NSString *tempString;
 
 @property (nonatomic, copy) NSString *devID;
 @property (nonatomic, assign) int channel;
 
 @property (nonatomic, strong) id model;
-
+//MARK: 开通前链接 算法超市跳转
+@property (nonatomic,copy) NSString *preUrl;//开通前链接  用于算法超市跳转
+//MARK: 开通后链接 算法超市跳转
+@property (nonatomic,copy) NSString *afterUrl;//开通后链接  用于算法超市跳转
 @end
 
 NS_ASSUME_NONNULL_END

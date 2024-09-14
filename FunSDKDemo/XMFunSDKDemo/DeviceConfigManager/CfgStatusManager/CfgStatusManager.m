@@ -55,6 +55,17 @@
     return ifFinished;
 }
 
+//MARK: 获取某个配置的状态
+- (XMCfgStatus)configStatusWithName:(NSString *)cfgName {
+    XMCfgStatus status = XMCfgStatus_UnRequest;
+    NSNumber *number = JFSafeDictionary([self.dicCfgStatus objectForKey:cfgName], @"Status");
+    if (number) {
+        status = (XMCfgStatus)[number intValue];
+    }
+    
+    return status;
+}
+
 //MARK: 重制所有请求状态
 - (void)resetAllCfgStatus{
     NSArray *array = self.dicCfgStatus.allKeys;

@@ -19,9 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UILabel *lbRight;
 @property (nonatomic,strong) UIImageView *imageViewArrow;
 @property (nonatomic,strong) UIView *bottomLine;
+///额外的左侧边距 需要在showTitle之前调用
+@property (nonatomic,assign) CGFloat extraBorderLeft;
+///分割线高度 同上
+@property (nonatomic,assign) CGFloat bottomLineHeight;
 
-- (void)showTitle:(NSString *)title description:(NSString *)description rightTitle:(NSString *)rightTitle;
-
+- (void)showTitle:(NSString *)title description:( NSString * _Nullable )description rightTitle:(NSString * _Nullable )rightTitle;
+- (void)showOnlyTitle:(NSString *)title;
 @end
 
 NS_ASSUME_NONNULL_END

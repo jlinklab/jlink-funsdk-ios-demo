@@ -64,4 +64,7 @@ NSDate *YYNSDateFromString(__unsafe_unretained NSString *string);
 + (NSString *)xm_hexStringWithData:(NSData *)data;
 /** MAC ADDRESS */
 + (NSString *)xm_deviceMacAddress;
+
+///将UTC时间转成手机当前时间
++ (NSString *)convertUTCtoLocalTime:(NSString *)utcTime;
 @end

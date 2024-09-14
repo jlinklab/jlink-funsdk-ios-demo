@@ -18,7 +18,7 @@ typedef NS_ENUM(int,XMCfgStatus) {
 NS_ASSUME_NONNULL_BEGIN
 
 /*
- 设备配置状态管理者
+ 设备配置状态管理器
  
  统一管理某个界面配置请求的状态
  
@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)changeCfgStatus:(XMCfgStatus)status name:(NSString *)cfgName;
 //MARK: 检测所有配置是否请求完成
 - (BOOL)checkAllCfgFinishedRequest;
+//MARK: 获取某个配置的状态
+- (XMCfgStatus)configStatusWithName:(NSString *)cfgName;
 //MARK: 重制所有请求状态
 - (void)resetAllCfgStatus;
 

@@ -42,7 +42,7 @@ static const float kBottomHSpaceOffset = 24;
     [self.weekButtons removeAllObjects];
     
     float btnWidth = kButtonWeekWidth;
-    NSArray *title = @[TS(@"Monday"),TS(@"Tuesday"),TS(@"Wednesday"),TS(@"Thursday"),TS(@"Friday"),TS(@"Saturday"),TS(@"Sunday")];
+    NSArray *title = @[TS("Monday"),TS("Tuesday"),TS("Wednesday"),TS("Thursday"),TS("Friday"),TS("Saturday"),TS("Sunday")];
     for (int i = 0;i < 7;i++){
         UIButton *btnWeek = [UIButton buttonWithType:UIButtonTypeSystem];
         [btnWeek setBackgroundColor: [UIColor orangeColor]];

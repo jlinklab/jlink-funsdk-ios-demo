@@ -37,6 +37,7 @@ typedef struct DevInfoEx
     int             ma;
     char            Comments[512]; // 服务器限制长度255
     char            DevTokenInfo[1024];
+    char            Manufacturer[256]; ///< 设备制造商
 }DevInfoEx;
     
 typedef struct UserInfo

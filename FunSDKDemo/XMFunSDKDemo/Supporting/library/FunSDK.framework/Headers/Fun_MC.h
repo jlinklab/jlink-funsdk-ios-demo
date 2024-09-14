@@ -151,7 +151,7 @@ using SDevAlarmMsgQueryReqParams = struct SDevAlarmMsgQueryReqParams
  * @return 异步回调消息 ID：EMSG_MC_INIT_INFO = 6011 ///< 报警服务初始化
  *                    param1: >=0 成功，否则失败
  */
-int MC_Init(UI_HANDLE hUser, SMCInitInfo *pInfo, int nSeq);
+XSDK_API int MC_Init(UI_HANDLE hUser, SMCInitInfo *pInfo, int nSeq);
 
 /**
  * @brief 报警初始化V2
@@ -160,7 +160,7 @@ int MC_Init(UI_HANDLE hUser, SMCInitInfo *pInfo, int nSeq);
  * @return 异步回调消息 ID：EMSG_MC_INIT_INFO = 6011 ///< 报警服务初始化
  *                    param1: >=0 成功，否则失败
  */
-int MC_InitV2(UI_HANDLE hUser, SMCInitInfoV2 *pInfo, int nSeq);
+XSDK_API int MC_InitV2(UI_HANDLE hUser, SMCInitInfoV2 *pInfo, int nSeq);
 
 /**
  * @brief 定阅报警
@@ -172,7 +172,7 @@ int MC_InitV2(UI_HANDLE hUser, SMCInitInfoV2 *pInfo, int nSeq);
  * @return 异步回调消息 ID：EMSG_MC_LinkDev = 6000 ///< 报警订阅
  *                    param1: >=0 成功，否则失败
  */
-int MC_LinkDev(UI_HANDLE hUser, const char *uuid, const char *devUsername, const char *devPwd, int nSeq = 0, const char *strDevName = NULL, const char *strVoice = NULL);
+XSDK_API int MC_LinkDev(UI_HANDLE hUser, const char *uuid, const char *devUsername, const char *devPwd, int nSeq = 0, const char *strDevName = NULL, const char *strVoice = NULL);
 
 /**
  * @brief 通用报警接口，可以替换其他的报警订阅接口
@@ -188,7 +188,7 @@ int MC_LinkDev(UI_HANDLE hUser, const char *uuid, const char *devUsername, const
  * 		              pData: 实时报警信息(JSON)
  * 		              str: 设备序列号
  */
-int MC_LinkDevGeneral(UI_HANDLE hUser, const char *sDevId, const char *sDevName = "", const char *sVoice = "", const char *sDevUserName = "", const char *sDevUserPwd = "", const char *sAppToken = "", const char *sAppType = "", int nSeq = 0);
+XSDK_API int MC_LinkDevGeneral(UI_HANDLE hUser, const char *sDevId, const char *sDevName = "", const char *sVoice = "", const char *sDevUserName = "", const char *sDevUserPwd = "", const char *sAppToken = "", const char *sAppType = "", int nSeq = 0);
 
 /**
  * @brief 批量报警订阅
@@ -203,7 +203,7 @@ int MC_LinkDevGeneral(UI_HANDLE hUser, const char *sDevId, const char *sDevName 
  * 		              arg1: >=0 成功，< 0错误值，详见错误码
  * 		              Str: 返回订阅成功的设备序列号集合 以";"分割
  */
-int MC_LinkDevsBatch(UI_HANDLE hUser, const char *sDevIDs, const char *sDevName = "", const char *sVoice = "", const char *sDevUserName = "", const char *sDevUserPwd = "", const char *sAppToken = "", const char *sAppType = "", int nSeq = 0);
+XSDK_API int MC_LinkDevsBatch(UI_HANDLE hUser, const char *sDevIDs, const char *sDevName = "", const char *sVoice = "", const char *sDevUserName = "", const char *sDevUserPwd = "", const char *sAppToken = "", const char *sAppType = "", int nSeq = 0);
 
 /**
  * @brief 设备报警订阅
@@ -217,7 +217,7 @@ int MC_LinkDevsBatch(UI_HANDLE hUser, const char *sDevIDs, const char *sDevName 
  *                    param1: >=0 成功，否则失败
  *                    Str:设备序列号
  */
-int MC_DevAlarmSubscribe(UI_HANDLE hUser, const char *szDevId, const char *szDevName = "", const char *szRules = "", const char *szVoice = "", const char *szAppToken = "", const char *szAppType = "", int nSeq = 0);
+XSDK_API int MC_DevAlarmSubscribe(UI_HANDLE hUser, const char *szDevId, const char *szDevName = "", const char *szRules = "", const char *szVoice = "", const char *szAppToken = "", const char *szAppType = "", int nSeq = 0);
 
 /**
  * @brief 批量设备报警订阅
@@ -231,7 +231,7 @@ int MC_DevAlarmSubscribe(UI_HANDLE hUser, const char *szDevId, const char *szDev
  *                    param1: >=0 成功，否则失败
  *                    Str:返回订阅成功的设备序列号集合， 以";"分割
  */
-int MC_BatchDevAlarmSubscribe(UI_HANDLE hUser, const char *szDevSNs, const char *szDevName = "", const char *szRules = "", const char *szVoice = "", const char *szAppToken = "", const char *szAppType = "", int nSeq = 0);
+XSDK_API int MC_BatchDevAlarmSubscribe(UI_HANDLE hUser, const char *szDevSNs, const char *szDevName = "", const char *szRules = "", const char *szVoice = "", const char *szAppToken = "", const char *szAppType = "", int nSeq = 0);
 
 /**
  * @brief 取消订阅报警
@@ -239,7 +239,7 @@ int MC_BatchDevAlarmSubscribe(UI_HANDLE hUser, const char *szDevSNs, const char 
  * @return 异步回调消息 id:EMSG_MC_UnlinkDev = 6001  ///< 取消报警订阅
  *                    param1: >=0 成功，否则失败
  */
-int MC_UnlinkDev(UI_HANDLE hUser, const char *uuid, int nSeq = 0);
+XSDK_API int MC_UnlinkDev(UI_HANDLE hUser, const char *uuid, int nSeq = 0);
 
 /**
  * @brief 通用取消报警订阅接口,可以替换其他所有的报警订阅接口
@@ -250,7 +250,7 @@ int MC_UnlinkDev(UI_HANDLE hUser, const char *uuid, int nSeq = 0);
  * @return 异步回调消息 id:EMSG_MC_UnlinkDev = 6001 ///< 取消报警订阅
  *                    param1: >=0 成功，否则失败
  */
-int MC_UnlinkDevGeneral(UI_HANDLE hUser, const char *sDevId, const char *sAppToken = "", int nFlag = 0, int nSeq = 0);
+XSDK_API int MC_UnlinkDevGeneral(UI_HANDLE hUser, const char *sDevId, const char *sAppToken = "", int nFlag = 0, int nSeq = 0);
 
 /**
  * @brief 取消设备下所有账号报警订阅
@@ -258,7 +258,7 @@ int MC_UnlinkDevGeneral(UI_HANDLE hUser, const char *sDevId, const char *sAppTok
  * @return 异步回调消息 id:EMSG_MC_UnlinkDev = 6001  ///< 取消报警订阅
  *                    param1: >=0 成功，否则失败
  */
-int MC_UnlinkAllAccountsOfDev(UI_HANDLE hUser, const char *uuid, int nSeq = 0);
+XSDK_API int MC_UnlinkAllAccountsOfDev(UI_HANDLE hUser, const char *uuid, int nSeq = 0);
 
 /**
  * @brief 批量取消报警订阅
@@ -270,7 +270,7 @@ int MC_UnlinkAllAccountsOfDev(UI_HANDLE hUser, const char *uuid, int nSeq = 0);
  * 		              arg1: >=0 成功，< 0错误值，详见错误码
  * 		              Str: 返回取消成功的设备序列号集合 以";"分割
  */
-int MC_UnLinkDevsBatch(UI_HANDLE hUser, const char *sDevIDs, const char *sAppToken = "", int nFlag = 0, int nSeq = 0);
+XSDK_API int MC_UnLinkDevsBatch(UI_HANDLE hUser, const char *sDevIDs, const char *sAppToken = "", int nFlag = 0, int nSeq = 0);
 
 /**
  * @brief 取消异常报警订阅
@@ -280,7 +280,7 @@ int MC_UnLinkDevsBatch(UI_HANDLE hUser, const char *sDevIDs, const char *sAppTok
  * @return 异步回调消息 id:EMSG_MC_UnlinkDev = 6001  ///< 取消报警订阅
  * 		              arg1: >=0 成功，< 0错误值，详见错误码
  */
-int MC_UnlinkDevAbnormal(UI_HANDLE hUser, const char *uuid, const char *apptoken, int nSeq = 0);
+XSDK_API int MC_UnlinkDevAbnormal(UI_HANDLE hUser, const char *uuid, const char *apptoken, int nSeq = 0);
 
 /**
  * @brief 删除报警信息
@@ -291,18 +291,18 @@ int MC_UnlinkDevAbnormal(UI_HANDLE hUser, const char *uuid, const char *apptoken
  * @return 异步回调消息 id:EMSG_MC_UnlinkDev = 6001  ///< 取消报警订阅
  * 		              arg1: >=0 成功，< 0错误值，详见错误码
  */
-int MC_Delete(UI_HANDLE hUser, const char *uuid, const char *deleteType, const char *alarmID, int nSeq = 0);
+XSDK_API int MC_Delete(UI_HANDLE hUser, const char *uuid, const char *deleteType, const char *alarmID, int nSeq = 0);
 
 //接口废弃-zyj-161029
-//int MC_DevConnect(UI_HANDLE hUser, const char *uuid, int nSeq = 0);
-//int MC_DevDisConnect(UI_HANDLE hUser, const char *uuid, int nSeq = 0);
+//XSDK_API int MC_DevConnect(UI_HANDLE hUser, const char *uuid, int nSeq = 0);
+//XSDK_API int MC_DevDisConnect(UI_HANDLE hUser, const char *uuid, int nSeq = 0);
 
 //接口废弃-zyj-161029
-//int MC_SendControlData(UI_HANDLE hUser, const char *uuid, const char *buf, int nSeq = 0);
+//XSDK_API int MC_SendControlData(UI_HANDLE hUser, const char *uuid, const char *buf, int nSeq = 0);
 
 // 返回0:Unlinked  1:Linked(会很快返回,存在本地了)
 /** @deprecated 接口废弃，不再以本地缓存的订阅状态为准，使用MC_GetDevAlarmSubStatusByServer接口代替 */
-int MC_GetLinkState(const char *uuid);
+XSDK_API int MC_GetLinkState(const char *uuid);
 
  /**
   * @brief 通过订阅类型从服务器端获取设备报警订阅状态
@@ -313,7 +313,7 @@ int MC_GetLinkState(const char *uuid);
   *                    msg->Str() 设备序列号
   *                    pData:成功返回结果信息(JSON,需要app自己解析)，失败返回错误信息
   */
-int MC_GetDevAlarmSubStatusByType(UI_HANDLE hUser, const char *szDevId, const char *szAppType, int nSeq);
+XSDK_API int MC_GetDevAlarmSubStatusByType(UI_HANDLE hUser, const char *szDevId, const char *szAppType, int nSeq);
 
 /**
  * @brief 通过TKOEN从服务器端获取设备报警订阅状态
@@ -324,7 +324,7 @@ int MC_GetDevAlarmSubStatusByType(UI_HANDLE hUser, const char *szDevId, const ch
  *                    msg->Str() 设备序列号
  *                    pData:成功返回结果信息(JSON,需要app自己解析)，失败返回错误信息
  */
-int MC_GetDevAlarmSubStatusByToken(UI_HANDLE hUser, const char *szDevId, const char *szAppTokens, int nSeq);
+XSDK_API int MC_GetDevAlarmSubStatusByToken(UI_HANDLE hUser, const char *szDevId, const char *szAppTokens, int nSeq);
 
 /**
  * @brief 查询报警信息
@@ -333,7 +333,26 @@ int MC_GetDevAlarmSubStatusByToken(UI_HANDLE hUser, const char *szDevId, const c
  * @return 异步返回消息 ID：EMSG_MC_SearchAlarmInfo = 6003, ///< 按条件搜索报警消息
  *                    param1:>=0符合搜索条件的报警消息条数; <0 失败，详见错误码
  */
-int MC_SearchAlarmInfo(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pXPMS_SEARCH_ALARMINFO_REQ, int nSeq = 0);
+XSDK_API int MC_SearchAlarmInfo(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pXPMS_SEARCH_ALARMINFO_REQ, int nSeq = 0);
+
+/**
+ * @brief 查询报警信息(拓展接口)
+ * @details 短连接，查询完了就关闭TCP连接，视频最多返回500条，报警消息最多返回200条，需要客户端重复查询
+ * @param pXPMS_SEARCH_ALARMINFO_REQ 报警信息查询结构，详见 XPMS_SEARCH_ALARMINFO_REQ
+ * @param szExInfo 查询拓展信息，Json格式、方便后续扩张
+ * @example
+ * {
+ *     "AlarmEvent":["", ""],             //【可选】筛选要查找的报警类型（多种） ps:SDevAlarmMsgQueryReqParams 结构体里的参数只支持单个筛选，如果需要多个筛选，使用此参数， 优先使用此参数
+ *     "Label" : ["", ""],                    //【可选】报警标签，即ai检测类型
+ *     "LabelFilterType":"or",            //【可选】针对报警标签的过滤方式，and为与判断，or为或判断，不传则默认为and，传则只允许值为and和or
+ *     "LabelDet":true,                      //【可选】用于表示是否需要详细标签信息，需要标签详细信息则传值且值为true，
+ *     "FilterType":"and",                  //【可选】仅当AlarmEvent与Label过滤方式同时使用时起作用，不传则默认为and方式（即与判断），传则只允许值为and和or（即或判断），此字段针对于AlarmEvent与Label的过滤规则
+ *     "AppTag":true,                        //【可选】用于区分多图片响应协议，true时，则按PicInfos格式响应，否则统一按PicInfo多图片则选一张有图的返回，没有则依旧响应PicErr
+ * }
+ * @return 异步返回消息 ID：EMSG_MC_SearchAlarmInfo = 6003, ///< 按条件搜索报警消息
+ *                    param1:>=0符合搜索条件的报警消息条数; <0 失败，详见错误码
+ */
+XSDK_API int MC_SearchAlarmInfoEx(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pXPMS_SEARCH_ALARMINFO_REQ, const char *szExInfo, int nSeq = 0);
 
 /**
  * @brief 以开始，结束时间为条件查询报警信息
@@ -342,7 +361,26 @@ int MC_SearchAlarmInfo(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pXPMS_SEARCH_
  * @return 异步返回消息 ID：EMSG_MC_SearchAlarmInfo = 6003, ///< 按条件搜索报警消息
  *                    param1:>=0符合搜索条件的报警消息条数; <0 失败，详见错误码
  */
-int MC_SearchAlarmInfoByTime(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pXPMS_SEARCH_ALARMINFO_REQ, int nSeq = 0);
+XSDK_API int MC_SearchAlarmInfoByTime(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pXPMS_SEARCH_ALARMINFO_REQ, int nSeq = 0);
+
+/**
+ * @brief 以开始，结束时间为条件查询报警信息(拓展接口)
+ * @details 短连接，查询完了就关闭TCP连接，视频最多返回500条，报警消息最多返回200条，需要客户端重复查询
+ * @param pXPMS_SEARCH_ALARMINFO_REQ 报警信息查询结构，详见 XPMS_SEARCH_ALARMINFO_REQ
+ * @param szExInfo 查询拓展信息，Json格式、方便后续扩张
+ * @example
+ * {
+ *     "AlarmEvent":["", ""],             //【可选】筛选要查找的报警类型（多种） ps:SDevAlarmMsgQueryReqParams 结构体里的参数只支持单个筛选，如果需要多个筛选，使用此参数， 优先使用此参数
+ *     "Label" : ["", ""],                    //【可选】报警标签，即ai检测类型
+ *     "LabelFilterType":"or",            //【可选】针对报警标签的过滤方式，and为与判断，or为或判断，不传则默认为and，传则只允许值为and和or
+ *     "LabelDet":true,                      //【可选】用于表示是否需要详细标签信息，需要标签详细信息则传值且值为true，
+ *     "FilterType":"and",                  //【可选】仅当AlarmEvent与Label过滤方式同时使用时起作用，不传则默认为and方式（即与判断），传则只允许值为and和or（即或判断），此字段针对于AlarmEvent与Label的过滤规则
+ *     "AppTag":true,                        //【可选】用于区分多图片响应协议，true时，则按PicInfos格式响应，否则统一按PicInfo多图片则选一张有图的返回，没有则依旧响应PicErr
+ * }
+ * @return 异步返回消息 ID：EMSG_MC_SearchAlarmInfo = 6003, ///< 按条件搜索报警消息
+ *                    param1:>=0符合搜索条件的报警消息条数; <0 失败，详见错误码
+ */
+XSDK_API int MC_SearchAlarmInfoByTimeEx(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pXPMS_SEARCH_ALARMINFO_REQ, const char *szExInfo, int nSeq = 0);
 
 /**
  * @brief 查询报警图片
@@ -353,7 +391,7 @@ int MC_SearchAlarmInfoByTime(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pXPMS_S
  *                    param1:=0搜索成功;>0图片已有搜索记录，返回文件长度; <0 失败，详见错误码
  *                    msg->Str()  param1:>=0时返回图片文件路径，否则返回具体错误消息
  */
-int MC_SearchAlarmPic(UI_HANDLE hUser, const char *fileName, XPMS_SEARCH_ALARMPIC_REQ *pXPMS_SEARCH_ALARMPIC_REQ, int nSeq = 0);
+XSDK_API int MC_SearchAlarmPic(UI_HANDLE hUser, const char *fileName, XPMS_SEARCH_ALARMPIC_REQ *pXPMS_SEARCH_ALARMPIC_REQ, int nSeq = 0);
 
 /**
  * @brief 下载报警图片
@@ -367,17 +405,17 @@ int MC_SearchAlarmPic(UI_HANDLE hUser, const char *fileName, XPMS_SEARCH_ALARMPI
  *                    param1:=0搜索成功;>0图片已有搜索记录，返回文件长度; <0 失败，详见错误码
  *                    msg->Str()  param1:>=0时返回图片文件路径，否则返回具体错误消息
  */
-int MC_DownloadAlarmImage(UI_HANDLE hUser, const char *szDevSN, const char *szSaveFileName, const char *szAlaramJson, int nWidth = 0, int nHeight = 0, int nSeq = 0);
+XSDK_API int MC_DownloadAlarmImage(UI_HANDLE hUser, const char *szDevSN, const char *szSaveFileName, const char *szAlaramJson, int nWidth = 0, int nHeight = 0, int nSeq = 0);
 
 // szSaveFileNames多个
 // 接口已废弃
-int MC_DownloadAlarmImages(UI_HANDLE hUser, const char *szDevSN, const char *szSaveFileNames, const char *szAlaramJsons, int nWidth = 0, int nHeight = 0, int nSeq = 0);
+XSDK_API int MC_DownloadAlarmImages(UI_HANDLE hUser, const char *szDevSN, const char *szSaveFileNames, const char *szAlaramJsons, int nWidth = 0, int nHeight = 0, int nSeq = 0);
 
 /**
  * @brief 取消队列中所有未下载的图片下载
  * @details MC_SearchAlarmPic和MC_DownloadAlarmImage都可以取消
  */
-int MC_StopDownloadAlarmImages(UI_HANDLE hUser, int nSeq);
+XSDK_API int MC_StopDownloadAlarmImages(UI_HANDLE hUser, int nSeq);
 
 // 获取域名转IP后的报警图片URL 接口废弃-zyj-161029
 // char *MC_GetAlarmPicURL(char *strDNSPicURL, char strPicURL[512]);
@@ -386,10 +424,10 @@ int MC_StopDownloadAlarmImages(UI_HANDLE hUser, int nSeq);
 // szAlarmTime:formate 2017-10-19 15:07:44
 // msgId:EMSG_MC_GetAlarmRecordUrl
 // 废弃此接口
-int MC_GetAlarmRecordUrl(UI_HANDLE hUser, const char *szDevSN, const char *szAlarmTime, int nSeq = 0);
+XSDK_API int MC_GetAlarmRecordUrl(UI_HANDLE hUser, const char *szDevSN, const char *szAlarmTime, int nSeq = 0);
 
 ////日历功能(可同时查看视频节点 和 报警消息节点)
-//int MC_SearchDataByMothEx(UI_HANDLE hUser, int nMsgId, const char *devId, int nChannel, const char *szStreamType, int nDate, const char *szType, int nSeq);
+//XSDK_API int MC_SearchDataByMothEx(UI_HANDLE hUser, int nMsgId, const char *devId, int nChannel, const char *szStreamType, int nDate, const char *szType, int nSeq);
 
 /**
  * @brief 按月查询报警消息
@@ -402,7 +440,7 @@ int MC_GetAlarmRecordUrl(UI_HANDLE hUser, const char *szDevSN, const char *szAla
  *                    param1:>=0，成功; <0 失败，详见错误码
  *                    msg->Str()  服务器返回消息
  */
-int MC_SearchAlarmByMoth(UI_HANDLE hUser, const char *devId, int nChannel, const char *szStreamType, int nDate, int nSeq = 0);
+XSDK_API int MC_SearchAlarmByMoth(UI_HANDLE hUser, const char *devId, int nChannel, const char *szStreamType, int nDate, int nSeq = 0);
 
 /**
  * @brief 按类型查询最后一条消息的时间
@@ -415,7 +453,7 @@ int MC_SearchAlarmByMoth(UI_HANDLE hUser, const char *devId, int nChannel, const
  *                    param1:>=0，成功; <0 失败，详见错误码
  *                    msg->Str()  服务器返回消息
  */
-int MC_SearchAlarmLastTimeByType(UI_HANDLE hUser, const char *devId, const char *szStreamType, const char *szAlramType, int nChannel, int nSeq = 0);
+XSDK_API int MC_SearchAlarmLastTimeByType(UI_HANDLE hUser, const char *devId, const char *szStreamType, const char *szAlramType, int nChannel, int nSeq = 0);
 
 /**
  * @brief 第三方报警服务器报警数据入口
@@ -423,7 +461,7 @@ int MC_SearchAlarmLastTimeByType(UI_HANDLE hUser, const char *devId, const char 
  * @return 异步返回消息 ID：EMSG_MC_ON_AlarmCb = 6015   ///<第三方报警服务器收到报警数据处理回调
  *                    param1:>=0，成功; <0 失败，详见错误码
  */
-int MC_OnRecvAlarmJsonData(UI_HANDLE hUser, const char *szJson, int nSeq = 0);
+XSDK_API int MC_OnRecvAlarmJsonData(UI_HANDLE hUser, const char *szJson, int nSeq = 0);
 
 /**
  * @brief 通用报警相关配置操作
@@ -435,11 +473,11 @@ int MC_OnRecvAlarmJsonData(UI_HANDLE hUser, const char *szJson, int nSeq = 0);
  * 		             Str: 传的参数sDevID（ip/序列号）
  * 		             pData:返回的整个json信息，失败也是
  */
-int MC_AlarmJsonCfgOperation(UI_HANDLE hUser, const char *sDevID, const char *sTypeName, const char *sJson, int nSeq);
+XSDK_API int MC_AlarmJsonCfgOperation(UI_HANDLE hUser, const char *sDevID, const char *sTypeName, const char *sJson, int nSeq);
 
 //http://host:6614/css_hls/VideoName
 // HLS播放地址信息获取
-int MC_CloudMediaSearchCssHls(UI_HANDLE hUser, XCLOUD_SEARCH_CSS_HLS_REQ *pInfo, int nSeq = 0);
+XSDK_API int MC_CloudMediaSearchCssHls(UI_HANDLE hUser, XCLOUD_SEARCH_CSS_HLS_REQ *pInfo, int nSeq = 0);
 
 /**
  * @brief 批量查询是否产生报警
@@ -454,7 +492,7 @@ int MC_CloudMediaSearchCssHls(UI_HANDLE hUser, XCLOUD_SEARCH_CSS_HLS_REQ *pInfo,
  *                       Str()：查询过的设备序列号列表
  *                       pDdta:结果信息(Json格式)
  */
-int MC_WhetherTheBatchQueryGeneratesAnAlarm(UI_HANDLE hUser, const char *szDevIDs, const char *szSpecifiedTimes, int nSeq);
+XSDK_API int MC_WhetherTheBatchQueryGeneratesAnAlarm(UI_HANDLE hUser, const char *szDevIDs, const char *szSpecifiedTimes, int nSeq);
 
 /**
  * @brief 查询设备状态历史记录
@@ -464,7 +502,7 @@ int MC_WhetherTheBatchQueryGeneratesAnAlarm(UI_HANDLE hUser, const char *szDevID
  *                       Str()：查询成功的设备序列号列表
  *                       pDdta:结果信息(Json格式，数据内容APP需重新按时间排序)
  */
-int MC_QueryDevsStatusHistoryRecord(UI_HANDLE hUser, const char *szDevSNs, SQueryDevHistoryParams *pParams, int nSeq = 0);
+XSDK_API int MC_QueryDevsStatusHistoryRecord(UI_HANDLE hUser, const char *szDevSNs, SQueryDevHistoryParams *pParams, int nSeq = 0);
 
 /**
  * @brief 账户报警订阅
@@ -476,7 +514,7 @@ int MC_QueryDevsStatusHistoryRecord(UI_HANDLE hUser, const char *szDevSNs, SQuer
  *                    param1: >=0 成功，否则失败
  *                    Str:结果信息(JSON格式)
  */
-int MC_LinkByUserID(UI_HANDLE hUser, const char *szUserID = "", const char *szVoice = "", const char *szAppToken = "", const char *szAppType = "", int nSeq = 0);
+XSDK_API int MC_LinkByUserID(UI_HANDLE hUser, const char *szUserID = "", const char *szVoice = "", const char *szAppToken = "", const char *szAppType = "", int nSeq = 0);
 
 /**
  * @brief 取消账户报警订阅
@@ -487,7 +525,7 @@ int MC_LinkByUserID(UI_HANDLE hUser, const char *szUserID = "", const char *szVo
  *                    param1: >=0 成功，否则失败
  *                    Str:结果信息(JSON格式)
  */
-int MC_UnLinkByUserID(UI_HANDLE hUser, const char *szUserID = "", const char *szAppToken = "", int nClearFlag = 0, int nSeq = 0);
+XSDK_API int MC_UnLinkByUserID(UI_HANDLE hUser, const char *szUserID = "", const char *szAppToken = "", int nClearFlag = 0, int nSeq = 0);
 
 /**
  * @brief 查询云报警消息列表(携带缩略图地址)
@@ -500,7 +538,7 @@ int MC_UnLinkByUserID(UI_HANDLE hUser, const char *szUserID = "", const char *sz
  *                     Str:设备序列号
  *                     pData：消息列表信息
  */
-int MC_SearchCloudAlarmInfoByTime(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pXPMS_SEARCH_ALARMINFO_REQ, int nWidth = 0, int nHeight = 0, int nSeq = 0);
+XSDK_API int MC_SearchCloudAlarmInfoByTime(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pXPMS_SEARCH_ALARMINFO_REQ, int nWidth = 0, int nHeight = 0, int nSeq = 0);
 
 /**
  * @brief 云报警消息图片下载
@@ -516,7 +554,7 @@ int MC_SearchCloudAlarmInfoByTime(UI_HANDLE hUser, XPMS_SEARCH_ALARMINFO_REQ *pX
  *                      Str:设备序列号
  *                      pData：消息列表信息
  */
-int MC_DownloadCloudAlarmImage(UI_HANDLE hUser, const char *szDevSN, const char *szFileName, const char *szAlaramJson, int nIsDownloadByUrl = 0, int nWidth = 0, int nHeight = 0, int nSeq = 0);
+XSDK_API int MC_DownloadCloudAlarmImage(UI_HANDLE hUser, const char *szDevSN, const char *szFileName, const char *szAlaramJson, int nIsDownloadByUrl = 0, int nWidth = 0, int nHeight = 0, int nSeq = 0);
 
 /**
  * @brief 根据时间点获取视频片段信息（批量）
@@ -533,7 +571,7 @@ int MC_DownloadCloudAlarmImage(UI_HANDLE hUser, const char *szDevSN, const char 
  *                    param1: >=0 成功，否则失败
  *                    Str:结果信息
  */
-int MC_BatchSearchVideoClipInfo(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int MC_BatchSearchVideoClipInfo(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 设置报警消息已读标志
@@ -542,13 +580,23 @@ int MC_BatchSearchVideoClipInfo(UI_HANDLE hUser, const char *szReqJson, int nSeq
  * @return 异步回调消息  id:EMSG_MC_SET_ALARM_MSG_READ_FLAG = 6030  ///< 设置报警消息已读标志
  *                     param1: >=0 成功，否则失败
  */
-int MC_SetAlarmMsgReadFlag(UI_HANDLE hUser, const char *szDevSN, const char *szAlarmIDs, int nSeq = 0);
+XSDK_API int MC_SetAlarmMsgReadFlag(UI_HANDLE hUser, const char *szDevSN, const char *szAlarmIDs, int nSeq = 0);
 
 /**
  * @brief 批量设备报警消息查询
  * @details 客户端如果没有传入序列号，则查询当前账户下的所有设备(不包括分享的设备！)
  * @param szDevSNs 序列号，多个以;分隔
  * @param pInfo 请求的参数信息 详见@struct SBatchDevAlarmMsgQueryReqParams
+ * @param szExInfo 查询拓展信息，Json格式、方便后续扩张
+ * @example
+ * {
+ *     "AlarmEvent":["", ""],             //【可选】筛选要查找的报警类型（多种）
+ *     "Label" : ["", ""],                    //【可选】报警标签，即ai检测类型
+ *     "LabelFilterType":"or",            //【可选】针对报警标签的过滤方式，and为与判断，or为或判断，不传则默认为and，传则只允许值为and和or
+ *     "LabelDet":true,                      //【可选】用于表示是否需要详细标签信息，需要标签详细信息则传值且值为true，
+ *     "FilterType":"and",                  //【可选】仅当AlarmEvent与Label过滤方式同时使用时起作用，不传则默认为and方式（即与判断），传则只允许值为and和or（即或判断），此字段针对于AlarmEvent与Label的过滤规则
+ *     "AppTag":true,                        //【可选】用于区分多图片响应协议，true时，则按PicInfos格式响应，否则统一按PicInfo多图片则选一张有图的返回，没有则依旧响应PicErr
+ * }
  * @return 异步回调消息  id:EMSG_MC_BATCH_DEV_ALARM_MSG_QUERY = 6031  ///< 批量设备报警消息查询
  *                     param1: >=0 成功，代表数据大小，否则失败；
  *                     param2:报警条数；
@@ -556,12 +604,22 @@ int MC_SetAlarmMsgReadFlag(UI_HANDLE hUser, const char *szDevSN, const char *szA
  *                     Str:查询设备列表；
  *                     pData:报警数据
  */
-int MC_BatchDevAlarmMsgQuery(UI_HANDLE hUser, const char *szDevSNs, SBatchDevAlarmMsgQueryReqParams *pInfo, int nSeq = 0);
+XSDK_API int MC_BatchDevAlarmMsgQuery(UI_HANDLE hUser, const char *szDevSNs, SBatchDevAlarmMsgQueryReqParams *pInfo, const char *szExInfo, int nSeq = 0);
 
 /**
  * @brief 设备报警消息查询
  * @details 支持分页&报警类型选择查询，同时兼容老的方式查询  ps:普通报警消息，分页查询无效!!!
  * @param pInfo 请求的参数信息 详见@struct SDevAlarmMsgQueryReqParams
+ * @param szExInfo 查询拓展信息，Json格式、方便后续扩张
+ * @example
+ * {
+ *     "AlarmEvent":["", ""],             //【可选】筛选要查找的报警类型（多种） ps:SDevAlarmMsgQueryReqParams 结构体里的参数只支持单个筛选，如果需要多个筛选，使用此参数， 优先使用此参数
+ *     "Label" : ["", ""],                    //【可选】报警标签，即ai检测类型
+ *     "LabelFilterType":"or",            //【可选】针对报警标签的过滤方式，and为与判断，or为或判断，不传则默认为and，传则只允许值为and和or
+ *     "LabelDet":true,                      //【可选】用于表示是否需要详细标签信息，需要标签详细信息则传值且值为true，
+ *     "FilterType":"and",                  //【可选】仅当AlarmEvent与Label过滤方式同时使用时起作用，不传则默认为and方式（即与判断），传则只允许值为and和or（即或判断），此字段针对于AlarmEvent与Label的过滤规则
+ *     "AppTag":true,                        //【可选】用于区分多图片响应协议，true时，则按PicInfos格式响应，否则统一按PicInfo多图片则选一张有图的返回，没有则依旧响应PicErr
+ * }
  * @return 异步回调消息  id:EMSG_MC_DEV_ALARM_MSG_QUERY = 6032, ///< 设备报警消息查询(支持分页&报警类型选择查询)
  *                     param1: >=0 成功，代表数据大小，否则失败；
  *                     param2:报警条数；
@@ -569,4 +627,4 @@ int MC_BatchDevAlarmMsgQuery(UI_HANDLE hUser, const char *szDevSNs, SBatchDevAla
  *                     Str:设备序列号；
  *                     pData:报警数据
  */
-int MC_DevAlarmMsgQuery(UI_HANDLE hUser, SDevAlarmMsgQueryReqParams *pInfo, int nSeq = 0);
+XSDK_API int MC_DevAlarmMsgQuery(UI_HANDLE hUser, SDevAlarmMsgQueryReqParams *pInfo, const char *szExInfo, int nSeq = 0);

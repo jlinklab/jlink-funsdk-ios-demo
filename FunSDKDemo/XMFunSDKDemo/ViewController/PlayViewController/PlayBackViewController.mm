@@ -86,12 +86,6 @@
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    // 默认关闭
-    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
-    dev.enableEpitomeRecord = NO;
-}
-
 //MARK: - 设备旋转处理
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self layoutWithDeviceOrientation:toInterfaceOrientation];
@@ -410,11 +404,19 @@
 #pragma mark - funsdk回调
 #pragma mark  录像按文件查询查询回调
 - (void)getVideoResult:(NSInteger)result{
+    channel = [[DeviceControl getInstance] getSelectChannel];
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
     if (result >= 0) {
         [pBackView refreshProgressWithSearchResult:[videoConfig getVideoTimeArray]];
         
         [pVIew playViewBufferIng];
-        [mediaPlayer startPlayBack:dateView.date];
+        //如果是缩影配置 缩影录像的按时间回放不能传范围时间，要传录像的具体时间
+        if(dev.enableEpitomeRecord){
+            
+        }
+        else {
+            [mediaPlayer startPlayBack:dateView.date andEndTime: dateView.date];
+        }
     }
     else{
         [SVProgressHUD showErrorWithStatus:TS("Video_Not_Found")];
@@ -423,6 +425,22 @@
 
 - (void)reloadCollection{
     [_fileListView reloadData];
+}
+
+- (void)getVideoResultForER:(NSInteger)result{
+    channel = [[DeviceControl getInstance] getSelectChannel];
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
+    //如果是缩影配置 缩影录像的按时间回放不能传范围时间，要传录像的具体时间
+    if (result >= 0 && dev.enableEpitomeRecord) {
+        //获取首段缩影录像
+        RecordInfo *recordInfo = [videoConfig getVideoFileArray:_selectVideoType].firstObject;
+        if (!recordInfo) {
+            return;
+        }
+        NSString *timeString = [NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:%02d",recordInfo.timeEnd.year, recordInfo.timeEnd.month, recordInfo.timeEnd.day, recordInfo.timeEnd.hour, recordInfo.timeEnd.minute, recordInfo.timeEnd.second];
+        NSString *timeStringBegin = [NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:%02d",recordInfo.timeBegin.year, recordInfo.timeBegin.month, recordInfo.timeBegin.day, recordInfo.timeBegin.hour, recordInfo.timeBegin.minute, recordInfo.timeBegin.second];
+        [mediaPlayer startPlayBack: [NSDate dateWithDateTimeString: timeStringBegin] andEndTime: [NSDate dateWithDateTimeString: timeString]];
+    }
 }
 
 #pragma mark 通过搜索录像返回的时间来刷新时间轴

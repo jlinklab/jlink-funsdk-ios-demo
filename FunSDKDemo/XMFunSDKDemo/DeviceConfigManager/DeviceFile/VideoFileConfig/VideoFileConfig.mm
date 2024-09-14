@@ -40,7 +40,7 @@
     info.nChannelN0 = channel.channelNumber;
     info.nFileType  = SDK_RECORD_ALL; //查询全部类型的录像
     if (dev.enableEpitomeRecord) {
-        info.StreamType = 5;
+        info.nFileType = (1 << 26) | (1 << 4 & 0x3FFFFFF);
     }
     //开始时间
     info.startTime.dwYear = (int)[components year];
@@ -66,6 +66,7 @@
     timeArray = [[NSMutableArray alloc] initWithCapacity:0];
     //获取通道
     ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
     //开内存
     SDK_SearchByTime info;
     memset(&info, 0, sizeof(info));
@@ -73,6 +74,10 @@
     info.nLowChannel  = 0;
     info.nFileType  = 0;
     info.iSync  = 0;
+    if (dev.enableEpitomeRecord) {
+        info.nFileType = (1 << 26) | (1 << 4 & 0x3FFFFFF);
+    }
+    
     NSDateComponents* components = [[NSCalendar currentCalendar] components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
     
     //搜索录像的开始时间
@@ -236,6 +241,9 @@
   
             if ([self.delegate respondsToSelector:@selector(reloadCollection)]) {
                 [self.delegate reloadCollection];
+            }
+            if ([self.delegate respondsToSelector:@selector(getVideoResultForER:)]) {
+                [self.delegate getVideoResultForER:msg->param1];
             }
         }
             break;

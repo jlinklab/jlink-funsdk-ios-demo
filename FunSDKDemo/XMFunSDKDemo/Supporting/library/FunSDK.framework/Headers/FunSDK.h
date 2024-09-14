@@ -228,20 +228,21 @@ typedef enum E_SYS_MODIFY_DEV_INFO
  */
 typedef enum EDevStatusType
 {
-    E_DevStatus_P2P = 0,        ///< P2P要用新的状态服务查下
-    E_DevStatus_TPS_V0 = 1,     ///< @deprecated 老的那种转发，用于老程序（2016年以前的）的插座，新的插座程序使用的是TPS
-    E_DevStatus_TPS = 2,        ///< @deprecated 透传服务
-    E_DevStatus_DSS = 3,        ///< 媒体直播服务
-    E_DevStatus_CSS = 4,        ///< @deprecated 云存储服务
-    E_DevStatus_P2P_V0 = 5,     ///< /P2P用老的方式,通过穿透库查询获取到的设备P2P状态
-    E_DevStatus_IP = 6,         ///< IP方式
-    E_DevStatus_RPS = 7,        ///< RPS可靠的转发
-    E_DevStatus_IDR = 8,        ///< 门铃状态
-    E_DevStatus_RTC = 9,        ///< @deprecated WEB-RTC状态
-    E_DevStatus_XMSDK = 10,     ///< @deprecated XMNetSDK状态
-    E_DevStatus_XTS = 11,       ///< @deprecated XTS状态，IPC使用，最稳定的状态
-    E_DevStatus_XTC = 12,       ///< @deprecated XTC状态，NVR使用
-    DEV_STATE_SIZE,             ///< NUM....
+    E_DevStatus_P2P = 0,            ///< P2P要用新的状态服务查下
+    E_DevStatus_TPS_V0 = 1,         ///< @deprecated 老的那种转发，用于老程序（2016年以前的）的插座，新的插座程序使用的是TPS
+    E_DevStatus_TPS = 2,            ///< @deprecated 透传服务
+    E_DevStatus_DSS = 3,            ///< 媒体直播服务
+    E_DevStatus_CSS = 4,            ///< @deprecated 云存储服务
+    E_DevStatus_P2P_V0 = 5,         ///< /P2P用老的方式,通过穿透库查询获取到的设备P2P状态
+    E_DevStatus_IP = 6,             ///< IP方式
+    E_DevStatus_RPS = 7,            ///< RPS可靠的转发
+    E_DevStatus_IDR = 8,            ///< 门铃状态
+    E_DevStatus_RTC = 9,            ///< @deprecated WEB-RTC状态
+    E_DevStatus_XMSDK = 10,         ///< @deprecated XMNetSDK状态
+    E_DevStatus_XTS = 11,           ///< @deprecated XTS状态，IPC使用，最稳定的状态
+    E_DevStatus_XTC = 12,           ///< @deprecated XTC状态，NVR使用
+    E_DevStatus_THIRD_PARTY = 13,   ///< 第三方设备状态
+    DEV_STATE_SIZE,                 ///< NUM....
 }EDevStatusType;
 
 /**
@@ -375,14 +376,14 @@ using SDevTalkParams = struct SDevTalkParams
 
 #ifdef FUN_TEST_STATE
 /**@brief 设置全局变量属性，关闭新消息通道服务（xmsdk->xts/c）*此方法必须在FunSDk.Init之前调用 */
-void FUN_SetNotSupXMSDKAttr();
+XSDK_API void FUN_SetNotSupXMSDKAttr();
 #endif
 
 /**@brief 禁用外网
  * @details 禁用外网，只允许局域网访问，相关外网的功能禁用（登录服务器、报警、状态、认证等后台发起的需要联外网的功能）
  * @warning 此方法必须在FunSDK初始化(FUN_Init)之前调用
  */
-void Fun_DisableConnectExtranet();
+XSDK_API void Fun_DisableConnectExtranet();
 
 #ifdef SUP_XMNAT_NABTO
 /**@brief  设置临时资源目录
@@ -390,20 +391,20 @@ void Fun_DisableConnectExtranet();
  * @warning 此方法必须在FunSDK初始化之前调用并且需要开启功能宏：SupNabto
  * @param[in] sPath 临时资源目录
  */
-int Fun_SetXMNatNabtoPath(const char *sPath);
+XSDK_API int Fun_SetXMNatNabtoPath(const char *sPath);
 
 /**@brief  设置日志等级
  * @details 设置xmnat_nabto日志等级 *Android.mk需要开启功能宏：SupNabto
  * @param[in] sLogLevel 日志等级:"error", "warn", "info", "debug", "trace" *默认:"debug"
  */
-int Fun_SetXMNatNabtoLogLevel(const char *sLogLevel);
+XSDK_API int Fun_SetXMNatNabtoLogLevel(const char *sLogLevel);
 
 /**@brief  获取Nabto Device ID
  * @details 获取Nabto Device ID ，如果获取到为空的不显示（表明不是Nabto的设备，方便排查是否已经绑定Nabto ID或者已升级新固件）
  * @param[in] sDevSn 设备序列号
  * @param[out] sDevID Nabto Device ID
  */
-int Fun_GetXMNabtoDevID(const char *sDevSn, char *sDevID);
+XSDK_API int Fun_GetXMNabtoDevID(const char *sDevSn, char *sDevID);
 #endif
 
 /**@brief 库初始化
@@ -415,10 +416,10 @@ int Fun_GetXMNabtoDevID(const char *sDevSn, char *sDevID);
  * @param[in] nServerPort p2p服务端口，默认使用通用p2p端口
  * @return == EE_OK(0)
  */
-int FUN_Init(int nParam = 0, SInitParam *pParam = NULL, const int nCustom = 0, const char *pServerAddr = NULL, const int nServerPort = 0);
+XSDK_API int FUN_Init(int nParam = 0, SInitParam *pParam = NULL, const int nCustom = 0, const char *pServerAddr = NULL, const int nServerPort = 0);
 
 /** @deprecated 接口废弃，使用FUN_InitExV2取代 */
-int FUN_InitEx(int nParam = 0, SInitParam *pParam = NULL, const char* strCustomPWD = "", const char *strCustomServerAddr = NULL, const int nCustomServerPort = 0);
+XSDK_API int FUN_InitEx(int nParam = 0, SInitParam *pParam = NULL, const char* strCustomPWD = "", const char *strCustomServerAddr = NULL, const int nCustomServerPort = 0);
 
 /**@brief 库初始化
  * @details 特殊定制的设备"密码加前缀"或"定制p2p服务"的时候使用
@@ -430,15 +431,15 @@ int FUN_InitEx(int nParam = 0, SInitParam *pParam = NULL, const char* strCustomP
  * @param[in] nCustomServerPort p2p服务端口，默认使用通用p2p端口
  * @return == EE_OK(0)
  */
-int FUN_InitExV2(int nParam, SInitParam *pParam, int nPWDCustomeType, const char* strCustomPWD, const char *strCustomServerAddr = NULL, const int nCustomServerPort = 0);
+XSDK_API int FUN_InitExV2(int nParam, SInitParam *pParam, int nPWDCustomeType, const char* strCustomPWD, const char *strCustomServerAddr = NULL, const int nCustomServerPort = 0);
 
-void FUN_TestTest(int hUser, int nParam1, int nParam2, const char *szParam);
+XSDK_API void FUN_TestTest(int hUser, int nParam1, int nParam2, const char *szParam);
 
 /**@brief 反初始化
  * @details 基本不需要调用，整个进程运行期间只需要初始化一次SDK(FUN_Init)，直到杀死进程
  * @param[in] nType 0：注销报警服务 1：不注销报警服务
  */
-void FUN_UnInit(int nType = 0);
+XSDK_API void FUN_UnInit(int nType = 0);
 
 /**@brief 设备网络服务相关初始化
  * @details 加载设备之前调用，参数nCustom、pServerAddr、nServerPort废弃，只为兼容以前的版本
@@ -447,12 +448,12 @@ void FUN_UnInit(int nType = 0);
  * @param nServerPort 废弃
  * @return == EE_OK(0)成功，否者失败
  */
-int FUN_InitNetSDK(const int nCustom = 0, const char *pServerAddr = NULL, const int nServerPort = 0);
+XSDK_API int FUN_InitNetSDK(const int nCustom = 0, const char *pServerAddr = NULL, const int nServerPort = 0);
 
 /**@brief 设备网络服务相关反初始化，登出时调用
  * @details 1.清空录像缩略图下载缓存队列 2.清除所有设备连接信息 3.清空设备状态 4.清空设备authcode
  */
-void FUN_UnInitNetSDK();
+XSDK_API void FUN_UnInitNetSDK();
 
 /**@brief 云账户系统初始化
  * @details 开发平台账户系统初始化
@@ -460,21 +461,21 @@ void FUN_UnInitNetSDK();
  * @param[in] nPort 废弃
  * @return == EE_OK(0)
  */
-int FUN_SysInit(const char *szIP, int nPort);
+XSDK_API int FUN_SysInit(const char *szIP, int nPort);
 
 /**@brief 本地账户系统初始化
  * @details 本地账户系统初始化
  * @param[in] szDBFile 保存本地账户设备信息数据库文件
  * @return == EE_OK(0)
  */
-int FUN_SysInit(const char *szDBFile);
+XSDK_API int FUN_SysInit(const char *szDBFile);
 
 /**@brief AP模式账户系统初始化
  * @details 设备AP模式(一般设备重置键连续按三次进入AP模式)，手机WIFI连接设备热点，AP登录账户
  * @param[in] szDBFile 保存本地账户设备信息数据库文件
  * @return == EE_OK(0)
  */
-int FUN_SysInitAsAPModel(const char *szDBFile);
+XSDK_API int FUN_SysInitAsAPModel(const char *szDBFile);
 
 /**
  * @brief 初始化一些账户系统需要使用的基础信息
@@ -491,7 +492,7 @@ int FUN_SysInitAsAPModel(const char *szDBFile);
  *    "logintype" : "" ///< 【可选】登录类型 通用传"", 第三方传"wx" "fb" "gg" "line"等 【慎用】同上
  * }
  */
-void Fun_SysInitBasicInfo(const char *szInfoJson);
+XSDK_API void Fun_SysInitBasicInfo(const char *szInfoJson);
 
 /**@brief 密码数据迁移
  * @details 如果APP版本更新之后，本地缓存的设备密码文件路径发生变更，则需要调用此接口进行密码数据迁移。\n
@@ -504,7 +505,7 @@ void Fun_SysInitBasicInfo(const char *szInfoJson);
  * @param[in] sPwdAesKeyFile AES密钥文件，新版本才需要传此文件：local_eketkey.txt
  * @return >=0成功，其他失败，详见错误码。
  */
-int Fun_ThePwdDataMigration(const char *sPwdFile, const char *sPwdAesKeyFile);
+XSDK_API int Fun_ThePwdDataMigration(const char *sPwdFile, const char *sPwdAesKeyFile);
 
 /**@brief 同Fun_ThePwdDataMigration 密码数据迁移
  * @param sPwdFile 同上
@@ -512,7 +513,7 @@ int Fun_ThePwdDataMigration(const char *sPwdFile, const char *sPwdAesKeyFile);
  * @param bIsCover 是否覆盖本地密码  true：覆盖 false：当本地密码存在时，不覆盖
  * @return >=0成功，其他失败，详见错误码。
  */
-int Fun_ThePwdDataMigrationV2(const char *sPwdFile, const char *sPwdAesKeyFile, bool bIsCover);
+XSDK_API int Fun_ThePwdDataMigrationV2(const char *sPwdFile, const char *sPwdAesKeyFile, bool bIsCover);
 
 /**@brief 设置服务IP和Port
  * @details 服务IP/Port不是默认，使用此接口进行配置
@@ -522,7 +523,7 @@ int Fun_ThePwdDataMigrationV2(const char *sPwdFile, const char *sPwdAesKeyFile, 
  * @see WIKI:http://10.2.11.100/pages/viewpage.action?pageId=22450648
  * @return == EE_OK(0)
  */
-int FUN_SysSetServerIPPort(const char *szKey, const char *szServerIP, int nServerPort);
+XSDK_API int FUN_SysSetServerIPPort(const char *szKey, const char *szServerIP, int nServerPort);
 
 /*********************************************
 * 方法名: 初始化服务器用户代理信息
@@ -533,7 +534,7 @@ int FUN_SysSetServerIPPort(const char *szKey, const char *szServerIP, int nServe
 *      输入(in)
 *      		[sInfo] 用户代理信息，使用当前手机信息组成:设备机型_操作系统_随机码
 ****************************************************/
-void Fun_SysInitUserAgentInfo(const char *sInfo);
+XSDK_API void Fun_SysInitUserAgentInfo(const char *sInfo);
 
 /*********************************************
 * 方法名: 初始化app证书
@@ -549,7 +550,7 @@ void Fun_SysInitUserAgentInfo(const char *sInfo);
 *      输出(out)
 *          [无]
 ****************************************************/
-int FUN_XMCloundPlatformInit(const char *uuid, const char *appKey, const char *appSecret, int movedCard);
+XSDK_API int FUN_XMCloundPlatformInit(const char *uuid, const char *appKey, const char *appSecret, int movedCard);
 
 /*******************用户服务相关的接口**************************
 * 方法名: 初始化验证码长度
@@ -564,7 +565,7 @@ int FUN_XMCloundPlatformInit(const char *uuid, const char *appKey, const char *a
 *      输出(out)
 *          [无]
 ****************************************************/
-void Fun_SysInitVerificationCodeSize(const char *szVerCodeSize);
+XSDK_API void Fun_SysInitVerificationCodeSize(const char *szVerCodeSize);
 
 /**
  * @brief 初始化账户访问令牌信息
@@ -572,14 +573,14 @@ void Fun_SysInitVerificationCodeSize(const char *szVerCodeSize);
  * @param szLoginType 登录类型 通用传"", 第三方传"wx" "fb" "gg" "line"等
  * @param szAccessToken 访问令牌信息
  */
-void Fun_SysInitAccountAccessToken(const char *szLoginType, const char *szAccessToken);
+XSDK_API void Fun_SysInitAccountAccessToken(const char *szLoginType, const char *szAccessToken);
 
 /**
  * @brief 获取当前登录参数信息
  * @param szLoginParams[out] 参数信息 格式:loginType=%s&&accessToken=%s  数组大小2048
  * @return 无
  */
-char *Fun_SysGetCurLoginParams(char szLoginParams[2048]);
+XSDK_API char *Fun_SysGetCurLoginParams(char szLoginParams[2048]);
 
 /**
  * @brief 同步设备信息到数据中心(SDK本地数据中心)
@@ -587,27 +588,27 @@ char *Fun_SysGetCurLoginParams(char szLoginParams[2048]);
  * @details 同步设备列表信息到SDK内部缓存数据中心（同步），并且Android相应的设备进行报警推送服务初始化（异步）。
  * @param szDevInfos 设备列表信息 @warning 服务器下发的整个json，不要单独截取
  */
-int Fun_SysSyncDevInfoToDataCenter(const char *szDevInfos);
+XSDK_API int Fun_SysSyncDevInfoToDataCenter(const char *szDevInfos);
 
 /**@brief 获取视频请求统计信息
  * @details 规则：只对设备登录成功之后或者不需要登录的DSS&GWM进行视频播放结果，视频播放成功(收到第一个I帧，APP提示缓冲结束)次数进行统计
  * @return 视频请求统计信息字符串，示例：[{"vidr":1,"vids":1,"vidt":"IP"},{"vidr":1,"vids":1,"vidt":"RPS"}]
  */
-const char *Fun_GetVideoPlayStatistics();
+XSDK_API const char *Fun_GetVideoPlayStatistics();
 
 /** @brief 删除视频请求统计信息,客户端在上报成功之后调用此接口进行本地数据清空 */
-void Fun_DelVideoPlayStatistics();
+XSDK_API void Fun_DelVideoPlayStatistics();
 
 #define LOG_UI_MSG  1
 #define LOG_FILE    2
 #define LOG_NET_MSG 4
 /*日志功能方法*/
-void Fun_Log(const char *szLog);
-void Fun_LogInit(UI_HANDLE hUser, const char *szServerIP, int nServerPort, const char *szLogFile, int nLogLevel = 0x3);
-void Fun_SendLogFile(const char *szFile);
+XSDK_API void Fun_Log(const char *szLog);
+XSDK_API void Fun_LogInit(UI_HANDLE hUser, const char *szServerIP, int nServerPort, const char *szLogFile, int nLogLevel = 0x3);
+XSDK_API void Fun_SendLogFile(const char *szFile);
 
 // 崩溃信息 + 崩溃之前的SDK信息另存文件保存
-void Fun_Crash(char *crashInfo);
+XSDK_API void Fun_Crash(char *crashInfo);
 
 /*******************SDK编译**************************
 * 方法名: FunSDK编译版本信息
@@ -625,10 +626,10 @@ void Fun_Crash(char *crashInfo);
 * 结果消息：
 * 		[无]
 ****************************************************/
-char *Fun_GetVersionInfo(char szVersion[512]);
+XSDK_API char *Fun_GetVersionInfo(char szVersion[512]);
 
 // 后台，前台切换函数
-void Fun_SetActive(int nActive);
+XSDK_API void Fun_SetActive(int nActive);
 
 /*********************************************
 * 方法名: 设置p2p数据交互加密开关
@@ -643,38 +644,38 @@ void Fun_SetActive(int nActive);
 * 结果消息：
 * 		[无]
 ****************************************************/
-int Fun_SetP2PDataEncryptEnable(int nEnable);
+XSDK_API int Fun_SetP2PDataEncryptEnable(int nEnable);
 
 //About Languae
-int Fun_InitLanguage(const char *szLanguaeFileName);
-int Fun_InitLanguageByData(const char *szBuffer);
-const char *Fun_TS(const char *szKey, const char *szDefault = NULL);
+XSDK_API int Fun_InitLanguage(const char *szLanguaeFileName);
+XSDK_API int Fun_InitLanguageByData(const char *szBuffer);
+XSDK_API const char *Fun_TS(const char *szKey, const char *szDefault = NULL);
 
 #ifdef OS_IOS
-UI_HANDLE FUN_RegWnd(LP_WND_OBJ pWnd);
-void FUN_UnRegWnd(UI_HANDLE hWnd);
-void FUN_ClearRegWnd();
+XSDK_API UI_HANDLE FUN_RegWnd(LP_WND_OBJ pWnd);
+XSDK_API void FUN_UnRegWnd(UI_HANDLE hWnd);
+XSDK_API void FUN_ClearRegWnd();
 
 /**
  * @brief 停止rps服务
  * @details app进程杀死的时候调用此接口
  */
-void Fun_StopRpsServer();
+XSDK_API void Fun_StopRpsServer();
 #endif
 
 /*系统功能方法*/
 //---用户注册相关接口---
 #ifndef CUSTOM_MNETSDK
 /** @deprecated */
-int FUN_SysRegUserToXMExtend(UI_HANDLE hUser, const char *UserName, const char *pwd, const char *checkCode, const char *phoneNO, const char *source, const char *country, const char *city, int nSeq = 0);
+XSDK_API int FUN_SysRegUserToXMExtend(UI_HANDLE hUser, const char *UserName, const char *pwd, const char *checkCode, const char *phoneNO, const char *source, const char *country, const char *city, int nSeq = 0);
 /** @deprecated */
-int FUN_SysRegisteByEmailExtend(UI_HANDLE hUser, const char *userName, const char *password, const char *email, const char *code, const char *source, const char *country, const char *city, int nSeq = 0);
+XSDK_API int FUN_SysRegisteByEmailExtend(UI_HANDLE hUser, const char *userName, const char *password, const char *email, const char *code, const char *source, const char *country, const char *city, int nSeq = 0);
 
 /** @deprecated 请使用FUN_SysRegUserToXM接口*/
-int FUN_SysNoValidatedRegisterExtend(UI_HANDLE hUser, const char *userName, const char *pwd, const char *source, const char *country, const char *city, int nSeq  =0);
+XSDK_API int FUN_SysNoValidatedRegisterExtend(UI_HANDLE hUser, const char *userName, const char *pwd, const char *source, const char *country, const char *city, int nSeq  =0);
 
 /** @deprecated ARSP XMeye用*/
-int FUN_SysUser_Register(UI_HANDLE hUser, const char *UserName,const char *Psw,const char *email, int nSeq = 0);    //注册用户
+XSDK_API int FUN_SysUser_Register(UI_HANDLE hUser, const char *UserName,const char *Psw,const char *email, int nSeq = 0);    //注册用户
 #endif
 //通用用户注册接口
 /**
@@ -686,7 +687,7 @@ int FUN_SysUser_Register(UI_HANDLE hUser, const char *UserName,const char *Psw,c
  * @return 异步回调消息 ID：EMSG_SYS_REGISER_USER_XM = 5011,      // 用户注册
  *                    param1: >=0 成功，否则失败
  */
-int FUN_SysRegUserToXM(UI_HANDLE hUser, const char *UserName, const char *pwd, const char *checkCode, const char *phoneNO, int nSeq);
+XSDK_API int FUN_SysRegUserToXM(UI_HANDLE hUser, const char *UserName, const char *pwd, const char *checkCode, const char *phoneNO, int nSeq);
 
 /**
  * @brief 通过邮箱注册账户
@@ -698,10 +699,10 @@ int FUN_SysRegUserToXM(UI_HANDLE hUser, const char *UserName, const char *pwd, c
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysRegisteByEmail(UI_HANDLE hUser, const char *userName, const char *password, const char *email, const char *code, int nSeq);
+XSDK_API int FUN_SysRegisteByEmail(UI_HANDLE hUser, const char *userName, const char *password, const char *email, const char *code, int nSeq);
 
 /** @deprecated 使用FUN_SysRegisteByEmail或FUN_SysRegUserToXM(手机)代替，验证码填写为空即可 */
-int FUN_SysNoValidatedRegister(UI_HANDLE hUser, const char *userName, const char *pwd, int nSeq  = 0);
+XSDK_API int FUN_SysNoValidatedRegister(UI_HANDLE hUser, const char *userName, const char *pwd, int nSeq  = 0);
 
 
 /**
@@ -714,7 +715,7 @@ int FUN_SysNoValidatedRegister(UI_HANDLE hUser, const char *userName, const char
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysCancellationAccount(UI_HANDLE hUser, const char *checkCode, int nSeq = 0);
+XSDK_API int FUN_SysCancellationAccount(UI_HANDLE hUser, const char *checkCode, int nSeq = 0);
 
 //---用户忘记/修改密码相关接口---
 #ifndef CUSTOM_MNETSDK
@@ -729,9 +730,9 @@ int FUN_SysCancellationAccount(UI_HANDLE hUser, const char *checkCode, int nSeq 
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysPsw_Change(UI_HANDLE hUser, const char *UserName,const char *old_Psw,const char *new_Psw, int nSeq = 0);
+XSDK_API int FUN_SysPsw_Change(UI_HANDLE hUser, const char *UserName,const char *old_Psw,const char *new_Psw, int nSeq = 0);
 /** @deprecated 通过邮箱找回密码 */
-int Fun_SysGetPWByEmail(UI_HANDLE hUser, const char* UserName, int nSeq = 0);
+XSDK_API int Fun_SysGetPWByEmail(UI_HANDLE hUser, const char* UserName, int nSeq = 0);
 #endif
 
 /**
@@ -742,7 +743,7 @@ int Fun_SysGetPWByEmail(UI_HANDLE hUser, const char* UserName, int nSeq = 0);
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysSendEmailCode(UI_HANDLE hUser, const char *email, int nSeq); //邮箱获取验证码(用户注册)
+XSDK_API int FUN_SysSendEmailCode(UI_HANDLE hUser, const char *email, int nSeq); //邮箱获取验证码(用户注册)
 
 /**
  * @brief 邮箱获取验证码
@@ -753,7 +754,7 @@ int FUN_SysSendEmailCode(UI_HANDLE hUser, const char *email, int nSeq); //邮箱
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysSendEmailCodeEx(UI_HANDLE hUser, const char *email, const char *username, int nSeq);
+XSDK_API int FUN_SysSendEmailCodeEx(UI_HANDLE hUser, const char *email, const char *username, int nSeq);
 
 /**
  * @brief 手机获取验证码
@@ -764,7 +765,7 @@ int FUN_SysSendEmailCodeEx(UI_HANDLE hUser, const char *email, const char *usern
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysSendPhoneMsg(UI_HANDLE hUser, const char *UserName, const char *phoneNO, int nSeq = 0);    //手机获取验证码(用户注册)
+XSDK_API int FUN_SysSendPhoneMsg(UI_HANDLE hUser, const char *UserName, const char *phoneNO, int nSeq = 0);    //手机获取验证码(用户注册)
 
 /**
  * @brief 邮箱获取验证码
@@ -774,7 +775,7 @@ int FUN_SysSendPhoneMsg(UI_HANDLE hUser, const char *UserName, const char *phone
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysSendCodeForEmail(UI_HANDLE hUser, const char *email, int nSeq); // 获取邮箱验证码（修改密码、重置密码）
+XSDK_API int FUN_SysSendCodeForEmail(UI_HANDLE hUser, const char *email, int nSeq); // 获取邮箱验证码（修改密码、重置密码）
 
 /**
  * @brief 邮箱获取验证码
@@ -785,7 +786,7 @@ int FUN_SysSendCodeForEmail(UI_HANDLE hUser, const char *email, int nSeq); // �
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysSendCodeForEmailEx(UI_HANDLE hUser, const char *email, const char *username, int nSeq);
+XSDK_API int FUN_SysSendCodeForEmailEx(UI_HANDLE hUser, const char *email, const char *username, int nSeq);
 
 /**
  * @brief 修改用户登录密码
@@ -795,7 +796,7 @@ int FUN_SysSendCodeForEmailEx(UI_HANDLE hUser, const char *email, const char *us
  * @return 异步回调消息 ID： EMSG_SYS_EDIT_PWD_XM = 5013,      // 修改用户登录密码
  *                    param1: >=0 成功，否则失败
  */
-int FUN_SysEditPwdXM(UI_HANDLE hUser, const char *UserName, const char *oldPwd, const char *newPwd, int nSeq);
+XSDK_API int FUN_SysEditPwdXM(UI_HANDLE hUser, const char *UserName, const char *oldPwd, const char *newPwd, int nSeq);
 
 /**
  * @brief 忘记密码
@@ -805,7 +806,7 @@ int FUN_SysEditPwdXM(UI_HANDLE hUser, const char *UserName, const char *oldPwd, 
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysForgetPwdXM(UI_HANDLE hUser, const char *phoneOrEmail, int nSeq);
+XSDK_API int FUN_SysForgetPwdXM(UI_HANDLE hUser, const char *phoneOrEmail, int nSeq);
 
 /**
  * @brief 通过邮箱修改密码
@@ -814,7 +815,7 @@ int FUN_SysForgetPwdXM(UI_HANDLE hUser, const char *phoneOrEmail, int nSeq);
  * @return 异步回调消息 ID： EMSG_SYS_PSW_CHANGE_BY_EMAIL = 5045, // 通过邮箱修改密码（重置密码）
  *                    param1: >=0 成功，否则失败
  */
-int FUN_SysChangePwdByEmail(UI_HANDLE hUser, const char *email, const char *newpwd, int nSeq);
+XSDK_API int FUN_SysChangePwdByEmail(UI_HANDLE hUser, const char *email, const char *newpwd, int nSeq);
 
 /**
  * @brief 重置登录密码
@@ -823,10 +824,10 @@ int FUN_SysChangePwdByEmail(UI_HANDLE hUser, const char *email, const char *newp
  * @return 异步回调消息 ID： EMSG_SYS_RESET_PWD_XM = 5016,       // 重置用户登录密码
  *                    param1: >=0 成功，否则失败
  */
-int FUN_ResetPwdXM(UI_HANDLE hUser, const char *phoneOrEmail, const char *newPwd, int nSeq);
+XSDK_API int FUN_ResetPwdXM(UI_HANDLE hUser, const char *phoneOrEmail, const char *newPwd, int nSeq);
 
 /** @deprecated 登入 */
-int FUN_SysLoginToXM(UI_HANDLE hUser, const char *UserName, const char *pwd, int nSeq);
+XSDK_API int FUN_SysLoginToXM(UI_HANDLE hUser, const char *UserName, const char *pwd, int nSeq);
 
 /**
  * @brief 登出
@@ -835,17 +836,17 @@ int FUN_SysLoginToXM(UI_HANDLE hUser, const char *UserName, const char *pwd, int
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysLogout(UI_HANDLE hUser, int nSeq = 0); //同步退出
+XSDK_API int FUN_SysLogout(UI_HANDLE hUser, int nSeq = 0); //同步退出
 
 /** @deprecated */
-int FUN_XMVideoLogin(UI_HANDLE hUser, const char *szUser, const char *szPwd, int nSeq);
+XSDK_API int FUN_XMVideoLogin(UI_HANDLE hUser, const char *szUser, const char *szPwd, int nSeq);
 
 /** @deprecated */
-int FUN_XMVideoLogout(UI_HANDLE hUser, int nSeq);
+XSDK_API int FUN_XMVideoLogout(UI_HANDLE hUser, int nSeq);
 
 //---检验用户账号相关接口---
 /** @deprecated */
-int FUN_SysSendBindingPhoneCode(UI_HANDLE hUser, const char *phone, const char *userName, const char *pwd, int nSeq = 0);
+XSDK_API int FUN_SysSendBindingPhoneCode(UI_HANDLE hUser, const char *phone, const char *userName, const char *pwd, int nSeq = 0);
 
 /** 获取验证码(用于当前账户绑定手机号，替换FUN_SysSendBindingPhoneCode) */
 /**
@@ -856,10 +857,10 @@ int FUN_SysSendBindingPhoneCode(UI_HANDLE hUser, const char *phone, const char *
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int Fun_SysGetVerCodeForBindPhone(UI_HANDLE hUser, const char *szPhone, int nSeq = 0);
+XSDK_API int Fun_SysGetVerCodeForBindPhone(UI_HANDLE hUser, const char *szPhone, int nSeq = 0);
 
 /** @deprecated */
-int FUN_SysBindingPhone(UI_HANDLE hUser, const char *userName, const char *pwd, const char *phone, const char *code, int nSeq  =0);
+XSDK_API int FUN_SysBindingPhone(UI_HANDLE hUser, const char *userName, const char *pwd, const char *phone, const char *code, int nSeq  =0);
 
 /**
  * @brief 当前账户绑定手机号
@@ -869,10 +870,10 @@ int FUN_SysBindingPhone(UI_HANDLE hUser, const char *userName, const char *pwd, 
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int Fun_SysAccountBindPhone(UI_HANDLE hUser, const char *phone, const char *code, int nSeq = 0);
+XSDK_API int Fun_SysAccountBindPhone(UI_HANDLE hUser, const char *phone, const char *code, int nSeq = 0);
 
 /** @deprecated */
-int FUN_SysSendBindingEmailCode(UI_HANDLE hUser, const char *email, const char *userName, const char *pwd, int nSeq);
+XSDK_API int FUN_SysSendBindingEmailCode(UI_HANDLE hUser, const char *email, const char *userName, const char *pwd, int nSeq);
 
 /**
  * @brief 获取邮箱验证码
@@ -883,10 +884,10 @@ int FUN_SysSendBindingEmailCode(UI_HANDLE hUser, const char *email, const char *
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int Fun_SysGetVerCodeForBindEmail(UI_HANDLE hUser, const char *szEmail, const char *szUserName, int nSeq);
+XSDK_API int Fun_SysGetVerCodeForBindEmail(UI_HANDLE hUser, const char *szEmail, const char *szUserName, int nSeq);
 
 /** @deprecated 当前登录账户绑定邮箱，无需重新传用户名、密码 */
-int FUN_SysBindingEmail(UI_HANDLE hUser, const char *userName, const char *pwd, const char *email, const char *code, int nSeq);
+XSDK_API int FUN_SysBindingEmail(UI_HANDLE hUser, const char *userName, const char *pwd, const char *email, const char *code, int nSeq);
 
 /**
  * @brief 当前账户绑定邮箱
@@ -896,7 +897,7 @@ int FUN_SysBindingEmail(UI_HANDLE hUser, const char *userName, const char *pwd, 
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int Fun_SysAccountBindEmail(UI_HANDLE hUser, const char *szEmail, const char *szVerCode, int nSeq = 0);
+XSDK_API int Fun_SysAccountBindEmail(UI_HANDLE hUser, const char *szEmail, const char *szVerCode, int nSeq = 0);
 
 /**
  * @brief 校验邮箱验证码
@@ -907,7 +908,7 @@ int Fun_SysAccountBindEmail(UI_HANDLE hUser, const char *szEmail, const char *sz
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysCheckCodeForEmail(UI_HANDLE hUser, const char *email, const char *code, int nSeq);
+XSDK_API int FUN_SysCheckCodeForEmail(UI_HANDLE hUser, const char *email, const char *code, int nSeq);
 
 /**
  * @brief 验证修改密码的验证码是否正确
@@ -918,7 +919,7 @@ int FUN_SysCheckCodeForEmail(UI_HANDLE hUser, const char *email, const char *cod
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_CheckResetCodeXM(UI_HANDLE hUser, const char *phoneOrEmail, const char *checkNum, int nSeq);
+XSDK_API int FUN_CheckResetCodeXM(UI_HANDLE hUser, const char *phoneOrEmail, const char *checkNum, int nSeq);
 
 /**
  * @brief 当前登录账号绑定微信账号
@@ -927,7 +928,7 @@ int FUN_CheckResetCodeXM(UI_HANDLE hUser, const char *phoneOrEmail, const char *
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysBindWXAccount(UI_HANDLE hUser, const char *wxLoginCode, int nSeq);
+XSDK_API int FUN_SysBindWXAccount(UI_HANDLE hUser, const char *wxLoginCode, int nSeq);
 
 /**
  * @brief 当前登录账号解绑微信账号
@@ -935,10 +936,10 @@ int FUN_SysBindWXAccount(UI_HANDLE hUser, const char *wxLoginCode, int nSeq);
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysUnBindWXAccount(UI_HANDLE hUser, int nSeq);
+XSDK_API int FUN_SysUnBindWXAccount(UI_HANDLE hUser, int nSeq);
 
 /** @deprecated */
-int FUN_CheckPwdStrength(UI_HANDLE hUser, const char *newPwd, int nSeq);
+XSDK_API int FUN_CheckPwdStrength(UI_HANDLE hUser, const char *newPwd, int nSeq);
 
 /**
  * @brief 检测用户名是否已被注册
@@ -947,7 +948,7 @@ int FUN_CheckPwdStrength(UI_HANDLE hUser, const char *newPwd, int nSeq);
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysCheckUserRegiste(UI_HANDLE hUser, const char *userName, int nSeq =0);
+XSDK_API int FUN_SysCheckUserRegiste(UI_HANDLE hUser, const char *userName, int nSeq =0);
 
 /**
  * @brief 检测手机号是否已被注册
@@ -956,7 +957,7 @@ int FUN_SysCheckUserRegiste(UI_HANDLE hUser, const char *userName, int nSeq =0);
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-FUN_HANDLE FUN_CheckUserPhone(UI_HANDLE hUser, const char *phone, int nSeq);
+XSDK_API FUN_HANDLE FUN_CheckUserPhone(UI_HANDLE hUser, const char *phone, int nSeq);
 
 /**
  * @brief 检测邮箱是否已被注册
@@ -965,7 +966,7 @@ FUN_HANDLE FUN_CheckUserPhone(UI_HANDLE hUser, const char *phone, int nSeq);
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-FUN_HANDLE FUN_CheckUserMail(UI_HANDLE hUser, const char *mail, int nSeq);
+XSDK_API FUN_HANDLE FUN_CheckUserMail(UI_HANDLE hUser, const char *mail, int nSeq);
 
 //---用户信息相关接口---
 /**
@@ -977,11 +978,11 @@ FUN_HANDLE FUN_CheckUserMail(UI_HANDLE hUser, const char *mail, int nSeq);
  *                    param1: >=0 成功，否则失败
  *                    str: 服务器返回内容
  */
-int FUN_SysGetUerInfo(UI_HANDLE hUser, const char *userName, const char *pwd, int nSeq = 0);
+XSDK_API int FUN_SysGetUerInfo(UI_HANDLE hUser, const char *userName, const char *pwd, int nSeq = 0);
 
 //---其他---
 /** @deprecated */
-int FUN_SysCheckDeviceReal(UI_HANDLE hUser, const char *twoDimensionCode, int nSeq = 0);//检测产品是否为正品
+XSDK_API int FUN_SysCheckDeviceReal(UI_HANDLE hUser, const char *twoDimensionCode, int nSeq = 0);//检测产品是否为正品
 
 //---设备列表相关接口---
 /**
@@ -991,7 +992,7 @@ int FUN_SysCheckDeviceReal(UI_HANDLE hUser, const char *twoDimensionCode, int nS
  * @return 异步回调消息：id: = EMSG_SYS_ADD_DEV_BY_FILE = 5060,            //通过文件添加设备-本地登陆使用
  *                    param1: >=0 成功，否则失败
  */
-int Fun_SysAddDevByFile(UI_HANDLE hUser, const char *szPath, int nSeq = 0); //通过文件添加设备-本地登陆使用
+XSDK_API int Fun_SysAddDevByFile(UI_HANDLE hUser, const char *szPath, int nSeq = 0); //通过文件添加设备-本地登陆使用
 
 /**
  * @brief 云账户登录
@@ -1002,7 +1003,7 @@ int Fun_SysAddDevByFile(UI_HANDLE hUser, const char *szPath, int nSeq = 0); //�
  *                    param1: >=0 成功，否则失败
  *                    str: 账户系统AccessToken
  */
-int FUN_SysCloudAccountLogin(UI_HANDLE hUser, const char *szUserName, const char *szPassword, int nSeq = 0);
+XSDK_API int FUN_SysCloudAccountLogin(UI_HANDLE hUser, const char *szUserName, const char *szPassword, int nSeq = 0);
 
 /**
  * @brief 第三方账户登录
@@ -1013,7 +1014,7 @@ int FUN_SysCloudAccountLogin(UI_HANDLE hUser, const char *szUserName, const char
  *                    param1: >=0 成功，否则失败
  *                    str: 账户系统AccessToken
  */
-int FUN_SysThirdPartyAccountLogin(UI_HANDLE hUser, const char *szUnionId, const char *szType, int nSeq = 0);
+XSDK_API int FUN_SysThirdPartyAccountLogin(UI_HANDLE hUser, const char *szUnionId, const char *szType, int nSeq = 0);
 
 /**
  * @brief 手机短信登录
@@ -1024,7 +1025,7 @@ int FUN_SysThirdPartyAccountLogin(UI_HANDLE hUser, const char *szUnionId, const 
  *                    param1: >=0 成功，否则失败
  *                    str: 账户系统AccessToken
  */
-int FUN_SysPhoneSMSLogin(UI_HANDLE hUser, const char *szPhone, const char *szCheckCode, int nSeq = 0);
+XSDK_API int FUN_SysPhoneSMSLogin(UI_HANDLE hUser, const char *szPhone, const char *szCheckCode, int nSeq = 0);
 
 /**
  * @brief 获取用户设备列表
@@ -1036,7 +1037,7 @@ int FUN_SysPhoneSMSLogin(UI_HANDLE hUser, const char *szPhone, const char *szChe
  *                    str: 组成的信息-->name=%s;uaes=%s;paes=%s;sysUserName=%s;
  *
  */
-int FUN_SysGetDevList(UI_HANDLE hUser, const char *szUser, const char *szPwd, int nSeq = 0); //获取用户设备信息
+XSDK_API int FUN_SysGetDevList(UI_HANDLE hUser, const char *szUser, const char *szPwd, int nSeq = 0); //获取用户设备信息
 
 /**
  * @brief 获取当前账户下设备列表
@@ -1046,7 +1047,7 @@ int FUN_SysGetDevList(UI_HANDLE hUser, const char *szUser, const char *szPwd, in
  *                     pData：SDBDeviceInfo(*设备数量param1)结构体字节流
  *                     Str：组成的信息-->name=%s;uaes=%s;paes=%s;sysUserName=%s;
  */
-int FUN_SysGetCurrentUserDevList(UI_HANDLE hUser,int nSeq);//仅获取设备列表
+XSDK_API int FUN_SysGetCurrentUserDevList(UI_HANDLE hUser,int nSeq);//仅获取设备列表
 
 /**
  * @brief 通过短信验证码获取设备列表
@@ -1058,7 +1059,7 @@ int FUN_SysGetCurrentUserDevList(UI_HANDLE hUser,int nSeq);//仅获取设备列�
  *                     pData：SDBDeviceInfo(*设备数量param1)结构体字节流
  *                     Str：组成的信息-->name=%s;uaes=%s;paes=%s;sysUserName=%s;
  */
-int FUN_SysSmsGetDevList(UI_HANDLE hUser, const char *phoneOrEmail, const char *nCheckCode, int nApptype, int nSeq = 0);
+XSDK_API int FUN_SysSmsGetDevList(UI_HANDLE hUser, const char *phoneOrEmail, const char *nCheckCode, int nApptype, int nSeq = 0);
 
 /**
  * @brief 获取验证码
@@ -1067,7 +1068,7 @@ int FUN_SysSmsGetDevList(UI_HANDLE hUser, const char *phoneOrEmail, const char *
  * @return  异步回调消息：id:EMSG_SYS_GET_LOGIN_ACCOUNT_CODE = 5076,		  // 获取登陆账户验证码
  *                     param1:>=0 代表账户下设备数据，否则失败
  */
-int FUN_SysGetLoginAccountCode(UI_HANDLE hUser, const char *phoneOrEmail, int nSeq = 0);
+XSDK_API int FUN_SysGetLoginAccountCode(UI_HANDLE hUser, const char *phoneOrEmail, int nSeq = 0);
 
 /**
  * @brief 第三方获取列表接口（微信、QQ、微博、Facebook、Google等）
@@ -1079,7 +1080,7 @@ int FUN_SysGetLoginAccountCode(UI_HANDLE hUser, const char *phoneOrEmail, int nS
  *                     pData：SDBDeviceInfo(*设备数量param1)结构体字节流
  *                     Str：组成的信息-->name=%s;uaes=%s;paes=%s;sysUserName=%s;
  */
-int FUN_SysGetDevListEx(UI_HANDLE hUser, const char *unionId, const char *szType, int nApptype, int nSeq = 0);
+XSDK_API int FUN_SysGetDevListEx(UI_HANDLE hUser, const char *unionId, const char *szType, int nApptype, int nSeq = 0);
 
 /**
  * @brief 本机号码一键登录并获取设备列表
@@ -1091,7 +1092,7 @@ int FUN_SysGetDevListEx(UI_HANDLE hUser, const char *unionId, const char *szType
  * @return 异步返回消息ID：EMSG_SYS_LOCAL_PHONE_LOGIN = 5212,    ///< 本机号码一键登录并获取设备列表
  *                param1: >=0 成功，否则失败
  */
-int Fun_LoginByLocalPhoneNumber(UI_HANDLE hUser, const char* szAppToken,const char* szAppID, int nSeq = 0);
+XSDK_API int Fun_LoginByLocalPhoneNumber(UI_HANDLE hUser, const char* szAppToken,const char* szAppID, int nSeq = 0);
 
 /**
  * @brief 添加设备
@@ -1106,18 +1107,18 @@ int Fun_LoginByLocalPhoneNumber(UI_HANDLE hUser, const char* szAppToken,const ch
  *                     pData:SDBDeviceInfo设备信息
  *                     Str:结果信息(JSON格式)
  */
-int FUN_SysAdd_Device(UI_HANDLE hUser, SDBDeviceInfo *pDevInfo, const char *szExInfo = "", const char *szExInfo2 = "", int nSeq = 0);
+XSDK_API int FUN_SysAdd_Device(UI_HANDLE hUser, SDBDeviceInfo *pDevInfo, const char *szExInfo = "", const char *szExInfo2 = "", int nSeq = 0);
 
 //设备是否开启微信报警推送  *有缺陷，废除（微信报警状态会改变的，打开/关闭），使用 FUN_SysWXAlarmStateCheck每次去服务器查询
 /** @deprecated */
-int FUN_SysDevWXPMS(const char *szDeviceSN);
+XSDK_API int FUN_SysDevWXPMS(const char *szDeviceSN);
 
 /**
  * @brief 登录帐户是否是主帐户
  * @param szDeviceSN 设备序列号
  * @return  1表示当前登录账户是该设备的主账户，0则表示不是
  */
-int FUN_SysDevIsMasterAccount(const char *szDeviceSN);
+XSDK_API int FUN_SysDevIsMasterAccount(const char *szDeviceSN);
 
 /**
  * @brief 获取设备的备注信息
@@ -1125,7 +1126,7 @@ int FUN_SysDevIsMasterAccount(const char *szDeviceSN);
  * @param comment 用于获取设备备注信息
  * @return  0表示成功获取设备备注信息,否则失败
  */
-int FUN_SysGetDevComment(const char *szDeviceSN, char comment[512]);
+XSDK_API int FUN_SysGetDevComment(const char *szDeviceSN, char comment[512]);
 
 /**
  * @brief 按字段获取设备信息
@@ -1137,7 +1138,7 @@ int FUN_SysGetDevComment(const char *szDeviceSN, char comment[512]);
  * @param nMaxSize 设备信息最大拷贝长度
  * @return 返回的数据长度
  */
-int Fun_SysGetDevInfoByField(const char *szDevId, const char *szField, char *szValue, int nMaxSize);
+XSDK_API int Fun_SysGetDevInfoByField(const char *szDevId, const char *szField, char *szValue, int nMaxSize);
 
 /**
  * @brief 修改缓存设备信息
@@ -1150,7 +1151,7 @@ int Fun_SysGetDevInfoByField(const char *szDevId, const char *szField, char *szV
 *          必须是 {"Name" : xxxx(string || int || ...)}]
  * @return 0表示成功，否则失败
  */
-int Fun_SysModifyCacheDevInfo(const char *szDevId, uint64_t nSystemTime, int nNumberOfSharedAccounts, int nOptionType, const char *szExJson = "");
+XSDK_API int Fun_SysModifyCacheDevInfo(const char *szDevId, uint64_t nSystemTime, int nNumberOfSharedAccounts, int nOptionType, const char *szExJson = "");
 
 /**
  * @brief 修改用户设备信息
@@ -1161,7 +1162,7 @@ int Fun_SysModifyCacheDevInfo(const char *szDevId, uint64_t nSystemTime, int nNu
  *                     param1:>=0 成功，否则失败
  *                     pData:SDBDeviceInfo设备信息
  */
-int FUN_SysChangeDevInfo(UI_HANDLE hUser, struct SDBDeviceInfo *ChangeDevInfor, const char *UserName,const char *Psw, int nSeq = 0);
+XSDK_API int FUN_SysChangeDevInfo(UI_HANDLE hUser, struct SDBDeviceInfo *ChangeDevInfor, const char *UserName,const char *Psw, int nSeq = 0);
 
 /**
  * @brief 获取设备登录令牌信息
@@ -1170,10 +1171,10 @@ int FUN_SysChangeDevInfo(UI_HANDLE hUser, struct SDBDeviceInfo *ChangeDevInfor, 
  *                       param1: >=0 成功，否则失败
  *                       Str:结果信息(JSON格式)
  */
-int Fun_SysGetDevEncToken(UI_HANDLE hUser, const char *szDevIDs, int nSeq = 0);
+XSDK_API int Fun_SysGetDevEncToken(UI_HANDLE hUser, const char *szDevIDs, int nSeq = 0);
 
 /** @deprecated */
-int FUN_SysDelete_Dev(UI_HANDLE hUser, const char *Delete_DevMac,const char *UserName,const char *Psw, int nSeq = 0);            //删除设备
+XSDK_API int FUN_SysDelete_Dev(UI_HANDLE hUser, const char *Delete_DevMac,const char *UserName,const char *Psw, int nSeq = 0);            //删除设备
 
 /** 删除设备 替代FUN_SysDelete_Dev */
 /**
@@ -1183,7 +1184,7 @@ int FUN_SysDelete_Dev(UI_HANDLE hUser, const char *Delete_DevMac,const char *Use
  *                       param1: >=0 成功，否则失败
  *                       Str:结果信息(JSON格式)
  */
-int Fun_SysDeleteDevice(UI_HANDLE hUser, const char *szDelDevID, int nSeq = 0);
+XSDK_API int Fun_SysDeleteDevice(UI_HANDLE hUser, const char *szDelDevID, int nSeq = 0);
 
 /**
  * @brief 批量删除设备
@@ -1191,10 +1192,10 @@ int Fun_SysDeleteDevice(UI_HANDLE hUser, const char *szDelDevID, int nSeq = 0);
  * @return  异步返回消息ID： EMSG_SYS_BATCH_DELETE_DEVS = 5211, ///< 批量删除设备;
  *                param1: >=0 成功，否则失败
  */
-int Fun_SysBatchDeleteDevices(UI_HANDLE hUser, const char *szDelDevIDs, int nSeq = 0);
+XSDK_API int Fun_SysBatchDeleteDevices(UI_HANDLE hUser, const char *szDelDevIDs, int nSeq = 0);
 
 /** @deprecated 废弃，使用FUN_SysChangeDevInfo接口代替*/
-int FUN_SysChangeDevLoginPWD(UI_HANDLE hUser, const char *uuid, const char *oldpwd, const char *newpwd, const char *repwd, int nSeq = 0);// 修改设备密码(服务器端)
+XSDK_API int FUN_SysChangeDevLoginPWD(UI_HANDLE hUser, const char *uuid, const char *oldpwd, const char *newpwd, const char *repwd, int nSeq = 0);// 修改设备密码(服务器端)
 
 /**
  * @brief 获取设备状态
@@ -1202,7 +1203,7 @@ int FUN_SysChangeDevLoginPWD(UI_HANDLE hUser, const char *uuid, const char *oldp
  * @return  异步返回消息ID： EMSG_SYS_GET_DEV_STATE = 5009,        // 获取设备状态
  *                param1: >=0 成功，否则失败
  */
-int FUN_SysGetDevState(UI_HANDLE hUser, const char *devId, int nSeq = 0);
+XSDK_API int FUN_SysGetDevState(UI_HANDLE hUser, const char *devId, int nSeq = 0);
 
 /**
  * @brief 分类型获取设备状态
@@ -1213,7 +1214,7 @@ int FUN_SysGetDevState(UI_HANDLE hUser, const char *devId, int nSeq = 0);
  *                    param1: >=0 成功，否则失败
  *                    Str():设备序列号
  */
-int FUN_SysGetDevStateByType(UI_HANDLE hUser, const char *sDevIds, int nQueryType, int nSeq = 0);
+XSDK_API int FUN_SysGetDevStateByType(UI_HANDLE hUser, const char *sDevIds, int nQueryType, int nSeq = 0);
 
 /**
  * @brief 获取批量设备状态
@@ -1225,7 +1226,7 @@ int FUN_SysGetDevStateByType(UI_HANDLE hUser, const char *sDevIds, int nQueryTyp
  *                    param1:状态结果掩码值，二进制位值0不在线，1在线，详见枚举EDevStatusType,
  *                    Str:设备序列号
  */
-int FUN_SysBatchGetDevsStatus(UI_HANDLE hUser, const char *szDevIDs, int nQueryTypeMask, int nSeq = 0);
+XSDK_API int FUN_SysBatchGetDevsStatus(UI_HANDLE hUser, const char *szDevIDs, int nQueryTypeMask, int nSeq = 0);
 
 /**
  * @brief 批量查询多个设备多个服务状态
@@ -1238,19 +1239,25 @@ int FUN_SysBatchGetDevsStatus(UI_HANDLE hUser, const char *szDevIDs, int nQueryT
  *                    Str:设备序列号
  *                    pData:结果信息
  */
-int Fun_SysQueryDevsStatusV2(UI_HANDLE hUser, const char *szDevIDs, int nQueryTypeMask, int nTimeout = 8000, int nSeq = 0);
+XSDK_API int Fun_SysQueryDevsStatusV2(UI_HANDLE hUser, const char *szDevIDs, int nQueryTypeMask, int nTimeout = 8000, int nSeq = 0);
 
 /**
  * @brief 添加设备状态变化监听
+ * @param hUser 用户句柄
+ * @param nSeq 自定义值
+ * @return 异步回调消息： id:EMSG_SYS_ADD_DEVSTATE_LISTENER = 5213, ///< 添加设备状态变化监听
  */
-int FUN_SysAddDevStateListener(UI_HANDLE hUser);
+XSDK_API int FUN_SysAddDevStateListener(UI_HANDLE hUser, int nSeq = 0);
 
 /**
  * @brief 移除设备状态变化监听
+ * @param hUser 用户句柄
+ * @param nSeq 自定义值
+ * @return 异步回调消息： id:EMSG_SYS_ADD_DEVSTATE_LISTENER = 5214, ///< 移除设备状态变化监听
  */
-int FUN_SysRemoveDevStateListener(UI_HANDLE hUser);
+XSDK_API int FUN_SysRemoveDevStateListener(UI_HANDLE hUser, int nSeq = 0);
 
-int FUN_SysGetDevLog(UI_HANDLE hUser, const char *ip, int nSeq = 0); //未实现？
+XSDK_API int FUN_SysGetDevLog(UI_HANDLE hUser, const char *ip, int nSeq = 0); //未实现？
 
 /**
  * @brief 用户账号绑定（第三方登陆后）
@@ -1262,7 +1269,7 @@ int FUN_SysGetDevLog(UI_HANDLE hUser, const char *ip, int nSeq = 0); //未实现
  *                    param1:>=0成功，否则失败，
  *                    Str:用户名密码字段，形如 "uname=%s;upwd=%s;"
  */
-int FUN_SysBindingAccount(UI_HANDLE hUser, const char *name, const char *pwd, int nSeq = 0);
+XSDK_API int FUN_SysBindingAccount(UI_HANDLE hUser, const char *name, const char *pwd, int nSeq = 0);
 
 /**
  * @brief 第三方绑定用户（微信、QQ、微博、Facebook、Google等）
@@ -1277,7 +1284,7 @@ int FUN_SysBindingAccount(UI_HANDLE hUser, const char *name, const char *pwd, in
  *                    Str: 第三方绑定结果信息
  *                    pData：第三方登录信息
  */
-int FUN_SysThirdPartyBindAccount(UI_HANDLE hUser, const char *szUserName, const char *szUserPwd, const char *szUnionId, const char *szType, int nApptype, int nSeq = 0);
+XSDK_API int FUN_SysThirdPartyBindAccount(UI_HANDLE hUser, const char *szUserName, const char *szUserPwd, const char *szUnionId, const char *szType, int nApptype, int nSeq = 0);
 
 /**
  * @brief 获取支持手机验证的全球区号
@@ -1286,15 +1293,16 @@ int FUN_SysThirdPartyBindAccount(UI_HANDLE hUser, const char *szUserName, const 
  *                    param1:>=0成功，否则失败，
  *                    str：返回的json信息
  */
-int FUN_SysGetPhoneSupportAreaCode(UI_HANDLE hUser, int nSeq = 0);
+XSDK_API int FUN_SysGetPhoneSupportAreaCode(UI_HANDLE hUser, int nSeq = 0);
 
 /**
  * @brief 获取支持手机验证的全球区号和区域URL
+ * @param szReqParams 请求的参数信息  示例：urlVersion=1.0.0&XXX=XXX
  * @return 异步回调消息：id:EMSG_SYS_GET_PHONE_SUPPORT_AREA_CODE_AND_URL = 5206,  ///< 获取支持手机验证的全球区号和区域URL
  *                    param1: >=0 成功，否则失败,
  *                    Str:服务器返回结果信息
  */
-int FUN_SysGetPhoneSupportAreaCodeAndUrl(UI_HANDLE hUser, int nSeq = 0);
+XSDK_API int FUN_SysGetPhoneSupportAreaCodeAndUrl(UI_HANDLE hUser, const char *szReqParams, int nSeq = 0);
 
 /**
  * @brief 全球区域手机短信验证
@@ -1306,7 +1314,7 @@ int FUN_SysGetPhoneSupportAreaCodeAndUrl(UI_HANDLE hUser, int nSeq = 0);
  *                    str：返回的type，就是传的参数szType，用来区分哪种类型返回的结果
  *                    pData：找回密码的时候返回当前手机号绑定的用户名，其他类型不返回
  */
-int FUN_SysSendGlobalPhoneCode(UI_HANDLE hUser, const char *szPhone, const char *szType, int nSeq = 0);
+XSDK_API int FUN_SysSendGlobalPhoneCode(UI_HANDLE hUser, const char *szPhone, const char *szType, int nSeq = 0);
 
 /**
  * @brief 开启微信报警监听
@@ -1315,7 +1323,7 @@ int FUN_SysSendGlobalPhoneCode(UI_HANDLE hUser, const char *szPhone, const char 
  *                    param1:>=0成功，否则失败，
  *                    Str:服务器返回结果信息
  */
-int FUN_SysOpenWXAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, int nSeq = 0);
+XSDK_API int FUN_SysOpenWXAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, int nSeq = 0);
 
 /**
  * @brief 关闭微信报警监听
@@ -1324,7 +1332,7 @@ int FUN_SysOpenWXAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, int nSeq =
  *                    param1:>=0成功，否则失败，
  *                    Str:服务器返回结果信息
  */
-int FUN_SysCloseWXAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, int nSeq = 0);
+XSDK_API int FUN_SysCloseWXAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, int nSeq = 0);
 
 /**
  * @brief 开启微信报警监听
@@ -1333,7 +1341,7 @@ int FUN_SysCloseWXAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, int nSeq 
  *                    param1:>=0成功，否则失败，
  *                    Str:服务器返回结果信息
  */
-int FUN_SysWXAlarmStateCheck(UI_HANDLE hUser, const char *szDeviceSN, int nSeq = 0);
+XSDK_API int FUN_SysWXAlarmStateCheck(UI_HANDLE hUser, const char *szDeviceSN, int nSeq = 0);
 
 /**
  * @brief 第三方登录报警订阅监听开启
@@ -1344,7 +1352,7 @@ int FUN_SysWXAlarmStateCheck(UI_HANDLE hUser, const char *szDeviceSN, int nSeq =
  *                    param1:>=0成功，否则失败，
  *                    str：结果信息
  */
-int FUN_SysThirdPartyOpenAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, const char *sThirdPartyType, int nSeq = 0);
+XSDK_API int FUN_SysThirdPartyOpenAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, const char *sThirdPartyType, int nSeq = 0);
 
 /**
  * @brief 第三方登录报警订阅监听关闭
@@ -1355,7 +1363,7 @@ int FUN_SysThirdPartyOpenAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, co
  *                    param1:>=0成功，否则失败，
  *                    str：结果信息
  */
-int FUN_SysThirdPartyCloseAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, const char *sThirdPartyType, int nSeq = 0);
+XSDK_API int FUN_SysThirdPartyCloseAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, const char *sThirdPartyType, int nSeq = 0);
 
 /**
  * @brief 第三方登录报警订阅监听状态查询
@@ -1366,7 +1374,7 @@ int FUN_SysThirdPartyCloseAlarmListen(UI_HANDLE hUser, const char *szDeviceSN, c
  *                    param1:>=0成功，否则失败，
  *                    str：结果信息
  */
-int FUN_SysThirdPartyAlarmStateCheck(UI_HANDLE hUser, const char *szDeviceSN, const char *sThirdPartyType, int nSeq = 0);
+XSDK_API int FUN_SysThirdPartyAlarmStateCheck(UI_HANDLE hUser, const char *szDeviceSN, const char *sThirdPartyType, int nSeq = 0);
 
 /**
  * @brief 保存APP信息
@@ -1376,7 +1384,7 @@ int FUN_SysThirdPartyAlarmStateCheck(UI_HANDLE hUser, const char *szDeviceSN, co
  *                     param1: >=0 成功，否则失败,
  *                     Str:服务器返回结果信息
  */
-int Fun_SysAppInfoSave(UI_HANDLE hUser, const char *szAppInfo, int nExpireTime, int nSeq = 0);
+XSDK_API int Fun_SysAppInfoSave(UI_HANDLE hUser, const char *szAppInfo, int nExpireTime, int nSeq = 0);
 
 /**
  * @brief 获取APP信息
@@ -1385,13 +1393,13 @@ int Fun_SysAppInfoSave(UI_HANDLE hUser, const char *szAppInfo, int nExpireTime, 
  *                     param1: >=0 成功，否则失败,
  *                     Str:服务器返回结果信息
  */
-int Fun_SysAppInfoQuery(UI_HANDLE hUser, const char *szFindKey, int nSeq = 0);
+XSDK_API int Fun_SysAppInfoQuery(UI_HANDLE hUser, const char *szFindKey, int nSeq = 0);
 
 /** @deprecated */
 // *废弃不使用，使用caps服务查询 接口：Fun_SysGetDevAbilitySetFromServer
 // EMSG_SYS_CHECK_CS_STATUS     = 5067,        // 实时从服务器上查询云存储状态
 // szDevices需要查询设备序列号，多个设备用","号分隔
-int Fun_SysGetDevsCSStatus(UI_HANDLE hUser, const char *szDevices, int nSeq);
+XSDK_API int Fun_SysGetDevsCSStatus(UI_HANDLE hUser, const char *szDevices, int nSeq);
 
 /**
  * @brief 获取设备所在的账户信息
@@ -1400,7 +1408,7 @@ int Fun_SysGetDevsCSStatus(UI_HANDLE hUser, const char *szDevices, int nSeq);
  *                     param1: >=0 成功，否则失败,
  *                     Str:服务器返回结果信息
  */
-int Fun_SysGetDevUserInfo(UI_HANDLE hUser, const char *szDevice, int nSeq);
+XSDK_API int Fun_SysGetDevUserInfo(UI_HANDLE hUser, const char *szDevice, int nSeq);
 
 /**
  * @brief 指定设备的主帐户
@@ -1410,7 +1418,7 @@ int Fun_SysGetDevUserInfo(UI_HANDLE hUser, const char *szDevice, int nSeq);
  *                     param1: >=0 成功，否则失败,
  *                     Str:服务器返回结果信息
  */
-int Fun_SysSetDevMasterAccount(UI_HANDLE hUser, const char *szDevice,  const char *szMAUserId, int nSeq);
+XSDK_API int Fun_SysSetDevMasterAccount(UI_HANDLE hUser, const char *szDevice,  const char *szMAUserId, int nSeq);
 
 /**
  * @brief 修改登录用户名
@@ -1419,7 +1427,7 @@ int Fun_SysSetDevMasterAccount(UI_HANDLE hUser, const char *szDevice,  const cha
  * @return 异步回调消息：id:EMSG_SYS_MODIFY_USERNAME = 5070,              // 修改登录用户名（只能修改微信等绑定帐户自动生成）
  *                     param1: >=0 成功，否则失败,
  */
-int Fun_SysModifyUserName(UI_HANDLE hUser, const char *szNewUserName, int nSeq);
+XSDK_API int Fun_SysModifyUserName(UI_HANDLE hUser, const char *szNewUserName, int nSeq);
 
 /**
  * @brief 从服务器端更新当前账号是否为该设备的主账号
@@ -1428,12 +1436,12 @@ int Fun_SysModifyUserName(UI_HANDLE hUser, const char *szNewUserName, int nSeq);
  *                     param1: >=0 成功，否则失败,
  *                     Str:服务器返回结果信息
  */
-int Fun_SysIsDevMasterAccountFromServer(UI_HANDLE hUser, const char *szDevice, int nSeq);
+XSDK_API int Fun_SysIsDevMasterAccountFromServer(UI_HANDLE hUser, const char *szDevice, int nSeq);
 
 // 接口废弃，使用Fun_SysGetDevCapabilitySet代替
 // EMSG_SYS_GET_ABILITY_SET = 5073
 // 从服务器获取设备的能力集 *只返回"caps"对象给请求端
-int Fun_SysGetDevAbilitySetFromServer(UI_HANDLE hUser,const char *szDevSysInfo, int nSeq);
+XSDK_API int Fun_SysGetDevAbilitySetFromServer(UI_HANDLE hUser,const char *szDevSysInfo, int nSeq);
 
 /**
  * @brief 从服务器获取设备的能力集
@@ -1444,7 +1452,7 @@ int Fun_SysGetDevAbilitySetFromServer(UI_HANDLE hUser,const char *szDevSysInfo, 
  *                     Str：服务器返回的结果信息
  *                     pData: 设备序列号
  */
-int Fun_SysGetDevCapabilitySet(UI_HANDLE hUser,const char *szDevSysInfo, int nSeq);
+XSDK_API int Fun_SysGetDevCapabilitySet(UI_HANDLE hUser,const char *szDevSysInfo, int nSeq);
 
 /**
  * @brief 批量获取设备能力级
@@ -1454,7 +1462,7 @@ int Fun_SysGetDevCapabilitySet(UI_HANDLE hUser,const char *szDevSysInfo, int nSe
  *                     param1: >=0 成功，否则失败
  *                     Str:结果信息(JSON格式)
  */
-int Fun_SysBatchGetDevCapabilitySet(UI_HANDLE hUser, const char *szDevsSysInfo, int nSeq);
+XSDK_API int Fun_SysBatchGetDevCapabilitySet(UI_HANDLE hUser, const char *szDevsSysInfo, int nSeq);
 
 /**
  * @brief 在服务器端验证设备校验码是否合法
@@ -1465,7 +1473,7 @@ int Fun_SysBatchGetDevCapabilitySet(UI_HANDLE hUser, const char *szDevsSysInfo, 
  *                     Str:结果信息(JSON格式)
  *                     data：返回设备信息字节流
  */
-int Fun_SysCheckDevValidityFromServer(UI_HANDLE hUser,const char *szDevId,const char *szDevCode, int nSeq);
+XSDK_API int Fun_SysCheckDevValidityFromServer(UI_HANDLE hUser,const char *szDevId,const char *szDevCode, int nSeq);
 
 /**
  * @brief 用户解除微信绑定
@@ -1473,7 +1481,7 @@ int Fun_SysCheckDevValidityFromServer(UI_HANDLE hUser,const char *szDevId,const 
  *                     param1: >=0 成功，否则失败
  *                     Str:结果信息(JSON格式)
  */
-int FUN_SysUserWXUnbind(UI_HANDLE hUser, int nSeq = 0);
+XSDK_API int FUN_SysUserWXUnbind(UI_HANDLE hUser, int nSeq = 0);
 
 /**
  * @brief 发送链接邮件用于注册用户
@@ -1483,7 +1491,7 @@ int FUN_SysUserWXUnbind(UI_HANDLE hUser, int nSeq = 0);
  *                    param1: >=0 成功，否则失败,
  *                    Str:UserId信息
  */
-int Fun_SysSendEmailLinkToRegisterUser(UI_HANDLE hUser, const char *szEmail, const char *szPassword, int nSeq = 0);
+XSDK_API int Fun_SysSendEmailLinkToRegisterUser(UI_HANDLE hUser, const char *szEmail, const char *szPassword, int nSeq = 0);
 
 /**
  * @brief 检测用户是否已激活
@@ -1491,7 +1499,7 @@ int Fun_SysSendEmailLinkToRegisterUser(UI_HANDLE hUser, const char *szEmail, con
  * @return 异步回调消息：id:EMSG_SYS_CHECK_USER_IS_ACTIVATED = 5099, ///< 检测用户是否已激活
  *                    param1: >=0 成功, -604056表示未激活
  */
-int Fun_SysCheckUserIsActivated(UI_HANDLE hUser, const char *szUserID, int nSeq = 0);
+XSDK_API int Fun_SysCheckUserIsActivated(UI_HANDLE hUser, const char *szUserID, int nSeq = 0);
 
 /**
  * @brief 发送链接邮件用于重置密码
@@ -1500,7 +1508,7 @@ int Fun_SysCheckUserIsActivated(UI_HANDLE hUser, const char *szUserID, int nSeq 
  *                    param1: >=0 成功，否则失败,
  *                    Str: 结果信息
  */
-int Fun_SysSendEmailLinkToResetPassword(UI_HANDLE hUser, const char *szEmail, int nSeq = 0);
+XSDK_API int Fun_SysSendEmailLinkToResetPassword(UI_HANDLE hUser, const char *szEmail, int nSeq = 0);
 
 /**
  * @brief 检测邮箱重置密码链接是否激活
@@ -1509,7 +1517,7 @@ int Fun_SysSendEmailLinkToResetPassword(UI_HANDLE hUser, const char *szEmail, in
  *                    param1: >=0 成功, -604027表示用户找回密码失败 -604065表示用户未找回密码，app端应继续监听；-604028表示用户找回密码链接过期
  *                    Str: 结果信息
  */
-int Fun_SysCheckResetPasswordIsActivated(UI_HANDLE hUser, const char *szUserID, int nSeq = 0);
+XSDK_API int Fun_SysCheckResetPasswordIsActivated(UI_HANDLE hUser, const char *szUserID, int nSeq = 0);
 
 /**
  * @brief 修改云账户昵称
@@ -1518,7 +1526,7 @@ int Fun_SysCheckResetPasswordIsActivated(UI_HANDLE hUser, const char *szUserID, 
  *                    param1: >=0 成功, -604027表示用户找回密码失败 -604065表示用户未找回密码，app端应继续监听；-604028表示用户找回密码链接过期
  *                    Str: 结果信息
  */
-int Fun_SysModifyAccountNickname(UI_HANDLE, const char *szNickname, int nSeq = 0);
+XSDK_API int Fun_SysModifyAccountNickname(UI_HANDLE, const char *szNickname, int nSeq = 0);
 
 /**
  * @brief 获取开放平台签名算法信息
@@ -1527,12 +1535,12 @@ int Fun_SysModifyAccountNickname(UI_HANDLE, const char *szNickname, int nSeq = 0
  * @param nMaxStrSize  szOutSignInfo的最大长度限制
  * @example {"time_millis":"00000631716796478433","signature":"c81920f6486d5f3166196b24b3127676","aes_key":"6796478433f1227a"}
  */
-int Fun_SysGetOpenPlatformSignAlgorithmInfo(char *szOutSignInfo, int nMaxStrSize);
+XSDK_API int Fun_SysGetOpenPlatformSignAlgorithmInfo(char *szOutSignInfo, int nMaxStrSize);
 
 /**
  * @brief 影子服务器获取设备配置
- * @details 1.建议使用Fun_GetDevCfgsFromShadowService
- *          2.接口支持单个/多个配置同时获取，SDK内部会缓存到内存当中，重启APP则清空。   // Dev--->CfgName  CfgName--->CfgJson
+ * @deprecated 接口废弃，使用MQTT相关接口代替
+ * @details 1.接口支持单个/多个配置同时获取，SDK内部会缓存到内存当中，重启APP则清空。   // Dev--->CfgName  CfgName--->CfgJson
  * @param sDeviceSN 设备序列号，不支持ip+port方式
  * @param sRequestJsons 请求的配置json数组，支持多个配置同时获取<p>
  * 示例：Json数组：["SofiaWare:0", "Channel:-1"]  、 Json对象："ConfigList": ["SofiaWare:0", "Channel:-1"] ，建议使用第一种<p>
@@ -1543,12 +1551,12 @@ int Fun_SysGetOpenPlatformSignAlgorithmInfo(char *szOutSignInfo, int nMaxStrSize
  *                    Str:设备序列号
  *                    pData：服务器返回结果信息
  */
-int FUN_SysGetCfgsFormShadowServer(UI_HANDLE hUser, const char *sDeviceSN, const char *sRequestJsons, int nTimeout = 5000, int nSeq = 0);
+XSDK_API int FUN_SysGetCfgsFormShadowServer(UI_HANDLE hUser, const char *sDeviceSN, const char *sRequestJsons, int nTimeout = 5000, int nSeq = 0);
 
 /**
  * @brief 影子服务设备配置状态监听
- * @details 1.建议使用Fun_AddShadowServiceListener
- *          2.定时查询功能，查询结果有变化通知上层，接口支持单个/多个配置同时监听
+ * @deprecated 接口废弃，使用MQTT相关接口代替
+ * @details 1.定时查询功能，查询结果有变化通知上层，接口支持单个/多个配置同时监听
  * @param sDeviceSN 设备序列号，不支持ip+port方式
  * @param sCfgNames 监听的配置名，SofiaWare;Channel ';'分隔
  * @return 异步回调消息：id:EMSG_SHADOW_SERVICE_START_DEV_LISTENING = 8803, ///< 开始设备影子服务监听
@@ -1556,77 +1564,52 @@ int FUN_SysGetCfgsFormShadowServer(UI_HANDLE hUser, const char *sDeviceSN, const
  *                    Str:设备序列号
  *                    pData：配置状态变化结果，json格式与查询接口FUN_SysGetCfgsFormShadowServer一致
  */
-int FUN_SysAddShadowServerListener(UI_HANDLE hUser, const char *sDeviceSN, const char *sCfgNames);
+XSDK_API int FUN_SysAddShadowServerListener(UI_HANDLE hUser, const char *sDeviceSN, const char *sCfgNames);
 
 /**
  * @brief 移除影子服务设备配置监听
- * @details 建议使用Fun_RemoveShadowServiceListener
+ * @deprecated 接口废弃，使用MQTT相关接口代替
  * @param sDeviceSN 设备序列号
  */
-int FUN_SysRemoveShadowServerListener(const char *sDeviceSN);
+XSDK_API int FUN_SysRemoveShadowServerListener(const char *sDeviceSN);
 
 /**
  * @brief 影子服务器获取设备配置
- * @details 接口支持单个/多个配置同时获取，SDK内部会缓存到内存当中，重启APP则清空。   // Dev--->CfgName  CfgName--->CfgJson
+ * @details 接口支持单个/多个配置同时获取。   // Dev--->CfgName  CfgName--->CfgJson
  * @param szDeviceSN 设备序列号，不支持ip+port方式
  * @param szCfgsJson 请求的配置json数组，支持多个配置同时获取<p>
- * 示例：<p>
- * {<p>
- *      "msg" : "getcfg",<p>
- *      "cfglist" : ["SofiaWare", "Channel"]<p>
- * }<p>
+ * @example
+ * {
+ *      "msg" : "getcfg",
+ *      "cfglist" : ["SofiaWare", "Channel"]
+ * }
  * @param nTimeout 超时时间
  * @return 异步回调消息：id:EMSG_SHADOW_SERVICE_GET_DEV_CONFIGS = 8800, ///< 获取设备配置
  *                    param1: >=0 成功，否则失败,
  *                    Str:设备序列号
  *                    pData：服务器返回结果信息
  */
-int Fun_GetDevCfgsFromShadowService(UI_HANDLE hUser, const char *szDeviceSN, const char *szCfgsJson, int nTimeout = 5000, int nSeq = 0);
+XSDK_API int Fun_GetDevCfgsFromShadowService(UI_HANDLE hUser, const char *szDeviceSN, const char *szCfgsJson, int nTimeout = 5000, int nSeq = 0);
 
 /**
  * @brief 设置设备离线配置到影子服务
  * @param szDeviceSN 设备序列号，不支持ip+port方式
  * @param szCfgsJson 设备配置信息<p>
- * 示例：<p>
- * {<p>
- *      "msg" : "setcfg",<p>
- *      "cfglist" : <p>
- *      {<p>
- *			"cpu":60,<p>
- *      	"mem":60,<p>
- *		}<p>
- * }<p>
+ * @example
+ * {
+ *      "msg" : "setcfg",
+ *      "cfglist" :
+ *      {
+ *			"cpu":60,
+ *      	"mem":60,
+ *		}
+ * }
  * @return 异步回调消息：id:EMSG_SHADOW_SERVICE_SET_DEV_OFFLINE_CFGS = 8801, ///< 设置设备离线配置
  *                    param1: >=0 成功，否则失败,
  *                    Str:设备序列号
  *                    pData：结果信息
  */
-int Fun_SetDevOffLineCfgsToShadowService(UI_HANDLE hUser, const char *szDeviceSN, const char *szCfgsJson, int nTimeout = 5000, int nSeq = 0);
-
-/**
- * @brief 影子服务设备配置状态监听
- * @details WebSocket主动上报，只对设备订阅，不支持单独配置订阅
- * @param szDeviceSNs 设备序列号，多个以;分隔，不支持ip+port方式
- * @return 1.异步回调消息：开启监听结果：id:EMSG_SHADOW_SERVICE_START_DEV_LISTENING = 8803, ///< 开始设备影子服务监听
- *                                  param1: >=0 成功，否者失败,
- *                                  Str:设备序列号
- *                                  pData：结果信息
- *         2.异步回调消息：配置状态变化结果通知： id:EMSG_SHADOW_SERVICE_DEV_CONFIGS_CHANGE_NOTIFY = 8802, ///< 设备配置变化通知
- *                                         param1: >=0 成功，否则失败,
- *                                         Str:设备序列号
- *                                         pData：配置状态变化结果，json格式与查询接口Fun_GetDevCfgsFromShadowService格式一致
- */
-int Fun_AddShadowServiceListener(UI_HANDLE hUser, const char *szDeviceSNs, int nTimeout = 5000, int nSeq = 0);
-
-/**
- * @brief 移除影子服务设备配置监听
- * @param szDeviceSNs 设备序列号，多个以;分隔，不支持ip+port方式
- * @return 异步回调消息：停止监听结果：id:EMSG_SHADOW_SERVICE_STOP_DEV_LISTENING = 8804, ///< 停止设备影子服务监听
- *                                param1: >=0 成功，否则失败,
- *                                Str:设备序列号
- *                                pData：结果信息
- */
-int Fun_RemoveShadowServiceListener(UI_HANDLE hUser, const char *szDeviceSNs, int nTimeout = 5000, int nSeq = 0);
+XSDK_API int Fun_SetDevOffLineCfgsToShadowService(UI_HANDLE hUser, const char *szDeviceSN, const char *szCfgsJson, int nTimeout = 5000, int nSeq = 0);
 
 /**
  * @brief 客户端到JF服务器网络速度测试
@@ -1636,77 +1619,95 @@ int Fun_RemoveShadowServiceListener(UI_HANDLE hUser, const char *szDeviceSNs, in
  *                                param2:下载速度(byte),
  *                                param3:上传速度(byte)
  */
-int Fun_SysNetSpeedTest(UI_HANDLE hUser, int SpeedFileSize, int nSeq = 0);
+XSDK_API int Fun_SysNetSpeedTest(UI_HANDLE hUser, int SpeedFileSize, int nSeq = 0);
 
 /*设备功能方法*/
 //---获取/设置对象属性---
-int FUN_GetIntAttr(FUN_HANDLE hObj, int nId);
-int FUN_GetIntAttr(FUN_HANDLE hObj, int nId, int nDefValue);
-int FUN_GetStrAttr(FUN_HANDLE hObj, int nId, char *pStr, int nMaxSize);
-int FUN_SetIntAttr(FUN_HANDLE hObj, int nId, int nValue);
-int FUN_SetStrAttr(FUN_HANDLE hObj, int nId, const char *szValue);
-int FUN_GetAttr(FUN_HANDLE hObj, int nId, char *pResult);
-int FUN_SetAttr(FUN_HANDLE hObj, int nId, char *pResult);
-int FUN_DestoryObj(FUN_HANDLE hObj, Bool bSyn = false);
+XSDK_API int FUN_GetIntAttr(FUN_HANDLE hObj, int nId);
+XSDK_API int FUN_GetIntAttr(FUN_HANDLE hObj, int nId, int nDefValue);
+XSDK_API int FUN_GetStrAttr(FUN_HANDLE hObj, int nId, char *pStr, int nMaxSize);
+XSDK_API int FUN_SetIntAttr(FUN_HANDLE hObj, int nId, int nValue);
+XSDK_API int FUN_SetStrAttr(FUN_HANDLE hObj, int nId, const char *szValue);
+XSDK_API int FUN_GetAttr(FUN_HANDLE hObj, int nId, char *pResult);
+XSDK_API int FUN_SetAttr(FUN_HANDLE hObj, int nId, char *pResult);
+XSDK_API int FUN_DestoryObj(FUN_HANDLE hObj, Bool bSyn = false);
 
 //#define DSS_SERVER "DSS_SERVER"协
 //#define SQUARE "SQUARE"
 //#define XM030 "XM030"
 //#define UPGRADE_SERVER "UPGRADE_SERVER"
-int FUN_UpdateServerInfo(const char *szServerKey, const char *szIPPort); // 未使用
+XSDK_API int FUN_UpdateServerInfo(const char *szServerKey, const char *szIPPort); // 未使用
 // 获取/设置库的全局属性,详见EFUN_ATTR枚举
-int FUN_GetFunIntAttr(EFUN_ATTR nId);
-int FUN_GetFunStrAttr(EFUN_ATTR nId, char *pStr, int nMaxSize);
+XSDK_API int FUN_GetFunIntAttr(EFUN_ATTR nId);
+XSDK_API int FUN_GetFunStrAttr(EFUN_ATTR nId, char *pStr, int nMaxSize);
 /**
  * @brief 获取属性值比较长的数据
  */
-std::string FUN_GetLongFunStrAttr(EFUN_ATTR nId);
-int FUN_SetFunIntAttr(EFUN_ATTR nId, int nValue);
-int FUN_SetFunStrAttr(EFUN_ATTR nId, const char *szValue);
-int FUN_GetAttr(EFUN_ATTR nId, char *pResult);
-int FUN_SetAttr(EFUN_ATTR nId, char *pResult);
-int Fun_GetObjHandle(EOOBJECT_ID nId);
-int Fun_GetDevHandle(const char *szDevId);
+XSDK_API std::string FUN_GetLongFunStrAttr(EFUN_ATTR nId);
+XSDK_API int FUN_SetFunIntAttr(EFUN_ATTR nId, int nValue);
+XSDK_API int FUN_SetFunStrAttr(EFUN_ATTR nId, const char *szValue);
+XSDK_API int FUN_GetAttr(EFUN_ATTR nId, char *pResult);
+XSDK_API int FUN_SetAttr(EFUN_ATTR nId, char *pResult);
+XSDK_API int Fun_GetObjHandle(EOOBJECT_ID nId);
+XSDK_API int Fun_GetDevHandle(const char *szDevId);
 
 //---其他方法    使用GetObjHandle获得对象ID,通过SendMsg完成发送消息处理功能---
-int FUN_SendMsg(FUN_HANDLE hObj, UI_HANDLE hUser, int nMsgId, int nParam1 = 0, int nParam2 = 0, int nParam3 = 0, const char *szParam = "", const void *pData = 0, int nDataLen = 0, int nSeq = 0);
+XSDK_API int FUN_SendMsg(FUN_HANDLE hObj, UI_HANDLE hUser, int nMsgId, int nParam1 = 0, int nParam2 = 0, int nParam3 = 0, const char *szParam = "", const void *pData = 0, int nDataLen = 0, int nSeq = 0);
 /////////////////////////////////////////// 设备公开与相关共享操作  ////////////////////////////////////////////////////
-FUN_HANDLE FUN_GetPublicDevList(UI_HANDLE hUser, int nSeq);
-FUN_HANDLE FUN_GetShareDevList(UI_HANDLE hUser, int nSeq);
+XSDK_API FUN_HANDLE FUN_GetPublicDevList(UI_HANDLE hUser, int nSeq);
+XSDK_API FUN_HANDLE FUN_GetShareDevList(UI_HANDLE hUser, int nSeq);
 //param:title&location&description(标题&地址&描述)
-FUN_HANDLE FUN_SetDevPublic(UI_HANDLE hUser, const char *szDevId, const char *param, int nSeq);
+XSDK_API FUN_HANDLE FUN_SetDevPublic(UI_HANDLE hUser, const char *szDevId, const char *param, int nSeq);
 //param:title&location&description(标题&地址&描述)
-FUN_HANDLE FUN_ShareDevVideo(UI_HANDLE hUser, const char *szDevId, const char *param, int nSeq);
-FUN_HANDLE FUN_CancelDevPublic(UI_HANDLE hUser, const char *szDevId, int nSeq);
-FUN_HANDLE FUN_CancelShareDevVideo(UI_HANDLE hUser, const char *szDevId, int nSeq);
-FUN_HANDLE FUN_SendComment(UI_HANDLE hUser, const char *videoId, const char *context, int nSeq);
-FUN_HANDLE FUN_GetCommentList(UI_HANDLE hUser, const char *videoId, int nPage, int nSeq);
-FUN_HANDLE FUN_GetVideoInfo(UI_HANDLE hUser, const char *szVideoId, int nSeq);
-FUN_HANDLE FUN_GetShortVideoList(UI_HANDLE hUser, int nSeq);
-FUN_HANDLE FUN_EditShortVideoInfo(UI_HANDLE hUser, const char *szVideoId, const char *szTitle, const char *szDescription, const char *style, int nSeq);
-FUN_HANDLE FUN_DeleteShortVideo(UI_HANDLE hUser, const char *szVideoId, int nSeq);
-FUN_HANDLE FUN_GetUserPhotosList(UI_HANDLE hUser, int page,  int nSeq);
-FUN_HANDLE FUN_CreateUserPhotos(UI_HANDLE hUser, const char *photosName, const char *szLocation, const char *szDescription, const char *style, int nSeq);
-FUN_HANDLE FUN_EditUserPhotos(UI_HANDLE hUser, const char *photosName, const char *szLocation, const char *szDescription, const char *style, const char *photosId, int nSeq);
-FUN_HANDLE FUN_UpLoadPhoto(UI_HANDLE hUser, const char *photosId, const char *szTitle, const char *szLocation, const char *szDescription, const char *szPhotoFileName, int nCoverPic, int nSeq);
-FUN_HANDLE FUN_EditPhotoInfo(UI_HANDLE hUser, const char *photosId, const char *photoId, const char *szTitle, const char *szLocation, const char *szDescription, int nSeq);
-FUN_HANDLE FUN_GetPhotoList(UI_HANDLE hUser, const char *photosId, int nPage, int nSeq);
-FUN_HANDLE FUN_DeletePhoto(UI_HANDLE hUser, const char *photoId, int nSeq);
-FUN_HANDLE FUN_DeletePhotos(UI_HANDLE hUser, const char * photosId, int nSeq);
-FUN_HANDLE FUN_CSSAPICommand(UI_HANDLE hUser, const char *szDevId, const char *cmd, const char *param, int nSeq);
-FUN_HANDLE FUN_CSSAPICommandCFS(UI_HANDLE hUser, const char *szDevId, const char *cmd, const char *param, const char *date, int nSeq);
-FUN_HANDLE FUN_KSSAPICommand(UI_HANDLE hUser, const char *object, const char *bucket, const char *auth, const char *date, const char *fileName, int nSeq);
-FUN_HANDLE FUN_KSSAPIUpLoadVideo(UI_HANDLE hUser, const char *userName, const char *pwd, const char *title, const char *location, const char *description, const char *categroyId, const char *videoFileName, const char *picFileName, const char *style, int nSeq);
-FUN_HANDLE FUN_KSSAPIUpLoadPhoto(UI_HANDLE hUser, const char *object, const char *bucket, const char *auth, const char *signature,const char *policy, const char *fileName, int nSeq);
+XSDK_API FUN_HANDLE FUN_ShareDevVideo(UI_HANDLE hUser, const char *szDevId, const char *param, int nSeq);
+XSDK_API FUN_HANDLE FUN_CancelDevPublic(UI_HANDLE hUser, const char *szDevId, int nSeq);
+XSDK_API FUN_HANDLE FUN_CancelShareDevVideo(UI_HANDLE hUser, const char *szDevId, int nSeq);
+XSDK_API FUN_HANDLE FUN_SendComment(UI_HANDLE hUser, const char *videoId, const char *context, int nSeq);
+XSDK_API FUN_HANDLE FUN_GetCommentList(UI_HANDLE hUser, const char *videoId, int nPage, int nSeq);
+XSDK_API FUN_HANDLE FUN_GetVideoInfo(UI_HANDLE hUser, const char *szVideoId, int nSeq);
+XSDK_API FUN_HANDLE FUN_GetShortVideoList(UI_HANDLE hUser, int nSeq);
+XSDK_API FUN_HANDLE FUN_EditShortVideoInfo(UI_HANDLE hUser, const char *szVideoId, const char *szTitle, const char *szDescription, const char *style, int nSeq);
+XSDK_API FUN_HANDLE FUN_DeleteShortVideo(UI_HANDLE hUser, const char *szVideoId, int nSeq);
+XSDK_API FUN_HANDLE FUN_GetUserPhotosList(UI_HANDLE hUser, int page,  int nSeq);
+XSDK_API FUN_HANDLE FUN_CreateUserPhotos(UI_HANDLE hUser, const char *photosName, const char *szLocation, const char *szDescription, const char *style, int nSeq);
+XSDK_API FUN_HANDLE FUN_EditUserPhotos(UI_HANDLE hUser, const char *photosName, const char *szLocation, const char *szDescription, const char *style, const char *photosId, int nSeq);
+XSDK_API FUN_HANDLE FUN_UpLoadPhoto(UI_HANDLE hUser, const char *photosId, const char *szTitle, const char *szLocation, const char *szDescription, const char *szPhotoFileName, int nCoverPic, int nSeq);
+XSDK_API FUN_HANDLE FUN_EditPhotoInfo(UI_HANDLE hUser, const char *photosId, const char *photoId, const char *szTitle, const char *szLocation, const char *szDescription, int nSeq);
+XSDK_API FUN_HANDLE FUN_GetPhotoList(UI_HANDLE hUser, const char *photosId, int nPage, int nSeq);
+XSDK_API FUN_HANDLE FUN_DeletePhoto(UI_HANDLE hUser, const char *photoId, int nSeq);
+XSDK_API FUN_HANDLE FUN_DeletePhotos(UI_HANDLE hUser, const char * photosId, int nSeq);
+XSDK_API FUN_HANDLE FUN_CSSAPICommand(UI_HANDLE hUser, const char *szDevId, const char *cmd, const char *param, int nSeq);
+XSDK_API FUN_HANDLE FUN_CSSAPICommandCFS(UI_HANDLE hUser, const char *szDevId, const char *cmd, const char *param, const char *date, int nSeq);
+XSDK_API FUN_HANDLE FUN_KSSAPICommand(UI_HANDLE hUser, const char *object, const char *bucket, const char *auth, const char *date, const char *fileName, int nSeq);
+XSDK_API FUN_HANDLE FUN_KSSAPIUpLoadVideo(UI_HANDLE hUser, const char *userName, const char *pwd, const char *title, const char *location, const char *description, const char *categroyId, const char *videoFileName, const char *picFileName, const char *style, int nSeq);
+XSDK_API FUN_HANDLE FUN_KSSAPIUpLoadPhoto(UI_HANDLE hUser, const char *object, const char *bucket, const char *auth, const char *signature,const char *policy, const char *fileName, int nSeq);
 
 //---设备相关操作接口---
 /////////////////////////////////////////// 设备相关操作  ////////////////////////////////////////////////////
 // 设备登录，如果本地数据库中没有此设备，则创建
-int FUN_DevLogin(UI_HANDLE hUser, const char *szDevId, const char *szUser, const char *szPwd, int nSeq);
+XSDK_API int FUN_DevLogin(UI_HANDLE hUser, const char *szDevId, const char *szUser, const char *szPwd, int nSeq);
+
+/**
+ * @brief 登录设备
+ * @details 如果设备信息不传，默认使用本地缓存信息
+ * @param szDevInfoJson 登陆设备信息
+ * @example
+ *{
+ *   "device_id" : "", ///< 设备ID 序列号\IP\域名【必填】【蓝牙配网只支持传序列号】
+ *   "uuid" : "", ///< 蓝牙设备唯一ID【可选】【蓝牙配网必填】 ps:android对应的是蓝牙mac，iOS对应的是蓝牙的uuid
+ *   "connect_type" : 1 ///< 连接类型 详见@enum DEV_NET_CNN_TYPE 【可选】 目前仅支持蓝牙自选，其他仍然内部自动选择
+ *   "user_name" : "", ///< 用户名【可选】
+ *   "user_pwd" : "", ///用户密码【可选】
+ *   "type" : 1, ///< 设备类型，详见@enum EFUN_DEV_TYPE【可选】
+ * }
+ * @return 异步消息回调：ID:5139;Param1:>=0成功，否者失败;param2:登录网络连接类型 详见@enum DEV_NET_CNN_TYPE
+ */
+XSDK_API int FUN_DeviceLoginEx(UI_HANDLE hUser, const char *szDevInfoJson, int nSeq);
+
 //适用于门铃，使设备进入休眠状态--EMSG_DEV_SLEEP
-int FUN_DevSleep(UI_HANDLE hUser, const char *szDevId, int nSeq);
+XSDK_API int FUN_DevSleep(UI_HANDLE hUser, const char *szDevId, int nSeq);
 //适用于门铃，唤醒设备，使之进入唤醒状态--EMSG_DEV_WAKE_UP
-int FUN_DevWakeUp(UI_HANDLE hUser, const char *szDevId, int nSeq);
+XSDK_API int FUN_DevWakeUp(UI_HANDLE hUser, const char *szDevId, int nSeq);
 
 /*******************设备相关的接口**************************
  * 方法名:设备唤醒
@@ -1722,7 +1723,7 @@ int FUN_DevWakeUp(UI_HANDLE hUser, const char *szDevId, int nSeq);
  *         消息id:EMSG_DEV_WAKE_UP = 5142
  *         param1:==EE_OK：成功；<0：失败，详见错误码说明
  ****************************************************/
-int FUN_DevWakeUpCtlLogin(UI_HANDLE hUser, const char *szDevId, Bool bDevLogin, int nSeq);
+XSDK_API int FUN_DevWakeUpCtlLogin(UI_HANDLE hUser, const char *szDevId, Bool bDevLogin, int nSeq);
 
 /**
  * @brief 设备重连使能
@@ -1731,7 +1732,7 @@ int FUN_DevWakeUpCtlLogin(UI_HANDLE hUser, const char *szDevId, Bool bDevLogin, 
  * @param szDevID 设备ID
  * @param nDisable 使能 0:不允许重连 1：允许自动重连
  */
-void Fun_DevIsReconnectEnable(const char *szDevID, Bool nEnable);
+XSDK_API void Fun_DevIsReconnectEnable(const char *szDevID, Bool nEnable);
 
 /**
  * @brief 设备唤醒接口
@@ -1742,7 +1743,7 @@ void Fun_DevIsReconnectEnable(const char *szDevID, Bool nEnable);
  * @param szReqExJson 唤醒设备的一些附加信息(必须是JSON格式) 示例：{"ExtInfo":{"Cmd":"xxx","Args":"xxx"}}
  * @param bDevLogin 后台登录设备使能  0:不登录  1：唤醒成功后自动登录
  */
-int Fun_DevWakeUpExt(UI_HANDLE hUser, const char *szDevId, const char *szReqExJson = "", Bool bDevLogin = TRUE, int nSeq = 0);
+XSDK_API int Fun_DevWakeUpExt(UI_HANDLE hUser, const char *szDevId, const char *szReqExJson = "", Bool bDevLogin = TRUE, int nSeq = 0);
 
 /*******************设备相关的接口**************************
 * 方法名: 设备连接网络状态获取
@@ -1759,22 +1760,22 @@ int Fun_DevWakeUpExt(UI_HANDLE hUser, const char *szDevId, const char *szReqExJs
 * 		param1: >= 0 设备网络类型, < 0 失败，见错误码
 * 		Str: 设备序列号
 ****************************************************/
-int FUN_DevGetConnectType(UI_HANDLE hUser, const char *szDevId, int nSeq);
+XSDK_API int FUN_DevGetConnectType(UI_HANDLE hUser, const char *szDevId, int nSeq);
 
-int FUN_DevGetChnName(UI_HANDLE hUser, const char *szDevId, const char *szUser, const char *szPwd, int nSeq = 0);
+XSDK_API int FUN_DevGetChnName(UI_HANDLE hUser, const char *szDevId, const char *szUser, const char *szPwd, int nSeq = 0);
 // 云台控制
-int FUN_DevPTZControl(UI_HANDLE hUser, const char *szDevId, int nChnIndex, int nPTZCommand, bool bStop = false, int nSpeed = 4, int nSeq = 0);
+XSDK_API int FUN_DevPTZControl(UI_HANDLE hUser, const char *szDevId, int nChnIndex, int nPTZCommand, bool bStop = false, int nSpeed = 4, int nSeq = 0);
 // 设备配置获取与设置 - 废弃
 /** @deprecated */
-int FUN_DevGetConfig(UI_HANDLE hUser, const char *szDevId, int nCommand, int nOutBufLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
+XSDK_API int FUN_DevGetConfig(UI_HANDLE hUser, const char *szDevId, int nCommand, int nOutBufLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
 /** @deprecated */
-int FUN_DevSetConfig(UI_HANDLE hUser, const char *szDevId, int nCommand, const void *pConfig, int nConfigLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
+XSDK_API int FUN_DevSetConfig(UI_HANDLE hUser, const char *szDevId, int nCommand, const void *pConfig, int nConfigLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
 
 // 设备配置获取与设置(Json格式)
-int FUN_DevGetConfig_Json(UI_HANDLE hUser, const char *szDevId, const char *szCommand, int nOutBufLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
-int FUN_DevSetConfig_Json(UI_HANDLE hUser, const char *szDevId, const char *szCommand, const void *pConfig, int nConfigLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
-int FUN_DevGetConfigJson(UI_HANDLE hUser, const char *szDevId, const char *szCmd, int nChannelNO = -1, int nCmdReq = 0, int nSeq = 0, const char *pInParam = NULL, int nCmdRes = 0, int nTimeout = 0);
-int FUN_DevSetConfigJson(UI_HANDLE hUser, const char *szDevId, const char *szCmd, const char *pInParam, int nChannelNO = -1, int nCmdReq = 0, int nSeq = 0, int nCmdRes = 0, int nTimeout = 0);
+XSDK_API int FUN_DevGetConfig_Json(UI_HANDLE hUser, const char *szDevId, const char *szCommand, int nOutBufLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
+XSDK_API int FUN_DevSetConfig_Json(UI_HANDLE hUser, const char *szDevId, const char *szCommand, const void *pConfig, int nConfigLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
+XSDK_API int FUN_DevGetConfigJson(UI_HANDLE hUser, const char *szDevId, const char *szCmd, int nChannelNO = -1, int nCmdReq = 0, int nSeq = 0, const char *pInParam = NULL, int nCmdRes = 0, int nTimeout = 0);
+XSDK_API int FUN_DevSetConfigJson(UI_HANDLE hUser, const char *szDevId, const char *szCmd, const char *pInParam, int nChannelNO = -1, int nCmdReq = 0, int nSeq = 0, int nCmdRes = 0, int nTimeout = 0);
 
 /**
  * @brief 设备配置获取(不通过缓存)
@@ -1788,10 +1789,10 @@ int FUN_DevSetConfigJson(UI_HANDLE hUser, const char *szDevId, const char *szCmd
  * @param nCmdRes 保留字段 暂未使用
  * @param nTimeout 超时时间  *<=0库里面默认根据网络类型设置
  */
-int Fun_DevGetConfigJsonWithoutCache(UI_HANDLE hUser, const char *szDevId, const char *szCmdName, int nChannelIndex = -1, int nCmdReqId = 0, int nSeq = 0, const char *pInParam = NULL, int nCmdRes = 0, int nTimeout = 15000);
+XSDK_API int Fun_DevGetConfigJsonWithoutCache(UI_HANDLE hUser, const char *szDevId, const char *szCmdName, int nChannelIndex = -1, int nCmdReqId = 0, int nSeq = 0, const char *pInParam = NULL, int nCmdRes = 0, int nTimeout = 15000);
 
 /** @deprecated 接口废弃，使用FUN_DevConfigJson_NotLoginPtl接口代替 */
-int FUN_DevConfigJson_NotLogin(UI_HANDLE hUser, const char *szDevId, const char *szCmd, const char *pInParam, int nCmdReq, int nChannelNO = -1, int nCmdRes = 0, int nTimeout = 15000, int nSeq = 0);
+XSDK_API int FUN_DevConfigJson_NotLogin(UI_HANDLE hUser, const char *szDevId, const char *szCmd, const char *pInParam, int nCmdReq, int nChannelNO = -1, int nCmdRes = 0, int nTimeout = 15000, int nSeq = 0);
 
 /**
  * @brief 设备配置获取、设置(not login)
@@ -1805,21 +1806,21 @@ int FUN_DevConfigJson_NotLogin(UI_HANDLE hUser, const char *szDevId, const char 
  * @param nActiveClose 是否立即主动关闭  1:主动关闭 0：不主动关闭，sdk内部20s超时自动关闭，再次调用接口重新计时
  * @return >=0消息发送成功，否者失败
  */
-int Fun_DevConfigJson_NotLoginPtl(UI_HANDLE hUser, const char *szDevId, const char *szCmd, const char *pInParam, int nCmdReq, int nChannelNO = -1, int nCmdRes = 0, int nTimeout = 15000, int nSeq = 0, int nActiveClose = 1);
+XSDK_API int Fun_DevConfigJson_NotLoginPtl(UI_HANDLE hUser, const char *szDevId, const char *szCmd, const char *pInParam, int nCmdReq, int nChannelNO = -1, int nCmdRes = 0, int nTimeout = 15000, int nSeq = 0, int nActiveClose = 1);
 
 // 设备通用命令交互
 // nIsBinary >= 0 || nInParamLen > 0传入的为二进制字节数组
-int FUN_DevCmdGeneral(UI_HANDLE hUser, const char *szDevId, int nCmdReq, const char *szCmd, int nIsBinary, int nTimeout, char *pInParam = NULL, int nInParamLen = 0, int nCmdRes = -1, int nSeq = 0);
+XSDK_API int FUN_DevCmdGeneral(UI_HANDLE hUser, const char *szDevId, int nCmdReq, const char *szCmd, int nIsBinary, int nTimeout, char *pInParam = NULL, int nInParamLen = 0, int nCmdRes = -1, int nSeq = 0);
 // 查询设备缩略图
-int FUN_DevSearchPic(UI_HANDLE hUser, const char *szDevId, int nCmdReq, int nRetSize, int nTimeout, char *pInParam, int nInParamLen, int nCount, int nCmdRes = -1, const char * szFileName = NULL, int nSeq = 0);
-int FUN_StopDevSearchPic(UI_HANDLE hUser, const char *szDevId, int nSeq);
-int FUN_DevGetAttr(UI_HANDLE hUser, const char *szDevId, int nCommand, int nOutBufLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
-int FUN_DevSetAttr(UI_HANDLE hUser, const char *szDevId, int nCommand, const void *pConfig, int nConfigLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
-int FUN_DevLogout(UI_HANDLE hUser, const char *szDevId);
-int FUN_DevReConnect(UI_HANDLE hUser, const char *szDevId); //未实现
-int FUN_DevReConnectAll(UI_HANDLE hUser);
+XSDK_API int FUN_DevSearchPic(UI_HANDLE hUser, const char *szDevId, int nCmdReq, int nRetSize, int nTimeout, char *pInParam, int nInParamLen, int nCount, int nCmdRes = -1, const char * szFileName = NULL, int nSeq = 0);
+XSDK_API int FUN_StopDevSearchPic(UI_HANDLE hUser, const char *szDevId, int nSeq);
+XSDK_API int FUN_DevGetAttr(UI_HANDLE hUser, const char *szDevId, int nCommand, int nOutBufLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
+XSDK_API int FUN_DevSetAttr(UI_HANDLE hUser, const char *szDevId, int nCommand, const void *pConfig, int nConfigLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
+XSDK_API int FUN_DevLogout(UI_HANDLE hUser, const char *szDevId);
+XSDK_API int FUN_DevReConnect(UI_HANDLE hUser, const char *szDevId); //未实现
+XSDK_API int FUN_DevReConnectAll(UI_HANDLE hUser);
 // 获取DSS支持的能力级--详细见EDEV_STREM_TYPE
-uint FUN_GetDSSAbility(const char *szDevId, int nChannel);
+XSDK_API uint FUN_GetDSSAbility(const char *szDevId, int nChannel);
 
 /*******************DSS相关的接口**************************
 * 方法名: 获取DSS通道主辅码流状态(当前缓存)
@@ -1835,7 +1836,7 @@ uint FUN_GetDSSAbility(const char *szDevId, int nChannel);
 *          [无]
 * 结果消息：无
 ****************************************************/
-int FUN_GetDSSChannelState(const char *sDevId, int nChannel, int nStreamType);
+XSDK_API int FUN_GetDSSChannelState(const char *sDevId, int nChannel, int nStreamType);
 
 /*******************DSS相关的接口**************************
 * 方法名: 获取DSS支持混合通道号
@@ -1851,13 +1852,13 @@ int FUN_GetDSSChannelState(const char *sDevId, int nChannel, int nStreamType);
 *          [无]
 * 结果消息：无
 ****************************************************/
-int FUN_GetDSSMixedChannel(const char *szDevId, int nStreamType);
+XSDK_API int FUN_GetDSSMixedChannel(const char *szDevId, int nStreamType);
 
 /** @deprecated 接口废弃，名称容易误认为只修改设备密码，使用FUN_DevSetLocalUserNameAndPwd代替 */
-int FUN_DevSetLocalPwd(const char *szDevId, const char *szUser, const char *szPwd);
+XSDK_API int FUN_DevSetLocalPwd(const char *szDevId, const char *szUser, const char *szPwd);
 
 /** 设置本地缓存设备用户名密码 */
-int Fun_DevSetLocalUserNameAndPwd(const char *szDevId, const char *szUser, const char *szPwd);
+XSDK_API int Fun_DevSetLocalUserNameAndPwd(const char *szDevId, const char *szUser, const char *szPwd);
 
 /**
  * @brief 设置登录令牌信息(加密后的数据)到本地缓存
@@ -1865,7 +1866,7 @@ int Fun_DevSetLocalUserNameAndPwd(const char *szDevId, const char *szUser, const
  * @param szDevId  设备序列号
  * @param szEncToken (加密后的数据)登录令牌信息
  */
-int Fun_DevSetLocalEncToken(const char *szDevId, const char *szEncToken);
+XSDK_API int Fun_DevSetLocalEncToken(const char *szDevId, const char *szEncToken);
 
 /**
  * @brief 设置设备信息到本地缓存
@@ -1875,20 +1876,27 @@ int Fun_DevSetLocalEncToken(const char *szDevId, const char *szEncToken);
  * @param szPwd  设备密码  ps:对应用户名
  * @param szEncToken 设备TOKEN(加密的数据)
  */
-int Fun_DevSetDevInfoToLocal(const char *szDevId, const char *szUser, const char *szPwd, const char *szEncToken);
+XSDK_API int Fun_DevSetDevInfoToLocal(const char *szDevId, const char *szUser, const char *szPwd, const char *szEncToken);
 
-char *FUN_DevGetLocalPwd(const char *szDevId, char szPwd[MAX_DEV_NAMEPASSWORD_LEN]);
-char *FUN_DevGetLocalUserName(const char *szDevId, char szUserName[64]);
+XSDK_API char *FUN_DevGetLocalPwd(const char *szDevId, char szPwd[MAX_DEV_NAMEPASSWORD_LEN]);
+XSDK_API char *FUN_DevGetLocalUserName(const char *szDevId, char szUserName[64]);
 
 /**
  * @brief 获取登录令牌信息(加密后的数据)
  * @param szDevId  设备序列号
  * @param szEncToken (加密后的数据)登录令牌信息
  */
-char *FUN_DevGetLocalEncToken(const char *szDevId, char szEncToken[MAX_DEV_TOKEN_LEN]);
+XSDK_API char *FUN_DevGetLocalEncToken(const char *szDevId, char szEncToken[MAX_DEV_TOKEN_LEN]);
 
-int Fun_DevSetPid(const char *szDevId, const char *szPid);
-char *Fun_GetDevPid(const char *szDevId, char szPid[MAX_DEV_PID]);
+/**
+ * @brief 获取本地的设备信息
+ * @param hUser 用户句柄
+ * @param nSeq 自定义值
+ */
+XSDK_API int Fun_GetLocalDevInfo(UI_HANDLE hUser, int nSeq = 0);
+
+XSDK_API int Fun_DevSetPid(const char *szDevId, const char *szPid);
+XSDK_API char *Fun_GetDevPid(const char *szDevId, char szPid[MAX_DEV_PID]);
 
 /**
  * @brief 通过键值ID获取随机秘钥(直到APP卸载保持有效)
@@ -1897,7 +1905,7 @@ char *Fun_GetDevPid(const char *szDevId, char szPid[MAX_DEV_PID]);
  * @param[out] szRandKey 随机秘钥字符串 ps:本地无缓存的时候生成，有的话直接返回
  * @return >= 0成功否者失败
  */
-int Fun_GetLocalCacheRandKey(const char *szKeyID, int nRandKeyLen, char szRandKey[MAX_RAND_KEY]);
+XSDK_API int Fun_GetLocalCacheRandKey(const char *szKeyID, int nRandKeyLen, char szRandKey[MAX_RAND_KEY]);
 
 /**
  * @brief 通过键值ID删除随机秘钥
@@ -1906,7 +1914,7 @@ int Fun_GetLocalCacheRandKey(const char *szKeyID, int nRandKeyLen, char szRandKe
  * @param[out] szRandKey 本地无缓存的时候生成，有的话直接返回
  * @return >= 0成功否者失败
  */
-void Fun_DelLocalCacheRandKey(const char *szKeyID);
+XSDK_API void Fun_DelLocalCacheRandKey(const char *szKeyID);
 
 /**
  * @brief 加密生成蓝牙TOKEN
@@ -1914,7 +1922,7 @@ void Fun_DelLocalCacheRandKey(const char *szKeyID);
  * @param szInfoJson 蓝牙信息
  * @param[out] szToken 蓝牙TOKEN
  */
-char *Fun_EncBleToken(const char *szDevID, const char *szInfoJson, char szToken[MAX_BEL_ENC_TOKEN]);
+XSDK_API char *Fun_EncBleToken(const char *szDevID, const char *szInfoJson, char szToken[MAX_BEL_ENC_TOKEN]);
 
 /**
  * @brief 解密蓝牙TOKEN
@@ -1922,19 +1930,19 @@ char *Fun_EncBleToken(const char *szDevID, const char *szInfoJson, char szToken[
  * @param szToken 蓝牙TOKEN
  * @param szInfo 解密后的蓝牙信息
  */
-char *Fun_DecBleToken(const char *szDevID, const char *szToken, char szInfo[MAX_BEL_ENC_TOKEN]);
+XSDK_API char *Fun_DecBleToken(const char *szDevID, const char *szToken, char szInfo[MAX_BEL_ENC_TOKEN]);
 
 // 快速配置接口
 // WIFI配置配置接口（WIFI信息特殊方式发送给设备-->接收返回（MSGID->EMSG_DEV_AP_CONFIG））
-int FUN_DevStartAPConfig(UI_HANDLE hUser, int nGetRetType, const char *ssid, const char *data, const char *info, const char *ipaddr, int type, int isbroad, const unsigned char wifiMac[6], int nTimeout = 10000);
-void FUN_DevStopAPConfig(int nStopType = 0x3);
+XSDK_API int FUN_DevStartAPConfig(UI_HANDLE hUser, int nGetRetType, const char *ssid, const char *data, const char *info, const char *ipaddr, int type, int isbroad, const unsigned char wifiMac[6], int nTimeout = 10000);
+XSDK_API void FUN_DevStopAPConfig(int nStopType = 0x3);
 
 //录像查询
 //(EMSType.XXXX << 26) | (1 << EMSSubType.XXXXX & 0x3FFFFFF);
-int FUN_DevFindFile(UI_HANDLE hUser, const char *szDevId, H264_DVR_FINDINFO* lpFindInfo, int nMaxCount, int waittime = 10000, int nSeq = 0);
-int FUN_DevFindFileByTime(UI_HANDLE hUser, const char *szDevId, SDK_SearchByTime* lpFindInfo, int waittime = 2000, int nSeq = 0);
-FUN_HANDLE FUN_DevDowonLoadByFile(UI_HANDLE hUser, const char *szDevId, H264_DVR_FILE_DATA *pH264_DVR_FILE_DATA, const char *szFileName, int nSeq = 0);
-FUN_HANDLE FUN_DevDowonLoadByTime(UI_HANDLE hUser, const char *szDevId, H264_DVR_FINDINFO *pH264_DVR_FINDINFO, const char *szFileName, int nSeq = 0);
+XSDK_API int FUN_DevFindFile(UI_HANDLE hUser, const char *szDevId, H264_DVR_FINDINFO* lpFindInfo, int nMaxCount, int waittime = 10000, int nSeq = 0);
+XSDK_API int FUN_DevFindFileByTime(UI_HANDLE hUser, const char *szDevId, SDK_SearchByTime* lpFindInfo, int waittime = 2000, int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_DevDowonLoadByFile(UI_HANDLE hUser, const char *szDevId, H264_DVR_FILE_DATA *pH264_DVR_FILE_DATA, const char *szFileName, int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_DevDowonLoadByTime(UI_HANDLE hUser, const char *szDevId, H264_DVR_FINDINFO *pH264_DVR_FINDINFO, const char *szFileName, int nSeq = 0);
 
 /**
  * @brief 下载SD卡图片集合
@@ -1949,38 +1957,38 @@ FUN_HANDLE FUN_DevDowonLoadByTime(UI_HANDLE hUser, const char *szDevId, H264_DVR
     EMSG_ON_FILE_DLD_COMPLETE = 5117, 下载完成结果通知
     EMSG_ON_FILE_DLD_POS = 5118, 下载进度结果通知   arg1:总个数 arg2：已下载的个数 arg3：当前下载图片所在列表中的位置 str:当前下载图片绝对路径
  */
-FUN_HANDLE FUN_DevImgListDowonLoad(UI_HANDLE hUser, const char *szDevId, H264_DVR_FILE_DATA_IMG_LIST *pH264_DVR_FILE_DATA_IMG_LIST, const char *szFileListMsk, const char *szFileDirName, int nSeq);
-int FUN_DevStopDownLoad(FUN_HANDLE hDownload);
+XSDK_API FUN_HANDLE FUN_DevImgListDowonLoad(UI_HANDLE hUser, const char *szDevId, H264_DVR_FILE_DATA_IMG_LIST *pH264_DVR_FILE_DATA_IMG_LIST, const char *szFileListMsk, const char *szFileDirName, int nSeq);
+XSDK_API int FUN_DevStopDownLoad(FUN_HANDLE hDownload);
 
 // 录像缩略图下载（最新固件才会支持2017.07.19）
 // 异步消息EMSG_DOWN_RECODE_BPIC_START、EMSG_DOWN_RECODE_BPIC_FILE、EMSG_DOWN_RECODE_BPIC_COMPLETE
 // 返回nDownId：可用于FUN_CancelDownloadRecordImage，取消下载用
-int FUN_DownloadRecordBImage(UI_HANDLE hUser, const char *szDevId, int nChannel, int nTime, const char *szFileName, int nTypeMask = -1, int nSeq = 0);
-int FUN_DownloadRecordBImages(UI_HANDLE hUser, const char *szDevId, int nChannel, int nStartTime, int nEndTime, const char *szFilePath, int nTypeMask = -1, int nSeq = 0, int nMaxPicCount = 0x7fffffff);
+XSDK_API int FUN_DownloadRecordBImage(UI_HANDLE hUser, const char *szDevId, int nChannel, int nTime, const char *szFileName, int nTypeMask = -1, int nSeq = 0);
+XSDK_API int FUN_DownloadRecordBImages(UI_HANDLE hUser, const char *szDevId, int nChannel, int nStartTime, int nEndTime, const char *szFilePath, int nTypeMask = -1, int nSeq = 0, int nMaxPicCount = 0x7fffffff);
 
 // nDownId:开始的返回值，如果==0表示全部停止
-int FUN_CancelDownloadRecordImage(const char *szDevId, int nDownId);
+XSDK_API int FUN_CancelDownloadRecordImage(const char *szDevId, int nDownId);
 
 // 设置设备下载队列最多任务数(初始默认为48)（录像缩略图下载SDK中是有个下载队列，排队下载）
 // nMaxSize == 0取消限制； nMaxSize > 0：下载最大排队任务数
-int FUN_SetDownRBImageQueueSize(const char *szDevId, int nMaxSize);
+XSDK_API int FUN_SetDownRBImageQueueSize(const char *szDevId, int nMaxSize);
 
 ////////升级相关函数////////////////////
 //升级检测
 /** @deprecated 接口废弃，使用FUN_DevCheckUpgradeAllNet代替(设备端检测升级失败后，p2p模式也允许去服务器检测升级信息) */
-int FUN_DevCheckUpgrade(UI_HANDLE hUser, const char *szDevId, int nSeq = 0); // 返回MSGID:EMSG_DEV_CHECK_UPGRADE
-int FUN_DevCheckUpgradeAllNet(UI_HANDLE hUser, const char *szDevId, int nSeq = 0); // 支持转发/p2p云服务查询
+XSDK_API int FUN_DevCheckUpgrade(UI_HANDLE hUser, const char *szDevId, int nSeq = 0); // 返回MSGID:EMSG_DEV_CHECK_UPGRADE
+XSDK_API int FUN_DevCheckUpgradeAllNet(UI_HANDLE hUser, const char *szDevId, int nSeq = 0); // 支持转发/p2p云服务查询
 /** @deprecated 接口废弃，使用FUN_DevCheckUpgradeExAllNet代替(设备端检测升级失败后，p2p模式也允许去服务器检测升级信息) */
-int FUN_DevCheckUpgradeEx(UI_HANDLE hUser, const char *szDevId, const SSubDevInfo *szSubDevInfo = NULL, int nSeq = 0);
-int FUN_DevCheckUpgradeExAllNet(UI_HANDLE hUser, const char *szDevId, const SSubDevInfo *szSubDevInfo = NULL, int nSeq = 0);// 支持转发/p2p云服务查询
+XSDK_API int FUN_DevCheckUpgradeEx(UI_HANDLE hUser, const char *szDevId, const SSubDevInfo *szSubDevInfo = NULL, int nSeq = 0);
+XSDK_API int FUN_DevCheckUpgradeExAllNet(UI_HANDLE hUser, const char *szDevId, const SSubDevInfo *szSubDevInfo = NULL, int nSeq = 0);// 支持转发/p2p云服务查询
 
 // 设备升级
-int FUN_DevStartUpgrade(UI_HANDLE hUser, const char *szDevId, int nType, int nSeq = 0);
-int FUN_DevStartUpgradeByFile(UI_HANDLE hUser, const char *szDevId, const char *szFileName, int nSeq = 0);
-int FUN_DevStartUpgradeEx(UI_HANDLE hUser, const char *szDevId, int nType, const SSubDevInfo *szSubDevInfo = NULL, int nSeq = 0);
-int FUN_DevStartUpgradeByFileEx(UI_HANDLE hUser, const char *szDevId, const char *szSubDevId, const char *szFileName, int nSeq = 0);
+XSDK_API int FUN_DevStartUpgrade(UI_HANDLE hUser, const char *szDevId, int nType, int nSeq = 0);
+XSDK_API int FUN_DevStartUpgradeByFile(UI_HANDLE hUser, const char *szDevId, const char *szFileName, int nSeq = 0);
+XSDK_API int FUN_DevStartUpgradeEx(UI_HANDLE hUser, const char *szDevId, int nType, const SSubDevInfo *szSubDevInfo = NULL, int nSeq = 0);
+XSDK_API int FUN_DevStartUpgradeByFileEx(UI_HANDLE hUser, const char *szDevId, const char *szSubDevId, const char *szFileName, int nSeq = 0);
 
-int FUN_DevStopUpgrade(UI_HANDLE hUser, const char *szDevId, int nSeq = 0);
+XSDK_API int FUN_DevStopUpgrade(UI_HANDLE hUser, const char *szDevId, int nSeq = 0);
 
 /**
  * @brief 升级检测（拓展模块）
@@ -1997,7 +2005,7 @@ int FUN_DevStopUpgrade(UI_HANDLE hUser, const char *szDevId, int nSeq = 0);
  * }
  * @return >=0代表成功，否者失败
  */
-int FUN_DevExModulesCheckUpgrade(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int FUN_DevExModulesCheckUpgrade(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 开始升级（拓展模块）
@@ -2012,7 +2020,7 @@ int FUN_DevExModulesCheckUpgrade(UI_HANDLE hUser, const char *szReqJson, int nSe
  * }
  * @return >=0代表成功，否者失败
  */
-int FUN_DevExModulesStartUpgrade(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int FUN_DevExModulesStartUpgrade(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 通过本地文件进行设备升级（拓展模块）
@@ -2027,13 +2035,13 @@ int FUN_DevExModulesStartUpgrade(UI_HANDLE hUser, const char *szReqJson, int nSe
  * }
  * @return >=0代表成功，否者失败
  */
-int FUN_DevExModulesStartUpgradeByFile(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int FUN_DevExModulesStartUpgradeByFile(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 停止升级（拓展模块）
  * @param szDevId 设备ID
  */
-int FUN_DevExModulesStopUpgrade(UI_HANDLE hUser, const char *szDevId, int nSeq = 0);
+XSDK_API int FUN_DevExModulesStopUpgrade(UI_HANDLE hUser, const char *szDevId, int nSeq = 0);
 
 /*******************IPC升级相关的接口**************************
 * 方法名: NVR给IPC升级
@@ -2055,18 +2063,18 @@ int FUN_DevExModulesStopUpgrade(UI_HANDLE hUser, const char *szDevId, int nSeq =
 *              	参数说明： param1： 升级当前状态，详见枚举EUPGRADE_STEP
 *              	       param2：>= 0 ,对应当前升级进度， 只有param1==10的时候，需要判断param2是否<0(失败，见错误码)
 ****************************************************/
-int FUN_DevStartUpgradeIPC(UI_HANDLE hUser, const char *szDevID, int nChannel, int nUpgType = 0, int nTimeout = 120000, int nSeq = 0);
-int FUN_DevStopUpgradeIPC(UI_HANDLE hUser, const char *szDevID, int nSeq = 0);
+XSDK_API int FUN_DevStartUpgradeIPC(UI_HANDLE hUser, const char *szDevID, int nChannel, int nUpgType = 0, int nTimeout = 120000, int nSeq = 0);
+XSDK_API int FUN_DevStopUpgradeIPC(UI_HANDLE hUser, const char *szDevID, int nSeq = 0);
 
 // 接口废弃，使用FUN_DevStartWifiConfigByAPLogin接口代替
-int FUN_DevSetWIFIConfig(UI_HANDLE hUser, const char *pCfg, int nCfgLen, const char *szUser, const char *szPwd, int nTimeout, int nSeq);
+XSDK_API int FUN_DevSetWIFIConfig(UI_HANDLE hUser, const char *pCfg, int nCfgLen, const char *szUser, const char *szPwd, int nTimeout, int nSeq);
 
 // WIFI配置配置接口（这种方式需要可以登录设备，通过协议把SSID和密码发给设备）
 // 手机APP通过局域网登录时（过程：调用接口->回调返回结果）（MSGID->EMSG_DEV_SET_WIFI_CFG））
-int FUN_DevStartWifiConfig(UI_HANDLE hUser, const char *szDevId, const char *szSSID, const char *szPassword, int nTimeout = 120000);
+XSDK_API int FUN_DevStartWifiConfig(UI_HANDLE hUser, const char *szDevId, const char *szSSID, const char *szPassword, int nTimeout = 120000);
 // 手机APP通过设备热点连接时（过程：手机连接设备热点->调用接口->返回1->切换到家里的WIFI->返回结果）（MSGID->EMSG_DEV_SET_WIFI_CFG））
-int FUN_DevStartWifiConfigByAPLogin(UI_HANDLE hUser, const char *szDevId, const char *szSSID, const char *szPassword, int nTimeout = 120000);
-void FUN_DevStopWifiConfig();
+XSDK_API int FUN_DevStartWifiConfigByAPLogin(UI_HANDLE hUser, const char *szDevId, const char *szSSID, const char *szPassword, int nTimeout = 120000);
+XSDK_API void FUN_DevStopWifiConfig();
 
 /*******************对讲相关的接口**************************
 * 方法名: 开启对讲
@@ -2083,7 +2091,7 @@ void FUN_DevStopWifiConfig();
 * 		消息ID：EMSG_START_PLAY = 5501
 ****************************************************/
 /** @deprecated 接口废弃，使用Fun_DevStartTalk代替 */
-FUN_HANDLE FUN_DevStarTalk(UI_HANDLE hUser, const char *szDevId, Bool bSupIpcTalk = FALSE, int nChannel = -1, int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_DevStarTalk(UI_HANDLE hUser, const char *szDevId, Bool bSupIpcTalk = FALSE, int nChannel = -1, int nSeq = 0);
 
 /**
  * @brief 开启对讲功能
@@ -2092,10 +2100,10 @@ FUN_HANDLE FUN_DevStarTalk(UI_HANDLE hUser, const char *szDevId, Bool bSupIpcTal
  * @return @async 消息ID：5111; param1: >=0 成功，否者失败
  * @return >=0消息发送成功，否者失败
  */
-FUN_HANDLE Fun_DevStartTalk(UI_HANDLE hUser, const char *szDevId, SDevTalkParams *pInfo, int nSeq = 0);
+XSDK_API FUN_HANDLE Fun_DevStartTalk(UI_HANDLE hUser, const char *szDevId, SDevTalkParams *pInfo, int nSeq = 0);
 
-int FUN_DevSendTalkData(const char *szDevId, const char *pPCMData, int nDataLen);
-void FUN_DevStopTalk(FUN_HANDLE hPlayer);
+XSDK_API int FUN_DevSendTalkData(const char *szDevId, const char *pPCMData, int nDataLen);
+XSDK_API void FUN_DevStopTalk(FUN_HANDLE hPlayer);
 
 /**
  * @brief 开启音视频对讲(Client-->Dev)
@@ -2133,7 +2141,7 @@ void FUN_DevStopTalk(FUN_HANDLE hPlayer);
  *    }
  * }
  */
-FUN_HANDLE Fun_DevStartAVTalk(UI_HANDLE hUser, const char *szDevID, const char *szReqJson, int nTimeout, int nSeq = 0);
+XSDK_API FUN_HANDLE Fun_DevStartAVTalk(UI_HANDLE hUser, const char *szDevID, const char *szReqJson, int nTimeout, int nSeq = 0);
 
 /**
  * @brief 发送音视频对讲数据(Client-->Dev)
@@ -2149,14 +2157,14 @@ FUN_HANDLE Fun_DevStartAVTalk(UI_HANDLE hUser, const char *szDevID, const char *
  * 	  "type" : 1 ///< 1:视频 2：音频
  * }
  */
-int Fun_DevSendAVTalkData(FUN_HANDLE hPlayer, const char *szFrameInfo, const char *pAVData, int nDataLen);
+XSDK_API int Fun_DevSendAVTalkData(FUN_HANDLE hPlayer, const char *szFrameInfo, const char *pAVData, int nDataLen);
 
 /**
  * @brief 关闭音视频对讲(Client-->Dev)
  * @details @details 异步回调消息：id:5558 param1: >=0 成功，否者失败
  * @param hPlayer
  */
-void Fun_DevStopAVTalkData(FUN_HANDLE hPlayer);
+XSDK_API void Fun_DevStopAVTalkData(FUN_HANDLE hPlayer);
 
 /**
  * @brief 控制音视频对讲(Client-->Dev)
@@ -2175,20 +2183,20 @@ void Fun_DevStopAVTalkData(FUN_HANDLE hPlayer);
  * 	 }
  * }
  */
-int Fun_DevControlAVTalk(FUN_HANDLE hPlayer, const char *szCtrlJson, int nSeq = 0);
+XSDK_API int Fun_DevControlAVTalk(FUN_HANDLE hPlayer, const char *szCtrlJson, int nSeq = 0);
 
-int FUN_DevOption(const char *szDevId, MsgOption *pOpt);
-int FUN_DevOption(UI_HANDLE hUser, const char *szDevId, int nOptId, void *pData = NULL, int nDataLen = 0, int param1 = 0, int param2 = 0, int param3 = 0, const char *szStr = "", int seq = 0);
+XSDK_API int FUN_DevOption(const char *szDevId, MsgOption *pOpt);
+XSDK_API int FUN_DevOption(UI_HANDLE hUser, const char *szDevId, int nOptId, void *pData = NULL, int nDataLen = 0, int param1 = 0, int param2 = 0, int param3 = 0, const char *szStr = "", int seq = 0);
 
 //废弃，代码未实现！！
-int FUN_DevStartSynRecordImages(UI_HANDLE hUser, const char *szDevId, int nChannel, const char *bufPath, time_t beginTime, time_t endTime, int nSeq);
-int FUN_DevStopSynRecordImages(UI_HANDLE hUser, const char *szDevId, int nSeq);
+XSDK_API int FUN_DevStartSynRecordImages(UI_HANDLE hUser, const char *szDevId, int nChannel, const char *bufPath, time_t beginTime, time_t endTime, int nSeq);
+XSDK_API int FUN_DevStopSynRecordImages(UI_HANDLE hUser, const char *szDevId, int nSeq);
 
 //局域网搜索
-int FUN_DevSearchDevice(UI_HANDLE hUser, int nTimeout, int nSeq);
+XSDK_API int FUN_DevSearchDevice(UI_HANDLE hUser, int nTimeout, int nSeq);
 
 // 开启上报数据
-int FUN_DevStartUploadData(UI_HANDLE hUser, const char *szDevId, int nUploadDataType, int nSeq);
+XSDK_API int FUN_DevStartUploadData(UI_HANDLE hUser, const char *szDevId, int nUploadDataType, int nSeq);
 
 /*******************数据上报通用协议**************************
 * 方法名: 开启上报数据通用接口
@@ -2211,10 +2219,10 @@ int FUN_DevStartUploadData(UI_HANDLE hUser, const char *szDevId, int nUploadData
 *              	       param2：上报类型
 *              	       pData：结果信息（json）
 ****************************************************/
-int FUN_DevGeneralStartUploadData(UI_HANDLE hUser, const char *sDevId, const char *sJson, int nChannel, int nUploadDataType, int nSeq = 0);
+XSDK_API int FUN_DevGeneralStartUploadData(UI_HANDLE hUser, const char *sDevId, const char *sJson, int nChannel, int nUploadDataType, int nSeq = 0);
 
 // 关闭上报数据
-int FUN_DevStopUploadData(UI_HANDLE hUser, const char *szDevId, int nUploadDataType, int nSeq);
+XSDK_API int FUN_DevStopUploadData(UI_HANDLE hUser, const char *szDevId, int nUploadDataType, int nSeq);
 
 /*******************数据上报通用协议**************************
 * 方法名: 关闭上报数据通用接口
@@ -2232,13 +2240,13 @@ int FUN_DevStopUploadData(UI_HANDLE hUser, const char *szDevId, int nUploadDataT
 * 结果消息：
 * 		消息ID：    EMSG_DEV_STOP_UPLOAD_DATA = 5136
 ****************************************************/
-int FUN_DevGeneralStopUploadData(UI_HANDLE hUser, const char *sDevId, const char *sJson, int nChannel, int nUploadDataType, int nSeq = 0);
+XSDK_API int FUN_DevGeneralStopUploadData(UI_HANDLE hUser, const char *sDevId, const char *sJson, int nChannel, int nUploadDataType, int nSeq = 0);
 
 //注意：设置本地报警接受者，不再使用FUN_DevGetAlarmState(此名字含义不明显)， 使用FUN_DevSetAlarmListener
-FUN_HANDLE FUN_DevGetAlarmState(UI_HANDLE hUser, int nSeq);
-FUN_HANDLE FUN_DevSetAlarmListener(UI_HANDLE hUser, int nSeq);
+XSDK_API FUN_HANDLE FUN_DevGetAlarmState(UI_HANDLE hUser, int nSeq);
+XSDK_API FUN_HANDLE FUN_DevSetAlarmListener(UI_HANDLE hUser, int nSeq);
 //获取dss真实通道数 在线返回通道数，不在线返回0 *通道数， 通道号要区分
-int FUN_GetDevChannelCount(const char *szDevId);
+XSDK_API int FUN_GetDevChannelCount(const char *szDevId);
 
 /*******************数据上报通用协议**************************
 * 方法名: 将错误码添加到监听器
@@ -2254,26 +2262,26 @@ int FUN_GetDevChannelCount(const char *szDevId);
 * 结果消息：
 * 		消息ID：    EMSG_DEV_ERROR_CODE_MONITOR = 5166
 ****************************************************/
-int Fun_DevErrorCodeAddToMonitor(UI_HANDLE hUser, int nErrorCode);
+XSDK_API int Fun_DevErrorCodeAddToMonitor(UI_HANDLE hUser, int nErrorCode);
 // 将错误码从监听器移除
-int Fun_DevErrorCodeRemoveFromTheMonitor(UI_HANDLE hUser, int nErrorCode);
+XSDK_API int Fun_DevErrorCodeRemoveFromTheMonitor(UI_HANDLE hUser, int nErrorCode);
 
 #ifdef SUP_PREDATOR
 //捕食器文件相关操作
-int FUN_DevPredatorFileOperation(UI_HANDLE hUser, SPredatorAudioFileInfo *pFileInfo, const char *szDevId, const char *szFilePath, int nSeq);
+XSDK_API int FUN_DevPredatorFileOperation(UI_HANDLE hUser, SPredatorAudioFileInfo *pFileInfo, const char *szDevId, const char *szFilePath, int nSeq);
 //捕食器文件保存
-int Fun_DevPredatorFileSave(UI_HANDLE hUser, const char *szDevId, const char *szFilePath, int nSeq);
+XSDK_API int Fun_DevPredatorFileSave(UI_HANDLE hUser, const char *szDevId, const char *szFilePath, int nSeq);
 #endif
 
 // 获取设备能力级
 // 返回 > 0表示有此功能能力  <=0表示无
 // 智能录像放回能力 "OtherFunction/SupportIntelligentPlayBack"
-int FUN_GetDevAbility(const char *szDevId, const char *szAbility);
+XSDK_API int FUN_GetDevAbility(const char *szDevId, const char *szAbility);
 
 // 分类型获取设备状态（直接获取缓存中的状态）
 // nType: 详细说明见枚举EFunDevStateType
 // 返回值见枚举EFunDevState
-int FUN_GetDevState(const char *szDevId, int nType);
+XSDK_API int FUN_GetDevState(const char *szDevId, int nType);
 
 /*******************设备状态相关接口**************************
 * 方法名: 获取缓存中的所有状态
@@ -2288,7 +2296,7 @@ int FUN_GetDevState(const char *szDevId, int nType);
 *          [无]
 * 结果消息：无
 ****************************************************/
-int FUN_GetDevAllNetState(const char *szDevId);
+XSDK_API int FUN_GetDevAllNetState(const char *szDevId);
 
 /**
  * @brief 获取设备主控低功耗状态
@@ -2296,7 +2304,7 @@ int FUN_GetDevAllNetState(const char *szDevId);
  * @param szDevID 设备序列号
  * @return 返回低功耗状态 详见@enum EFUN_SATE
  */
-int Fun_GetDevMasterControlState(const char *szDevSN);
+XSDK_API int Fun_GetDevMasterControlState(const char *szDevSN);
 
 /**
  * @brief 获取设备外网IP地址
@@ -2306,7 +2314,7 @@ int Fun_GetDevMasterControlState(const char *szDevSN);
  * @param nMaxSize 可拷贝最大字节，一般为szDstWanIP数组字节大小
  * @return <0失败，详见错误码说明
  */
-int Fun_GetDevWanIP(const char *szDevSN, char *szDstWanIP, int nMaxSize);
+XSDK_API int Fun_GetDevWanIP(const char *szDevSN, char *szDstWanIP, int nMaxSize);
 
 /** @deprecated FUN_SetDevInfoByShared接口废弃，使用Fun_AddDevInfoToDataCenter代替 */
 /**
@@ -2318,7 +2326,7 @@ int Fun_GetDevWanIP(const char *szDevSN, char *szDstWanIP, int nMaxSize);
  * @param nMa 是否是主账号
  * @param sComments 附加信息
  */
-void Fun_AddDevInfoToDataCenter(SDBDeviceInfo *pDevInfo, int nWxpms, int nMa, const char* szComments);
+XSDK_API void Fun_AddDevInfoToDataCenter(SDBDeviceInfo *pDevInfo, int nWxpms, int nMa, const char* szComments);
 
 /** @deprecated Fun_DeleteDevInfoByShared接口废弃，使用Fun_DeleteDevsInfoFromDataCenter代替 */
 
@@ -2328,7 +2336,7 @@ void Fun_AddDevInfoToDataCenter(SDBDeviceInfo *pDevInfo, int nWxpms, int nMa, co
  * 删除设备相关信息：关闭设备连接；清空设备状态；本地密码清空；dss本地缓存密码清空；自动取消报警订阅；关闭alc服务；devToken清空
  * @param sDevIds  设备序列号 多个设备时以';'分隔
  */
-void Fun_DeleteDevsInfoFromDataCenter(const char *szDevIds);
+XSDK_API void Fun_DeleteDevsInfoFromDataCenter(const char *szDevIds);
 
 /*******************设备相关接口**************************
 * 方法名: 添加分享的设备的主账号UserId
@@ -2341,49 +2349,49 @@ void Fun_DeleteDevsInfoFromDataCenter(const char *szDevIds);
 *          [无]
 * 结果消息：无
 ****************************************************/
-int Fun_AddSharedDevMaUserId(const char *sDevId, const char *sUserId);
+XSDK_API int Fun_AddSharedDevMaUserId(const char *sDevId, const char *sUserId);
 
 /**
  * @brief 判断设备是否在局域网内（不进行局域网搜索）
  * @details 仅支持序列号查找
  * @param szDevId  设备序列号
  * @param devInfo 搜索到的设备信息(IOS需分配对象空间)
- * @return 1代表设备在局域网内，否者不在
+ * @return 1代表设备在局域网内，否者不在 <0:详见错误码
  */
-int Fun_DevIsSearched(const char *szDevId, SDK_CONFIG_NET_COMMON_V2 *devInfo);
+XSDK_API int Fun_DevIsSearched(const char *szDevId, SDK_CONFIG_NET_COMMON_V2 *devInfo);
 
 /**
  * @brief 局域网搜索设备
  * @param szDevSN 设备序列号(不支持IP或域名)
  * @param nTimeout 超时时间
  * @param[out] pOutDevInfo 搜索到的设备信息(IOS需分配对象空间)
- * @return <=0:未搜到设备 1:搜索到设备（需要结合结构体的sn等信息判断设备存在）
+ * @return <0:失败，详见错误码，0:未搜到设备 1:搜索到设备（需要结合结构体的sn等信息判断设备存在）
  */
- int Fun_DevLANSearch(const char *szDevSN, int nTimeout, SDK_CONFIG_NET_COMMON_V2 *pOutDevInfo);
+ XSDK_API int Fun_DevLANSearch(const char *szDevSN, int nTimeout, SDK_CONFIG_NET_COMMON_V2 *pOutDevInfo);
 
 /**
  * @brief 检测局域网设备TCP服务
  * @param pDevInfo 局域网设备信息结构体
  * @param nTimeout 超时时间
- * @return 0:连接失败 1:连接成功
+ * @return <0:连接失败,详见错误码 1:连接成功
  */
-int Fun_DevIsDetectTCPService(SDK_CONFIG_NET_COMMON_V2 *pDevInfo, int nTimeout);
+XSDK_API int Fun_DevIsDetectTCPService(SDK_CONFIG_NET_COMMON_V2 *pDevInfo, int nTimeout);
 
 /**
  * @brief 添加局域网内设备到SDK缓存
  * @details 便于蓝牙配网后快速访问设备
  * @param pDevsInfo 设备信息结构体(多个设备信息时传入首地址)
  * @param nDevCount 设备个数
- * @return == 0
+ * @return <0:连接失败,详见错误码 0:成功
  */
-int Fun_AddLANDevsToCache(SDK_CONFIG_NET_COMMON_V2 *pDevsInfo, int nDevCount);
+XSDK_API int Fun_AddLANDevsToCache(SDK_CONFIG_NET_COMMON_V2 *pDevsInfo, int nDevCount);
 
 //EMSG_SYS_CLOUDUPGRADE_CHECK
-int Fun_SysCloudUpGradeCheck(UI_HANDLE hUser,  const char *szDevId, int nSeq = 0);
+XSDK_API int Fun_SysCloudUpGradeCheck(UI_HANDLE hUser,  const char *szDevId, int nSeq = 0);
 //EMSG_SYS_CLOUDUPGRADE_DOWNLOAD
-int Fun_SysCloudUpGradeDownLoad(UI_HANDLE hUser, const char *szDevId, int nSeq = 0);
+XSDK_API int Fun_SysCloudUpGradeDownLoad(UI_HANDLE hUser, const char *szDevId, int nSeq = 0);
 //EMSG_SYS_STOP_CLOUDUPGRADE_DOWNLOAD
-int Fun_SysStopCloudUpGradeDownLoad(UI_HANDLE hUser, const char *szDevId, int nSeq = 0);
+XSDK_API int Fun_SysStopCloudUpGradeDownLoad(UI_HANDLE hUser, const char *szDevId, int nSeq = 0);
 
 /**
  * @brief 从服务器检测升级信息
@@ -2391,7 +2399,7 @@ int Fun_SysStopCloudUpGradeDownLoad(UI_HANDLE hUser, const char *szDevId, int nS
  * @param szCmd 命令字段，多模块传"listModule"，普通的传"list"，其他适服务器提供协议文档而定
  * @details 异步回调消息：id:5096 param1: >=0 成功，否者失败 Str:结果信息(JSON格式)
  */
-int Fun_SysCheckUpgradeForServer(UI_HANDLE hUser, const char *szRequestJson, const char *szCmd, int nTimeout, int nSeq);
+XSDK_API int Fun_SysCheckUpgradeForServer(UI_HANDLE hUser, const char *szRequestJson, const char *szCmd, int nTimeout, int nSeq);
 
 /**
  * @brief 开始从服务器下载升级固件
@@ -2402,17 +2410,17 @@ int Fun_SysCheckUpgradeForServer(UI_HANDLE hUser, const char *szRequestJson, con
  * @details 异步回调消息：id:8606(升级进度回调) param1: >=0 代表升级进度，否者失败 param2：当前已下载的固件数据大小 param3:下载固件总大小 Str:模块名称
  * @return 返回对象操作句柄，用于停止升级固件下载(中途临时取消)
  */
-FUN_HANDLE Fun_SysStartDownloadUpgradeFileForServer(UI_HANDLE hUser, const char *szFilePath, const char *szUpgradeInfo, int nSeq);
+XSDK_API FUN_HANDLE Fun_SysStartDownloadUpgradeFileForServer(UI_HANDLE hUser, const char *szFilePath, const char *szUpgradeInfo, int nSeq);
 
 /**
  * @brief 停止从服务器下载升级固件
  * @param hHandle 升级对象操作句柄
  * @details 异步回调消息：id:8607 param1: >=0 成功，否者失败
  */
-int Fun_SysStopDownloadUpgradeFileForServer(FUN_HANDLE hHandle, UI_HANDLE hUser, int nSeq);
+XSDK_API int Fun_SysStopDownloadUpgradeFileForServer(FUN_HANDLE hHandle, UI_HANDLE hUser, int nSeq);
 
 // 通过SN获取对应的外网IP地址
-Bool Fun_DevGetNetIPBySN(char* ip, const char *uuid);
+XSDK_API Bool Fun_DevGetNetIPBySN(char* ip, const char *uuid);
 
 /*************************************************
  描述:跨网段设置设备配置，目前只支持对有线网络配置进行设置
@@ -2426,7 +2434,7 @@ Bool Fun_DevGetNetIPBySN(char* ip, const char *uuid);
  nTimeout[in]:       等待超时时间,单位毫秒
  异步返回，消息ID:EMSG_DEV_SET_NET_IP_BY_UDP（5143）
  *****************************************************/
-int FUN_DevSetNetCfgOverUDP(UI_HANDLE hUser, Bool bTempCfg, SNetCFG *pNetCfg, const char *szDeviceMac, const char *szDeviceSN, const char *szDevUserName, const char *szDevPassword, int nTimeout = 4000, int nSeq = 0);
+XSDK_API int FUN_DevSetNetCfgOverUDP(UI_HANDLE hUser, Bool bTempCfg, SNetCFG *pNetCfg, const char *szDeviceMac, const char *szDeviceSN, const char *szDevUserName, const char *szDevPassword, int nTimeout = 4000, int nSeq = 0);
 
 //---媒体有关的接口---
 /////////////////////////////////////////// 媒体通道相关操作  ////////////////////////////////////////////////////
@@ -2437,7 +2445,7 @@ int FUN_DevSetNetCfgOverUDP(UI_HANDLE hUser, Bool bTempCfg, SNetCFG *pNetCfg, co
 #define MEDIA_EX_PARAM
 #define P_PARAM
 #endif
-FUN_HANDLE FUN_MediaRealPlay(UI_HANDLE hUser, const char *szDevId, int nChnIndex, int nStreamType, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_MediaRealPlay(UI_HANDLE hUser, const char *szDevId, int nChnIndex, int nStreamType, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
 
 /**
  * @brief 实时预览接口
@@ -2450,14 +2458,14 @@ FUN_HANDLE FUN_MediaRealPlay(UI_HANDLE hUser, const char *szDevId, int nChnIndex
  * @param pParam 仅Android有效：对应JNIEnv
  * @return 播放操作句柄:开关音频、录像、抓图、停止播放等
  */
-FUN_HANDLE FUN_MediaRealPlayEx(UI_HANDLE hUser, const char *szDevId, int nChnIndex, int nStreamType, bool bEnableSharedMediaLink, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_MediaRealPlayEx(UI_HANDLE hUser, const char *szDevId, int nChnIndex, int nStreamType, bool bEnableSharedMediaLink, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
 
-FUN_HANDLE FUN_MediaNetRecordPlay(UI_HANDLE hUser, const char *szDevId, H264_DVR_FILE_DATA *sPlayBackFile, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
-FUN_HANDLE FUN_MediaNetRecordPlayByTime(UI_HANDLE hUser, const char *szDevId, H264_DVR_FINDINFO *sPlayBackFile, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
-FUN_HANDLE FUN_MediaRecordPlay(UI_HANDLE hUser, const char *szRecord, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
-FUN_HANDLE FUN_MediaLocRecordPlay(UI_HANDLE hUser, const char *szFileName, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_MediaNetRecordPlay(UI_HANDLE hUser, const char *szDevId, H264_DVR_FILE_DATA *sPlayBackFile, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_MediaNetRecordPlayByTime(UI_HANDLE hUser, const char *szDevId, H264_DVR_FINDINFO *sPlayBackFile, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_MediaRecordPlay(UI_HANDLE hUser, const char *szRecord, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_MediaLocRecordPlay(UI_HANDLE hUser, const char *szFileName, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
 
-FUN_HANDLE FUN_MediaCloudRecordPlay(UI_HANDLE hUser, const char *szDevId, int nChannel, const char *szStreamType, int nStartTime, int nEndTime, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_MediaCloudRecordPlay(UI_HANDLE hUser, const char *szDevId, int nChannel, const char *szStreamType, int nStartTime, int nEndTime, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
 /*******************设备相关接口**************************
  * 方法名: 云存储视频播放
  * 描  述: 云存储视频播放，缓存信息存在直接播放，否者会先查询云视频。
@@ -2478,9 +2486,9 @@ FUN_HANDLE FUN_MediaCloudRecordPlay(UI_HANDLE hUser, const char *szDevId, int nC
  *                EMSG_ON_PLAY_BUFFER_BEGIN = 5516,   // 正在缓存数据
  *                EMSG_GET_DATA_END,          //4019
  ****************************************************/
-FUN_HANDLE FUN_MediaCloudRecordPlayV2(UI_HANDLE hUser, const char *szDeviceId, int nChannel, const char *szStreamType, int nStartTime, int nEndTime, const char *sMessageType, Bool bTimePoint, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_MediaCloudRecordPlayV2(UI_HANDLE hUser, const char *szDeviceId, int nChannel, const char *szStreamType, int nStartTime, int nEndTime, const char *sMessageType, Bool bTimePoint, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
 
-FUN_HANDLE FUN_MediaCloudRecordDownload(UI_HANDLE hUser, const char *szDeviceId, int nChannel, const char *szStreamType, int nStartTime, int nEndTime, const char *szFileName, int nSeq);
+XSDK_API FUN_HANDLE FUN_MediaCloudRecordDownload(UI_HANDLE hUser, const char *szDeviceId, int nChannel, const char *szStreamType, int nStartTime, int nEndTime, const char *szFileName, int nSeq);
 
 /*******************设备相关接口**************************
  * 方法名: 云存储视频下载
@@ -2504,7 +2512,7 @@ FUN_HANDLE FUN_MediaCloudRecordDownload(UI_HANDLE hUser, const char *szDeviceId,
  *                 EMSG_ON_FILE_DLD_POS = 5118 下载进度回调 param1：总大小（时间），param2：当前下载大小（时间）， param3:上一次进度（%d）
  *
  ****************************************************/
-FUN_HANDLE FUN_MediaCloudRecordDownloadV2(UI_HANDLE hUser, const char *szDeviceId, int nChannel, const char *szStreamType, int nStartTime, int nEndTime, const char *szFileName, const char *sMessageType, Bool bTimePoint, int nSeq);
+XSDK_API FUN_HANDLE FUN_MediaCloudRecordDownloadV2(UI_HANDLE hUser, const char *szDeviceId, int nChannel, const char *szStreamType, int nStartTime, int nEndTime, const char *szFileName, const char *sMessageType, Bool bTimePoint, int nSeq);
 
 /**
  * @brief 云存储视频播放
@@ -2523,7 +2531,7 @@ FUN_HANDLE FUN_MediaCloudRecordDownloadV2(UI_HANDLE hUser, const char *szDeviceI
  *    "streamtype" : "Main" ///< 【可选】默认值"Main"  现在也只支持"Main"
  * }
  */
-FUN_HANDLE Fun_MediaCloudStorageRecordPlay(UI_HANDLE hUser, const char *szReqJson, LP_WND_OBJ hWnd, void *pParam, int nSeq = 0);
+XSDK_API FUN_HANDLE Fun_MediaCloudStorageRecordPlay(UI_HANDLE hUser, const char *szReqJson, LP_WND_OBJ hWnd, void *pParam, int nSeq = 0);
 
 /**
 * @brief 云存储视频下载
@@ -2543,7 +2551,7 @@ FUN_HANDLE Fun_MediaCloudStorageRecordPlay(UI_HANDLE hUser, const char *szReqJso
 *    "filename" : "xxxx" ///< 下载文件缓存绝对路径
 * }
 */
-FUN_HANDLE Fun_MediaCloudStorageRecordDownload(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API FUN_HANDLE Fun_MediaCloudStorageRecordDownload(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 多目云存储视频播放
@@ -2575,7 +2583,7 @@ FUN_HANDLE Fun_MediaCloudStorageRecordDownload(UI_HANDLE hUser, const char *szRe
  *    ]
  * }
  */
-FUN_HANDLE Fun_MultiMediaCloudStorageRecordPlay(const char *szReqJson, LP_WND_OBJ hWnds, int nViewCount, void *pParam);
+XSDK_API FUN_HANDLE Fun_MultiMediaCloudStorageRecordPlay(const char *szReqJson, LP_WND_OBJ hWnds, int nViewCount, void *pParam);
 
 /**
  * @brief 多目云存储视频下载
@@ -2607,7 +2615,7 @@ FUN_HANDLE Fun_MultiMediaCloudStorageRecordPlay(const char *szReqJson, LP_WND_OB
  *    ]
  * }
  */
-int Fun_MultiMediaCloudStorageRecordDownload(const char *szReqJson);
+XSDK_API int Fun_MultiMediaCloudStorageRecordDownload(const char *szReqJson);
 
 /**
  * @brief 获取媒体通道播放句柄
@@ -2616,19 +2624,19 @@ int Fun_MultiMediaCloudStorageRecordDownload(const char *szReqJson);
  * @param nChannelIndex
  * @return  返回对应通道的播放操作句柄
  */
-int Fun_GetMediaPlayerHandle(FUN_HANDLE hMultiPlayer, int nChannelIndex);
+XSDK_API int Fun_GetMediaPlayerHandle(FUN_HANDLE hMultiPlayer, int nChannelIndex);
 
 // 废弃接口FUN_MediaRtspPlay--20170805
-//FUN_HANDLE FUN_MediaRtspPlay(UI_HANDLE hUser, const char * uuid, int mediaId, const char *szUrl, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq);
-FUN_HANDLE FUN_MediaByVideoId(UI_HANDLE hUser, const char *szVideoId, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
-FUN_HANDLE Fun_MediaPlayXMp4(UI_HANDLE hUser, int hMp4File, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+//XSDK_API FUN_HANDLE FUN_MediaRtspPlay(UI_HANDLE hUser, const char * uuid, int mediaId, const char *szUrl, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq);
+XSDK_API FUN_HANDLE FUN_MediaByVideoId(UI_HANDLE hUser, const char *szVideoId, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE Fun_MediaPlayXMp4(UI_HANDLE hUser, int hMp4File, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
 
-int FUN_MediaPlay(FUN_HANDLE hPlayer, int nSeq = 0);
-int FUN_MediaPause(FUN_HANDLE hPlayer, int bPause, int nSeq = 0);
-int FUN_MediaRefresh(FUN_HANDLE hPlayer, int nSeq = 0);
-int FUN_MediaStop(FUN_HANDLE hPlayer, void *env = NULL);
+XSDK_API int FUN_MediaPlay(FUN_HANDLE hPlayer, int nSeq = 0);
+XSDK_API int FUN_MediaPause(FUN_HANDLE hPlayer, int bPause, int nSeq = 0);
+XSDK_API int FUN_MediaRefresh(FUN_HANDLE hPlayer, int nSeq = 0);
+XSDK_API int FUN_MediaStop(FUN_HANDLE hPlayer, void *env = NULL);
 
-int FUN_MediaSetPlaySpeed(FUN_HANDLE hPlayer, int nSpeed, int nSeq = 0);
+XSDK_API int FUN_MediaSetPlaySpeed(FUN_HANDLE hPlayer, int nSpeed, int nSeq = 0);
 
 /*******************设备相关接口**************************
  * 方法名: 设置播放倍速策略
@@ -2641,12 +2649,12 @@ int FUN_MediaSetPlaySpeed(FUN_HANDLE hPlayer, int nSpeed, int nSeq = 0);
  *      输出(out)
  *          [无]
  ****************************************************/
-int Fun_MediaSetPlaySpeedStrategy(FUN_HANDLE hPlayer, bool bEnable);
+XSDK_API int Fun_MediaSetPlaySpeedStrategy(FUN_HANDLE hPlayer, bool bEnable);
 
-int FUN_MediaStartRecord(FUN_HANDLE hPlayer, const char *szFileName, int nSeq = 0); // 本地录像
-int FUN_MediaStopRecord(FUN_HANDLE hPlayer, int nSeq = 0);
-int FUN_MediaSnapImage(FUN_HANDLE hPlayer, const char *szFileName, int nSeq = 0); // 本地抓图
-int FUN_MediaSeekToPos(FUN_HANDLE hPlayer, int nPos, int nSeq = 0);        // 0~100
+XSDK_API int FUN_MediaStartRecord(FUN_HANDLE hPlayer, const char *szFileName, int nSeq = 0); // 本地录像
+XSDK_API int FUN_MediaStopRecord(FUN_HANDLE hPlayer, int nSeq = 0);
+XSDK_API int FUN_MediaSnapImage(FUN_HANDLE hPlayer, const char *szFileName, int nSeq = 0); // 本地抓图
+XSDK_API int FUN_MediaSeekToPos(FUN_HANDLE hPlayer, int nPos, int nSeq = 0);        // 0~100
 
 /**
  * @brief 媒体文件进度跳转
@@ -2655,30 +2663,83 @@ int FUN_MediaSeekToPos(FUN_HANDLE hPlayer, int nPos, int nSeq = 0);        // 0~
  * @param nAddTime 从开始时间算起的秒值(duration)
  * @param nAbsTime 绝对时间 单位:秒
  */
-int FUN_MediaSeekToTime(FUN_HANDLE hPlayer, int nAddTime, int nAbsTime, int nSeq);
+XSDK_API int FUN_MediaSeekToTime(FUN_HANDLE hPlayer, int nAddTime, int nAbsTime, int nSeq);
 
 // nAbsTime:绝对时间跳转到时间，单位毫秒
-int FUN_MediaSeekToMSTime(FUN_HANDLE hPlayer, uint64 nMSecond, int nSeq);
+XSDK_API int FUN_MediaSeekToMSTime(FUN_HANDLE hPlayer, uint64 nMSecond, int nSeq);
 
-int FUN_MediaSetSound(FUN_HANDLE hPlayer, int nSound, int nSeq = 0);    // -1表示静音 0～100表示音量
+XSDK_API int FUN_MediaSetSound(FUN_HANDLE hPlayer, int nSound, int nSeq = 0);    // -1表示静音 0～100表示音量
 // EMSG_ON_MEDIA_SET_PLAY_SIZE 0:高清 1:标清 2:高清/标清 3:流畅(实时视频有效)
 // 实时播放/云存储播放有效-(废弃？)
-int FUN_MediaSetPlaySize(FUN_HANDLE hPlayer, int nType, int nSeq = 0);
+XSDK_API int FUN_MediaSetPlaySize(FUN_HANDLE hPlayer, int nType, int nSeq = 0);
 // 获取当前播放的时间单位毫秒
 uint64 FUN_MediaGetCurTime(FUN_HANDLE hPlayer);
 
 // 调整显示的亮度(brightness)\对比度(contrast)\饱合度(saturation)\灰度(gray)(只影响显示，对原始视频数据无影响)
 // 范围0~100；默认值为：50；-1表示不做调整，使用上次的配置
-int FUN_MediaSetDisplayBCSG(FUN_HANDLE hPlayer, int nBrightness, int nContrast, int nSaturation, int nGray);
+XSDK_API int FUN_MediaSetDisplayBCSG(FUN_HANDLE hPlayer, int nBrightness, int nContrast, int nSaturation, int nGray);
 
 // 智能回放
 // MSGID:EMSG_SET_INTELL_PLAY
 // nTypeMask:EMSSubType
 // nSpeed==0:取消智能快放
-int Fun_MediaSetIntellPlay(FUN_HANDLE hPlayer, unsigned int nTypeMask, int nSpeed, int nSeq = 0);
+XSDK_API int Fun_MediaSetIntellPlay(FUN_HANDLE hPlayer, unsigned int nTypeMask, int nSpeed, int nSeq = 0);
 
-// 更改播放显示窗口
-int FUN_MediaSetPlayView(FUN_HANDLE hPlayer, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq);
+// 更改播放显示窗口 @deprecated 接口废弃（原因：仅支持单路码流单窗口画面），可以使用FUN_MediaRemovePlayView + FUN_MediaAddPlayView替换
+XSDK_API int FUN_MediaSetPlayView(FUN_HANDLE hPlayer, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq);
+
+/**
+ * @brief 增加一个播放显示窗口
+ * @details 一路码流需要单/多窗口显示时使用
+ * @param hWnd 播放窗口对象
+ * @param szPlayViewJsonParam 播放窗口信息，传空默认显示，详见下面example
+ * @example
+ * {
+ *   "play_view":   ///< 【可选】播放窗口信息
+ *   {
+ *        "render_enable" : true,  ///<【可选】渲染使能 true:渲染,false:不渲染【默认值:true】
+ *        "coord_vertices":          ///< 【可选】纹理坐标顶点 范围[0, 1]
+ *        {
+ *            "left": 0,【默认值:0】
+ *            "right": 1,【默认值:1】
+ *            "top": 1,【默认值:1】
+ *            "bottom": 0【默认值:0】
+ *        }
+ *    }
+ * }
+ */
+XSDK_API int FUN_MediaAddPlayView(FUN_HANDLE hPlayer, LP_WND_OBJ hWnd, const char* szPlayViewJsonParam);
+
+/**
+ * @brief 删除一个播放显示窗口
+ * @details 一路码流需要单/多窗口显示时使用
+ * @param hWnd 播放窗口对象
+ * }
+ */
+XSDK_API int FUN_MediaRemovePlayView(FUN_HANDLE hPlayer, LP_WND_OBJ hWnd);
+
+/**
+ * @brief 设置一个播放显示窗口属性
+ * @details 一路码流需要单/多窗口显示时使用(设置已存在的播放显示窗口)
+ * @param hWnd 播放窗口对象
+ * @param szPlayViewJsonParam 播放窗口信息，传空默认显示，详见下面example
+ * @example
+ * {
+ *   "play_view":   ///< 【可选】播放窗口信息
+ *   {
+ *        "render_enable" : true,  ///<【可选】渲染使能 true:渲染,false:不渲染【默认值:true】
+ *        "coord_vertices":  ///< 【可选】纹理坐标顶点 范围[0, 1]
+ *        {
+ *            "left": 0,【默认值:0】
+ *            "right": 1,【默认值:1】
+ *            "top": 1,【默认值:1】
+ *            "bottom": 0【默认值:0】
+ *        }
+ *    }
+ * }
+ */
+XSDK_API int FUN_MediaSetPlayViewAttr(FUN_HANDLE hPlayer, LP_WND_OBJ hWnd, const char* szPlayViewJsonParam);
+
 
 /*******************媒体有关的接口**************************
  * 方法名: 更新当前播放窗口大小
@@ -2694,7 +2755,7 @@ int FUN_MediaSetPlayView(FUN_HANDLE hPlayer, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int
  *         param1: >= 0 成功, < 0 失败，见错误码
  ****************************************************/
 #ifdef OS_IOS
-int FUN_MediaUpDateUIViewSize(FUN_HANDLE hPlayer, int nSeq);
+XSDK_API int FUN_MediaUpDateUIViewSize(FUN_HANDLE hPlayer, int nSeq);
 #endif
 
 /*******************媒体有关的接口**************************
@@ -2713,34 +2774,37 @@ int FUN_MediaUpDateUIViewSize(FUN_HANDLE hPlayer, int nSeq);
 *          [无]
 * 结果消息: [无]
 ****************************************************/
-int FUN_MediaSetRealPlayModel(const char *szDevId, int nPlayModel);
+XSDK_API int FUN_MediaSetRealPlayModel(const char *szDevId, int nPlayModel);
 
 // 函数返回值==PlayModel : 0 实时性优先(不用DSS，用RPS/P2P) 1 稳定性优先(用DSS，保留现有逻辑)
-int FUN_MediaGetRealPlayModel(const char *szDevId);
+XSDK_API int FUN_MediaGetRealPlayModel(const char *szDevId);
 
-const static char* kSaveMediaPrivateMixed = "private_mixed";  	///< 公司内部私有混合码流(包含音频、视频、信息帧等，仅支持实时预览和回放)
-const static char* kSaveMediaStandardVideo = "standard_video";  ///< 标准视频码流(H264\H265等)
-const static char* kSaveMediaStandardAudio = "standard_audio";  ///< 标准音频码流(G711A\AAC等)
+const static char* kSaveMediaPrivateMixed = "private_mixed";  	                ///< 公司内部私有混合码流(包含音频、视频、信息帧等，仅支持实时预览和回放)
+const static char* kSaveMediaDecryptedPrivateMixed = "decrypted_private_mixed"; ///< 公司内部私有混合码流(包含音频、视频、信息帧等，仅支持实时预览和回放)   ps:经过码流分析&解密后(一些设备I帧前XXX字节加密)的数据
+const static char* kSaveMediaStandardVideo = "standard_video";                  ///< 标准视频码流(H264\H265等)
+const static char* kSaveMediaStandardAudio = "standard_audio";                  ///< 标准音频码流(G711A\AAC等)
+
 /**
  * @brief 开始存储当前正在播放的媒体数据
  * @param hPlayer 当前播放操作句柄
- * @param szStorageInfoJson 存储信息, example: {"storage_list":[{"media_type":"private_mixed","file_name":"xxx/xxx_private.mixed"},{"media_type":"standard_video","file_name":"xxx/xxx_standard.video"},{"media_type":"standard_audio","file_name":"xxx/xxx_standard.audio"}]}
+ * @param szStorageInfoJson 存储信息,
+ * @example:{"storage_list":[{"media_type":"private_mixed","file_name":"xxx/xxx_private.mixed"},{"media_type":"decrypted_private_mixed","file_name":"xxx/xxx_decrypted_private.mixed"},{"media_type":"standard_video","file_name":"xxx/xxx_standard.video"},{"media_type":"standard_audio","file_name":"xxx/xxx_standard.audio"}]}
  * @return 异步回调消息 id:EMSG_START_STORE_PLAYING_MEDIA_DATA_INFO = 5560, ///< 开始存储当前正在播放的媒体数据  param1:>=0成功否者失败
  */
-int Fun_StartStorePlayingMediaData(FUN_HANDLE hPlayer, const char *szStorageInfoJson);
+XSDK_API int Fun_StartStorePlayingMediaData(FUN_HANDLE hPlayer, const char *szStorageInfoJson);
 
 /**
  * @brief 停止存储当前正在播放的媒体数据
  * @param hPlayer 当前播放操作句柄
  * @return 异步回调消息 id:EMSG_STOP_STORE_PLAYING_MEDIA_DATA_INFO = 5561, ///< 开始存储当前正在播放的媒体数据  param1:>=0成功否者失败
  */
-int Fun_StopStorePlayingMediaData(FUN_HANDLE hPlayer);
+XSDK_API int Fun_StopStorePlayingMediaData(FUN_HANDLE hPlayer);
 
 //设置播放流畅度
-int FUN_MediaSetFluency(FUN_HANDLE hPlayer, int nLevel, int nSeq);  // nLevel : EDECODE_TYPE
-int FUN_MediaGetThumbnail(FUN_HANDLE hPlayer, const char *szOutFileName, int nSeq);
-int FUN_MediaGetDecParam(const char *szFilePath, unsigned char *pOutBuffer, int nBufMaxSize);
-int FUN_MediaGetFishParam(const char * szFilePath, FishEyeFrameParam * pInfo);
+XSDK_API int FUN_MediaSetFluency(FUN_HANDLE hPlayer, int nLevel, int nSeq);  // nLevel : EDECODE_TYPE
+XSDK_API int FUN_MediaGetThumbnail(FUN_HANDLE hPlayer, const char *szOutFileName, int nSeq);
+XSDK_API int FUN_MediaGetDecParam(const char *szFilePath, unsigned char *pOutBuffer, int nBufMaxSize);
+XSDK_API int FUN_MediaGetFishParam(const char * szFilePath, FishEyeFrameParam * pInfo);
 
 /*******************媒体有关的接口**************************
 * 方法名: 获取mp4编解码类型
@@ -2755,7 +2819,7 @@ int FUN_MediaGetFishParam(const char * szFilePath, FishEyeFrameParam * pInfo);
 *          [无]
 * 结果消息：无
 ****************************************************/
-int FUN_MediaGetCodecType(const char *szFilePath);
+XSDK_API int FUN_MediaGetCodecType(const char *szFilePath);
 
 /*******************媒体有关的接口**************************
 * 方法名: 获取媒体视频真实时间范围
@@ -2769,7 +2833,7 @@ int FUN_MediaGetCodecType(const char *szFilePath);
 *          [sDesMediaInfo:媒体结果信息，格式: "%s（开始时间）&&%s（结束时间）" ]
 * 结果消息：无
 ****************************************************/
-int Fun_MediaGetRealTime(const char *sSrcFilePath, char* sDesMediaInfo);
+XSDK_API int Fun_MediaGetRealTime(const char *sSrcFilePath, char* sDesMediaInfo);
 
 /*******************媒体有关的接口**************************
 * 方法名: 将mp3文件解码为pcm文件
@@ -2786,7 +2850,7 @@ int Fun_MediaGetRealTime(const char *sSrcFilePath, char* sDesMediaInfo);
 *          [无]
 * 结果消息：无
 ****************************************************/
-int FUN_Mp3Decoder2PCM(const char *sSrcFilePath, const char *sDesFilePath, int nBitsPerSample, int nSamplesPerSecond, int nChannels);
+XSDK_API int FUN_Mp3Decoder2PCM(const char *sSrcFilePath, const char *sDesFilePath, int nBitsPerSample, int nSamplesPerSecond, int nChannels);
 
 /**
  * @brief 调节PCM音频音量大小
@@ -2796,11 +2860,11 @@ int FUN_Mp3Decoder2PCM(const char *sSrcFilePath, const char *sDesFilePath, int n
  * @param nRepeat 重复次数 通常设为1
  * @param nVol 增益倍数，可以小于1
  */
-int Fun_RaisePCMVolume(char* szBuf, int nSize, int nRepeat, double nVol);
+XSDK_API int Fun_RaisePCMVolume(char* szBuf, int nSize, int nRepeat, double nVol);
 
 // 保存设备实时码流到本地文件夹
-FUN_HANDLE FUN_DevSaveRealTimeStream(UI_HANDLE hUser, const char *szDevId, int nChannel, int nStreamType, const char *szFileName, int nSeq = 0);
-int FUN_DevCloseRealTimeStream(FUN_HANDLE hSaveObj);
+XSDK_API FUN_HANDLE FUN_DevSaveRealTimeStream(UI_HANDLE hUser, const char *szDevId, int nChannel, int nStreamType, const char *szFileName, int nSeq = 0);
+XSDK_API int FUN_DevCloseRealTimeStream(FUN_HANDLE hSaveObj);
 
 /*******************媒体有关的接口**************************
 * 方法名: 设备实时码流数据返回
@@ -2830,11 +2894,11 @@ int FUN_DevCloseRealTimeStream(FUN_HANDLE hSaveObj);
 *#define FRAME_TYPE_DATA_TEXT    5
 *#define FRAME_TYPE_DATA_INTL    6
 ****************************************************/
-FUN_HANDLE FUN_DevReturnRealStream(UI_HANDLE hUser, const char *szDevId, int nChannel, int nStreamType, int nSeq = 0);
-int FUN_DevCloseReturnRealStream(FUN_HANDLE hRealObj);
+XSDK_API FUN_HANDLE FUN_DevReturnRealStream(UI_HANDLE hUser, const char *szDevId, int nChannel, int nStreamType, int nSeq = 0);
+XSDK_API int FUN_DevCloseReturnRealStream(FUN_HANDLE hRealObj);
 
-FUN_HANDLE Fun_MediaPlayByURL(UI_HANDLE hUser, const char* strUrl, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
-FUN_HANDLE Fun_MediaPlayByURLEx(UI_HANDLE hUser, const char *szUrl, int nType, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE Fun_MediaPlayByURL(UI_HANDLE hUser, const char* strUrl, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE Fun_MediaPlayByURLEx(UI_HANDLE hUser, const char *szUrl, int nType, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
 
 /**
  * @brief 通过M3u8 url播放视频
@@ -2845,7 +2909,7 @@ FUN_HANDLE Fun_MediaPlayByURLEx(UI_HANDLE hUser, const char *szUrl, int nType, L
  * @details 进度跳转只支持传秒值,从开始时间算起。 详见FUN_MediaSeekToTime;
  * @return 播放句柄，可以通过此句柄实现音频、进度跳转、快放、抓图、录像、关闭预览等功能
  */
-FUN_HANDLE Fun_MediaPlayM3u8ByUrl(UI_HANDLE hUser, const char *szUrl, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
+XSDK_API FUN_HANDLE Fun_MediaPlayM3u8ByUrl(UI_HANDLE hUser, const char *szUrl, LP_WND_OBJ hWnd, MEDIA_EX_PARAM int nSeq = 0);
 
 /**
  * @brief 通过M3u8 url下载视频
@@ -2856,10 +2920,10 @@ FUN_HANDLE Fun_MediaPlayM3u8ByUrl(UI_HANDLE hUser, const char *szUrl, LP_WND_OBJ
  * 						 5118 下载进度回调 param1：总大小，param2：当前下载大小， param3:进度（%d）。
  * @return 下载句柄，可以通过此句柄停止下载
  */
-FUN_HANDLE Fun_MediaDownloadM3u8ByUrl(UI_HANDLE hUser, const char *szUrl, const char *szStorageFileName, int nSeq = 0);
+XSDK_API FUN_HANDLE Fun_MediaDownloadM3u8ByUrl(UI_HANDLE hUser, const char *szUrl, const char *szStorageFileName, int nSeq = 0);
 
 // 创建VRSoft句柄
-void *Fun_VRSoft_Create();
+XSDK_API void *Fun_VRSoft_Create();
 
 #endif
 
@@ -2877,7 +2941,7 @@ void *Fun_VRSoft_Create();
 *          [无]
 * 结果消息：ID:EMSG_DEV_START_PUSH_PICTURE 开始成功返回结果, EMSG_ON_MEDIA_DATA 数据返回
 ****************************************************/
-FUN_HANDLE FUN_DevStartPushFacePicture(UI_HANDLE hUser, const char *szDevId, int nChannel, int nImgType, int nIntelType, int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_DevStartPushFacePicture(UI_HANDLE hUser, const char *szDevId, int nChannel, int nImgType, int nIntelType, int nSeq = 0);
 
 /*******************文件传输有关的接口**************************
 * 方法名: 开启文件传输通用接口
@@ -2897,7 +2961,7 @@ FUN_HANDLE FUN_DevStartPushFacePicture(UI_HANDLE hUser, const char *szDevId, int
 * 		param3: 设备操作ID：目前默认应该是 3500
 * 		pData: json数据
 ****************************************************/
-FUN_HANDLE FUN_DevStartFileTransfer(UI_HANDLE hUser, const char *szDevId, const char *szJsons, int nTimeout, int nSeq = 0);
+XSDK_API FUN_HANDLE FUN_DevStartFileTransfer(UI_HANDLE hUser, const char *szDevId, const char *szJsons, int nTimeout, int nSeq = 0);
 /*******************文件传输有关的接口**************************
 * 方法名: 文件传输通用接口
 * 描  述: 发送文件数据给设备 数据最大值不要超过32K 1024 * 32 字节（音频可以双倍，G711A压缩一倍）
@@ -2917,10 +2981,10 @@ FUN_HANDLE FUN_DevStartFileTransfer(UI_HANDLE hUser, const char *szDevId, const 
 * 		param3: 设备操作ID：目前默认应该是 3502
 * 		msg->pData: 失败返回json信息，例如多通道发送数据，发送结束返回操作失败的通道号（通道号从1开始计算）
 ****************************************************/
-int FUN_DevFileDataTransfer(UI_HANDLE hUser, const char *szDevId, const char *pData, int nDataLen, int nEndFlag, int nTimeout, int nSeq = 0);
+XSDK_API int FUN_DevFileDataTransfer(UI_HANDLE hUser, const char *szDevId, const char *pData, int nDataLen, int nEndFlag, int nTimeout, int nSeq = 0);
 //增加接口兼容新老协议  *后面的协议支持同时多文件传输，所以增加参数nFileIndex，此参数是每次开始传输，设备返回当前文件index
-int FUN_DevFileDataTransfersV2(UI_HANDLE hUser, const char *szDevId, const char *pData, int nDataLen, int nFileIndex, int nEndFlag, int nTimeout, int nSeq = 0);
-void FUN_DevStopFileTransfer(FUN_HANDLE hPlayer);
+XSDK_API int FUN_DevFileDataTransfersV2(UI_HANDLE hUser, const char *szDevId, const char *pData, int nDataLen, int nFileIndex, int nEndFlag, int nTimeout, int nSeq = 0);
+XSDK_API void FUN_DevStopFileTransfer(FUN_HANDLE hPlayer);
 
 /*******************文件传输有关的接口**************************
 * 方法名: 文件接收通用接口
@@ -2942,7 +3006,7 @@ void FUN_DevStopFileTransfer(FUN_HANDLE hPlayer);
 * 		EMSG_DEV_FILE_DATA_RECV = 5161, // 文件接收回传数据  参数：param1:nFileIndex 文件索引  param2：nCmdId 设备消息id, param3:结束标识,  pData：接收的数据
 *		EMSG_ON_FILE_DLD_COMPLETE = 5117, // 文件数据接收结束标识
 ****************************************************/
-int Fun_DevStartFileDataRecv(UI_HANDLE hUser, const char *sDevId, const char *sJson, int nTimeout = 15000, int nSeq = 0);
+XSDK_API int Fun_DevStartFileDataRecv(UI_HANDLE hUser, const char *sDevId, const char *sJson, int nTimeout = 15000, int nSeq = 0);
 
 // ---设备有关公共接口---
 // 获取推荐码流值
@@ -2952,29 +3016,29 @@ int Fun_DevStartFileDataRecv(UI_HANDLE hUser, const char *sDevId, const char *sJ
 // iGOP        描述两个I帧之间的间隔时间，1-12
 // nFrameRate  帧率
 // nVideoStd   视频制式 0 : P 1 : N
-int DEV_GetDefaultBitRate(int nEncType, int iResolution, int iQuality, int iGOP, int nFrameRate, int nVideoStd = 0, int nDevType = EE_DEV_NORMAL_MONITOR);
+XSDK_API int DEV_GetDefaultBitRate(int nEncType, int iResolution, int iQuality, int iGOP, int nFrameRate, int nVideoStd = 0, int nDevType = EE_DEV_NORMAL_MONITOR);
 
 // ---其它公共接口---
-int GN_DeleteFiles(const char *szDir, long nDaysAgo, const char *szType);
+XSDK_API int GN_DeleteFiles(const char *szDir, long nDaysAgo, const char *szType);
 
 // 获取*.私有码流缩略图
-int FUN_GetMediaThumbnail(const char *szInFileName, const char *szOutFileName);
+XSDK_API int FUN_GetMediaThumbnail(const char *szInFileName, const char *szOutFileName);
 
 // 通过错误id获取错误提示信息
-char* Fun_GetErrorInfoByEId(int nEId, char strError[512]);
+XSDK_API char* Fun_GetErrorInfoByEId(int nEId, char strError[512]);
 
 // // 创建JPEG转MP4对象 返回操作够本Jpeg2Mp4Add-------EMSG_JPEG_TO_MP4_ON_PROGRESS：进度 arg1/arg2 当前/总大小 Fun_DestoryObj结束
 // nBits可以默认写0，由底层自动判断
-int FUN_Jpeg2Mp4_Create(UI_HANDLE hUser, const char *szDesFileName, int nFrameRate, int nBits, int nWidth, int nHeight);
-int FUN_Jpeg2Mp4_Add(FUN_HANDLE hDecoder, const char *szFileName);
+XSDK_API int FUN_Jpeg2Mp4_Create(UI_HANDLE hUser, const char *szDesFileName, int nFrameRate, int nBits, int nWidth, int nHeight);
+XSDK_API int FUN_Jpeg2Mp4_Add(FUN_HANDLE hDecoder, const char *szFileName);
 // 全部文件已经放进去了--EMSG_JPEG_TO_MP4_CLOSE,真正结束看EMSG_JPEG_TO_MP4_ON_PROGRESS
-int FUN_Jpeg2Mp4_Close(FUN_HANDLE hDecoder);
+XSDK_API int FUN_Jpeg2Mp4_Close(FUN_HANDLE hDecoder);
 // 中途取消EMSG_JPEG_TO_MP4_CANCEL
-int FUN_Jpeg2Mp4_Cancel(FUN_HANDLE hDecoder);
+XSDK_API int FUN_Jpeg2Mp4_Cancel(FUN_HANDLE hDecoder);
 
-int FUN_AddRefXMSG(XMSG *pMsg);            // 消息引用计数+1
-int FUN_GetXMSG(XMSG *pMsg, MsgContent *pContent);            // 获取消息内容
-void FUN_RelRefXMSG(XMSG *pMsg);        // 消息引用计数-1
+XSDK_API int FUN_AddRefXMSG(XMSG *pMsg);            // 消息引用计数+1
+XSDK_API int FUN_GetXMSG(XMSG *pMsg, MsgContent *pContent);            // 获取消息内容
+XSDK_API void FUN_RelRefXMSG(XMSG *pMsg);        // 消息引用计数-1
 
 
 /*******************艺能通 - IP广播**************************
@@ -2994,7 +3058,7 @@ void FUN_RelRefXMSG(XMSG *pMsg);        // 消息引用计数-1
 * 		param3:
 * 		msg->Str: 返回的分区设备信息
 ****************************************************/
-int Fun_GroupSearchDevInfo(UI_HANDLE hUser, const char *sGroupIds, int nTimeout = 15000, int nSeq = 0);
+XSDK_API int Fun_GroupSearchDevInfo(UI_HANDLE hUser, const char *sGroupIds, int nTimeout = 15000, int nSeq = 0);
 /*******************艺能通 - IP广播**************************
 * 方法名: 设备分区信息管理
 * 描  述: 设备分区信息管理
@@ -3010,7 +3074,7 @@ int Fun_GroupSearchDevInfo(UI_HANDLE hUser, const char *sGroupIds, int nTimeout 
 *       消息ID:	EMSG_GROUP_SET_DEV_INFO = 5156, // 分区局域网广播设置设备信息
 * 		param1: >= 0 成功, < 0 失败，见错误码
 ****************************************************/
-int Fun_GroupDevSetInfo(UI_HANDLE hUser, const char *sJson, int nTimeout = 5000, int nSeq = 0);
+XSDK_API int Fun_GroupDevSetInfo(UI_HANDLE hUser, const char *sJson, int nTimeout = 5000, int nSeq = 0);
 /*******************艺能通 - IP广播**************************
 * 方法名: 分区音频广播数据发送
 * 描  述: 分区音频广播数据发送   *只有发送数据走udp广播，开启/关闭都是走tcp协议对单个ipc进行的操作，json协议传输udp端口，分区id给设备，设备打开相应的端口进行数据接收等待。
@@ -3026,24 +3090,24 @@ int Fun_GroupDevSetInfo(UI_HANDLE hUser, const char *sJson, int nTimeout = 5000,
 *          [无]
 * 结果消息：[无]
 ****************************************************/
-int Fun_SendDataRadioOperation(const char *pData, int nDataLen, int nUdpPort, int nEndFlag, int nTimeout = 15000);
+XSDK_API int Fun_SendDataRadioOperation(const char *pData, int nDataLen, int nUdpPort, int nEndFlag, int nTimeout = 15000);
 
 // 对外提供pcm转g711接口， 可以转g711a/g711u类型的  nType：0 --> g711u， 1 --> g711a
-int Fun_PcmEncodeToG711(char *sSrcData, unsigned char *sDestData, int srclen, int nType);
+XSDK_API int Fun_PcmEncodeToG711(char *sSrcData, unsigned char *sDestData, int srclen, int nType);
 
 #ifdef SUP_MEDIA_SUPER_RESOLUTION
 // 初始化超分， 加载模型， 初始化超分线程    *多次调用无效，和UnInitSuperResolution一一对应
 #ifdef OS_IOS
-int Fun_InitSuperResolution();
+XSDK_API int Fun_InitSuperResolution();
 #endif
 #ifdef OS_ANDROID
-int Fun_InitSuperResolution(AAssetManager* pMgr);
+XSDK_API int Fun_InitSuperResolution(AAssetManager* pMgr);
 #endif
 
 // 注销超分 ， 关闭超分线程 *和InitSuperResolution一一对应，多次调用无效
-int Fun_UnInitSuperResolution();
+XSDK_API int Fun_UnInitSuperResolution();
 // 超分库版本信息获取
-int Fun_GetVersionSuperResolution(char *sVersionInfo);
+XSDK_API int Fun_GetVersionSuperResolution(char *sVersionInfo);
 
 /*******************超分（超级分辨率）**************************
 * 方法名: 开启实时预览超分
@@ -3061,16 +3125,16 @@ int Fun_GetVersionSuperResolution(char *sVersionInfo);
 *       消息ID:	EMSG_START_REAL_PLAY_SUPER_RESOLUTION = 5543, // 开启实时预览超分处理
 * 		param1: >= 0 成功, < 0 失败，见错误码
 ****************************************************/
-int Fun_StartRealplaySuperResolution(FUN_HANDLE hPlayer, int nSrWidth, int nSrHeight, int nSrMode, int nSeq = 0);
-int Fun_StopRealplaySuperResolution(FUN_HANDLE hPlayer);
+XSDK_API int Fun_StartRealplaySuperResolution(FUN_HANDLE hPlayer, int nSrWidth, int nSrHeight, int nSrMode, int nSeq = 0);
+XSDK_API int Fun_StopRealplaySuperResolution(FUN_HANDLE hPlayer);
 // 抓图超分处理
 // 逻辑： 当前实时预览未开启超分模式 --> 抓图：原始缓存yuv数据，再进行超分处理（while，超时时间1s）
 //        当前实时预览开启超分模式 --> 抓图：直接是当前预览超分yuv缓存数据
-int FUN_SnapImageSuperResolution(FUN_HANDLE hPlayer, const char *sFileName, int nSrWidth, int nSrHeight, int nSrMode, int nSeq = 0); // 本地抓图
+XSDK_API int FUN_SnapImageSuperResolution(FUN_HANDLE hPlayer, const char *sFileName, int nSrWidth, int nSrHeight, int nSrMode, int nSeq = 0); // 本地抓图
 // 当前YUV420数据超分  最长超时时间（阻塞）一秒
-int Fun_OnYUV420PSuperResolution(int nWidth, int nHeight, char* pRGBData, int nSrWidth, int nSrHeight, char* pSrRGBData, int nSrMode);
+XSDK_API int Fun_OnYUV420PSuperResolution(int nWidth, int nHeight, char* pRGBData, int nSrWidth, int nSrHeight, char* pSrRGBData, int nSrMode);
 // 清空超分缓存
-int FUN_ClearCacheSuperResolution();
+XSDK_API int FUN_ClearCacheSuperResolution();
 #endif
 
 /**
@@ -3080,7 +3144,7 @@ int FUN_ClearCacheSuperResolution();
  * @param ping的次数，默认六次
  * @details 异步回调消息：id:EMSG_SYS_NET_PING = 8901 , str:Ping的结果
  */
-int Fun_Ping(UI_HANDLE hUser, const char *pServerAddr, Bool ifUseIPv6, int nPingTimes = 6,int nSeq = 0);
+XSDK_API int Fun_Ping(UI_HANDLE hUser, const char *pServerAddr, Bool ifUseIPv6, int nPingTimes = 6,int nSeq = 0);
 
 /**
  * @brief 创建MQTT客户端和指定服务器交互
@@ -3089,14 +3153,14 @@ int Fun_Ping(UI_HANDLE hUser, const char *pServerAddr, Bool ifUseIPv6, int nPing
  * @param ninterval MQTT客户端心跳时间间隔（单位：毫秒）
  * @details 异步回调消息：id:EMSG_SYS_MQTT_CLIENT = 8921
  */
-int Fun_MQTTInit(UI_HANDLE hUser, const char *pPacketName, int nInterval = 10000,int nSeq = 0);
+XSDK_API int Fun_MQTTInit(UI_HANDLE hUser, const char *pPacketName, int nInterval = 10000,int nSeq = 0);
 
 /**
  * @brief 反初始化MQTT客户端
  * @param hUser 消息接收对象
  * @details 异步回调消息：id:EMSG_SYS_MQTT_CLIENT
  */
-int Fun_MQTTUnInit(UI_HANDLE hUser, int nSeq = 0);
+XSDK_API int Fun_MQTTUnInit(UI_HANDLE hUser, int nSeq = 0);
 
 /**
  * @brief 订阅状态推送
@@ -3117,7 +3181,7 @@ int Fun_MQTTUnInit(UI_HANDLE hUser, int nSeq = 0);
    "timestamp":1694086194967
 }
 */
-int Fun_SubscribeInfoFromServer(UI_HANDLE hUser, const char* szSubscribeJson, int nSeq);
+XSDK_API int Fun_SubscribeInfoFromServer(UI_HANDLE hUser, const char* szSubscribeJson, int nSeq);
 
 /**
  * @brief 取消订阅状态推送(暂时一次只支持取消订阅一种内容)
@@ -3132,7 +3196,7 @@ int Fun_SubscribeInfoFromServer(UI_HANDLE hUser, const char* szSubscribeJson, in
  *}
  * @details 异步回调消息：如Fun_SubscribeInfoFromServer
 */
-int Fun_UnSubscribeInfoFromServer(UI_HANDLE hUser, const char* szUnSubscribeJson, int nSeq);
+XSDK_API int Fun_UnSubscribeInfoFromServer(UI_HANDLE hUser, const char* szUnSubscribeJson, int nSeq);
 
 /**
  * @brief 日志服务HTTP接口
@@ -3156,7 +3220,7 @@ int Fun_UnSubscribeInfoFromServer(UI_HANDLE hUser, const char* szUnSubscribeJson
  * @return 异步回调消息：日志服务HTTP请求结果：id:EMSG_SYS_SERVICE_GET_LOGS = 8934, ///< HTTP日志服务请求
  *
  */
-int Fun_SysGetLogs(UI_HANDLE hUser, const char *szReqExJson, int nTimeout = 10000,int nSeq = 0);
+XSDK_API int Fun_SysGetLogs(UI_HANDLE hUser, const char *szReqExJson, int nTimeout = 10000,int nSeq = 0);
 
 /**
  * @brief AI服务相关功能接口
@@ -3176,7 +3240,18 @@ int Fun_SysGetLogs(UI_HANDLE hUser, const char *szReqExJson, int nTimeout = 1000
  * }
  * @return  异步回调消息ID：EMSG_SYS_AI_SERVICE = 8935, ///< AI服务数据回调  param1:>=0成功否者失败 Str:结果数据回调
  */
-int Fun_SysAIService(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int Fun_SysAIService(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+
+
+XSDK_API time_t ToTime_t(SDK_SYSTEM_TIME *pDvrTime);
+
+/**
+ * @brief 探测当前网络是否仅支持ipv6
+ * @param szHostName 测试域名
+ * @param nPort 端口号
+ * @details 异步回调消息：id EMSG_DETECT_IPV6_ONLY_NETWORK = 9000,  param1:==1代表仅支持ipv6，否者不是
+ */
+XSDK_API int Fun_DetectIPv6OnlyNetwork(UI_HANDLE hUser, const char *szHostName, int nPort, int nSeq = 0);
 
 /**
  * @brief 实时预览返回的打开网络模式
@@ -3198,6 +3273,7 @@ typedef enum DEV_NET_CNN_TYPE
 	NET_TYPE_XTC_P2P = 12,
 	NET_TYPE_XTC_PROXY = 13,
 	NET_TYPE_RPS_GWM = 14,
+    NET_TYPE_BLUETOOTH = 15,
     NET_TYPE_MAX_SIZE,
 }DEV_NET_CNN_TYPE;
 
@@ -3318,6 +3394,8 @@ typedef enum EUIMSG
 	EMSG_SYS_QUERY_DEVS_STATUS = 5210, ///< 批量查询多个设备多个服务状态
     EMSG_SYS_BATCH_DELETE_DEVS = 5211, ///< 批量删除设备;
 	EMSG_SYS_LOCAL_PHONE_LOGIN = 5212, ///< 本机号码一键登录并获取设备列表
+    EMSG_SYS_ADD_DEVSTATE_LISTENER = 5213, ///< 添加设备状态变化监听
+    EMSG_SYS_REMOVE_DEVSTATE_LISTENER = 5214, ///< 移除设备状态变化监听
 
     EMSG_XM030_VIDEO_LOGIN = 8601,
     EMSG_XM030_VIDEO_LOGOUT = 8602,
@@ -3480,6 +3558,11 @@ typedef enum EUIMSG
 
 	EMSG_START_STORE_PLAYING_MEDIA_DATA_INFO = 5560, ///< 开始存储当前正在播放的媒体数据
     EMSG_STOP_STORE_PLAYING_MEDIA_DATA_INFO = 5561, ///< 停止存储当前正在播放的媒体数据
+    EMSG_STOP_DEV_RECORDPLAY = 5562,         ///< 让设备停止录像回放数据传输
+
+    EMSG_DEV_PLAY_VIEW_OPT_ADD = 5563, ///< 播放窗口添加
+    EMSG_DEV_PLAY_VIEW_OPT_DELETE = 5564, ///< 播放窗口删除
+    EMSG_DEV_PLAY_VIEW_OPT_SET_ATTR = 5565, ///< 播放窗口设置属性
 
     EMSG_MC_LinkDev = 6000,
     EMSG_MC_UnlinkDev = 6001,
@@ -3555,6 +3638,7 @@ typedef enum EUIMSG
 	EMSG_AS_SET_ALARM_MSG_READ_FLAG = 6416, ///< 设置报警消息已读标志
     EMSG_AS_GET_STORAGE_INFO_COUNT = 6417, ///< 根据时间段获取存储信息条数
     EMSG_AS_QUERY_VIDEO_CLIP_BY_NAME  = 6418, ///< 按文件名称查询对应的云存储视频片段信息
+    EMSG_AS_GET_ALARM_MSG_TRANSLATION_AND_ICON  = 6419, ///< 获取报警消息翻译与图标
 
     EMSG_DL_ON_DOWN_FILE = FUN_USER_MSG_BEGIN_1 + 1500,
     EMSG_DL_ON_INFORMATION,
@@ -3595,13 +3679,12 @@ typedef enum EUIMSG
 
 	EMSG_AP_ON_RECEIVE_SAMPLES = FUN_USER_MSG_BEGIN_1 + 3700,
 
-    /** 新影子服务消息ID */
+    /** 影子服务消息ID */
     EMSG_SHADOW_SERVICE_GET_DEV_CONFIGS = FUN_USER_MSG_BEGIN_1 + 3800, ///< 获取设备配置
 	EMSG_SHADOW_SERVICE_SET_DEV_OFFLINE_CFGS = 8801, ///< 设置设备离线配置
 	EMSG_SHADOW_SERVICE_DEV_CONFIGS_CHANGE_NOTIFY = 8802, ///< 设备配置变化通知
 	EMSG_SHADOW_SERVICE_START_DEV_LISTENING = 8803, ///< 开始设备影子服务监听
 	EMSG_SHADOW_SERVICE_STOP_DEV_LISTENING = 8804, ///< 停止设备影子服务监听
-	EMSG_SHADOW_SERVICE_DISCONNECT_NOTIFY = 8805, ///< 影子服务断开连接通知(内部已重试过)
 
 	EMSG_SYS_NET_SPEED_TEST = FUN_USER_MSG_BEGIN_1 + 3900, ///< 客户端到JF服务器网络速度测试
 	EMSG_SYS_NET_PING = 8901, ///< 客户端Ping指定域名
@@ -3621,6 +3704,17 @@ typedef enum EUIMSG
 
 	EMSG_SYS_SERVICE_GET_LOGS = 8934, ///< HTTP日志服务请求
     EMSG_SYS_AI_SERVICE = 8935, ///< AI服务数据回调
+
+    EMSG_BLUETOOTH_START_SEARCH = 8936, ///< 开始搜索回调
+    EMSG_BLUETOOTH_STOP_SEARCH = 8937, ///< 停止搜索回调
+    EMSG_BLUETOOTH_SEARCH_RESULT = 8938, ///< 搜索结果数据回调
+    EMSG_BLUETOOTH_CACEL_SEARCH = 8939, ///< 取消搜索回调
+    EMSG_BLUETOOTH_ON_RECVDATA = 8940, ///< 透传数据，非NETIP协议
+    EMSG_BLUETOOTH_ON_CONNECT = 8941, ///< 蓝牙连接结果
+    EMSG_BLUETOOTH_ON_DISCONNECT = 8942, ///< 蓝牙已断开
+    EMSG_GET_LOCAL_DEVINFO = 8943, ///< 获取本地设备信息
+    ///<
+    EMSG_DETECT_IPV6_ONLY_NETWORK = FUN_USER_MSG_BEGIN_1 + 4000, ///< 探测当前网络是否仅支持ipv6
 }EUIMSG;
 
 typedef enum EDEV_ATTR
@@ -4493,6 +4587,34 @@ typedef enum EFUN_ERROR
     // -1400000  AI服务相关错误码
     EE_AISERVER_REQUEST_FAILED = -1400400, ///< 400 失败
     EE_AISERVER_INTERNAL_ERROR = -1400500, ///< 500 服务器内部错误
+
+    // -1500000 蓝牙通信相关错误码
+    EE_BLUETOOTH_MOD_IS_BEING_INITIALIZED = -1500001, ///< 1 模组正在初始化
+    EE_BLUETOOTH_GET_MASTER_INFO_ABNORMAL = -1500002, ///< 2 模组获取主控信息异常
+    EE_BLUETOOTH_ACTIVATION_PROCESS_INCOMPLETE = -1500003, ///< 3 激活流程不完整
+    EE_BLUETOOTH_ACTIVATION_INFO_MISSING = -1500004, ///< 4 激活信息缺失
+    EE_BLUETOOTH_REQUEST_FAILED = -1500101, ///<  -1  请求失败
+    EE_BLUETOOTH_REQUEST_CANCELED = -1500102, ///<  -2  请求取消
+    EE_BLUETOOTH_ILLEGAL_ARGUMENT = -1500103, ///<  -3 非法参数
+    EE_BLUETOOTH_NOT_SUPPORTED = -1500104, ///<  -4 不支持
+    EE_BLUETOOTH_DISABLED = -1500105, ///<  -5 禁用
+    EE_BLUETOOTH_SERVICE_UNREADY = -1500106, ///<  -6  服务未就绪
+    EE_BLUETOOTH_REQUEST_TIMEDOUT = -1500107, ///<  -7 请求超时
+    EE_BLUETOOTH_REQUEST_OVERFLOW = -1500108, ///<  -8 请求溢出
+    EE_BLUETOOTH_REQUEST_DENIED = -1500109, ///<  -9 请求被拒绝
+    EE_BLUETOOTH_REQUEST_EXCEPTION = -1500110, ///<  -10 请求异常
+    EE_BLUETOOTH_REQUEST_UNKNOWN = -1500111, ///<  -11 请求未知
+    EE_BLUETOOTH_DISCONNECTED = -1500112, ///<  -12 请求未知
+
+    // -1600000 局域网相关错误
+    EE_LAN_DEV_NET_ERROR = -1600000, ///< 网络错误
+    EE_LAN_DEV_SEND_DATA_ERROR = -1600001, ///< 发送数据失败
+    EE_LAN_DEV_RECV_DATA_ERROR = -1600002, ///< 接收数据失败
+    EE_LAN_MOBILE_NETWORK_ERROR = -1600003, ///< 移动网络，无法进行局域网搜索
+    
+    // -1610000 设备SD卡录像下载相关错误
+    EE_DEV_SDCARD_DOWNLOAD_INCOMPLETE_DOWNLOAD = -1610000, ///< 下载完成通知提前到达但数据不完整
+    EE_DEV_SDCARD_DOWNLOAD_NET_DISCONNECT = -1610001, ///< 网络异常断开
 }EFUN_ERROR;
 
 // 对像属性
@@ -4640,39 +4762,39 @@ typedef enum EFunDevState
  * 鱼眼矫正信息写入,同jpghead_write_vrhw_exif和jpghead_write_vrsw_exif
  * return : 0成功, 非0失败
  */
-int FUN_JPGHead_Write_Exif(char * srcPath, char * dstPath, FishEyeFrameParam * pFrame);
+XSDK_API int FUN_JPGHead_Write_Exif(char * srcPath, char * dstPath, FishEyeFrameParam * pFrame);
 
 /**
  * 从文件中读取鱼眼矫正参数
  * return : 0成功, 非0失败(或者是非鱼眼图片)
  */
-int FUN_JPGHead_Read_Exif(char * srcPath, FishEyeFrameParam * pFrame);
+XSDK_API int FUN_JPGHead_Read_Exif(char * srcPath, FishEyeFrameParam * pFrame);
 
 #ifdef SUP_IRCODE
-void InfraRed_IRemoteClient_SetPath(char* strDataPath);
-void InfraRed_IRemoteClient_LoadBrands(Brand_c* brands, int& num);
-void InfraRed_IRemoteClient_LoadBrands(int type, Brand_c* brands, int& num);
-void InfraRed_IRemoteClient_GetBrandNum(int type, int& num);
-void InfraRed_IRemoteClient_GetRemoteNum(int& num);
-void InfraRed_IRemoteClient_LoadRemotes(Remote_c* remotes, int &num);
-void InfraRed_IRemoteClient_ExactMatchRemotes(MatchPage_c* page, Key_c* key, MatchResult_c* results, int& num);
-void InfraRed_IRemoteClient_ExactMatchAirRemotes(MatchPage_c* page, Key_c* key, AirRemoteState_c* state, MatchResult_c* results, int& num);
+XSDK_API void InfraRed_IRemoteClient_SetPath(char* strDataPath);
+XSDK_API void InfraRed_IRemoteClient_LoadBrands(Brand_c* brands, int& num);
+XSDK_API void InfraRed_IRemoteClient_LoadBrands(int type, Brand_c* brands, int& num);
+XSDK_API void InfraRed_IRemoteClient_GetBrandNum(int type, int& num);
+XSDK_API void InfraRed_IRemoteClient_GetRemoteNum(int& num);
+XSDK_API void InfraRed_IRemoteClient_LoadRemotes(Remote_c* remotes, int &num);
+XSDK_API void InfraRed_IRemoteClient_ExactMatchRemotes(MatchPage_c* page, Key_c* key, MatchResult_c* results, int& num);
+XSDK_API void InfraRed_IRemoteClient_ExactMatchAirRemotes(MatchPage_c* page, Key_c* key, AirRemoteState_c* state, MatchResult_c* results, int& num);
 
-void InfraRed_IRemoteManager_GetAllRooms(Room_c* rooms, int& num);
-void InfraRed_IRemoteManager_GetRemoteFromRoom(Room_c room, Remote_c* remotes, int& num);
-void InfraRed_IRemoteManager_GetRemoteByID(char* name, char* remote_id, Remote_c* remote);
-void InfraRed_IRemoteManager_AddRemoteToRoom(Remote_c* remote, Room_c* room);
-void InfraRed_IRemoteManager_DeleteRemoteFromRoom(Remote_c* remote, Room_c* room);
-void InfraRed_IRemoteManager_AddRemote(Remote_c* remote);
-void InfraRed_IRemoteManager_AddRoom(Room_c* room);
-void InfraRed_IRemoteManager_DeleteRoom(Room_c* room);
-void InfraRed_IRemoteManager_ChangeRoomName(Room_c* room, char* name);
+XSDK_API void InfraRed_IRemoteManager_GetAllRooms(Room_c* rooms, int& num);
+XSDK_API void InfraRed_IRemoteManager_GetRemoteFromRoom(Room_c room, Remote_c* remotes, int& num);
+XSDK_API void InfraRed_IRemoteManager_GetRemoteByID(char* name, char* remote_id, Remote_c* remote);
+XSDK_API void InfraRed_IRemoteManager_AddRemoteToRoom(Remote_c* remote, Room_c* room);
+XSDK_API void InfraRed_IRemoteManager_DeleteRemoteFromRoom(Remote_c* remote, Room_c* room);
+XSDK_API void InfraRed_IRemoteManager_AddRemote(Remote_c* remote);
+XSDK_API void InfraRed_IRemoteManager_AddRoom(Room_c* room);
+XSDK_API void InfraRed_IRemoteManager_DeleteRoom(Room_c* room);
+XSDK_API void InfraRed_IRemoteManager_ChangeRoomName(Room_c* room, char* name);
 
-void InfraRed_IInfraredFetcher_FetchInfrareds(Remote_c* remote, Key_c* key, Infrared_c* infrareds, int& num);
+XSDK_API void InfraRed_IInfraredFetcher_FetchInfrareds(Remote_c* remote, Key_c* key, Infrared_c* infrareds, int& num);
 int InfraRed_IInfraredFetcher_GetAirRemoteStatus(Remote_c* remote, AirRemoteState_c* state);
 int InfraRed_IInfraredFetcher_SetAirRemoteStatus(char* remote_name, AirRemoteState_c* state);
-void InfraRed_IInfraredFetcher_FetchAirTimerInfrared(Remote_c* remote, Key_c* key, AirRemoteState_c* state, int time,  Infrared_c* infrareds, int& num);
-void InfraRed_IInfraredFetcher_TranslateInfrared(char* code, unsigned char* data, int& num);
+XSDK_API void InfraRed_IInfraredFetcher_FetchAirTimerInfrared(Remote_c* remote, Key_c* key, AirRemoteState_c* state, int time,  Infrared_c* infrareds, int& num);
+XSDK_API void InfraRed_IInfraredFetcher_TranslateInfrared(char* code, unsigned char* data, int& num);
 #endif
 
 #endif // FUNSDK_H

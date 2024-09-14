@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <FunSDK/JObject.h>
+//#import <FunSDK/JObject.h>
 
 @class DeviceConfig;
 

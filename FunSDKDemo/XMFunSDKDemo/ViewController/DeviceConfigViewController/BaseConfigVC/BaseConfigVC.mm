@@ -15,6 +15,8 @@
 #import "AudioInputConfig.h"
 #import "AudioOutputConfig.h"
 #import "VideoRotainConfig.h"
+#import "MultiLanguageManager.h"
+#import "DeviceLanguageViewController.h"
 
 static NSString *const kBaseConfigListCell = @"kBaseConfigListCell";
 
@@ -42,6 +44,11 @@ static NSString *const kBaseConfigListCell = @"kBaseConfigListCell";
 @property (nonatomic,strong) AudioInputConfig *audioInputConfig;            // 音量输入
 @property (nonatomic,strong) AudioOutputConfig *audioOutputConfig;          // 音量输出
 @property (nonatomic,strong) VideoRotainConfig *videoRotainconfig; //摄像机参数配置 (日夜切换灵敏度)
+@property(nonatomic, strong) MultiLanguageManager *muilLanguageManager;
+//可选择的语言数据列表
+@property (nonatomic, strong) NSMutableArray *languageList;
+//当前设备语言
+@property (nonatomic, copy) NSString *curDeviceLanguage;
 @end
 
 @implementation BaseConfigVC
@@ -52,20 +59,41 @@ static NSString *const kBaseConfigListCell = @"kBaseConfigListCell";
     [self configSuvView];
     
     [SVProgressHUD show];
-    // 获取能力集
-    ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
-    [self.functionConfig getSystemFunction:channel.deviceMac];
+    
+    [self getConfig];
 }
 
 //MARK: - ConfigSubView
 - (void)configSuvView{
-//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(saveConfig)];
-//    self.navigationItem.rightBarButtonItem = rightButton;
-    
     [self.view addSubview:self.tbFunctionList];
     
     [self.tbFunctionList mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
+    }];
+}
+
+#pragma mark - 获取配置
+- (void)getConfig {
+    [SVProgressHUD show];
+    
+    // 获取能力集
+    ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+    [self.functionConfig getSystemFunction:channel.deviceMac];
+    
+    //判断是否支持多语言,支持并获取多语言列表
+    [self.muilLanguageManager getMultiLanguage: channel.deviceMac channel: 0 completed:^(int result, int channel) {
+        if (result >= 0) {
+            [SVProgressHUD dismiss];
+            //多语言列表
+            self.languageList = self.muilLanguageManager.languageList;
+            //当前设备语言
+            self.curDeviceLanguage = [self.muilLanguageManager getDeviceLanguage];
+            [self changeSupport: TS("TR_Device_language")];
+            [self.tbFunctionList reloadData];
+        } else {
+            [SVProgressHUD dismissWithError: [NSString stringWithFormat: @"%d", result]];
+            [self.navigationController popViewControllerAnimated: YES];
+        }
     }];
 }
 
@@ -149,9 +177,33 @@ static NSString *const kBaseConfigListCell = @"kBaseConfigListCell";
     else if ([title isEqualToString:TS("TR_Device_Image_Sensibility")]){
         [cell changeStyle:BaseConfigListCellStyleSlider];
         [cell.slider setValue:([self.videoRotainconfig getDncThr]/100.0)];
+    }else if([title isEqualToString: TS("TR_Device_language")]){
+        [cell changeStyle: BaseConfigListCellStyleNone];
+        cell.lbDetail.text = TS([self.curDeviceLanguage UTF8String]);
     }
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary *dic = [self.dataSource objectAtIndex:indexPath.row];
+    NSString *title = [dic objectForKey:@"Title"];
+    
+    if([title isEqualToString: TS("TR_Device_language")]){
+        // 获取能力集
+        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+        
+        DeviceLanguageViewController *vc = [[DeviceLanguageViewController alloc] init];
+        vc.devID = channel.deviceMac;
+        vc.languageList = self.languageList;
+        vc.curDeviceLanguage = self.curDeviceLanguage;
+        __weak typeof(self) weakSelf = self;
+        vc.languageSelectBlock = ^(NSString * _Nonnull selectLanguage) {
+            weakSelf.curDeviceLanguage = selectLanguage;
+            [weakSelf.tbFunctionList reloadData];
+        };
+        [self.navigationController pushViewController: vc animated: YES];
+    }
 }
 
 //MARK: BaseConfigListCellDelegate
@@ -403,7 +455,8 @@ static NSString *const kBaseConfigListCell = @"kBaseConfigListCell";
                          @{@"Title":TS("Door_Ring"),@"DetailInfo":TS(""),@"Support":@0},\
                          @{@"Title":TS("Input_Volume"),@"DetailInfo":TS(""),@"Support":@0},\
                          @{@"Title":TS("Output_Volume"),@"DetailInfo":TS(""),@"Support":@0},\
-                         @{@"Title":TS("TR_Device_Image_Sensibility"),@"DetailInfo":TS(""),@"Support":@0}] mutableCopy];
+                         @{@"Title":TS("TR_Device_Image_Sensibility"),@"DetailInfo":TS(""),@"Support":@0},\
+                         @{@"Title":TS("TR_Device_language"),@"DetailInfo":TS(""),@"Support":@0}] mutableCopy];
     }
     
     return _dataSource;
@@ -451,4 +504,12 @@ static NSString *const kBaseConfigListCell = @"kBaseConfigListCell";
     return _audioOutputConfig;
 }
 
+- (MultiLanguageManager *)muilLanguageManager{
+    if (!_muilLanguageManager) {
+        _muilLanguageManager = [[MultiLanguageManager alloc] init];
+        ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+        _muilLanguageManager.devID = channel.deviceMac;
+    }
+    return _muilLanguageManager;
+}
 @end

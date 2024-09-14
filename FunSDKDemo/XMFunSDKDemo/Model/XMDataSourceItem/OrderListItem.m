@@ -7,6 +7,7 @@
 //
 
 #import "OrderListItem.h"
+#import <CoreServices/CoreServices.h>
 
 @implementation OrderListItem
 
@@ -22,6 +23,27 @@
     }
     
     return self;
+}
+
+// NSItemProviderWriting 协议方法
++ (NSArray<NSString *> *)writableTypeIdentifiersForItemProvider {
+    return @[(NSString *)kUTTypePlainText];
+}
+
+- (NSProgress *)loadDataWithTypeIdentifier:(NSString *)typeIdentifier forItemProviderCompletionHandler:(void (^)(NSData * _Nullable data, NSError * _Nullable error))completionHandler {
+    NSData *data = [NSData data];
+    completionHandler(data, nil);
+    return [NSProgress progressWithTotalUnitCount:100];
+}
+
+// NSItemProviderReading 协议方法
++ (NSArray<NSString *> *)readableTypeIdentifiersForItemProvider {
+    return @[(NSString *)kUTTypePlainText];
+}
+
++ (instancetype)objectWithItemProviderData:(NSData *)data typeIdentifier:(NSString *)typeIdentifier error:(NSError * _Nullable *)outError {
+    NSString *title = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return [[self alloc] init];
 }
 
 @end

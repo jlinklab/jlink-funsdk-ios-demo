@@ -42,7 +42,7 @@ static NSString *const kSelectItemCell = @"kSelectItemCell";
         make.top.equalTo(self.tbContainer);
         make.bottom.equalTo(self.tbContainer);
     }];
-    if ([self.title isEqualToString:TS(@"TR_ScreenCloseTime")]) {
+    if ([self.title isEqualToString:TS("TR_ScreenCloseTime")]) {
         self.tbSettings.tableFooterView = [self creatTableFootView];
     }
 }
@@ -52,18 +52,9 @@ static NSString *const kSelectItemCell = @"kSelectItemCell";
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.translucent = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame = CGRectMake(0, 0, 32, 32);
-    [leftBtn setBackgroundImage:[UIImage imageNamed:@"UserLoginView-back-nor"] forState:UIControlStateNormal];
-    [leftBtn addTarget:self action:@selector(backViewController) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
-    
-    self.navigationItem.leftBarButtonItem = leftBarBtn;
-    
     if (self.needSaveButton) {
         UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightBtn setTitle:TS(@"finish") forState:UIControlStateNormal];
+        [rightBtn setTitle:TS("finish") forState:UIControlStateNormal];
         [rightBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         rightBtn.frame = CGRectMake(0, 0, 48, 32);
         [rightBtn addTarget:self action:@selector(rightBtnClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -87,7 +78,7 @@ static NSString *const kSelectItemCell = @"kSelectItemCell";
         make.size.mas_equalTo(CGSizeMake(17, 17));
     }];
     UILabel *lblTitle = [[UILabel alloc] init];
-    lblTitle.text = TS(@"TR_ScreenCloseTime_Click_Tips");
+    lblTitle.text = TS("TR_ScreenCloseTime_Click_Tips");
     lblTitle.font = [UIFont systemFontOfSize:12];
     lblTitle.numberOfLines = 0;
     lblTitle.textColor = [UIColor blackColor];
@@ -109,7 +100,7 @@ static NSString *const kSelectItemCell = @"kSelectItemCell";
 
 //MARK: - 配置保存成功处理
 - (void)saveSuccess{
-    [SVProgressHUD showSuccessWithStatus:TS(@"Save_Success")];
+    [SVProgressHUD showSuccessWithStatus:TS("Save_Success")];
     
     if (self.itemChangedAction) {
         self.itemChangedAction(self.lastIndex);
@@ -167,9 +158,9 @@ static NSString *const kSelectItemCell = @"kSelectItemCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 2 && self.ifNeedSleepTips) {
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:nil message:TS(@"Set_Never_Sleep_Tips") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:nil message:TS("Set_Never_Sleep_Tips") preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction *action = [UIAlertAction actionWithTitle:TS(@"ok") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *action = [UIAlertAction actionWithTitle:TS("ok") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.lastIndex = 2;
             
             if (self.itemChangedAction) {
@@ -179,7 +170,7 @@ static NSString *const kSelectItemCell = @"kSelectItemCell";
             [self.tbSettings reloadData];
         }];
         
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:TS(@"cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:TS("cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self.tbSettings reloadData];
         }];
         

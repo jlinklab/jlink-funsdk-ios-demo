@@ -15,28 +15,41 @@
 }
 
 #pragma -mark 根据选择的日期调用回放接口
--(void)startPlayBack:(NSDate *)date{
+-(void)startPlayBack:(NSDate *)beginTime andEndTime:(NSDate *)EndTime{
     DeviceObject *dev = [[DeviceControl getInstance]GetDeviceObjectBySN: self.devID];
     struct H264_DVR_FINDINFO requestInfo;
     memset(&requestInfo, 0, sizeof(H264_DVR_FINDINFO));
-    if (dev.enableEpitomeRecord) {
-        requestInfo.StreamType = 5;
-    }
-    requestInfo.nChannelN0 = self.channel;
     requestInfo.nFileType = 0;
-    requestInfo.startTime.dwYear = [NSDate getYearFormDate:date];
-    requestInfo.startTime.dwMonth = [NSDate getMonthFormDate:date];
-    requestInfo.startTime.dwDay = [NSDate getDayFormDate:date];
+    requestInfo.nChannelN0 = self.channel;
+    requestInfo.startTime.dwYear = [NSDate getYearFormDate:beginTime];
+    requestInfo.startTime.dwMonth = [NSDate getMonthFormDate:beginTime];
+    requestInfo.startTime.dwDay = [NSDate getDayFormDate:beginTime];
     requestInfo.startTime.dwHour = 0;
     requestInfo.startTime.dwMinute = 0;
     requestInfo.startTime.dwSecond = 0;
     
-    requestInfo.endTime.dwYear = [NSDate getYearFormDate:date];
-    requestInfo.endTime.dwMonth = [NSDate getMonthFormDate:date];
-    requestInfo.endTime.dwDay = [NSDate getDayFormDate:date];
+    requestInfo.endTime.dwYear = [NSDate getYearFormDate:beginTime];
+    requestInfo.endTime.dwMonth = [NSDate getMonthFormDate:beginTime];
+    requestInfo.endTime.dwDay = [NSDate getDayFormDate:beginTime];
     requestInfo.endTime.dwHour = 23;
     requestInfo.endTime.dwMinute = 59;
     requestInfo.endTime.dwSecond = 59;
+    
+    //传入开始结束时间具体时间
+    if (dev.enableEpitomeRecord) {
+        requestInfo.nFileType = 5;
+        requestInfo.endTime.dwYear = [NSDate getYearFormDate:EndTime];
+        requestInfo.endTime.dwMonth = [NSDate getMonthFormDate:EndTime];
+        requestInfo.endTime.dwDay = [NSDate getDayFormDate:EndTime];
+        requestInfo.endTime.dwHour = [NSDate getHourFormDate:EndTime];
+        requestInfo.endTime.dwMinute = [NSDate getMinuteFormDate:EndTime];
+        requestInfo.endTime.dwSecond = [NSDate getSecondFormDate:EndTime];
+        
+        requestInfo.startTime.dwHour = [NSDate getHourFormDate:beginTime];
+        requestInfo.startTime.dwMinute = [NSDate getMinuteFormDate:beginTime];
+        requestInfo.startTime.dwSecond = [NSDate getSecondFormDate:beginTime];
+    }
+    
     [self start:requestInfo];
 }
 #pragma mark - 开启

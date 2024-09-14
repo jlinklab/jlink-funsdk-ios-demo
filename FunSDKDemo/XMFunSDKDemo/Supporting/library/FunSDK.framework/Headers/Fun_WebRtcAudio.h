@@ -8,10 +8,10 @@
 #include "APDefines.h"
 
 /** WebRtc音频数据处理参数初始化 */
-int WebRtcAudio_Init(SAudioProcessParams *pAudioProcessParams);
+XSDK_API int WebRtcAudio_Init(SAudioProcessParams *pAudioProcessParams);
 
 /** 反初始化 */
-void WebRtcAudio_UnInit();
+XSDK_API void WebRtcAudio_UnInit();
 
 /**
  * @brief WebRtc音频数据处理
@@ -20,7 +20,7 @@ void WebRtcAudio_UnInit();
  * @param nDataSize 数据大小
  * @return >=0 成功，否者失败
  */
-int WebRtcAudio_Process(char *pPCMData, int nDataSize);
+XSDK_API int WebRtcAudio_Process(char *pPCMData, int nDataSize);
 
 /**
  * @brief WebRtc音频数据回声消除
@@ -31,12 +31,20 @@ int WebRtcAudio_Process(char *pPCMData, int nDataSize);
  * @param nFarDataSize 参考音频数据大小
  * @return >=0 成功，否者失败
  */
-int WebRtcAudio_AecProcess(char *pPCMData, int nDataSize, char *pFarData, int nFarDataSize);
+XSDK_API int WebRtcAudio_AecProcess(char *pPCMData, int nDataSize, char *pFarData, int nFarDataSize);
 
 /** WebRtc音频数据噪声抑制 */
-int WebRtcAudio_NsProcess(char* pPCMData, int nDataSize);
+XSDK_API int WebRtcAudio_NsProcess(char* pPCMData, int nDataSize);
 
 /** WebRtc音频数据增益 */
-int WebRtcAudio_AgcProcess(char* pPCMData, int nDataSize);
+XSDK_API int WebRtcAudio_AgcProcess(char* pPCMData, int nDataSize);
+
+/**
+ * @brief 启用临时日志记录和文件保存
+ * @details 生成的临时文件包括 dev_talk.pcm / app_talk.pcm  far.pcm /  near.pcm ---> aec.pcm  ---> ns.pcm  - --> agc.pcm
+ * @param bTempLoggingEnable  临时日志记录使能 false:不支持  true:支持
+ * @param szFilePath  存储路径
+ */
+XSDK_API void WebRtcAudio_EnableTempLoggingAndFileSaving(bool bTempLoggingEnable, const char *szFilePath);
 
 #endif // __FUNSDK_WEBRTC_AUDIO_H_

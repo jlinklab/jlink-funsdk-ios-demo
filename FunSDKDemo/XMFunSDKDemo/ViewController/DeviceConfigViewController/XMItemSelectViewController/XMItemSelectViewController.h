@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+//#import "XMBaseViewController.h"
 
 @interface XMItemSelectViewController : UIViewController
 
@@ -26,7 +27,9 @@
 @property (nonatomic,assign) BOOL needAutoBack;
 
 - (void)backViewControllerAnimated:(BOOL)animated;
-
+@property (nonatomic,assign) BOOL isAOVFPS;  // 是否是aov的帧率设置
+///自定义模式FPS
+@property (nonatomic,copy) NSString *customFPS;
 //MARK: - 配置保存成功处理
 - (void)saveSuccess;
 

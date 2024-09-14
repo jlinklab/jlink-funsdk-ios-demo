@@ -25,6 +25,6 @@ Action：Create
 * 		pData： 结构体信息
 * 		str： 服务器返回的整个json结果， 上层应该需要用到，显示列表层级;
 ****************************************************/
-int BC_SysVmsCloudGetDevList(UI_HANDLE hUser, const char *sRequestJson, int nSeq = 0);
+XSDK_API int BC_SysVmsCloudGetDevList(UI_HANDLE hUser, const char *sRequestJson, int nSeq = 0);
 
 #endif // _FUN_BC_H

@@ -9,8 +9,6 @@
 #import "PhoneInfoManager.h"
 #import <sys/utsname.h>
 
-NSString * const KUserGravity = @"User_Gravity";
-
 @implementation PhoneInfoManager
 
 //MARK: 获取手机类型
@@ -242,13 +240,44 @@ NSString * const KUserGravity = @"User_Gravity";
 + (CGFloat)heightOfBangs{
     CGFloat safeAreaTopHeight = 0;
     if (@available(iOS 11.0, *)) {
-        UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
+        UIWindow *window = UIApplication.sharedApplication.keyWindow;
         safeAreaTopHeight = window.safeAreaInsets.top;
     }
     
     return safeAreaTopHeight;
 }
 
-
+//MARK: 安全区域长度
++ (CGFloat)safeAreaLength:(SafeArea_Deirection)direction{
+    CGFloat safeAreaLength = 0;
+    if (@available(iOS 11.0, *)) {
+        UIWindow *window = UIApplication.sharedApplication.keyWindow;
+        switch (direction) {
+            case SafeArea_Top:
+                safeAreaLength = window.safeAreaInsets.top;
+                break;
+            case SafeArea_Bottom:
+                safeAreaLength = window.safeAreaInsets.bottom;
+                break;
+            case SafeArea_Left:
+                safeAreaLength = window.safeAreaInsets.left;
+                break;
+            case SafeArea_Right:
+                safeAreaLength = window.safeAreaInsets.right;
+                break;
+            case SafeArea_Max:
+            {
+                safeAreaLength = window.safeAreaInsets.top > window.safeAreaInsets.bottom ? window.safeAreaInsets.top : window.safeAreaInsets.bottom;
+                safeAreaLength = safeAreaLength > window.safeAreaInsets.left ? safeAreaLength : window.safeAreaInsets.left;
+                safeAreaLength = safeAreaLength > window.safeAreaInsets.right ? safeAreaLength : window.safeAreaInsets.right;
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    
+    return safeAreaLength;
+}
 
 @end

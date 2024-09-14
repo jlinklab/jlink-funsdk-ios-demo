@@ -19,8 +19,23 @@
 #endif
 #define CALLBACK __stdcall
 #else
-#define XBASIC_API
+#ifdef OS_IOS
+  #define XBASIC_API __attribute__((visibility("default")))
 #define CALLBACK
+#else
+    #define XBASIC_API
+    #define CALLBACK
+#endif
+#endif
+
+#ifdef _WIN32
+    #define XSDK_API
+#else
+  #ifdef OS_IOS
+    #define XSDK_API __attribute__((visibility("default")))
+  #else
+    #define XSDK_API
+  #endif
 #endif
 
 #if (defined(WIN32)||defined(_WIN32) ||defined(__WIN32__)||defined(__NT__))
@@ -307,6 +322,7 @@ typedef enum EE_MSG
     EMSG_ON_NET_DISCONNECT = 13,   // net disconnected
     EMSG_ADD_TASK_TO_DRIVER = 14,
     EMSG_SET_TASK_DRIVER_MAX_THREAD = 15,
+    EMSG_BLUETOOTH_DISCONNECT = 16,
 
     EMSG_ON_CONNECT = 25,
     EMSG_ON_SEND_EVENT = 60,

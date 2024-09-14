@@ -9,7 +9,7 @@
 #import "DeviceAudioPlayManager.h"
 #import <FunSDK/FunSDK.h>
 //#import "SVProgressHUD+style.h"
-//#import "SDKParser.h"
+//
 
 @interface DeviceAudioPlayManager ()
 
@@ -129,7 +129,7 @@
                                 self.deviceAudioGetAudioListResult(msg->param1, [NSArray array]);
                             }
                         }
-//                        [SVProgressHUD showErrorWithStatus:TS(@"TR_Data_Parsing_Failed")];
+//                        [SVProgressHUD showErrorWithStatus:TS("TR_Data_Parsing_Failed")];
 //                        if (self.deviceAudioGetAudioListResult) {
 //                            self.deviceAudioGetAudioListResult(msg->param1, [NSArray array]);
 //                        }
@@ -149,7 +149,7 @@
                                 self.deviceAudioGetAudioListResult(msg->param1, [NSArray array]);
                             }
                         }
-//                        [SVProgressHUD showErrorWithStatus:TS(@"TR_Data_Parsing_Failed")];
+//                        [SVProgressHUD showErrorWithStatus:TS("TR_Data_Parsing_Failed")];
 //                        if (self.deviceAudioGetAudioListResult) {
 //                            self.deviceAudioGetAudioListResult(msg->param1, [NSArray array]);
 //                        }

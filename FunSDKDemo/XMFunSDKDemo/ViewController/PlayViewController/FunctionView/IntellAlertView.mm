@@ -445,10 +445,10 @@ static NSString *const kBaseStationSoundSettingCell = @"kBaseStationSoundSetting
             }
             //暂时不处理 目前android都不显示这个配置
 //            if ([self.channelSystemFunctionManager checkSupportAbility:kSupportSoftPhotosensitive channel:self.channel] || (device.iSupportSoftPhotosensitive && self.channel == -1)){//支持球机灯泡配置
-//                [arraySection addObject:@{@"name":TS(@"bulb_switch"),@"select_parameter_list":@[@"Auto",@"KeepOpen",@"Close",@"Timing"],@"parameter_name_list":@[TS(@"Auto_Color"),TS(@"open"),TS(@"close"),TS(@"timing")]}];
+//                [arraySection addObject:@{@"name":TS("bulb_switch"),@"select_parameter_list":@[@"Auto",@"KeepOpen",@"Close",@"Timing"],@"parameter_name_list":@[TS("Auto_Color"),TS("open"),TS("close"),TS("timing")]}];
 //                if ([[cfg.whiteLightManager getWordMode] isEqualToString:@"Timing"]) {
-//                    [arraySection addObject:@{@"name":TS(@"open_time")}];
-//                    [arraySection addObject:@{@"name":TS(@"close_time")}];
+//                    [arraySection addObject:@{@"name":TS("open_time")}];
+//                    [arraySection addObject:@{@"name":TS("close_time")}];
 //                }
 //            }
         }else  {
@@ -1239,7 +1239,7 @@ static NSString *const kBaseStationSoundSettingCell = @"kBaseStationSoundSetting
 //    if (self.curStyle == JFIAVS_T_BLACK) {
 //        [tableView makeFilletTableViewCell:cell forRowAtIndexPath:indexPath transparent:YES];
 //    }else{
-//        [tableView makeFilletTableViewCell:cell forRowAtIndexPath:indexPath];
+//        
 //    }
 //}
 
@@ -1671,7 +1671,7 @@ static NSString *const kBaseStationSoundSettingCell = @"kBaseStationSoundSetting
             //最好对时间进行判断
 //            if ([CYCalenderManager getSecondsFromTime:[cfg.whiteLightManager getLightCloseTime] style:CY_TIME_STRING_STYLE_HM] == [CYCalenderManager getSecondsFromTime:dateTime style:CY_TIME_STRING_STYLE_HM]) {
 //                
-//                [SVProgressHUD showErrorText:TS(@"Start_And_End_Time_Unable_Equal")];
+//                [SVProgressHUD showErrorText:TS("Start_And_End_Time_Unable_Equal")];
 //                return;
 //            }
 //            else

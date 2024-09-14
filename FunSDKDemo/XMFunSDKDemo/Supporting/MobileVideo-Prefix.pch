@@ -35,6 +35,10 @@
 #import "DataSafeService.h"
 #import "NSDate+TimeCategory.h"
 #import "NSDate+Ex.h"
+#import "UIView+Additions.h"
+#import "VCManager.h"
+#import "UIServiceManager.h"
+#import "PhoneInfoManager.h"
 
 //开放平台App信息，需要在开放平台上面创建APP来生成，每一个APP对应一组不同并且唯一的平台信息，不能重复,如果直接使用下面参数，则后续可能会出现各种问题
 #define APPUUID "e0534f3240274897821a126be19b6d46"   //客户唯一标识
@@ -103,6 +107,14 @@ enum LanguageTypes
 #define CSTR(x) (x==nil ? "" : [x UTF8String])
 #define OCSTR(x) ([NSString stringWithUTF8String:x])
 
+#define JFSafeArray(array,index) [DataSafeService safeObjectAtIndex:index fromArray:array]
+#define JFForceArray(array) [DataSafeService forceSafeArray:array]
+/// 安全方式获取字典的值
+#define JFSafeDictionary(dic,key) [DataSafeService safeObjectForkey:key fromDictionary:dic]
+#define JFForceDictionary(dic) [DataSafeService forceSafeDictionary:dic]
+#define JFSafeString(string) (string == nil ? @"" : (NSString *)string)
+
+
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
@@ -134,6 +146,20 @@ enum LanguageTypes
 #define JF_Font_Weight(fontValue, weightValue)   [UIFont systemFontOfSize:fontValue weight:weightValue]
 #define JF_Img(imgName) [[UIImage imageNamed:imgName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
 
+//文字属性定义
+#define JFFont(s) [UIFont fontWithName:@"PingFangSC-Regular" size: s]
+/** 字体粗细可以设置的范围
+ PingFangSC-Regular,
+ PingFangSC-Ultralight,
+ PingFangSC-Thin,
+ PingFangSC-Light,
+ PingFangSC-Medium,
+ PingFangSC-Semibold
+ */
+
+#define JFFontWeightAndSize(w,s) [UIFont fontWithName:[NSString stringWithFormat:@"PingFangSC-%@",w] size: s]
+#define JFColor(hexString) [UIColor colorWithHexStr:hexString]
+#define JFColorAlpha(hexString,a) [UIColor colorWithHexStr:hexString alpha:a]
 
 #define Handle  [self MsgHandle]
 #define SELF    [self MsgHandle]

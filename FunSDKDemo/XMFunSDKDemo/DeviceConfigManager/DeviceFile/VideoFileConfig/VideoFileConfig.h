@@ -19,6 +19,8 @@
 - (void)addTimeDelegate:(NSInteger)add;
 //reload
 - (void)reloadCollection;
+//获取缩影录像代理回调
+- (void)getVideoResultForER:(NSInteger)result;
 
 @end
 

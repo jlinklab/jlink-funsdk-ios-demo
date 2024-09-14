@@ -22,6 +22,8 @@
 @property (nonatomic,assign) CGFloat bottomLineLeftBorder;
 //标题偏移左边距
 @property (nonatomic,assign) CGFloat titleLeftBorder;
+///开关微调边距
+@property (nonatomic,assign) CGFloat adjustSwitchBorder;
 
 @property (nonatomic,assign) BOOL autoAdjustAllTitleHeight;
 @property (nonatomic,assign) NSInteger row;

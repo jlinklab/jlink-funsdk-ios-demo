@@ -12,7 +12,7 @@
 #ifndef JPGEXIF_JPGHEAD_H_
 #define JPGEXIF_JPGHEAD_H_
 
-
+#include "XTypes.h"
 
 #define VR_FRAME_TYPE_HW	0x03
 #define VR_FRAME_TYPE_SW	0x04
@@ -57,7 +57,7 @@ typedef struct {
  * pFrameHW : 硬矫正参数
  * return : 0成功, 非0失败
  */
-int jpghead_write_vrhw_exif(char * srcPath, char * dstPath, FishEyeFrameHW * pFrameHW);
+XSDK_API int jpghead_write_vrhw_exif(char * srcPath, char * dstPath, FishEyeFrameHW * pFrameHW);
 
 /**
  * 普通镜头畸变矫正EXIF头写入
@@ -66,7 +66,7 @@ int jpghead_write_vrhw_exif(char * srcPath, char * dstPath, FishEyeFrameHW * pFr
  * pFrameCM : 畸变矫正参数
  * return : 0成功, 非0失败
  */
-int jpghead_write_common_exif(char * srcPath, char * dstPath, FishEyeFrameCM * pFrameCM);
+XSDK_API int jpghead_write_common_exif(char * srcPath, char * dstPath, FishEyeFrameCM * pFrameCM);
 
 /**
  * 鱼眼软矫正EXIF头写入
@@ -75,20 +75,20 @@ int jpghead_write_common_exif(char * srcPath, char * dstPath, FishEyeFrameCM * p
  * pFrameSW : 软矫正参数
  * return : 0成功, 非0失败
  */
-int jpghead_write_vrsw_exif(char * srcPath, char * dstPath, FishEyeFrameSW * pFrameSW);
+XSDK_API int jpghead_write_vrsw_exif(char * srcPath, char * dstPath, FishEyeFrameSW * pFrameSW);
 
 
 /**
  * 鱼眼矫正信息写入,同jpghead_write_vrhw_exif和jpghead_write_vrsw_exif
  * return : 0成功, 非0失败
  */
-int jpghead_write_exif(char * srcPath, char * dstPath, FishEyeFrameParam * pFrame);
+XSDK_API int jpghead_write_exif(char * srcPath, char * dstPath, FishEyeFrameParam * pFrame);
 
 /**
  * 从文件中读取鱼眼矫正参数
  * return : 0成功, 非0失败(或者是非鱼眼图片)
  */
-int jpghead_read_exif(char * srcPath, FishEyeFrameParam * pFrame);
+XSDK_API int jpghead_read_exif(char * srcPath, FishEyeFrameParam * pFrame);
 
 
 #endif /* JPGEXIF_JPGHEAD_H_ */

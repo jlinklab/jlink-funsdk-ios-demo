@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger,SafeArea_Deirection){
+    SafeArea_Top,
+    SafeArea_Bottom,
+    SafeArea_Left,
+    SafeArea_Right,
+    SafeArea_Max,
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PhoneInfoManager : NSObject
@@ -24,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)randomStringWithLength:(NSInteger)len;
 //MARK: 获取手机刘海的高度
 + (CGFloat)heightOfBangs;
+//MARK: 安全区域长度
++ (CGFloat)safeAreaLength:(SafeArea_Deirection)direction;
 
 @end
 

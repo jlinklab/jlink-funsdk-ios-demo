@@ -927,18 +927,19 @@ UIPinchGestureRecognizer *twoFingerPinch;//硬解码捏合手势
 
 #pragma - mark - 语音对讲按钮代理 (对讲和双向对讲同时只能打开一个)
 - (void)openTalk {
-   talkControl.handle = mediaPlayer.msgHandle;
+   talkControl.handle = mediaPlayer.player;
     talkControl.pitchSemiTonesType = talkView.talkSoundType;
     [talkControl startTalk];
     [toolView refreshFunctionView:CONTROL_REALPLAY_VOICE result:NO];
 }
 - (void)closeTalk {
-    talkControl.handle = mediaPlayer.msgHandle;
+    talkControl.handle = mediaPlayer.player;
     [talkControl pauseTalk];
     [toolView refreshFunctionView:CONTROL_REALPLAY_VOICE result:YES];
 }
 #pragma - mark 开始双向对讲  (单向对讲和双向对讲同时只能打开一个) (双向对讲最好做一下手机端的回音消除工作     demo中并没有做这个)
 - (void)startDouTalk {
+    talkControl.handle = mediaPlayer.player;
     talkControl.pitchSemiTonesType = talkView.talkSoundType;
     [talkControl startDouTalk:YES];
     [toolView refreshFunctionView:CONTROL_REALPLAY_VOICE result:YES];

@@ -358,4 +358,20 @@ NSDate *YYNSDateFromString(__unsafe_unretained NSString *string) {
     }
     return idStr;
 }
+
+///将UTC时间转成手机当前时间
++ (NSString *)convertUTCtoLocalTime:(NSString *)utcTime {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+    NSCalendar *calender = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:calender.locale.localeIdentifier]];
+    
+    NSDate *date = [dateFormatter dateFromString:utcTime];
+    
+    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    NSString *localTime = [dateFormatter stringFromDate:date];
+    
+    return localTime;
+}
 @end

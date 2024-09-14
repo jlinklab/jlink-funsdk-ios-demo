@@ -60,6 +60,7 @@
             self.ifSupportSetVolume = systemFunction.mOtherFunction.SupportSetVolume.Value()?1:0;
             self.iSupportLowPowerDoubleLightToLightingSwitch = systemFunction.mOtherFunction.SupportLowPowerDoubleLightToLightingSwitch.Value()?1:0;
             self.iSupportMusicLightBulb = systemFunction.mOtherFunction.SupportMusicLightBulb.Value()?1:0;
+            self.AovWorkModeIndieControl = systemFunction.mOtherFunction.AovWorkModeIndieControl.Value()?1:0;
         }
         
         if (self.callBack) {

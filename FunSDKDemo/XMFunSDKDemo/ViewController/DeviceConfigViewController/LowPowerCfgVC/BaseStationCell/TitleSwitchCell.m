@@ -48,7 +48,7 @@
 -(XMUISwitch *)toggleSwitch {
     if (!_toggleSwitch) {
         _toggleSwitch = [[XMUISwitch alloc] init];
-        _toggleSwitch.onTintColor = [UIColor orangeColor];
+        _toggleSwitch.onTintColor = NormalFontColor;
         
         [_toggleSwitch addTarget:self action:@selector(toggleSwitchStateChanged:) forControlEvents:UIControlEventValueChanged];
     }
@@ -127,7 +127,7 @@
     self.bottomLine.backgroundColor = cTableViewFilletUnderLineColor;
     self.leftIcon.hidden = YES;
     [self.toggleSwitch mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.contentView).offset(-(cTableViewFilletLFBorder + self.titleLeftBorder));
+        make.right.equalTo(self.contentView).offset(-(cTableViewFilletLFBorder + self.titleLeftBorder + self.adjustSwitchBorder));
         make.centerY.equalTo(self.contentView);
         make.width.equalTo(@60);
         make.height.equalTo(@30);
@@ -161,7 +161,7 @@
         make.bottom.equalTo(self);
         make.right.equalTo(self);
         make.left.equalTo(self);
-        make.height.equalTo(@1);
+        make.height.equalTo(@0.5);
     }];
     
     [self setNeedsLayout];
@@ -245,6 +245,7 @@
     if (self) {
         self.titleLeftBorder = 0;
         self.bottomLineLeftBorder = 0;
+        self.adjustSwitchBorder = 0;
         
         [self makeUI];
     }

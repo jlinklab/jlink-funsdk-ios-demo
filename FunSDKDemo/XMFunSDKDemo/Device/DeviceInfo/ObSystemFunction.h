@@ -61,4 +61,13 @@
 @property (nonatomic, assign) int iSupportLPDoubleLightAlert; // 是否支持双光警戒
 @property (nonatomic, assign) int iNotSupportAutoAndIntelligent;// 仅支持白光灯开关
 @property (nonatomic, assign) int iSupportBoxCameraBulb;  // BoxCameraBulb
+@property (nonatomic, assign) int AovMode; //支持AOV功能
+@property (nonatomic, assign) int AovWorkModeIndieControl;  // AOV 支持工作模式协议
+@property (nonatomic, assign) int AovAlarmHold; //AOV报警抑制，限制设备不能频繁触发报警
+@property (nonatomic, assign) int supportSetBrightness; ////是否支持灯光亮度：目前AOV设备使用
+@property (nonatomic, assign) int MicroFillLight; //是否支持微光控制
+@property (nonatomic, assign) int SoftLedThr; //支持自动灯光模式下的灵敏度设置，取值范围固定为1~5 目前AOV设备使用
+@property (nonatomic, assign) int LowPowerWorkTime; //是否支持低功耗设备唤醒和预览时长 目前AOV设备使用
+@property (nonatomic, assign) int BatteryManager; //是否支持低功耗设备电池管理
+
 @end

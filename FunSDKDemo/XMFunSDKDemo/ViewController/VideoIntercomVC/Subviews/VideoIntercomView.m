@@ -222,7 +222,7 @@
 -(UILabel *)deviceNameLab{
     if(!_deviceNameLab){
         _deviceNameLab = [[UILabel alloc] init];
-        _deviceNameLab.text = TS(@"");
+        _deviceNameLab.text = TS("");
         _deviceNameLab.textColor = [UIColor whiteColor];
         _deviceNameLab.font = [UIFont systemFontOfSize:17];
         _deviceNameLab.numberOfLines = 2;

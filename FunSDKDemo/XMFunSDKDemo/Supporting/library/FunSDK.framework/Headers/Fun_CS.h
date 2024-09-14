@@ -25,7 +25,7 @@
  *   "label":["person","pet"] ///<【可选】标签数组，不传则不筛选，支持筛选多个（或）
  * }
  */
-int CS_QueryVideoClipsByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq);
+XSDK_API int CS_QueryVideoClipsByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq);
 
 /**
 * @brief 云存储视频时间轴查询
@@ -41,7 +41,7 @@ int CS_QueryVideoClipsByTime(UI_HANDLE hUser, const char *szReqJson, int nSeq);
 *    "ch": 0    ///<【可选】不填写此字段表示查询所有通道
 * }
 */
-int CS_QueryVideoTimeAxis(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int CS_QueryVideoTimeAxis(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 下载云视频片段缩略图
@@ -71,17 +71,17 @@ int CS_QueryVideoTimeAxis(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
  *   }
  * }
  */
-int CS_DownloadVideoClipThumbnail(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
+XSDK_API int CS_DownloadVideoClipThumbnail(UI_HANDLE hUser, const char *szReqJson, int nSeq = 0);
 
 /**
  * @brief 设置下载列表中的任务数量
  * @details 默认为N_MAX_DOWNLOAD_QUEUE_SIZE(32)
  */
-int CS_SetDownloadVideoClipThumbnailMaxQueue(int nMaxQueueSize);
+XSDK_API int CS_SetDownloadVideoClipThumbnailMaxQueue(int nMaxQueueSize);
 
 /**
  * @brief 取消全部缩略图下载任务
  */
-void CS_StopDownloadVideoClipThumbnail();
+XSDK_API void CS_StopDownloadVideoClipThumbnail();
 
 #endif //__FUN_PMS_H_
