@@ -289,17 +289,29 @@
     //设备在线状态。。(低功耗在线显示休眠状态。。其他设备显示在线离线状态)
     if ([devObject getDeviceTypeLowPowerConsumption]) {
         if (devObject.state > 0) {
-            if (devObject.eFunDevStateNotCode == 2){
-                // 设备睡眠
-                return XMDeviceStatusSleep;
-            }else if (devObject.eFunDevStateNotCode == 3){
-                //深度休眠
-                return XMDeviceStatusDeepSleep;
-            }else if (devObject.eFunDevStateNotCode == 4){
-                //准备休眠
-                return XMDeviceStatusPrepareSleep;
+            if (devObject.sysFunction.AovMode) {
+                //AOV设备，显示在线、AOV模式等状态（APP上层显示逻辑）
+                if (devObject.eFunDevStateNotCode == 0 || devObject.eFunDevStateNotCode == 1){
+                    //唤醒中或者未知状态 ，显示在线
+                    return XMDeviceStatusOnline;
+                }else{
+                    //demo这里简单处理，非在线时就显示AOV。（可以按 eFunDevStateNotCode 状态继续细分）
+                    return XMDeviceStatusAOV;
+                }
             }else{
-                return XMDeviceStatusOnline;
+                //非AOV设备，显示在线、休眠等状态
+                if (devObject.eFunDevStateNotCode == 2){
+                    // 设备睡眠
+                    return XMDeviceStatusSleep;
+                }else if (devObject.eFunDevStateNotCode == 3){
+                    //深度休眠
+                    return XMDeviceStatusDeepSleep;
+                }else if (devObject.eFunDevStateNotCode == 4){
+                    //准备休眠
+                    return XMDeviceStatusPrepareSleep;
+                }else{
+                    return XMDeviceStatusOnline;
+                }
             }
         }else{
             return XMDeviceStatusOffline;

@@ -381,7 +381,6 @@
 		1FF6AC2A2A3208100012A0CE /* UIImage+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6AC292A3208100012A0CE /* UIImage+Ex.m */; };
 		1FF6C29026DF0A2B007927A3 /* AboutDemoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6C28F26DF0A2B007927A3 /* AboutDemoViewController.mm */; };
 		1FF6C29326DF0A85007927A3 /* DataEncrypt.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6C29226DF0A85007927A3 /* DataEncrypt.mm */; };
-		1FF7FDB222E1E3D70036373B /* Test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1FF7FDB122E1E3D70036373B /* Test.jpg */; };
 		203BD11C21DF602D005B91E9 /* BuzzerConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 203BD11B21DF602D005B91E9 /* BuzzerConfig.mm */; };
 		203BD12821DF7515005B91E9 /* BuzzerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 203BD12621DF7515005B91E9 /* BuzzerViewController.mm */; };
 		22007D6A2C8564BF0095D889 /* FunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22007D682C85646E0095D889 /* FunSDK.framework */; };
@@ -1638,7 +1637,6 @@
 		1FF6C29126DF0A85007927A3 /* DataEncrypt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataEncrypt.h; sourceTree = "<group>"; };
 		1FF6C29226DF0A85007927A3 /* DataEncrypt.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DataEncrypt.mm; sourceTree = "<group>"; };
 		1FF6C29526DF50E2007927A3 /* libFunSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFunSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FF7FDB122E1E3D70036373B /* Test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Test.jpg; sourceTree = "<group>"; };
 		203BD11A21DF602D005B91E9 /* BuzzerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuzzerConfig.h; sourceTree = "<group>"; };
 		203BD11B21DF602D005B91E9 /* BuzzerConfig.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BuzzerConfig.mm; sourceTree = "<group>"; };
 		203BD12621DF7515005B91E9 /* BuzzerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BuzzerViewController.mm; sourceTree = "<group>"; };
@@ -6513,7 +6511,6 @@
 		96EFBC3121BB966A005EBA5A /* ImageSource */ = {
 			isa = PBXGroup;
 			children = (
-				1FF7FDB122E1E3D70036373B /* Test.jpg */,
 				96EFBC3221BB966A005EBA5A /* DeviceImage */,
 				96EFBC4121BB966A005EBA5A /* icon_funsdk.png */,
 				96EFBC4221BB966A005EBA5A /* icon_hide_nor.png */,
@@ -6990,7 +6987,6 @@
 				96EFBD1721BB966A005EBA5A /* QRCode.png in Resources */,
 				96EFBCCC21BB966A005EBA5A /* xmjp_fbulb.png in Resources */,
 				96EFBCF421BB966A005EBA5A /* VR-Ceiling_nor.png in Resources */,
-				1FF7FDB222E1E3D70036373B /* Test.jpg in Resources */,
 				96EFBCF321BB966A005EBA5A /* VR-ball bowl_sel.png in Resources */,
 				96EFBD0121BB966A005EBA5A /* VR_ball hat_nor.png in Resources */,
 				1F4828F12C47945B00721A22 /* WDRViewController.xib in Resources */,

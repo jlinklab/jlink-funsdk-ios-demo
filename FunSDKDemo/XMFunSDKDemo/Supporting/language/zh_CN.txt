@@ -1074,7 +1074,6 @@ TR_Medium_Low=中低
 TR_Min=低
 TR_Precise_Trigger=精准触发
 TR_Sensitive_Trigger=灵敏触发
-<<<<<<< HEAD
 TR_Device_language=设备语言
 SimpChinese=中文
 English=英文
@@ -1083,7 +1082,6 @@ Spanish=西班牙语
 Vietnamese=越南语
 Portugal=葡萄牙语
 Poland=波兰语
-=======
 TR_Setting_Mode_Of_Work=工作模式
 TR_Setting_Performance=性能模式
 TR_Setting_Power_Saving_Mode=省电模式

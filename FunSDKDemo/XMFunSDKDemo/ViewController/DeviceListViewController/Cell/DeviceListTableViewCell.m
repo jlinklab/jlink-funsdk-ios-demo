@@ -116,6 +116,9 @@
         case XMDeviceStatusOffline:
             _onlineState.image = [UIImage imageNamed:@"offline"];
             break;
+        case XMDeviceStatusAOV:
+            _onlineState.image = [UIImage imageNamed:@"icon_aov"];
+            break;
         default:
             _onlineState.image = nil;
             break;

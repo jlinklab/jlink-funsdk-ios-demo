@@ -143,7 +143,8 @@
 
 //MARK: 获取SystemFunction回调
 - (void)SystemFunctionConfigGetResult:(NSInteger)result{
-
+    //获取能力集之后，可以保存在本地，能力集一般不会变动，可以使用上一次保存下来的配置进行刷新，后台获取后更新本地存储（可能会变动的情况：设备固件升级、极个别型号的设备模式切换时等等）
+    [[DeviceControl getInstance] saveDeviceList];
 }
 
 //休眠中的设备需要先唤醒才能去获取其他配置

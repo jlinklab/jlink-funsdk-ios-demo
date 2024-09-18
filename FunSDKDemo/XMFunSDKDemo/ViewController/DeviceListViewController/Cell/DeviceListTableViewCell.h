@@ -27,6 +27,8 @@ typedef NS_ENUM(NSInteger, XMDeviceStatus) {
     XMDeviceStatusOnline,
     ///离线
     XMDeviceStatusOffline,
+    ///离线
+    XMDeviceStatusAOV,
 };
 
 @interface DeviceListTableViewCell : UITableViewCell
