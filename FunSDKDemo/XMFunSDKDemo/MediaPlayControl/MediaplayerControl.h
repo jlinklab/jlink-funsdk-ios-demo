@@ -165,5 +165,7 @@ enum MediaSpeedState{
 -(void)controZStopIPTAction:(PTZ_ControlType)sender;
 #pragma mark FunSDK 结果
 -(void)OnFunSDKResult:(NSNumber *)pParam;
+//MARK: APP画
+- (void)drawYUVSelf;
 
 @end

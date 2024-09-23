@@ -14,7 +14,6 @@
 {
     UIView *pView;      //时间轴上方的红线
     UILabel *_labTime;  //播放时间
-    UISegmentedControl *_control;
     
     float _add;         //每次跳转的时间
     float _standardNum;
@@ -25,6 +24,7 @@
 @property (nonatomic, strong) MyProgressView *MPView; //时间轴
 @property (nonatomic ,copy) void (^TouchSeektoTime)(NSInteger addTime);//根据拖动时间切换播放
 @property (nonatomic) BOOL ifSliding;      // 是否在滑动
+@property (nonatomic, strong)UISegmentedControl *control;
 //根据返回的录像文件刷新时间轴
 -(void)refreshProgressWithSearchResult:(NSMutableArray*)array;
 //通过搜索录像返回的时间来刷新时间轴

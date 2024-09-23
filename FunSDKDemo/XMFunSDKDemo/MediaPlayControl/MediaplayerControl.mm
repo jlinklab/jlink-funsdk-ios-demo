@@ -134,7 +134,12 @@
     [self start];
 }
 
-
+//MARK: APP画
+- (void)drawYUVSelf{
+    FUN_SetIntAttr(self.player, EOA_MEDIA_YUV_USER, self.msgHandle);//返回Yuv数据
+    FUN_SetIntAttr(self.player, EOA_SET_MEDIA_VIEW_VISUAL, 0);//自己画画面
+    self.IsYuv = YES;
+}
 
 #pragma mark - 点击云台控制的按钮，开始控制  这个接口没有回调信息
 -(void)controZStartlPTAction:(PTZ_ControlType)sender {

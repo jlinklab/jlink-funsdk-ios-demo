@@ -19,7 +19,7 @@
 #import <Masonry/Masonry.h>
 #import "XMFileListCell.h"
 
-@interface PlayBackViewController ()<DateSelectViewDelegate,VideoFileConfigDelegate,MediaplayerControlDelegate,basePlayFunctionViewDelegate,MediaPlayBackControlDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface PlayBackViewController ()<DateSelectViewDelegate,VideoFileConfigDelegate,MediaplayerControlDelegate,basePlayFunctionViewDelegate,MediaPlayBackControlDelegate,UICollectionViewDelegate,UICollectionViewDataSource, VRGLViewControllerDelegate>
 {
     PlayView *pVIew;                    //播放画面
     PlayFunctionView *toolView;         //工具栏
@@ -43,7 +43,9 @@
 
 @property (nonatomic,assign) Video_Type selectVideoType;//选中的录像类型
 @property(nonatomic, strong) UIButton *epBUtton;
-
+@property (nonatomic, strong)VRGLViewController *vrglVC;
+//是否需要配置软解环境
+@property (nonatomic,assign) BOOL needConfigSoftEAGLContext;
 //@property (nonatomic) NSMutableArray <XMResourceItem *>* fileList;//录像列表
 
 
@@ -132,6 +134,7 @@
     if (dev.sysFunction.supportEpitomeRecord) {
         self.epBUtton.hidden = NO;
     }
+    self.needConfigSoftEAGLContext = YES;
 }
 
 -(FishPlayControl*)feyeControl{
@@ -485,6 +488,10 @@
         [pVIew playViewBufferIng];
     }else{//缓冲完成
         [pVIew playViewBufferEnd];
+        DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: mediaPlayer.devID];
+        if(dev.imageWidth != 0 && dev.imageHeight != 0 && dev.iSceneType == XMVR_TYPE_TWO_LENSES){
+            [self mediaPlayer: mediaPlayer Hardandsoft: dev.iCodecType Hardmodel: dev.iSceneType];
+        }
     }
 }
 
@@ -535,14 +542,99 @@
 
 #pragma mark 用户自定义信息帧回调，通过这个判断是什么模式在预览
 -(void)mediaPlayer:(MediaplayerControl*)mediaPlayer Hardandsoft:(int)Hardandsoft Hardmodel:(int)Hardmodel {
-    if (Hardandsoft == 3 || Hardandsoft == 4 || Hardandsoft == 5) {
+    //一路码流双目
+    if(Hardmodel == XMVR_TYPE_TWO_LENSES){
+        DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: mediaPlayer.devID];
+        //存储 设备的软硬解码以及场景
+        dev.iCodecType = Hardandsoft;
+        dev.iSceneType = Hardmodel;
+        //播放界面布局
+        pVIew.frame = CGRectMake(0,0, SCREEN_WIDTH,  SCREEN_WIDTH * 1.125);
+        self.vrglVC.view.frame = CGRectMake(0,0, SCREEN_WIDTH,  SCREEN_WIDTH * 1.125);
+        [pVIew addSubview: self.vrglVC.view];
+        // 在mediavc 中也存储软硬解码方式以及场景
+        self.vrglVC.iCodecType = Hardandsoft;
+        self.vrglVC.iSceneType = Hardmodel;
+        self.vrglVC.hwRatio = 1.125;
+        [pVIew mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(self.view.mas_width);
+            make.height.mas_equalTo(self.view.mas_width).multipliedBy(1.125);
+            make.top.mas_equalTo(NavHeight);
+            make.left.mas_equalTo(self);
+        }];
+        //codec配置
+        [self mediaId:mediaPlayer.devID codecType:Hardandsoft scene:Hardmodel];
+        //预览界面工具栏等重新布局
+        [toolView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_offset(NavAndStatusHight + ScreenWidth * 1.125);
+            make.centerX.mas_equalTo(self);
+            make.height.mas_equalTo(ToolViewHeight);
+            make.width.mas_equalTo(ScreenWidth);
+        }];
+        float height = (ScreenHeight - NavHeight - ScreenWidth - ToolViewHeight);
+        [pBackView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_offset(NavAndStatusHight + ScreenWidth * 1.125 + ToolViewHeight + 50);
+            make.centerX.mas_equalTo(self);
+            make.height.mas_equalTo(height);
+            make.width.mas_equalTo(ScreenWidth);
+        }];
+        [pBackView.control mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.view);
+            make.bottom.equalTo(self.view);
+            make.height.mas_equalTo(30);
+            make.width.mas_equalTo(100);
+        }];
+    }
+   else if (Hardandsoft == 3 || Hardandsoft == 4 || Hardandsoft == 5) {
         //创建鱼眼预览界面
         [self createFeye:Hardandsoft Hardmodel:Hardmodel];
     }
 }
+
+#pragma mark 鱼眼codec配置
+-(void)mediaId:(NSString *)devID codecType:(int)codec scene:(int)scene{
+    DeviceObject *devInfo = [[DeviceControl getInstance] GetDeviceObjectBySN: devID];
+    //由于aov端录像，不会走到EMSG_ON_FRAME_USR_DATA的回调中, 需要自己画
+    [mediaPlayer drawYUVSelf];
+        if(codec == 4 && scene == XMVR_TYPE_TWO_LENSES) {
+        //如果收到信息帧，那么则需要配置EAGLContext
+            if(self.needConfigSoftEAGLContext){
+                //防止频繁初始化
+                self.needConfigSoftEAGLContext = NO;
+                //初始化
+                [self.vrglVC configSoftEAGLContext];
+            }
+            //如果是SDK处理双目画中画
+            [self.vrglVC setVRType:XMVR_TYPE_TWO_LENSES_IN_ONE];
+        }
+        
+        if (devInfo.imageWidth != 0 && devInfo.imageHeight != 0) {
+            int height = scene == XMVR_TYPE_TWO_LENSES?devInfo.imageHeight * 0.5 : devInfo.imageHeight;
+            int offsetX = scene == XMVR_TYPE_TWO_LENSES?devInfo.imageWidth * 0.5 : devInfo.centerOffsetX;
+            int offsetY = scene == XMVR_TYPE_TWO_LENSES?devInfo.imageHeight * 0.5 : devInfo.centerOffsetY;
+            int iImgradius = scene == XMVR_TYPE_TWO_LENSES?devInfo.imageWidth * 0.5 : devInfo.imgradius;
+            NSLog(@"%d %d", devInfo.imageWidth, devInfo.imageHeight);
+            //设置镜头偏移参数
+            [self.vrglVC setVRFecParams:offsetX yCenter:offsetY radius:iImgradius Width:devInfo.imageWidth Height:height];
+        }
+        
+        if(scene == XMVR_TYPE_TWO_LENSES){
+            //获取当前双目模式
+            XMTwoLensesScreen model = [self.vrglVC getVRSoftTwoLensesScreen];
+            if(model == XMTWOLENSESSCREEN_END){
+                //设置双目镜头显示方式
+                [self.vrglVC setTwoLensesDrawMode:FitScreen];
+            }
+        }
+      
+}
 #pragma mark YUV数据回调
 -(void)mediaPlayer:(MediaplayerControl*)mediaPlayer width:(int)width height:(int)height pYUV:(unsigned char *)pYUV {
-    [self.feyeControl PushData:width height:height YUVData:pYUV];
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: mediaPlayer.devID];
+    if(dev.iSceneType == XMVR_TYPE_TWO_LENSES){
+        [self.vrglVC PushData:width height:height YUVData:pYUV];
+    }
+    else [self.feyeControl PushData:width height:height YUVData:pYUV];
 }
 #pragma mark - 设备时间（鱼眼）
 -(void)mediaPlayer:(MediaplayerControl*)mediaPlayer DevTime:(NSString *)time {
@@ -655,6 +747,14 @@
         _epBUtton.hidden = YES;
     }
     return _epBUtton;
+}
+
+-(VRGLViewController *)vrglVC{
+    if (!_vrglVC) {
+        _vrglVC = [[VRGLViewController alloc] init];
+        _vrglVC.vrglDelegate = self;
+    }
+    return _vrglVC;
 }
 
 @end
