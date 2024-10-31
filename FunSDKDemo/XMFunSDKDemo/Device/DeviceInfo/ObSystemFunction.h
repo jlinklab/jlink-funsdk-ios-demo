@@ -69,5 +69,9 @@
 @property (nonatomic, assign) int SoftLedThr; //支持自动灯光模式下的灵敏度设置，取值范围固定为1~5 目前AOV设备使用
 @property (nonatomic, assign) int LowPowerWorkTime; //是否支持低功耗设备唤醒和预览时长 目前AOV设备使用
 @property (nonatomic, assign) int BatteryManager; //是否支持低功耗设备电池管理
+@property (nonatomic, assign) BOOL iSupportHumanPedDetection;//是否支持智能侦测（人形检测）：目前AOV设备使用 -1:未获取过 0:不是 1:是
+@property (nonatomic,assign) BOOL ifSupportPIRSensitive;                   // 是否支持PIR灵敏度设置
+@property (nonatomic, assign) int iSupportAlarmVoiceTipInterval;// 是否支持警铃间隔
+@property (nonatomic, assign) int iMultiAlgoCombinePed; // 是否支持多算法 aov人车判断
 
 @end

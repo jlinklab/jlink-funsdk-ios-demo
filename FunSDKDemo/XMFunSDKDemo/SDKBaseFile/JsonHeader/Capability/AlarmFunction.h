@@ -28,6 +28,8 @@ public:
     JBoolObj        MotionHumanDection;     // 支持移动追踪和人形报警同时开启
     JBoolObj        NewVideoAnalyze;
     JBoolObj        PIRAlarm;
+    JBoolObj        HumanPedDetection;      //AOV智能侦测（人形检测）
+    JBoolObj        MultiAlgoCombinePed;    //AOV多算法组合, 支持人车
 public:
     AlarmFunction(JObject *pParent = NULL, const char *szName = JK_AlarmFunction):
     JObject(pParent,szName),
@@ -53,7 +55,9 @@ public:
     ManuIntellAlertAlarm(this, "ManuIntellAlertAlarm"),
     MotionHumanDection(this, "MotionHumanDection"),
     NewVideoAnalyze(this, "NewVideoAnalyze"),
-    PIRAlarm(this, "PIRAlarm"){
+    PIRAlarm(this, "PIRAlarm"),
+    HumanPedDetection(this, "HumanPedDetection"),
+    MultiAlgoCombinePed(this, "MultiAlgoCombinePed"){
 	};
 
     ~AlarmFunction(void){};

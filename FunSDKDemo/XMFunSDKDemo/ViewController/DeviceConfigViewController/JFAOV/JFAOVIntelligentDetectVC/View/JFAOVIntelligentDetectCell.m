@@ -36,15 +36,6 @@
         make.height.mas_equalTo(100);
     }];
     
-    UIImageView *imgLeft = [[UIImageView alloc] init];
-    imgLeft.image = [UIImage imageNamed:@"set_detection_people"];
-    [self.leftView addSubview:imgLeft];
-    [imgLeft mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(17);
-        make.left.mas_equalTo(20);
-        make.size.mas_equalTo(CGSizeMake(35, 35));
-    }];
-    
     UILabel *lblLeft = [[UILabel alloc] init];
     lblLeft.textColor = UIColorFromHex(0x333333);
     lblLeft.font = [UIFont systemFontOfSize:15];
@@ -52,7 +43,7 @@
     lblLeft.text = TS("TR_Human_Shape");
     [self.leftView addSubview:lblLeft];
     [lblLeft mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(imgLeft.mas_bottom).mas_offset(10);
+        make.top.mas_equalTo(17);
         make.left.mas_equalTo(20);
          
     }];
@@ -82,15 +73,6 @@
         make.height.mas_equalTo(100);
     }];
     
-    UIImageView *imgRight = [[UIImageView alloc] init];
-    imgRight.image = [UIImage imageNamed:@"set_detection_car"];
-    [self.rightView addSubview:imgRight];
-    [imgRight mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(17);
-        make.left.mas_equalTo(20);
-        make.size.mas_equalTo(CGSizeMake(35, 35));
-    }];
-    
     UILabel *lblRight  = [[UILabel alloc] init];
     lblRight.textColor = UIColorFromHex(0x333333);
     lblRight.font = [UIFont systemFontOfSize:15];
@@ -98,7 +80,7 @@
     lblRight.text = TS("TR_Car_Shape");
     [self.rightView addSubview:lblRight];
     [lblRight mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(imgRight.mas_bottom).mas_offset(10);
+        make.top.mas_equalTo(17);
         make.left.mas_equalTo(20);
     }];
     

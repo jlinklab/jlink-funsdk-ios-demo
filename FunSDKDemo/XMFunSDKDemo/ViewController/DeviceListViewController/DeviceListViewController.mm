@@ -26,6 +26,9 @@
 @property (nonatomic, strong) UITableView *devListTableView;
 
 @property (nonatomic, strong) DeviceChannelView *channelView;
+@property (nonatomic,strong) dispatch_queue_t socketMsgQueue;
+@property (nonatomic, strong) NSMutableDictionary* webSocketDataInfo;//长连接数据
+@property (nonatomic, strong) NSMutableDictionary* deviceActionDataInfo;
 
 @end
 
@@ -101,6 +104,13 @@
     //配置子试图
     [self configSubView];
     
+    WeakSelf(weakSelf);
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    NSOperationQueue *queue = [NSOperationQueue mainQueue];
+    [center addObserverForName: @"WebSocketUpdate" object:nil  queue:queue usingBlock: ^(NSNotification *notification) {
+        [weakSelf refreshDeviceStateWithDeviceDataInfo: notification.object];
+    }];
+    
 }
 
 - (void)getDevicelist {
@@ -153,7 +163,7 @@
         return;
     }
     NSLog(@"%ld",(long)indexPath.row);
-    DeviceObject *devObject = [deviceArray objectAtIndex:indexPath.section];;
+    DeviceObject *devObject = [deviceArray objectAtIndex:indexPath.section];
     
     NSString *title = [NSString stringWithFormat:@"%@%@",TS(""), devObject.deviceName];
     
@@ -453,6 +463,143 @@ static NSString * devObjectMac = @"";
         [[DoorBellModel shareInstance] beginCountDown];
         [[DoorBellModel shareInstance] removeAllWorkingDevice];
     }
+}
+
+#pragma mark MQTT数据解析——实时设备状态
+-(void)refreshDeviceStateWithDeviceDataInfo:(NSDictionary*)deviceDataInfo{
+    dispatch_async(self.socketMsgQueue, ^{
+        if (deviceDataInfo) {
+            @try {
+                if ([self checkIsRepeatWebSocketMsg:deviceDataInfo]) {
+                    return;
+                }
+                
+                NSString* dateTimeString = [deviceDataInfo objectForKey:@"time"];
+                if ([dateTimeString isKindOfClass:[NSString class]]) {
+                    [self.webSocketDataInfo setObject:deviceDataInfo forKey:dateTimeString];
+                }
+                
+                long long websocketInterval = 0;
+                if ([deviceDataInfo objectForKey:@"timeStamp"]) {
+                    websocketInterval = [[deviceDataInfo objectForKey:@"timeStamp"] longLongValue];
+                    NSLog(@"debug:webSocket-interval=%lld", websocketInterval);
+                }
+                
+                BOOL isExisted = NO;
+                DeviceObject *deviceModel;
+                NSString* deviceIdString = [deviceDataInfo objectForKey:@"sn"];
+                if ([deviceIdString isKindOfClass:[NSString class]]) {
+                    for (int m = 0; m < deviceArray.count; m++) {
+                        deviceModel = deviceArray[m];
+                        if ([deviceModel.deviceMac isEqualToString:deviceIdString]) {
+                            isExisted = YES;
+                            break;
+                        }
+                        else{
+                            deviceModel = nil;
+                        }
+                    }
+                }
+                NSMutableDictionary* tempDataInfo = [NSMutableDictionary dictionaryWithDictionary:deviceDataInfo];
+                NSLog(@"debug:webSocket-data%@", (NSMutableDictionary*)tempDataInfo);
+
+                    BOOL stateChanged = NO;
+                    if ([deviceIdString isKindOfClass:[NSString class]] && deviceIdString.length) {
+                        DeviceObject *device = [[DeviceControl getInstance] GetDeviceObjectBySN: deviceIdString];
+                        NSArray* propsArray = [deviceDataInfo objectForKey:@"props"];
+                        NSString *serverName = @"";
+                        if([deviceDataInfo.allKeys containsObject:@"serverName"]){
+                            serverName = [deviceDataInfo objectForKey:@"serverName"];
+                        }
+                        if ([propsArray isKindOfClass:[NSArray class]]) {
+                            for (int m = 0; m < propsArray.count; m++) {
+                                NSDictionary* propInfo = propsArray[m];
+                                if ([propInfo isKindOfClass:[NSDictionary class]]) {
+                                    NSString *propCodeString = [propInfo objectForKey:@"propCode"];
+                                    if ([propCodeString isKindOfClass:[NSString class]] == NO) {
+                                        continue;
+                                    }
+                                             
+
+                                        if ([propCodeString isEqualToString: @"sleepState"] && device && ![serverName isEqualToString:@"RPS"]) { //低功耗且不是rps状态才处理
+                                            stateChanged = YES;
+                                            [self handleSleepState:device deviceIdString:deviceIdString propInfo:propInfo];
+                                        }
+                                   
+                                        }
+                                  
+                                    
+                                }
+                            }
+                        }
+                    }
+                 @catch (NSException *exception) {
+                NSLog(@"%@", exception);
+            }
+        }
+    });
+}
+
+#pragma mark 处理长连接收到的设备休眠状态改变事件
+-(void)handleSleepState:(DeviceObject*)device deviceIdString:(NSString*)deviceIdString propInfo:(NSDictionary*)propInfo{
+    NSString *stateString = [propInfo objectForKey: @"propValue"];
+    if ([stateString isKindOfClass:[NSString class]] && device) {
+        BOOL needSetReconnectEnable = NO;
+        if ([stateString isEqualToString:@"WakeUp"]) {//0 未知 1 唤醒 2 睡眠 3 不能被唤醒的休眠 4正在准备休眠
+            device.state = 1;
+        }
+        else if ([stateString isEqualToString:@"LightSleep"]) {
+            device.state = 2;
+            needSetReconnectEnable = YES;
+        }
+        else if ([stateString isEqualToString:@"DeepSleep"]) {
+            device.state = 3;
+            needSetReconnectEnable = YES;
+        }
+        else if ([stateString isEqualToString:@"PreSleep"]) {
+            device.state = 4;
+            needSetReconnectEnable = YES;
+        }
+        //浅休眠/深度休眠/准备休眠中 就发送禁止重连
+        if(device && needSetReconnectEnable ){
+            Fun_DevIsReconnectEnable([device.deviceMac UTF8String], 0);
+        }
+        NSLog(@"eFunDevState %@ %i socket",device.deviceMac,device.state);
+    }
+}
+
+-(BOOL)checkIsRepeatWebSocketMsg:(NSDictionary*)messageDataInfo{
+    @try {
+        if ([messageDataInfo isKindOfClass:[NSDictionary class]]) {
+            NSString* dateTimeString = [messageDataInfo objectForKey:@"time"];
+            if ([dateTimeString isKindOfClass:[NSString class]]) {
+                id objectValue = [self.webSocketDataInfo objectForKey:dateTimeString];
+                if ([objectValue isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary* existedDataInfo = (NSDictionary*)objectValue;
+                    if ([existedDataInfo isEqualToDictionary:messageDataInfo] ) {
+                        return YES;
+                    }
+                }
+            }
+        }
+        return NO;
+    } @catch (NSException *exception) {
+        return NO;
+    }
+}
+
+-(NSMutableDictionary*)webSocketDataInfo{
+    if (_webSocketDataInfo == nil) {
+        _webSocketDataInfo = [NSMutableDictionary new];
+    }
+    return _webSocketDataInfo;
+}
+
+-(dispatch_queue_t)socketMsgQueue{
+    if (_socketMsgQueue == nil) {
+        _socketMsgQueue=dispatch_queue_create("com.socketMsgQueue", NULL);
+    }
+    return _socketMsgQueue;
 }
 
 @end

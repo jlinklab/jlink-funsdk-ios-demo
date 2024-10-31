@@ -67,8 +67,8 @@
         {
             if (msg->param1 >= 0) {
                 if (msg->seq == 0) {
-                   
-                    
+                    [SVProgressHUD dismiss];
+                    [self updateDataSource];
                 }else{
                      
                 }
@@ -88,8 +88,6 @@
 }
 
 //MARK: 请求所有配置
-
-
 - (void)updateDataSource{
 
     if (self.iSupportHumanPedDetection) {

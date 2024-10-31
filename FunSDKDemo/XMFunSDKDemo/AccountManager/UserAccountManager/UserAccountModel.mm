@@ -298,6 +298,27 @@
 }
 
 
+//MARK: 获取登录Token
+- (NSString *)loginToken{
+    char loginParams[2048] = {0};
+    Fun_SysGetCurLoginParams(loginParams);
+    
+    NSString *token = @"";
+    NSString *info = OCSTR(loginParams);
+    NSArray *arrayList = [info componentsSeparatedByString:@"&&"];
+    if (arrayList && [arrayList isKindOfClass:[NSArray class]]) {
+        for (int i = 0; i < arrayList.count; i++) {
+            NSString *listInfo = [arrayList objectAtIndex:i];
+            if ([listInfo hasPrefix:@"accessToken="]) {
+                token = [listInfo stringByReplacingOccurrencesOfString:@"accessToken=" withString:@""];
+                break;
+            }
+        }
+    }
+    [[LoginShowControl getInstance] setLoginToken:token];
+    return token;
+}
+
 #pragma mark - 网络请求回调接口 有回调信息的所有FUN接口都会回调进这个方法
 - (void)OnFunSDKResult:(NSNumber *) pParam {
     NSInteger nAddr = [pParam integerValue];
@@ -345,6 +366,9 @@
             if ([self.delegate respondsToSelector:@selector(loginWithNameDelegate:)]) {
                 [self.delegate loginWithNameDelegate:msg->param1];
             }
+            
+            //缓存登陆token，获取pid属性时需要
+            [self loginToken];
         }
             break;
         case EMSG_SYS_ADD_DEV_BY_FILE:{

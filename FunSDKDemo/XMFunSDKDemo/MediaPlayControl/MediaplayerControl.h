@@ -116,14 +116,15 @@ enum MediaSpeedState{
 @property (nonatomic, assign) MediaSpeedState speed;        // 播放速度状态
 @property (nonatomic, copy) NSString* devID;                     //设备id
 @property (nonatomic, assign) int channel;                       //通道号
-@property (nonatomic, assign) int stream;                       //码流类型（0：主码流 1：副码流）
+@property (nonatomic, assign) int stream;                       //码流类型（0：主码流 1：副码流，demo这里默认辅码流）
 @property (nonatomic, assign) FUN_HANDLE player;                 //播放器句柄
-@property (nonatomic, assign) UIView* renderWnd;                 //渲染窗体
+@property (nonatomic, assign) UIView* renderWnd;                 //渲染窗体 （PlayView）
 @property (nonatomic, assign) int index;                       //索引
 
-@property (nonatomic, assign) BOOL IsYuv;   //是否是鱼眼模式
+@property (nonatomic, assign) BOOL IsYuv;   //是否是YUV模式
 @property (nonatomic,assign) BOOL isVideoIntercom;// 视频对讲
 
+@property (nonatomic, assign) BOOL nonuseYuv;   //不使用YUV模式
 
 @property (nonatomic, weak) id<MediaplayerControlDelegate> delegate;  //代理
 

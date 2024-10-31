@@ -45,4 +45,8 @@ typedef enum {
 #pragma mark - 推送token
 - (void)setPushToken:(NSString *)token;
 - (NSString *)getPushToken;
+
+#pragma mark - 账号登陆token
+- (void)setLoginToken:(NSString*)token;
+- (NSString *)getLoginToken;
 @end

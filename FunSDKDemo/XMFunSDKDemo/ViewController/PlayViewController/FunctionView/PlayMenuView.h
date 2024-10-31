@@ -46,6 +46,13 @@
 //声光报警
 - (void)btnLightAlarmClicked;
 
+//APP 多目效果 （多个摄像头合并为一路码流的视频，APP端可以把画面重新裁剪为多摄像头画面）
+- (void)btnmultilePreviewClicked;
+
+//APP 变倍效果 （通过缩放画面来实现放大和缩小的效果）
+- (void)btnZoomScreenClicked;
+
+
 
 @end
 
@@ -74,6 +81,12 @@
 
 //走廊模式按钮
 @property (nonatomic, strong) UIButton *corridorModelBtn;
+
+//多目分割模式预览按钮 （多个摄像头合并为一路码流的视频，APP端可以把画面重新裁剪为多画面）
+@property (nonatomic, strong) UIButton *MultilePlayBtn;
+
+//预览时APP变倍效果按钮 （放大缩小播放画面）
+@property (nonatomic, strong) UIButton *APPZoomScreenBtn;
 
 @property (nonatomic, weak) id <PlayMenuViewDelegate> delegate;
 

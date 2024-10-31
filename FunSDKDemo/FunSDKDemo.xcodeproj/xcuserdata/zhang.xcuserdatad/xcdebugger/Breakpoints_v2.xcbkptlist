@@ -50,53 +50,6 @@
             endingLineNumber = "129"
             landmarkName = "-addDevHandle:"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "6A03F958-C9AD-4017-BFB8-00EA63441F8B - 7c122a42edb4935c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__42-[JFRouterSettingController addDevHandle:]_block_invoke_4"
-                  moduleName = "FunSDKDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/GitHub/FunSDKDemo_iOS/FunSDKDemo/XMFunSDKDemo/ViewController/DeviceAddViewController/controllers/JFRouterSettingController.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "129"
-                  endingLineNumber = "129"
-                  offsetFromSymbolStart = "48">
-               </Location>
-               <Location
-                  uuid = "6A03F958-C9AD-4017-BFB8-00EA63441F8B - 37349d41493c8de9"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__42-[JFRouterSettingController addDevHandle:]_block_invoke"
-                  moduleName = "FunSDKDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/GitHub/FunSDKDemo_iOS/FunSDKDemo/XMFunSDKDemo/ViewController/DeviceAddViewController/controllers/JFRouterSettingController.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "129"
-                  endingLineNumber = "129"
-                  offsetFromSymbolStart = "176">
-               </Location>
-               <Location
-                  uuid = "6A03F958-C9AD-4017-BFB8-00EA63441F8B - 7466e90dd2c7567b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__42-[JFRouterSettingController addDevHandle:]_block_invoke"
-                  moduleName = "FunSDKDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/Sourcetree/FunSDKDemo/FunSDKDemo/XMFunSDKDemo/ViewController/DeviceAddViewController/controllers/JFRouterSettingController.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "129"
-                  endingLineNumber = "129"
-                  offsetFromSymbolStart = "176">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -113,84 +66,6 @@
             endingLineNumber = "148"
             landmarkName = "-addTokenDevWithDevSerialNumber:deviceName:loginName:loginPassword:devType:configModel:"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BE098011-B054-4F9B-918A-AB897F913FE8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XMFunSDKDemo/ViewController/PlayViewController/PlayViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "886"
-            endingLineNumber = "886"
-            landmarkName = "PlayViewController"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "BE098011-B054-4F9B-918A-AB897F913FE8 - 7aafc113d1393010"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[PlayViewController playViewController:firstPoint:]"
-                  moduleName = "FunSDKDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/GitHub/FunSDKDemo_iOS/FunSDKDemo/XMFunSDKDemo/ViewController/PlayViewController/PlayViewController.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "886"
-                  endingLineNumber = "886"
-                  offsetFromSymbolStart = "944">
-               </Location>
-               <Location
-                  uuid = "BE098011-B054-4F9B-918A-AB897F913FE8 - 7aafc113d1393010"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[PlayViewController playViewController:firstPoint:]"
-                  moduleName = "FunSDKDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/GitHub/FunSDKDemo_iOS/FunSDKDemo/XMFunSDKDemo/ViewController/PlayViewController/PlayViewController.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "886"
-                  endingLineNumber = "886"
-                  offsetFromSymbolStart = "928">
-               </Location>
-               <Location
-                  uuid = "BE098011-B054-4F9B-918A-AB897F913FE8 - 8de7a9f248e3fd3d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[PlayViewController controlPTZBtnTouchDownAction:]"
-                  moduleName = "FunSDKDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/GitHub/FunSDKDemo_iOS/FunSDKDemo/XMFunSDKDemo/ViewController/PlayViewController/PlayViewController.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "887"
-                  endingLineNumber = "887"
-                  offsetFromSymbolStart = "36">
-               </Location>
-               <Location
-                  uuid = "BE098011-B054-4F9B-918A-AB897F913FE8 - 6279d642a26692ed"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[PlayViewController presentTalkView]"
-                  moduleName = "FunSDKDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/Sourcetree/FunSDKDemo/FunSDKDemo/XMFunSDKDemo/ViewController/PlayViewController/PlayViewController.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "887"
-                  endingLineNumber = "887"
-                  offsetFromSymbolStart = "800">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -228,69 +103,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4C8B8CDD-B37B-4FDA-AA6C-25466E9E2932"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XMFunSDKDemo/DeviceConfigManager/CloudAbilityConfig/CloudAbilityConfig.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
-            landmarkName = "-OnFunSDKResult:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "4C8B8CDD-B37B-4FDA-AA6C-25466E9E2932 - 5d5c1ee142bbf272"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CloudAbilityConfig OnFunSDKResult:]"
-                  moduleName = "FunSDKDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/Sourcetree/FunSDKDemo/FunSDKDemo/XMFunSDKDemo/DeviceConfigManager/CloudAbilityConfig/CloudAbilityConfig.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "229"
-                  endingLineNumber = "229"
-                  offsetFromSymbolStart = "3084">
-               </Location>
-               <Location
-                  uuid = "4C8B8CDD-B37B-4FDA-AA6C-25466E9E2932 - 5d5c1ee142bbf272"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CloudAbilityConfig OnFunSDKResult:]"
-                  moduleName = "FunSDKDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/Sourcetree/FunSDKDemo/FunSDKDemo/XMFunSDKDemo/DeviceConfigManager/CloudAbilityConfig/CloudAbilityConfig.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "229"
-                  endingLineNumber = "229"
-                  offsetFromSymbolStart = "3088">
-               </Location>
-               <Location
-                  uuid = "4C8B8CDD-B37B-4FDA-AA6C-25466E9E2932 - 5d5c1ee142bbf272"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CloudAbilityConfig OnFunSDKResult:]"
-                  moduleName = "FunSDKDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/Sourcetree/FunSDKDemo/FunSDKDemo/XMFunSDKDemo/DeviceConfigManager/CloudAbilityConfig/CloudAbilityConfig.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "229"
-                  endingLineNumber = "229"
-                  offsetFromSymbolStart = "3048">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "A03E1C1F-A8AD-4C00-911C-FCA22A2A59FF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -317,6 +129,182 @@
             startingLineNumber = "90"
             endingLineNumber = "90"
             landmarkName = "-drawRect:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BCB2F149-622E-4AC1-9242-3CA4B0BB4D3D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/DeviceConfigManager/PIDManager/JFPIDManager.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "-requestPropvalue:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D22E7518-C7E9-422F-A526-FFBDD6625F83"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/AccountManager/DeviceManager/DeviceManager.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "679"
+            endingLineNumber = "679"
+            landmarkName = "-addDevice:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0A7E4669-489B-4115-A353-224D39A2604D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/ViewController/PlayViewController/PlayBackViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "546"
+            endingLineNumber = "546"
+            landmarkName = "-mediaPlayer:Hardandsoft:Hardmodel:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "16E6B90E-B9AB-4E44-8B21-03EDD6821BA5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/ViewController/PlayViewController/PlayBackViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "634"
+            endingLineNumber = "634"
+            landmarkName = "-mediaPlayer:width:height:pYUV:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7509A933-4EF5-432F-A047-44858808A9E3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/ViewController/PlayViewController/PlayBackViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "645"
+            endingLineNumber = "645"
+            landmarkName = "-centerOffSetX:offSetx:offY:radius:width:height:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "86DD3011-786F-486E-A20A-DD4A193D8073"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/ViewController/PlayViewController/PlayBackViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "598"
+            endingLineNumber = "598"
+            landmarkName = "-mediaId:codecType:scene:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8213CBA3-FD4E-404C-981B-F09DE3D09407"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/MediaPlayControl/MediaplayerControl.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "-drawYUVSelf"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "61AD3A9E-E815-4199-B7DE-BE901A0B692D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/MediaPlayControl/MediaplayerControl.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "-startYUVBack"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4CE583F2-A419-40CF-ABE5-E01C5FB5595C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/ViewController/DeviceConfigViewController/CameraLinkHomeVC/PTZLocateView.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "-startPlayWithPlayViewOfGun:PlayViewOfBall:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FA2F9520-B86C-495F-97F0-515BFDF37CF4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/ViewController/DeviceConfigViewController/CameraLinkHomeVC/PTZLocateView.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
+            landmarkName = "-OnFunSDKResult:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AF17C3F7-65B2-4D71-BEB9-782AF11E38F1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMFunSDKDemo/ViewController/PlayViewController/&#x9c7c;&#x773c;&#x76f8;&#x5173;/FishEyeVideoVC.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
+            landmarkName = "-OnFunSDKResult:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

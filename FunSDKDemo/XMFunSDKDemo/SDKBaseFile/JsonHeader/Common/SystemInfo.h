@@ -23,6 +23,7 @@ public:
 	JIntHex		UpdataType;
 	JIntObj		VideoInChannel;
 	JIntObj		VideoOutChannel;
+    JStrObj     Pid;
 
 public:
 	SystemInfo(JObject *pParent = NULL, const char *szName = JK_SystemInfo):
@@ -45,6 +46,7 @@ public:
 	UpdataTime(this, "UpdataTime"),
 	UpdataType(this, "UpdataType"),
 	VideoInChannel(this, "VideoInChannel"),
+    Pid(this, "Pid"),
 	VideoOutChannel(this, "VideoOutChannel"){
 	};
 

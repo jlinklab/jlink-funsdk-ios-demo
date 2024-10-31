@@ -26,6 +26,7 @@
         _info = [[ObSysteminfo alloc] init];
         _sysFunction = [[ObSystemFunction alloc] init];
         _enableEpitomeRecord = NO;
+        _threeScreen = @"";
     }
     return self;
 }

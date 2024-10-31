@@ -15,8 +15,9 @@
 #include <ifaddrs.h>
 #import <dlfcn.h>
 #import <SystemConfiguration/SystemConfiguration.h>
-#import <SystemConfiguration/CaptiveNetwork.h>
 #import <NetworkExtension/NetworkExtension.h>
+
+const  NSString * KFisheyeMode = @"Fisheye_model";
 
 @implementation NSString (Category)
 

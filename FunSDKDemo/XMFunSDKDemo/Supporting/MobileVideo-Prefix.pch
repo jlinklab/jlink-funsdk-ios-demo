@@ -47,6 +47,17 @@
 #define MOVECARD 4   //内容保护参数
 
 
+typedef enum DisplayViewStatus
+{
+    DisplayViewStatusStop,
+    DisplayViewStatusBuffering,
+    DisplayViewStatusPlaying,
+    DisplayViewStatusPause,
+    DisplayViewStatusRetrying,
+    DisplayViewStatusNoVideo
+}DisplayViewStatus;
+
+
 typedef NS_ENUM(int,XM_DEV_NET_CNN_TYPE){
     XM_NET_TYPE_P2P = 0,
     XM_NET_TYPE_SERVER_TRAN = 1,
@@ -215,7 +226,7 @@ enum LanguageTypes
 #define kDefaultTitleColor [UIColor colorWithHexStr:@"#333333"]              //默认字体颜色
 
 #pragma mark - 设备类型定义
-NS_ENUM(NSInteger,XM_DEV_TYPE)
+typedef NS_ENUM(NSInteger,XM_DEV_TYPE)
 {
     XM_DEV_DEV          = 0,
     XM_DEV_SOCKET       = 1,   // 插座

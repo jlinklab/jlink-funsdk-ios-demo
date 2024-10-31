@@ -8,6 +8,8 @@
 
 #import "NSString+Path.h"
 
+const  NSString * picturePlist = @"picture.plist";
+
 @implementation NSString (Path)
 
 #pragma mark - 鱼眼模式保存的路径

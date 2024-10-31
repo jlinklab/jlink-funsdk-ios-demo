@@ -838,6 +838,13 @@ XSDK_API int FUN_SysLoginToXM(UI_HANDLE hUser, const char *UserName, const char 
  */
 XSDK_API int FUN_SysLogout(UI_HANDLE hUser, int nSeq = 0); //同步退出
 
+/**
+ * @brief 设置低功耗设备空闲自动登出时间
+ * @param nIdlingTime 空闲时间，0，不会自动登出; >0：空间时间，单位秒
+ * @return >=0:成功;<0:失败
+ */
+XSDK_API int Fun_SetLowPowerDevAutoLogout(int nIdlingTimeSec);
+
 /** @deprecated */
 XSDK_API int FUN_XMVideoLogin(UI_HANDLE hUser, const char *szUser, const char *szPwd, int nSeq);
 
@@ -1084,7 +1091,7 @@ XSDK_API int FUN_SysGetDevListEx(UI_HANDLE hUser, const char *unionId, const cha
 
 /**
  * @brief 本机号码一键登录并获取设备列表
- * @detail 上层传入Token进行登录操作
+ * @details 上层传入Token进行登录操作
  * @param hUser 消息接收对象
  * @param szAppToken 登录用令牌，需上层传入
  * @param szAppID 登录用应用程序id，需上层传入
@@ -1735,6 +1742,20 @@ XSDK_API int FUN_DevWakeUpCtlLogin(UI_HANDLE hUser, const char *szDevId, Bool bD
 XSDK_API void Fun_DevIsReconnectEnable(const char *szDevID, Bool nEnable);
 
 /**
+ * @brief 将设备添加到局域网IP黑名单列表
+ * @param szDevSNs 设备序列号，多个以；分隔
+ * @details 异步回调消息：5168 param1:>=0 成功，否者失败
+ */
+XSDK_API int Fun_AddDevicesToLANIPBlocklist(UI_HANDLE hUser, const char *szDevSNs, int nSeq = 0);
+
+/**
+ * @brief 从局域网IP黑名单中移除设备
+ * @param szDevSNs 设备序列号，多个以；分隔
+ * @details 异步回调消息：5169 param1:>=0 成功，否者失败
+ */
+XSDK_API int Fun_RemoveDevicesFromLANIPBlocklist(UI_HANDLE hUser, const char *szDevSNs, int nSeq = 0);
+
+/**
  * @brief 设备唤醒接口
  * @details 兼容 FUN_DevWakeUp、FUN_DevWakeUpCtlLogin接口，调用此接口后，SDK内部发生唤醒也会使用szReqExJson字段的内容！！！
  * @details szReqExJson字段也可以接口设置，保存在本地文件，直到下次覆盖、否者会一直生效
@@ -1776,6 +1797,24 @@ XSDK_API int FUN_DevGetConfig_Json(UI_HANDLE hUser, const char *szDevId, const c
 XSDK_API int FUN_DevSetConfig_Json(UI_HANDLE hUser, const char *szDevId, const char *szCommand, const void *pConfig, int nConfigLen, int nChannelNO = -1, int nTimeout = 15000, int nSeq = 0);
 XSDK_API int FUN_DevGetConfigJson(UI_HANDLE hUser, const char *szDevId, const char *szCmd, int nChannelNO = -1, int nCmdReq = 0, int nSeq = 0, const char *pInParam = NULL, int nCmdRes = 0, int nTimeout = 0);
 XSDK_API int FUN_DevSetConfigJson(UI_HANDLE hUser, const char *szDevId, const char *szCmd, const char *pInParam, int nChannelNO = -1, int nCmdReq = 0, int nSeq = 0, int nCmdRes = 0, int nTimeout = 0);
+
+/**
+ * @brief 监听设备协议消息
+ * @param hUser 用户句柄
+ * @param szDevId 设备SN
+ * @param nCommand 设备命令ID; 0:表示忽略此值(不用做匹配项);
+ * @param szCommand 设备命令; 空:表示忽略此值(不用做匹配项);
+ * @param nTimeout 超时时间，单位毫秒; 0:表示手动停止;
+ * @param nSeq 结果返回Seq
+ * @return >=0:成功; <0:失败;
+ * 返回消息ID:EMSG_DEV_ON_DEVICE_PROTOCOL
+ * param1 >=0 表示成功，<0表示错误码
+ * param2 表示数据长度
+ * pData 表示数据内容
+ * 其它:数组返回
+*/
+XSDK_API int Fun_DevStartListen(UI_HANDLE hUser, const char* szDevId, int nCmdId, const char* szCommand, int nTimeout, int nSeq);
+XSDK_API int Fun_DevStopListen(int nListenHandle);
 
 /**
  * @brief 设备配置获取(不通过缓存)
@@ -2282,6 +2321,9 @@ XSDK_API int FUN_GetDevAbility(const char *szDevId, const char *szAbility);
 // nType: 详细说明见枚举EFunDevStateType
 // 返回值见枚举EFunDevState
 XSDK_API int FUN_GetDevState(const char *szDevId, int nType);
+
+// 从本地缓存获取设备状态，功能与FUN_GetDevState完全相同，只是改为异步返回
+XSDK_API int FUN_GetDevStateAsyn(int hUser, const char *szDevId, int nType, int nSeq);
 
 /*******************设备状态相关接口**************************
 * 方法名: 获取缓存中的所有状态
@@ -3396,6 +3438,7 @@ typedef enum EUIMSG
 	EMSG_SYS_LOCAL_PHONE_LOGIN = 5212, ///< 本机号码一键登录并获取设备列表
     EMSG_SYS_ADD_DEVSTATE_LISTENER = 5213, ///< 添加设备状态变化监听
     EMSG_SYS_REMOVE_DEVSTATE_LISTENER = 5214, ///< 移除设备状态变化监听
+    EMSG_SYS_GET_LOCAL_DEV_STATE = 5215,  ///< 从本地缓存获取设备状态
 
     EMSG_XM030_VIDEO_LOGIN = 8601,
     EMSG_XM030_VIDEO_LOGOUT = 8602,
@@ -3484,6 +3527,9 @@ typedef enum EUIMSG
     
     EMSG_DEV_REPORT_IMPORTANT_INFO_REQ = 5167, ///< 设备重要消息上报
 
+    EMSG_ADD_DEVICES_TO_LAN_IP_BLOCK_LIST = 5168, ///< 将设备添加到局域网IP黑名单列表
+    EMSG_REMOVE_DEVICES_FORM_LAN_IP_BLOCK_LIST = 5169, ///< 从局域网IP黑名单中移除设备
+
     EMSG_SET_PLAY_SPEED = FUN_USER_MSG_BEGIN_1 + 500,
     EMSG_START_PLAY = 5501,
     EMSG_STOP_PLAY = 5502,
@@ -3563,6 +3609,7 @@ typedef enum EUIMSG
     EMSG_DEV_PLAY_VIEW_OPT_ADD = 5563, ///< 播放窗口添加
     EMSG_DEV_PLAY_VIEW_OPT_DELETE = 5564, ///< 播放窗口删除
     EMSG_DEV_PLAY_VIEW_OPT_SET_ATTR = 5565, ///< 播放窗口设置属性
+	EMSG_DEV_ON_DEVICE_PROTOCOL = 5566,     ///< 设备协议回调
 
     EMSG_MC_LinkDev = 6000,
     EMSG_MC_UnlinkDev = 6001,

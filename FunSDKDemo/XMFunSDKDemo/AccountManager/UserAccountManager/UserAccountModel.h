@@ -107,6 +107,14 @@
  */
 #pragma mark 删除账号 code：验证码
 - (void)deleteAccount:(NSString*)code;
+
+
+/*
+ 获取当前账号的登陆token，部分接口要求传登陆token进行验证
+ */
+//MARK: 获取登录Token
+- (NSString *)loginToken;
+
 /**
 未登录状态SDK初始化
  */

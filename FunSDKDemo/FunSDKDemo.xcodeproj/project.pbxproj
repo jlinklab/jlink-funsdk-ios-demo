@@ -18,6 +18,7 @@
 		0EDBDBC428853E07007ED584 /* XMFileListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDBDBC228853E07007ED584 /* XMFileListCell.m */; };
 		1F045E7A24B06826000A30F6 /* libfisheye.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F045E7824B06826000A30F6 /* libfisheye.a */; };
 		1F045E7B24B06826000A30F6 /* libFSCalendar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F045E7924B06826000A30F6 /* libFSCalendar.a */; };
+		1F04AB892CC24D16007E143D /* JFPIDManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F04AB882CC24D16007E143D /* JFPIDManager.mm */; };
 		1F1C6DE12354596E0043A713 /* GetStorageHeadDataConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C6DE02354596E0043A713 /* GetStorageHeadDataConfig.mm */; };
 		1F1C6DE3235460230043A713 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1C6DE2235460220043A713 /* MessageUI.framework */; };
 		1F1DBCC3233065F00025C27A /* StorageSnapshotCfgManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F1DBCC1233065F00025C27A /* StorageSnapshotCfgManager.mm */; };
@@ -46,6 +47,7 @@
 		1F60551A22A647630043061E /* qrspec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F60550F22A647630043061E /* qrspec.m */; };
 		1F60551B22A647630043061E /* rscode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F60551322A647630043061E /* rscode.m */; };
 		1F60551E22A6487C0043061E /* ScanViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F60551C22A6487B0043061E /* ScanViewController.mm */; };
+		1F64B6212CCBBAF100EC17BF /* MultipleEyesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B6202CCBBAF100EC17BF /* MultipleEyesManager.m */; };
 		1F66F2922A5FC4DA00463303 /* VoiceTimeSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F66F28C2A5FC4DA00463303 /* VoiceTimeSwitchCell.m */; };
 		1F66F2932A5FC4DA00463303 /* VoiceBroadcastingManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F66F28E2A5FC4DA00463303 /* VoiceBroadcastingManager.mm */; };
 		1F66F2942A5FC4DA00463303 /* VoiceBroadcastingViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F66F28F2A5FC4DA00463303 /* VoiceBroadcastingViewController.mm */; };
@@ -60,6 +62,9 @@
 		1F7241D32328F2BE002A6EDA /* CapturePriorityManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F7241D22328F2BE002A6EDA /* CapturePriorityManager.mm */; };
 		1F75D83D22856D7600AA01B4 /* ElectricityViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F75D83C22856D7600AA01B4 /* ElectricityViewController.mm */; };
 		1F75D84122856D8400AA01B4 /* ElectricityConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F75D83F22856D8400AA01B4 /* ElectricityConfig.mm */; };
+		1F9170362CCA7647003B70C1 /* MultilePlayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F9170342CCA7647003B70C1 /* MultilePlayViewController.mm */; };
+		1F9170372CCA7647003B70C1 /* MultilePlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F9170352CCA7647003B70C1 /* MultilePlayViewController.xib */; };
+		1F91703A2CCA7A27003B70C1 /* MultileMediaplayerControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F9170392CCA7A27003B70C1 /* MultileMediaplayerControl.mm */; };
 		1F9BA8C022C1BAF100D7E6BA /* CruiseConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F9BA8BF22C1BAF100D7E6BA /* CruiseConfig.mm */; };
 		1F9BA8C322C1BBC800D7E6BA /* CruiseDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9BA8C222C1BBC800D7E6BA /* CruiseDataSource.m */; };
 		1F9BA8CB22C1ED9900D7E6BA /* CruiseViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F9BA8CA22C1ED9900D7E6BA /* CruiseViewController.mm */; };
@@ -381,6 +386,9 @@
 		1FF6AC2A2A3208100012A0CE /* UIImage+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6AC292A3208100012A0CE /* UIImage+Ex.m */; };
 		1FF6C29026DF0A2B007927A3 /* AboutDemoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6C28F26DF0A2B007927A3 /* AboutDemoViewController.mm */; };
 		1FF6C29326DF0A85007927A3 /* DataEncrypt.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6C29226DF0A85007927A3 /* DataEncrypt.mm */; };
+		1FFCC8C82CD1D27C00810DB6 /* ZoomScreenViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCC8C72CD1D27C00810DB6 /* ZoomScreenViewController.mm */; };
+		1FFCC8CC2CD24F1A00810DB6 /* ZoomControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCC8CA2CD24F1A00810DB6 /* ZoomControlView.m */; };
+		1FFCC8CF2CD25CDA00810DB6 /* ScaleAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCC8CE2CD25CDA00810DB6 /* ScaleAnimationManager.m */; };
 		203BD11C21DF602D005B91E9 /* BuzzerConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 203BD11B21DF602D005B91E9 /* BuzzerConfig.mm */; };
 		203BD12821DF7515005B91E9 /* BuzzerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 203BD12621DF7515005B91E9 /* BuzzerViewController.mm */; };
 		22007D6A2C8564BF0095D889 /* FunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22007D682C85646E0095D889 /* FunSDK.framework */; };
@@ -885,6 +893,8 @@
 		1F045E6624A8C107000A30F6 /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
 		1F045E7824B06826000A30F6 /* libfisheye.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfisheye.a; sourceTree = "<group>"; };
 		1F045E7924B06826000A30F6 /* libFSCalendar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFSCalendar.a; sourceTree = "<group>"; };
+		1F04AB872CC24D16007E143D /* JFPIDManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JFPIDManager.h; sourceTree = "<group>"; };
+		1F04AB882CC24D16007E143D /* JFPIDManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = JFPIDManager.mm; sourceTree = "<group>"; };
 		1F1C6DDF2354596E0043A713 /* GetStorageHeadDataConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetStorageHeadDataConfig.h; sourceTree = "<group>"; };
 		1F1C6DE02354596E0043A713 /* GetStorageHeadDataConfig.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GetStorageHeadDataConfig.mm; sourceTree = "<group>"; };
 		1F1C6DE2235460220043A713 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -947,6 +957,8 @@
 		1F60551322A647630043061E /* rscode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rscode.m; sourceTree = "<group>"; };
 		1F60551C22A6487B0043061E /* ScanViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ScanViewController.mm; sourceTree = "<group>"; };
 		1F60551D22A6487B0043061E /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
+		1F64B61F2CCBBAF100EC17BF /* MultipleEyesManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultipleEyesManager.h; sourceTree = "<group>"; };
+		1F64B6202CCBBAF100EC17BF /* MultipleEyesManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultipleEyesManager.m; sourceTree = "<group>"; };
 		1F66F28C2A5FC4DA00463303 /* VoiceTimeSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceTimeSwitchCell.m; sourceTree = "<group>"; };
 		1F66F28D2A5FC4DA00463303 /* VoiceBroadcastingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceBroadcastingManager.h; sourceTree = "<group>"; };
 		1F66F28E2A5FC4DA00463303 /* VoiceBroadcastingManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VoiceBroadcastingManager.mm; sourceTree = "<group>"; };
@@ -976,6 +988,11 @@
 		1F75D83C22856D7600AA01B4 /* ElectricityViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ElectricityViewController.mm; sourceTree = "<group>"; };
 		1F75D83F22856D8400AA01B4 /* ElectricityConfig.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ElectricityConfig.mm; sourceTree = "<group>"; };
 		1F75D84022856D8400AA01B4 /* ElectricityConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElectricityConfig.h; sourceTree = "<group>"; };
+		1F9170332CCA7647003B70C1 /* MultilePlayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultilePlayViewController.h; sourceTree = "<group>"; };
+		1F9170342CCA7647003B70C1 /* MultilePlayViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MultilePlayViewController.mm; sourceTree = "<group>"; };
+		1F9170352CCA7647003B70C1 /* MultilePlayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultilePlayViewController.xib; sourceTree = "<group>"; };
+		1F9170382CCA7A27003B70C1 /* MultileMediaplayerControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultileMediaplayerControl.h; sourceTree = "<group>"; };
+		1F9170392CCA7A27003B70C1 /* MultileMediaplayerControl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MultileMediaplayerControl.mm; sourceTree = "<group>"; };
 		1F9BA8BE22C1BAF100D7E6BA /* CruiseConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CruiseConfig.h; sourceTree = "<group>"; };
 		1F9BA8BF22C1BAF100D7E6BA /* CruiseConfig.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CruiseConfig.mm; sourceTree = "<group>"; };
 		1F9BA8C122C1BBC800D7E6BA /* CruiseDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CruiseDataSource.h; sourceTree = "<group>"; };
@@ -1637,6 +1654,12 @@
 		1FF6C29126DF0A85007927A3 /* DataEncrypt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataEncrypt.h; sourceTree = "<group>"; };
 		1FF6C29226DF0A85007927A3 /* DataEncrypt.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DataEncrypt.mm; sourceTree = "<group>"; };
 		1FF6C29526DF50E2007927A3 /* libFunSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFunSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FFCC8C62CD1D27C00810DB6 /* ZoomScreenViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZoomScreenViewController.h; sourceTree = "<group>"; };
+		1FFCC8C72CD1D27C00810DB6 /* ZoomScreenViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ZoomScreenViewController.mm; sourceTree = "<group>"; };
+		1FFCC8C92CD24F1A00810DB6 /* ZoomControlView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZoomControlView.h; sourceTree = "<group>"; };
+		1FFCC8CA2CD24F1A00810DB6 /* ZoomControlView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZoomControlView.m; sourceTree = "<group>"; };
+		1FFCC8CD2CD25CDA00810DB6 /* ScaleAnimationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScaleAnimationManager.h; sourceTree = "<group>"; };
+		1FFCC8CE2CD25CDA00810DB6 /* ScaleAnimationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScaleAnimationManager.m; sourceTree = "<group>"; };
 		203BD11A21DF602D005B91E9 /* BuzzerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuzzerConfig.h; sourceTree = "<group>"; };
 		203BD11B21DF602D005B91E9 /* BuzzerConfig.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BuzzerConfig.mm; sourceTree = "<group>"; };
 		203BD12621DF7515005B91E9 /* BuzzerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BuzzerViewController.mm; sourceTree = "<group>"; };
@@ -2686,6 +2709,15 @@
 			path = "鱼眼库";
 			sourceTree = "<group>";
 		};
+		1F04AB802CC24C6D007E143D /* PIDManager */ = {
+			isa = PBXGroup;
+			children = (
+				1F04AB872CC24D16007E143D /* JFPIDManager.h */,
+				1F04AB882CC24D16007E143D /* JFPIDManager.mm */,
+			);
+			path = PIDManager;
+			sourceTree = "<group>";
+		};
 		1F1C6DDE2354596E0043A713 /* 设备存储调试 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2824,6 +2856,17 @@
 			path = libqrencode;
 			sourceTree = "<group>";
 		};
+		1F64B61E2CCBBACE00EC17BF /* MultipleEyesManager */ = {
+			isa = PBXGroup;
+			children = (
+				1F9170382CCA7A27003B70C1 /* MultileMediaplayerControl.h */,
+				1F9170392CCA7A27003B70C1 /* MultileMediaplayerControl.mm */,
+				1F64B61F2CCBBAF100EC17BF /* MultipleEyesManager.h */,
+				1F64B6202CCBBAF100EC17BF /* MultipleEyesManager.m */,
+			);
+			path = MultipleEyesManager;
+			sourceTree = "<group>";
+		};
 		1F66F28B2A5FC4DA00463303 /* VoiceBroadcastingViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2919,6 +2962,17 @@
 				1F75D84022856D8400AA01B4 /* ElectricityConfig.h */,
 			);
 			path = ElectricityConfig;
+			sourceTree = "<group>";
+		};
+		1F9170322CCA75F1003B70C1 /* MultilePlayViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1F9170332CCA7647003B70C1 /* MultilePlayViewController.h */,
+				1F9170342CCA7647003B70C1 /* MultilePlayViewController.mm */,
+				1F9170352CCA7647003B70C1 /* MultilePlayViewController.xib */,
+				1F64B61E2CCBBACE00EC17BF /* MultipleEyesManager */,
+			);
+			path = MultilePlayViewController;
 			sourceTree = "<group>";
 		};
 		1F9BA8BD22C1BAD800D7E6BA /* CruiseConfig */ = {
@@ -3022,8 +3076,8 @@
 		1F9DE8C62C91359100C9D065 /* JFAOVSmartSecurityVC */ = {
 			isa = PBXGroup;
 			children = (
-				1F9DE8C72C91359100C9D065 /* JFAOVSmartSecurityAffairManager.h */,
 				1F9DE8C82C91359100C9D065 /* JFAOVAlarmLinkage */,
+				1F9DE8C72C91359100C9D065 /* JFAOVSmartSecurityAffairManager.h */,
 				1F9DE8CB2C91359100C9D065 /* JFAOVSmartSecurityVC.h */,
 				1F9DE8CC2C91359100C9D065 /* JFAOVSmartSecurityAffairManager.mm */,
 				1F9DE8CD2C91359100C9D065 /* JFAOVSmartSecurityVC.mm */,
@@ -4160,6 +4214,27 @@
 				1FF6C28F26DF0A2B007927A3 /* AboutDemoViewController.mm */,
 			);
 			path = AboutDemoViewController;
+			sourceTree = "<group>";
+		};
+		1FFCC8C52CD1D25700810DB6 /* ZoomScreenViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1FFCC8C62CD1D27C00810DB6 /* ZoomScreenViewController.h */,
+				1FFCC8C72CD1D27C00810DB6 /* ZoomScreenViewController.mm */,
+				1FFCC8CD2CD25CDA00810DB6 /* ScaleAnimationManager.h */,
+				1FFCC8CE2CD25CDA00810DB6 /* ScaleAnimationManager.m */,
+				1FFCC8CB2CD24F1A00810DB6 /* ZoomControlView */,
+			);
+			path = ZoomScreenViewController;
+			sourceTree = "<group>";
+		};
+		1FFCC8CB2CD24F1A00810DB6 /* ZoomControlView */ = {
+			isa = PBXGroup;
+			children = (
+				1FFCC8C92CD24F1A00810DB6 /* ZoomControlView.h */,
+				1FFCC8CA2CD24F1A00810DB6 /* ZoomControlView.m */,
+			);
+			path = ZoomControlView;
 			sourceTree = "<group>";
 		};
 		203BD11921DF5FEA005B91E9 /* BuzzerConfig */ = {
@@ -5343,6 +5418,7 @@
 		96C6B2B021BB6867000B32E7 /* DeviceConfigManager */ = {
 			isa = PBXGroup;
 			children = (
+				1F04AB802CC24C6D007E143D /* PIDManager */,
 				22007D702C8EF54A0095D889 /* MultiLanguageManager.h */,
 				22007D712C8EF54A0095D889 /* MultiLanguageManager.mm */,
 				22D84DD92C69A32700C4374A /* XMStateDefine.h */,
@@ -6255,20 +6331,22 @@
 		96C6B4A521BB6868000B32E7 /* PlayViewController */ = {
 			isa = PBXGroup;
 			children = (
+				96C6B4B321BB6868000B32E7 /* PlayBackView */,
+				96C6B4A821BB6868000B32E7 /* FunctionView */,
+				96C6B4BC21BB6868000B32E7 /* PlayViewController.h */,
+				96C6B4BD21BB6868000B32E7 /* PlayViewController.mm */,
 				1FC0F11123A0DB5C0076F742 /* RealPlayControlViewController.h */,
 				1FC0F11023A0DB5C0076F742 /* RealPlayControlViewController.mm */,
 				96C6B4A621BB6868000B32E7 /* FishPlayControl.h */,
 				96C6B4A721BB6868000B32E7 /* FishPlayControl.mm */,
-				96C6B4A821BB6868000B32E7 /* FunctionView */,
-				96C6B4B321BB6868000B32E7 /* PlayBackView */,
 				96C6B4BA21BB6868000B32E7 /* PlayBackViewController.h */,
 				96C6B4BB21BB6868000B32E7 /* PlayBackViewController.mm */,
 				0EDBDBC328853E07007ED584 /* XMFileListCell.h */,
 				0EDBDBC228853E07007ED584 /* XMFileListCell.m */,
-				96C6B4BC21BB6868000B32E7 /* PlayViewController.h */,
-				96C6B4BD21BB6868000B32E7 /* PlayViewController.mm */,
 				96FF06AA21E44D06006CFBA3 /* PlayCloudVideoViewController.h */,
 				96FF06AB21E44D06006CFBA3 /* PlayCloudVideoViewController.mm */,
+				1FFCC8C52CD1D25700810DB6 /* ZoomScreenViewController */,
+				1F9170322CCA75F1003B70C1 /* MultilePlayViewController */,
 				96C6B4BE21BB6868000B32E7 /* 鱼眼相关 */,
 			);
 			path = PlayViewController;
@@ -6945,6 +7023,7 @@
 				96EFBCD421BB966A005EBA5A /* icon_hide_sel.png in Resources */,
 				96EFBD0721BB966A005EBA5A /* ic_alarm.png in Resources */,
 				96EFBD0C21BB966A005EBA5A /* press_talk_selected_en.png in Resources */,
+				1F9170372CCA7647003B70C1 /* MultilePlayViewController.xib in Resources */,
 				96EFBCEA21BB966A005EBA5A /* btn_stop.png in Resources */,
 				96EFBCC521BB966A005EBA5A /* xmjp_bob.png in Resources */,
 				96EFBD1821BB966A005EBA5A /* radar_search_bg.png in Resources */,
@@ -7064,6 +7143,7 @@
 				22FE68CA2B999EA8003EC7A3 /* XMDeviceOrientationManager.m in Sources */,
 				1FF6AB9A2A3207620012A0CE /* ZXPDF417Dimensions.m in Sources */,
 				1F9DE9522C92E70D00C9D065 /* DetectPetDetectionManager.mm in Sources */,
+				1F04AB892CC24D16007E143D /* JFPIDManager.mm in Sources */,
 				7ADBA8402C25630400782CE2 /* ManuIntelAlarmManager.mm in Sources */,
 				22FAE12B2BF4908700FA1C8C /* VideoIntercomView.m in Sources */,
 				1F9DE9282C917C1300C9D065 /* VCManager.m in Sources */,
@@ -7323,6 +7403,7 @@
 				C1E557E22A736D51006F5171 /* BlueToothToolManager.mm in Sources */,
 				1FF6ABA02A3207620012A0CE /* ZXModulusGF.m in Sources */,
 				1FF6ABB32A3207620012A0CE /* ZXDataMatrixC40Encoder.m in Sources */,
+				1FFCC8C82CD1D27C00810DB6 /* ZoomScreenViewController.mm in Sources */,
 				1FF6ABEF2A3207620012A0CE /* ZXRSSFinderPattern.m in Sources */,
 				1F3A5ACC22B379E600E3139B /* NetworkViewController.mm in Sources */,
 				C1E557C72A70BA41006F5171 /* JFExternKey.m in Sources */,
@@ -7404,6 +7485,7 @@
 				96C6B5A521BB6869000B32E7 /* MonthPictureViewController.mm in Sources */,
 				1FF6ABD12A3207620012A0CE /* ZXOneDimensionalCodeWriter.m in Sources */,
 				1F9DE9412C92E5FA00C9D065 /* JFTopTitleBottomSliderCell.m in Sources */,
+				1FFCC8CF2CD25CDA00810DB6 /* ScaleAnimationManager.m in Sources */,
 				9668D24221DDB0A600C8898D /* CloudServerViewController.mm in Sources */,
 				96C6B5D321BB6869000B32E7 /* PlayViewController.mm in Sources */,
 				1FE52D5F2B8DB31E00C00A79 /* DoubleEyesManager.mm in Sources */,
@@ -7490,6 +7572,7 @@
 				2939951B21CA2504004FC87C /* WaterMarkConfig.mm in Sources */,
 				1F9DE9012C9135C300C9D065 /* DevLowElectrModeManager.mm in Sources */,
 				7ADC933729F520860055A341 /* DevicePairingNetworkManager.mm in Sources */,
+				1FFCC8CC2CD24F1A00810DB6 /* ZoomControlView.m in Sources */,
 				22D84DE52C69A58300C4374A /* PirAlarmManager.mm in Sources */,
 				1F60551422A647630043061E /* bitstream.m in Sources */,
 				96C6B58221BB6869000B32E7 /* UserInfoCell.m in Sources */,
@@ -7535,6 +7618,7 @@
 				0EA2BE31290A5806008052E1 /* SharePermissionVC.m in Sources */,
 				96C6B5B921BB6869000B32E7 /* TimeSynViewController.mm in Sources */,
 				1F9DE8E02C91359100C9D065 /* JFAOVPIRDetectAffairManager.m in Sources */,
+				1F9170362CCA7647003B70C1 /* MultilePlayViewController.mm in Sources */,
 				1F4BB50722CD8A5800D9D50F /* IPCHumanDetectionConfig.mm in Sources */,
 				96B081DD225C781700059D2C /* DoorUnlockConfig.mm in Sources */,
 				6C21E540224DE51000F2F4EA /* UIBarButtonItem+WZLBadge.m in Sources */,
@@ -7545,6 +7629,7 @@
 				1FF6ABD62A3207620012A0CE /* ZXRSSExpandedBlockParsedResult.m in Sources */,
 				1FF6ABB82A3207620012A0CE /* ZXDataMatrixSymbolInfo.m in Sources */,
 				1FF6ABEE2A3207620012A0CE /* ZXAbstractRSSReader.m in Sources */,
+				1F64B6212CCBBAF100EC17BF /* MultipleEyesManager.m in Sources */,
 				1F9DE91D2C9175B100C9D065 /* JFNewCustomSliderValueView.m in Sources */,
 				96C6B4FB21BB6869000B32E7 /* RecordDataSourse.m in Sources */,
 				96C6B59321BB6869000B32E7 /* SearchDeviceCell.m in Sources */,
@@ -7683,6 +7768,7 @@
 				1FC0F15823A0DBC40076F742 /* GTMNSString+HTML.m in Sources */,
 				1FF6ABDD2A3207620012A0CE /* ZXRSSExpandedDecodedObject.m in Sources */,
 				96C6B58421BB6869000B32E7 /* ChangePasswordView.m in Sources */,
+				1F91703A2CCA7A27003B70C1 /* MultileMediaplayerControl.mm in Sources */,
 				22FE68D02B99A313003EC7A3 /* VRGLViewController.mm in Sources */,
 				7A786D5D29F012E90062040F /* NSString+Utils.m in Sources */,
 				1FF6ABE12A3207620012A0CE /* ZXRSSExpandedGeneralAppIdDecoder.m in Sources */,
@@ -7985,7 +8071,7 @@
 				);
 				IBC_FLATTEN_NIBS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/XMFunSDKDemo/Supporting/MobileVideo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_NO_PIE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -8014,7 +8100,10 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "CYPush2024-03-02";
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "FunSDKDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -8068,7 +8157,7 @@
 				);
 				IBC_FLATTEN_NIBS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/XMFunSDKDemo/Supporting/MobileVideo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_NO_PIE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -8095,7 +8184,10 @@
 				PROVISIONING_PROFILE = "584edf9c-a7bb-452c-9210-d75a6c0aa429";
 				PROVISIONING_PROFILE_SPECIFIER = NewCYPush;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "FunSDKDemo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

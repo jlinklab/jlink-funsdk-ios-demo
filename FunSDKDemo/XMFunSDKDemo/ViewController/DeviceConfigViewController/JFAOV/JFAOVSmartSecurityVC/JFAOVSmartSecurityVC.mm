@@ -41,8 +41,8 @@
     [self.view addSubview:self.ruleTableView];
     CGFloat safeBottom = [PhoneInfoManager safeAreaLength:SafeArea_Bottom];
     [self.ruleTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self).mas_offset(cTableViewFilletLFBorder);
-        make.right.equalTo(self).mas_offset(-cTableViewFilletLFBorder);
+        make.left.equalTo(self);
+        make.right.equalTo(self);
         make.top.equalTo(self);
         make.bottom.equalTo(self).mas_offset(-cTableViewFilletLFBorder);
         make.bottom.equalTo(self).mas_offset(-safeBottom);
@@ -51,7 +51,7 @@
 
 - (void)configNav{
     self.navigationItem.title = TS("TR_Smart_Alarm");
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"UserLoginView-back-nor"] style:UIBarButtonItemStyleDone target:self action:@selector(btnBackClicked)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_back"] style:UIBarButtonItemStyleDone target:self action:@selector(btnBackClicked)];
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
 }
 #pragma mark - **************** request ****************

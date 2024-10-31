@@ -31,11 +31,16 @@
 
 //MQTT初始化
 - (void)initSubscribeServer{
+    if ([[LoginShowControl getInstance] getLoginType] == loginTypeNone || self.msgHandle <= 0) {
+        return;
+    }
     FUN_SysSetServerIPPort(CSTR(SERVER_MQTT_FLAG), CSTR(HOST_MQTT_PRODUCT), PORT_MQTT);
     //MQTT初始化
     NSDictionary *dicInfo = [[NSBundle mainBundle] localizedInfoDictionary];
     NSString *appBundleID = [dicInfo objectForKey:@"CFBundleIdentifier"];
-    Fun_MQTTInit(self.msgHandle, [appBundleID UTF8String]);
+    appBundleID = appBundleID ? appBundleID : @"";
+    
+    Fun_MQTTInit(self.msgHandle, [@"com.jf.jlinkiot" UTF8String]);
 }
 - (void)unInitSubscribeServer{
     //MQTT反初始化
@@ -119,6 +124,21 @@
             break;
             
         case EMSG_SYS_MQTT_RETURNMSG: //服务端主动向APP推送设备的订阅消息
+            if (msg->param1 >= 0) {
+                if (msg->szStr) {
+                    NSString* tempString =OCSTR(msg->szStr);
+                    NSLog(@"MQTT recive message: %@", tempString);
+                }
+                NSData *jsonData = [NSData dataWithBytes:msg->pObject length:strlen(msg->pObject)];
+                NSError *error;
+                NSDictionary *deviceDataInfo = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:&error];
+                if ([deviceDataInfo isKindOfClass:[NSDictionary class]]) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"WebSocketUpdate" object:deviceDataInfo];
+                }
+            }
+            else{
+                NSLog(@"MQTT recive message error");
+            }
             if (self.delegate && [self.delegate respondsToSelector:@selector(messageFromServer:message:)]) {
                 [self.delegate messageFromServer:NSSTR(msg->szStr) message:NSSTR(msg->pObject)];
             }

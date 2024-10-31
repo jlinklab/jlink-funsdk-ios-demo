@@ -46,6 +46,7 @@
             object.info.netType = (NetTypeModel)param.param2;
             //设备模拟通道数量
             object.info.nVideoInChanNum = sysInfo.VideoInChannel.Value();
+            object.sPid = [NSString stringWithUTF8String:sysInfo.Pid.Value()];
         }
         if ([self.delegate respondsToSelector:@selector(SystemInfoConfigGetResult:)]) {
             [self.delegate SystemInfoConfigGetResult:param.errorCode];

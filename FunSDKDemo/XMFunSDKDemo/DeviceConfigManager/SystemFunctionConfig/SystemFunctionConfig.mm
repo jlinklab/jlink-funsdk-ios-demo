@@ -203,6 +203,18 @@
         //是否支持低功耗设备电池管理
         object.sysFunction.BatteryManager = functionCfg.mOtherFunction.BatteryManager.Value();
         
+        //AOV智能侦测（人形检测）
+        object.sysFunction.iSupportHumanPedDetection = functionCfg.mAlarmFunction.HumanPedDetection.Value();
+        
+        //是否支持PIR灵敏度设置
+        object.sysFunction.ifSupportPIRSensitive = functionCfg.mOtherFunction.SupportPirSensitive.Value();
+        
+        //警铃间隔
+        object.sysFunction.iSupportAlarmVoiceTipInterval = functionCfg.mOtherFunction.SupportAlarmVoiceTipInterval.Value();
+        
+        //AOV多算法组合, 支持人车
+        object.sysFunction.iMultiAlgoCombinePed = functionCfg.mAlarmFunction.MultiAlgoCombinePed.Value();
+        
         //获取能力级之后的结果回调
         if ([self.delegate respondsToSelector:@selector(SystemFunctionConfigGetResult:)]) {
             [self.delegate SystemFunctionConfigGetResult:param.errorCode];

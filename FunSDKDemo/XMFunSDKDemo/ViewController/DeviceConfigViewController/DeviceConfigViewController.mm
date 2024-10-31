@@ -68,6 +68,7 @@
 #import "JFAOVModeOfWorkVC.h"
 #import "JFAOVLightSettingVc.h"
 #import "JFAOVBatteryManagementVC.h"
+#import "JFAOVSmartSecurityVC.h"
 
 @interface DeviceConfigViewController ()<UITableViewDelegate,UITableViewDataSource,SystemInfoConfigDelegate,SystemFunctionConfigDelegate,MFMailComposeViewControllerDelegate>
 
@@ -114,11 +115,11 @@
      //获取各个设备配置前，如果设备(门铃门锁等等)是在休眠状态，需要先进行唤醒
     [self checkDeviceSleepType];
     
-    //获取设备能力级SystemFunction
-    [self getSystemFunction];
-    
     //获取设备信息systeminfo
     [self getSysteminfo];
+    
+    //获取设备能力级SystemFunction
+    [self getSystemFunction];
 }
 
 //获取设备能力级SystemFunction
@@ -193,8 +194,24 @@
     DeviceObject *devObject = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
     NSString *titleStr = [self.configTitleArray[indexPath.row] objectForKey:@"title"];
     if ([titleStr isEqualToString:TS("alarm_config")]) {
-        AlarmDetectViewController *alarmDetectVC = [[AlarmDetectViewController alloc] initWithNibName:nil bundle:nil];
-        [self.navigationController pushViewController:alarmDetectVC animated:NO];
+        //AOV设备进入新的报警配置界面
+        if (devObject.sysFunction.AovMode) {
+             //AOV智能报警入口
+             JFAOVSmartSecurityVC *vc = [[JFAOVSmartSecurityVC alloc] init];
+             vc.iSupportHumanPedDetection = devObject.sysFunction.iSupportHumanPedDetection;
+            vc.iSupportPirAlarm = devObject.sysFunction.SupportPirAlarm;
+             vc.iSupportIntellAlertAlarm = devObject.sysFunction.iIntellAlertAlarm;
+             vc.ifSupportPIRSensitive = devObject.sysFunction.ifSupportPIRSensitive;
+            vc.iSupportSetVolume = devObject.sysFunction.ifSupportSetVolume;
+             vc.supportAlarmVoiceTipInterval = devObject.sysFunction.iSupportAlarmVoiceTipInterval;
+             vc.iMultiAlgoCombinePed = devObject.sysFunction.iMultiAlgoCombinePed;
+             vc.devID = devObject.deviceMac;
+             [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            // 非AOV设备进普通报警配置界面
+            AlarmDetectViewController *alarmDetectVC = [[AlarmDetectViewController alloc] initWithNibName:nil bundle:nil];
+            [self.navigationController pushViewController:alarmDetectVC animated:NO];
+        }
     }else if ([titleStr isEqualToString:TS("分享设备")]){ //分享设置
         ShareDeviceGatherVC * vc = [ShareDeviceGatherVC new];
         vc.devId = channel.deviceMac;

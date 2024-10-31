@@ -8,16 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "DisplayViewDelegate.h"
-typedef enum DisplayViewStatus
-{
-    DisplayViewStatusStop,
-    DisplayViewStatusBuffering,
-    DisplayViewStatusPlaying,
-    DisplayViewStatusPause,
-    DisplayViewStatusRetrying,
-    DisplayViewStatusNoVideo
-}DisplayViewStatus;
-
 
 @interface DisplayView : UIView
 

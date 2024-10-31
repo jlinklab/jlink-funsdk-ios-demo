@@ -1100,6 +1100,8 @@ TR_Setting_Device_Indicator_Light=设备指示灯
 Bright=亮度
 start_time=开始时间
 end_time=结束时间
+Multi preview=多目效果
+Zoom Screen=APP变倍效果
 TR_Low_Light_Control=微光开关
 TR_Low_Light_Control_Tip=微光开关开启后，在AOV状态下，夜晚场景会进行微补光
 TR_Low_Power_Mode=低功耗模式
@@ -1113,5 +1115,15 @@ TR_Setting_Low_Power_Mode_Description=当电量小于所设阈值时， 设备�
 TR_Setting_Number_Of_Alarms=报警次数
 TR_Setting_Wake_Up_Time=唤醒时间
 TR_Setting_Preview_Time=预览时间
-
-
+TR_Setting_Intelligent_Detection=智能侦测
+TR_Setting_PIR_Detection=PIR侦测
+TR_AlarmLinkage=报警联动
+TR_Human_Shape=人形
+TR_Car_Shape=车形
+TR_DetectionObject=检测对象
+TR_Setting_Display_Smart_Trace=显示智能轨迹
+TR_Setting_Lens=镜头
+alarm_time=报警时段
+time_day=全天报警
+time_diy=自定义报警
+Not_Open=未开启

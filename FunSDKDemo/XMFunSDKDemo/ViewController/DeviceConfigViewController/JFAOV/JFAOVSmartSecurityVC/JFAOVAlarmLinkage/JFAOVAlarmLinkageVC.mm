@@ -530,7 +530,7 @@ static NSString *const kTitleComboBoxCell = @"kTitleComboBoxCell";
     if (!_btnNavBack) {
         _btnNavBack = [UIButton buttonWithType:UIButtonTypeSystem];
         _btnNavBack.frame = CGRectMake(0, 0, 32, 32);
-        [_btnNavBack setBackgroundImage:[UIImage imageNamed:@"UserLoginView-back-nor"] forState:UIControlStateNormal];
+        [_btnNavBack setBackgroundImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
         [_btnNavBack addTarget:self action:@selector(btnNavBackClicked) forControlEvents:UIControlEventTouchUpInside];
     }
     

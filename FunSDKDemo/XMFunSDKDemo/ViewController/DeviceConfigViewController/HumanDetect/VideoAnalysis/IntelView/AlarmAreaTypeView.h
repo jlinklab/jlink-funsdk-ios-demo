@@ -35,6 +35,7 @@
 @property (nonatomic) UIButton *completeBtn;
 
 @property (nonatomic) enum DrawType alarmType;
+@property (nonatomic,assign) int areaNumFirst;
 
 //场景选择
 @property (nonatomic) UIScrollView *scenariosScrollView;

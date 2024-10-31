@@ -102,7 +102,7 @@
 //全屏
 -(UIButton *)btnFull{
     if (!_btnFull) {
-        _btnFull = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
+        _btnFull = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
         _btnFull.center = CGPointMake(self.controlBtn.center.x, 70*3);
         [_btnFull addTarget:self action:@selector(fullScreenEvent) forControlEvents:UIControlEventTouchUpInside];
         [_btnFull setTitle:TS("TR_FullScreen") forState:UIControlStateNormal];
@@ -119,7 +119,7 @@
 //视频对讲
 -(UIButton *)btnVideoCall{
     if (!_btnVideoCall) {
-        _btnVideoCall = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
+        _btnVideoCall = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
         _btnVideoCall.center = CGPointMake(self.controlBtn.center.x, 70*3);
         [_btnVideoCall addTarget:self action:@selector(btnVideoCallClicked) forControlEvents:UIControlEventTouchUpInside];
         [_btnVideoCall setTitle:TS("TR_VideoCall") forState:UIControlStateNormal];
@@ -135,7 +135,7 @@
 //声光报警
 - (UIButton *)btnLightAlarm{
     if (!_btnLightAlarm) {
-        _btnLightAlarm = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
+        _btnLightAlarm = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
         _btnLightAlarm.center = CGPointMake(self.playYUVBtn.center.x, 70*2);
         [_btnLightAlarm addTarget:self action:@selector(btnLightAlarmClicked) forControlEvents:UIControlEventTouchUpInside];
         [_btnLightAlarm setTitle:TS("TR_Alarm_By_Voice_Light") forState:UIControlStateNormal];
@@ -146,6 +146,36 @@
         _btnLightAlarm.hidden = YES;
     }
     return _btnLightAlarm;
+}
+
+//APP 多目预览
+-(UIButton *)MultilePlayBtn{
+    if (!_MultilePlayBtn) {
+        _MultilePlayBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+        _MultilePlayBtn.center = CGPointMake(self.streamBtn.center.x, 70*3);
+        [_MultilePlayBtn addTarget:self action:@selector(multilePreviewEvent) forControlEvents:UIControlEventTouchUpInside];
+        [_MultilePlayBtn setTitle:TS("Multi preview") forState:UIControlStateNormal];
+        [_MultilePlayBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _MultilePlayBtn.titleLabel.font = [UIFont systemFontOfSize:12.0];
+        _MultilePlayBtn.titleLabel.numberOfLines = 0;
+        _MultilePlayBtn.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    }
+    return _MultilePlayBtn;
+}
+
+//APP 多目预览
+-(UIButton *)APPZoomScreenBtn{
+    if (!_APPZoomScreenBtn) {
+        _APPZoomScreenBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+        _APPZoomScreenBtn.center = CGPointMake(self.playYUVBtn.center.x, 70*3);
+        [_APPZoomScreenBtn addTarget:self action:@selector(zoomScreenEvent) forControlEvents:UIControlEventTouchUpInside];
+        [_APPZoomScreenBtn setTitle:TS("Zoom Screen") forState:UIControlStateNormal];
+        [_APPZoomScreenBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _APPZoomScreenBtn.titleLabel.font = [UIFont systemFontOfSize:12.0];
+        _APPZoomScreenBtn.titleLabel.numberOfLines = 0;
+        _APPZoomScreenBtn.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    }
+    return _APPZoomScreenBtn;
 }
 
 
@@ -169,6 +199,9 @@
     [self addSubview: self.btnFull];
     [self addSubview: self.btnVideoCall];
     [self addSubview: self.btnLightAlarm];
+    [self addSubview: self.MultilePlayBtn];
+    [self addSubview: self.APPZoomScreenBtn];
+    
 }
 
 -(void)PTZBtnClick:(UIButton *)sender{
@@ -286,7 +319,15 @@
         [self.delegate btnLightAlarmClicked];
     }
 }
-
-
+- (void)multilePreviewEvent{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(btnmultilePreviewClicked)]){
+        [self.delegate btnmultilePreviewClicked];
+    }
+}
+- (void)zoomScreenEvent{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(btnZoomScreenClicked)]){
+        [self.delegate btnZoomScreenClicked];
+    }
+}
 
 @end

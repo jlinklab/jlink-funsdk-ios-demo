@@ -31,6 +31,11 @@
 #import <FunSDK/VRSoft.h>
 #import "VRGLViewController.h"
 #import "XMDeviceOrientationManager.h"
+
+//APP 多目分割效果
+#import "MultilePlayViewController.h"
+//APP 变倍缩放效果
+#import "ZoomScreenViewController.h"
 //视频对讲
 #import "VideoIntercomVC.h"
 //声光报警
@@ -38,6 +43,9 @@
 #import "HumanDetectionForIPCViewController.h"
 #import "NetCustomRecordVC.h"
 #import "SmartSecurityVC.h"
+
+//PID属性 PropValue
+#import "JFPIDManager.h"
 
 
 #define PlayViewNumberFour [[DeviceControl getInstance] getSelectChannelArray].count == 4 ? YES : NO
@@ -68,6 +76,8 @@
     int hardandsoft;
     int hardmodel;
     double orginalRatio; //视频比例
+    
+    JFPIDManager *pidManager;
     
 }
 
@@ -144,6 +154,7 @@
     __weak typeof(self) wSelf = self;
   
     ChannelObject *channel = [[DeviceControl getInstance] getSelectChannelArray][self.focusWindowIndex];
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
     self.deviceAbilityManager.devID = channel.deviceMac;
     //获取设备能力集
     [self.deviceAbilityManager getSystemFunctionConfig:^(int result) {
@@ -153,7 +164,6 @@
             FUN_DevCmdGeneral(self.msgHandle, CSTR(channel.deviceMac), 1020, "WifiRouteInfo", 0, 5000, NULL, 0, -1, (int)self.focusWindowIndex);
         }
         if (result >= 0) {
-            DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
             //是否支持多目枪球云台定位
             dev.sysFunction.iSupportGunBallTwoSensorPtzLocate = wSelf.deviceAbilityManager.iSupportGunBallTwoSensorPtzLocate;
             //是否支持视频对讲
@@ -182,6 +192,13 @@
             }
         }
     }];
+    
+    //获取设备PID属性，有PID时才会去获取。大部分添加设备流程可以获取到PID，设备systeminfo配置也会回调pid（不支持pid的设备不会回调）
+    if (dev.sPid && dev.sPid.length > 0) {
+        pidManager = [[JFPIDManager alloc] init];
+        //pidManager.delegate = self;
+        [pidManager requestPropvalue:dev];
+    }
 }
 
 
@@ -1169,6 +1186,46 @@ UIPinchGestureRecognizer *twoFingerPinch;//硬解码捏合手势
     ChannelObject *channel = [[[DeviceControl getInstance] getSelectChannelArray] firstObject];
     [self.interAlertView dispalyAlertView:channel.deviceMac channel:-1 index:0];
 }
+//MARK:  APP 多目效果
+//APP 多目效果 （多个摄像头合并为一路码流的视频，APP端可以把画面重新裁剪为多摄像头画面）
+- (void)btnmultilePreviewClicked {
+    
+    ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+    DeviceObject *device = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
+    if (device.threeScreen.length > 0) {
+        MultilePlayViewController *MultilePlayVC = [[MultilePlayViewController alloc] initWithNibName:@"MultilePlayViewController" bundle:nil];
+        [self.navigationController pushViewController:MultilePlayVC animated:YES];
+    }else{
+        [MessageUI ShowError:TS("TR_Not_Support_Function")];
+        //如果你只想看APP裁剪效果，不支持的设备也可以跳转进去,查看上下裁剪为两部分播放的双目效果
+//        MultilePlayViewController *MultilePlayVC = [[MultilePlayViewController alloc] initWithNibName:@"MultilePlayViewController" bundle:nil];
+//        [self.navigationController pushViewController:MultilePlayVC animated:YES];
+    }
+}
+
+//MARK:  APP 变倍缩放效果
+//APP 变倍效果 （通过缩放画面来实现放大和缩小的效果）
+- (void)btnZoomScreenClicked {
+    
+    ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+    DeviceObject *device = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
+    
+    if (device.iSupportAPPZoomScreen) {
+        //设备支持APP变倍，具体参数通过PID获取后可以使用
+//        device.iAPPZoomScreenMaxNum;
+//        device.iAPPZoomScreenMaxDisplayNum;
+        
+    }else{
+        NSLog(@"这个设备没有配置APP变倍功能");
+        //设备没有配置APP变倍功能，demo这里仍可以进入界面查看变倍效果,这里随便设置了变倍参数，后续功能会用到
+        device.iAPPZoomScreenMaxNum = 3;
+        device.iAPPZoomScreenMaxDisplayNum = 6;
+    }
+    
+    ZoomScreenViewController *zoomScreenVC = [[ZoomScreenViewController alloc] init];
+    [self.navigationController pushViewController:zoomScreenVC animated:YES];
+}
+
 
 - (void)clickedGotoDetectVC{
     float delay = 0;

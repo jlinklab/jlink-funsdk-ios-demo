@@ -16,7 +16,7 @@
 #import "ObSysteminfo.h"
 #import "ObSystemFunction.h"
 
-enum device_type {
+typedef enum device_type {
     DEVICE_TYPE_UnKnow, //没有获取过设备类型
     DEVICE_TYPE_DVR, //普通DVR设备
     DEVICE_TYPE_NVS, ///< NVS设备
@@ -60,14 +60,27 @@ enum device_type {
 @property (nonatomic, assign) int centerOffsetX;  //X轴偏移量
 @property (nonatomic, assign) int imgradius; //半径
 @property (nonatomic, assign) BOOL enableEpitomeRecord;
-//MARK: 设备厂家信息 服务器接口可能会用到
-@property (nonatomic,copy) NSString *sPid;
 
-///是否为低功耗设备
--(BOOL)getDeviceTypeLowPowerConsumption;
 /**设备云台反转配置缓存 key="channel" value="0:0:0" 左往右第一位表示上下 第二位表示左右 第三位表示ModifyCfg */
 @property (nonatomic,copy) NSString *sPTZReverseCfg;
 
+//MARK: 设备厂家信息 服务器接口可能会用到
+@property (nonatomic,copy) NSString *sPid;
+
+//MARK: PID属性
+///是否支持APP裁剪多目效果
+@property (nonatomic,copy) NSString *threeScreen;
+///是否支持APP端变倍
+@property (nonatomic, assign) int iSupportAPPZoomScreen;
+///APP端变倍的最大实际倍数
+@property (nonatomic, assign) int iAPPZoomScreenMaxNum;
+///APP端变倍的最大显示倍数
+@property (nonatomic, assign) int iAPPZoomScreenMaxDisplayNum;
+
+
+
+///是否为低功耗设备
+-(BOOL)getDeviceTypeLowPowerConsumption;
 
 /**缓存的上下反转配置 -1:未缓存 0:关闭 1:开启*/
 - (int)PTZUpsideDown:(int)channel;

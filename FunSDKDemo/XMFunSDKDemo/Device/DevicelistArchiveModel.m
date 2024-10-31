@@ -52,7 +52,10 @@
 #pragma mark - 设备列表数据保存到本地
 - (void)saveDevicelist:(NSMutableArray *)deviceArray {
     if (deviceArray == nil || self.userName == nil || [self.userName isEqualToString:@""]) {
-        return;
+        self.userName = [[LoginShowControl getInstance] getLoginUserName];
+        if (self.userName == nil ||  [self.userName isEqualToString:@""]) {
+            return;
+        }
     }
     NSMutableArray *copyArray = [[NSMutableArray alloc]initWithArray:deviceArray copyItems:YES];//深拷贝数组文件
     dispatch_async(dispatch_get_global_queue(0, 0), ^{

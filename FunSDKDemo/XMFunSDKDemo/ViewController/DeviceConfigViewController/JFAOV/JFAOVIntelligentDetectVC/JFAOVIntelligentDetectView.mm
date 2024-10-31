@@ -43,10 +43,10 @@ static NSString *const kJFLeftSelectRightArrowCell = @"kJFLeftSelectRightArrowCe
         [self addSubview:self.tbList];
         CGFloat safeBottom = [PhoneInfoManager safeAreaLength:SafeArea_Bottom];
         [self.tbList mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).mas_offset(cTableViewFilletLFBorder);
-            make.right.equalTo(self).mas_offset(-cTableViewFilletLFBorder);
+            make.left.equalTo(self);
+            make.right.equalTo(self);
             make.top.equalTo(self);
-            make.bottom.equalTo(self).mas_offset(-cTableViewFilletLFBorder);
+            make.bottom.equalTo(self);
             make.bottom.equalTo(self).mas_offset(-safeBottom);
         }];
     }
@@ -465,7 +465,7 @@ static NSString *const kJFLeftSelectRightArrowCell = @"kJFLeftSelectRightArrowCe
         cell.titleLabel.text = title;
         cell.accessoryImageView.hidden = NO;
         if ([self.humanDetectionManager getHumanDetectRuleTypeWithPedRuleIndex:0] == 1) {
-            cell.accessoryImageView.image = [UIImage imageNamed:@"new_icon_select"];
+            cell.accessoryImageView.image = [UIImage imageNamed:@"SM_check_on"];
             [cell.accessoryImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.right.mas_equalTo(-10);
                 make.centerY.mas_equalTo(cell.contentView.mas_centerY);
@@ -582,10 +582,10 @@ static NSString *const kJFLeftSelectRightArrowCell = @"kJFLeftSelectRightArrowCe
         indelVC.devID = self.devID;
         indelVC.humanDetectionDic = self.humanDetectionManager.dicCfg;
         indelVC.channelNum = 0;
-//        WeakSelf(weakSelf);
-//        indelVC.AreaPointNumSaveSuccessAction = ^(int areaPointNum) {
-//            weakSelf.humanDetectionManager.areaPointNum = areaPointNum;
-//        };
+        WeakSelf(weakSelf);
+        indelVC.AreaPointNumSaveSuccessAction = ^(int areaPointNum) {
+            weakSelf.humanDetectionManager.areaPointNum = areaPointNum;
+        };
         
         [[VCManager getCurrentVC].navigationController pushViewController:indelVC animated:YES];
     }else if ([title isEqualToString:@"itemSensor1"]) {//镜头1
@@ -593,9 +593,9 @@ static NSString *const kJFLeftSelectRightArrowCell = @"kJFLeftSelectRightArrowCe
         int pedRuleIndex = [self.humanRuleLimitManager pedRuleArrayIndexWithSensorIndex:0 areaIndex:0];
         IntelViewController *indelVC = [[IntelViewController alloc] init];
         indelVC.humanDetection = YES;
-//        indelVC.ifMultiSensor = self.multiSensor == 1 ? YES : NO;
-//        indelVC.sensorIndex = 0;
-//        indelVC.pedRuleIndex = pedRuleIndex;
+        indelVC.ifMultiSensor = self.multiSensor == 1 ? YES : NO;
+        indelVC.sensorIndex = 0;
+        indelVC.pedRuleIndex = pedRuleIndex;
         indelVC.drawType = (DrawType)1;
         indelVC.navTitle = [NSString stringWithFormat:@"%@1",TS("TR_Setting_Lens")];
         indelVC.directArray = [self.humanRuleLimitManager.areaDirectArray mutableCopy];
@@ -605,19 +605,19 @@ static NSString *const kJFLeftSelectRightArrowCell = @"kJFLeftSelectRightArrowCe
         indelVC.devID = self.devID;
         indelVC.humanDetectionDic = self.humanDetectionManager.dicCfg;
         indelVC.channelNum = 0;
-//        WeakSelf(weakSelf);
-//        indelVC.AreaPointNumSaveSuccessAction = ^(int areaPointNum) {
-//            [weakSelf.humanDetectionManager setAreaPointNum:areaPointNum pedRuleIndex:pedRuleIndex];
-//        };
+        WeakSelf(weakSelf);
+        indelVC.AreaPointNumSaveSuccessAction = ^(int areaPointNum) {
+            [weakSelf.humanDetectionManager setAreaPointNum:areaPointNum pedRuleIndex:pedRuleIndex];
+        };
         [[VCManager getCurrentVC].navigationController pushViewController:indelVC animated:YES];
     }else if ([title isEqualToString:@"itemSensor2"]) {//镜头2
         //通过镜头获取index
         int pedRuleIndex = [self.humanRuleLimitManager pedRuleArrayIndexWithSensorIndex:1 areaIndex:0];
         IntelViewController *indelVC = [[IntelViewController alloc] init];
         indelVC.humanDetection = YES;
-//        indelVC.ifMultiSensor = self.multiSensor == 1 ? YES : NO;
-//        indelVC.sensorIndex = 1;
-//        indelVC.pedRuleIndex = pedRuleIndex;
+        indelVC.ifMultiSensor = self.multiSensor == 1 ? YES : NO;
+        indelVC.sensorIndex = 1;
+        indelVC.pedRuleIndex = pedRuleIndex;
         indelVC.drawType = (DrawType)1;
         indelVC.navTitle = [NSString stringWithFormat:@"%@2",TS("TR_Setting_Lens")];
         indelVC.directArray = [self.humanRuleLimitManager.areaDirectArray mutableCopy];
@@ -627,10 +627,10 @@ static NSString *const kJFLeftSelectRightArrowCell = @"kJFLeftSelectRightArrowCe
         indelVC.devID = self.devID;
         indelVC.humanDetectionDic = self.humanDetectionManager.dicCfg;
         indelVC.channelNum = 0;
-//        WeakSelf(weakSelf);
-//        indelVC.AreaPointNumSaveSuccessAction = ^(int areaPointNum) {
-//            [weakSelf.humanDetectionManager setAreaPointNum:areaPointNum pedRuleIndex:pedRuleIndex];
-//        };
+        WeakSelf(weakSelf);
+        indelVC.AreaPointNumSaveSuccessAction = ^(int areaPointNum) {
+            [weakSelf.humanDetectionManager setAreaPointNum:areaPointNum pedRuleIndex:pedRuleIndex];
+        };
         [[VCManager getCurrentVC].navigationController pushViewController:indelVC animated:YES];
     }else if ([title isEqualToString:TS("alarm_time")]) {//报警时间段
         JFNewAlarmPeriodVc* alarmPeriodVC = [[JFNewAlarmPeriodVc alloc] init];

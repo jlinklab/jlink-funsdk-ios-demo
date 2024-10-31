@@ -69,4 +69,13 @@ NSString *tokenStr = @"";
 - (NSString *)getPushToken {
     return tokenStr;
 }
+
+#pragma mark - 账号登陆token
+NSString *loginTokenStr = @"";
+- (void)setLoginToken:(NSString *)token {
+    loginTokenStr = token;
+}
+- (NSString *)getLoginToken {
+    return loginTokenStr;
+}
 @end

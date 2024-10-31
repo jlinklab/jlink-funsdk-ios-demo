@@ -12,11 +12,14 @@
 #import "SuperView.h"
 
 @interface IntelViewController : BaseJConfigController
+
+///保存成功后将当前报警区域类型字段通知到上一级 不需要再重新请求
+@property (nonatomic, copy) void (^AreaPointNumSaveSuccessAction)(int areaPointNum);
 @property (nonatomic) AlarmAreaTypeView *alarmView;
 @property (nonatomic) enum DrawType drawType;
 @property (nonatomic,strong) NSString *devID;      // 设备id
-@property (nonatomic) int channelNum;       // 选中通道号
-@property (nonatomic) int stream;          // 播放的码流类型
+@property (nonatomic) int channelNum;              // 选中通道号
+@property (nonatomic) int stream;                  // 播放的码流类型
 
 @property (nonatomic,copy) NSString *navTitle;         // 标题
 
@@ -30,6 +33,10 @@
 @property (nonatomic, assign) BOOL humanDetection;
 
 @property (nonatomic, strong) NSMutableDictionary *humanDetectionDic;
+
+@property (nonatomic,assign) int pedRuleIndex;       // 镜头报警区域对应pedRule数组的序号
+@property (nonatomic,assign) BOOL ifMultiSensor;     // 是否是多镜头
+@property (nonatomic,assign) int sensorIndex;        // 镜头序号 从0开始
 
 -(void)setInterfaceControl:(InterInterfaceControl*)interControl;
 

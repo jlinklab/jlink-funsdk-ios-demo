@@ -29,7 +29,13 @@
     self = [super init];
     deviceArray = [[NSMutableArray alloc] initWithCapacity:0];
     channelPlayingArray = [[NSMutableArray alloc] initWithCapacity:0];
-    [DevicelistArchiveModel sharedDeviceListArchiveModel];
+    NSString *username = [[LoginShowControl getInstance] getLoginUserName];
+    if (username && username.length > 0) {
+        [[DevicelistArchiveModel sharedDeviceListArchiveModel] getSavedDeviceList:username];
+    }else{
+        [DevicelistArchiveModel sharedDeviceListArchiveModel];
+    }
+    
     return self;
 }
 #pragma mark  清空所有缓存的设备
