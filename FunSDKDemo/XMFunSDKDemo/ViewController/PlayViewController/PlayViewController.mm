@@ -37,7 +37,7 @@
 //APP 变倍缩放效果
 #import "ZoomScreenViewController.h"
 //视频对讲
-#import "VideoIntercomVC.h"
+#import "VideoIntercomVC.h" 
 //声光报警
 #import "IntellAlertView.h"
 #import "HumanDetectionForIPCViewController.h"
@@ -1198,8 +1198,8 @@ UIPinchGestureRecognizer *twoFingerPinch;//硬解码捏合手势
     }else{
         [MessageUI ShowError:TS("TR_Not_Support_Function")];
         //如果你只想看APP裁剪效果，不支持的设备也可以跳转进去,查看上下裁剪为两部分播放的双目效果
-//        MultilePlayViewController *MultilePlayVC = [[MultilePlayViewController alloc] initWithNibName:@"MultilePlayViewController" bundle:nil];
-//        [self.navigationController pushViewController:MultilePlayVC animated:YES];
+        MultilePlayViewController *MultilePlayVC = [[MultilePlayViewController alloc] initWithNibName:@"MultilePlayViewController" bundle:nil];
+        [self.navigationController pushViewController:MultilePlayVC animated:YES];
     }
 }
 

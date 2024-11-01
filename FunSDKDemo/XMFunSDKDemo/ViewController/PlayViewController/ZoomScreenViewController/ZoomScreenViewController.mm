@@ -47,7 +47,6 @@
     
     [self startPlay];
     
-    [self playScreenChaned];
 }
 
 
@@ -76,6 +75,10 @@
         [control1 updateWindowDisplayMode:JF_MEFD_Top_Half_Mode playWindowMode:JFMultipleEyesPlayViewWindowMode_Fake_Portrait_Original];
         //刷新播放分割画面frame
         [self rsetPlayViewRect:control1];
+    }
+    else{
+        //刷新播放分割画面frame
+        [self rsetPlayViewRect];
     }
     
 }
@@ -109,12 +112,30 @@
             //主视图，位置为固定播放画面下半部分
             self.playView.frame = CGRectMake(0, 0, ScreenWidth, height/2.0);
             self.backgroundView.frame = CGRectMake(0, mainY, ScreenWidth, height/2.0);
+            [self resetZoomView];
         }
         else if (mediaControl.windowNumber == 1) {
             //分割视图1,位置为固定播放画面上半部分
             mediaControl.renderWnd.frame = CGRectMake(0, y, ScreenWidth, height/2.0);
         }
     }
+}
+
+- (void)rsetPlayViewRect {
+    //设置播放界面的起始y坐标。Y轴层级为： 起始Y坐标+上半部分画面高度+下半部分画面高度
+    float y = NavHeight + 60;
+    float height = ScreenWidth * device.imageHeight / device.imageWidth;
+    self.playView.frame = CGRectMake(0, 0, ScreenWidth, height);
+    self.backgroundView.frame = CGRectMake(0, y, ScreenWidth, height);
+}
+
+- (void)resetZoomView {
+    [_zoomControlView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.backgroundView).mas_offset(50);
+        make.right.equalTo(self.backgroundView).mas_offset(-50);
+        make.bottom.equalTo(self.backgroundView);
+        make.height.equalTo(@40);
+    }];
 }
 
 #pragma mark - 开始预览结果回调
@@ -126,6 +147,20 @@
     }
 }
 
+#pragma mark 预览收到视频宽高比信息，可以用来刷新播放画面的宽高
+-(void)mediaPlayer:(MediaplayerControl*)mediaPlayer width:(int)width htight:(int)height {
+    NSLog(@"width = %d; height = %d",width, height);
+    DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: mediaPlayer.devID];
+    dev.imageWidth = width;
+    dev.imageHeight = height;
+    
+    [self playScreenChaned];
+}
+
+#pragma mark  缓冲
+-(void)mediaPlayer:(MediaplayerControl*)mediaPlayer buffering:(BOOL)isBuffering ratioDetail:(double)ratioDetail {
+    //ratioDetail 画面比例
+}
 
 - (void)initSubView {
     //配置播放视图
@@ -148,7 +183,7 @@
 
 - (void)initPlayBackView {
     float width = ScreenWidth;
-    float height = width *3/4;
+    float height = width *9/16;
     
     CGRect backRect = CGRectMake(0, NavHeight+20 , width, height);
     UIView *backView = [[UIView alloc] initWithFrame:backRect];
@@ -171,12 +206,8 @@
         };
     }
     [self.backgroundView addSubview:_zoomControlView];
-    [_zoomControlView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.backgroundView).mas_offset(50);
-        make.right.equalTo(self.backgroundView).mas_offset(-50);
-        make.bottom.equalTo(self.backgroundView);
-        make.height.equalTo(@40);
-    }];
+    [self resetZoomView];
+    
 }
 
 
@@ -199,7 +230,7 @@
         
         if (number == 0) {
             //主视图设置宽高比16:18；
-            height = width *18/16;
+            height = width *9/16;
             [view playViewBufferIng];
         }else{
             //分割视图暂时不补设置高度，刷新模式时再设置
