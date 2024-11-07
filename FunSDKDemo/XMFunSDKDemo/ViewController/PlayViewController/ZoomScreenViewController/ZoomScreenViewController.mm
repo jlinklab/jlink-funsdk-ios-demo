@@ -80,7 +80,6 @@
         //刷新播放分割画面frame
         [self rsetPlayViewRect];
     }
-    
 }
 
 - (void)zoomMultiple:(float)multiple maxMultiple:(float)fMultiple {
@@ -191,6 +190,7 @@
     self.backgroundView = backView;
     [self.view addSubview:self.backgroundView];
     
+    // backgroundView 是变倍的背景view，playview的初始大小必须和背景view一样大
     [self.backgroundView addSubview:self.playView];
 
 }
