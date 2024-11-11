@@ -381,8 +381,7 @@
                 ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
                 DeviceObject *device = [[DeviceControl getInstance] GetDeviceObjectBySN:channel.deviceMac];
                 if (self.nonuseYuv) {
-                    //多目APP裁剪效果参数，除了APP裁剪效果，其他不需要经过这个判断和return
-                    return;
+                    //多目APP裁剪效果参数，说明SDK不需要回调YUV数据，直接在传入的view上渲染即可
                 }else{
                     FUN_SetIntAttr(self.player, EOA_MEDIA_YUV_USER, self.msgHandle);//返回Yuv数据
                     FUN_SetIntAttr(self.player, EOA_SET_MEDIA_VIEW_VISUAL, 0);//自己画画面

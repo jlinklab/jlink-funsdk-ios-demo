@@ -25,6 +25,7 @@
 #import "DeviceAbilityManager.h"
 #import "SVProgressHUD.h"
 #import "UIView+Layout.h"
+#import "SystemInfoConfig.h"
 //双目相关
 #import "DoubleEyesManager.h"
 #import <Masonry/Masonry.h>
@@ -91,6 +92,7 @@
 @property (nonatomic, assign) NSInteger focusWindowIndex;//焦点窗体
 
 @property (nonatomic,strong) DeviceAbilityManager *deviceAbilityManager;
+@property (nonatomic,strong) SystemInfoConfig *systemConfig;
 
 @property (nonatomic, strong)DoubleEyesManager *doubleEyesManager;
 @property (nonatomic, strong)VRGLViewController *vrglVC;
@@ -155,6 +157,20 @@
   
     ChannelObject *channel = [[DeviceControl getInstance] getSelectChannelArray][self.focusWindowIndex];
     DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: channel.deviceMac];
+    
+    if (dev.sPid) {
+        [self getDevicePIDPropvalue:dev];
+    }else{
+        wSelf;
+        [self.systemConfig getSystemInfoCompletion:^(int result) {
+            if (result < 0){
+                //获取systeminfo信息失败
+            }else{
+                [wSelf getDevicePIDPropvalue:dev];
+            }
+        }];
+    }
+    
     self.deviceAbilityManager.devID = channel.deviceMac;
     //获取设备能力集
     [self.deviceAbilityManager getSystemFunctionConfig:^(int result) {
@@ -192,7 +208,9 @@
             }
         }
     }];
-    
+}
+
+- (void)getDevicePIDPropvalue:(DeviceObject*)dev {
     //获取设备PID属性，有PID时才会去获取。大部分添加设备流程可以获取到PID，设备systeminfo配置也会回调pid（不支持pid的设备不会回调）
     if (dev.sPid && dev.sPid.length > 0) {
         pidManager = [[JFPIDManager alloc] init];
@@ -201,12 +219,18 @@
     }
 }
 
-
 - (DeviceAbilityManager *)deviceAbilityManager{
     if (!_deviceAbilityManager) {
         _deviceAbilityManager = [[DeviceAbilityManager alloc] init];
     }
     return _deviceAbilityManager;
+}
+
+- (SystemInfoConfig *)systemConfig {
+    if (!_systemConfig) {
+        _systemConfig = [[SystemInfoConfig alloc] init];
+    }
+    return _systemConfig;
 }
 
 - (DoubleEyesManager *)doubleEyesManager{

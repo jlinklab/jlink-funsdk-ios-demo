@@ -45,10 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param maxMultiple 最大可以放大的倍数
 /// @param view 需要被缩放的view
 - (void)zoomControlViewChangeMultiple:(float)multiple maxMultiple:(float)maxMultiple animationView:(UIView *)view ignoreAnimation:(BOOL)ignore;
-////MARK: 主动滑动动画
-//- (void)zoomControlViewChangeMultiple:(float)multiple animationView:(UIView *)view sensor:(int)sensor criticalPointZoom:(float)zoom;
-////MARK: sensor变化动画
-//- (void)changeToSensor:(int)sensor multiple:(float)multiple criticalPointZoom:(float)zoom animationView:(UIView *)view;
 
 @end
 

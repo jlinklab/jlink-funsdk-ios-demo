@@ -18,11 +18,14 @@
 {
     MultileMediaplayerControl *mediaControl;
     
-    NSMutableDictionary *g_mediaPlayerDict;
-    NSMutableDictionary *g_PlayViewDict;
+    NSMutableDictionary *g_mediaPlayerDict; //多目播放工具数组
+    NSMutableDictionary *g_PlayViewDict; // 多目播放画布数组
+    NSMutableDictionary *g_ZoomDict; // 多目播放变倍条数组
     
     ChannelObject *channel;
     DeviceObject *device;
+    
+    BOOL rsetRect;
 }
 @property (strong, nonatomic) ScaleAnimationManager *scaleAnimationManager;
 @property (strong, nonatomic) ZoomControlView *zoomControlView;
@@ -62,7 +65,11 @@
 }
 
 - (void)playScreenChaned{
-    
+    if (rsetRect == YES) {
+        //如果多次刷新多目裁剪效果，并且其间操作过变倍，则有可能出现变倍计算异常。因此这里简单限制为只允许刷新一次，并且刷新前不允许操作变倍。（目前的变倍算法不允许在操作变倍之后，再改动位置和大小。如果要改动，则需要优化变倍算法。优化算法暂无，候补，APP上层逻辑）
+        return;
+    }
+    rsetRect = YES;
     if (device.threeScreen.length > 0 && [device.threeScreen intValue] > 1) {
         //支持APP多目效果，增加裁剪效果，展示裁剪后变倍功能
         mediaControl = [self getMediaplayerControl:channel.deviceMac channel:channel.channelNumber windowNumber:0];
@@ -83,6 +90,11 @@
 }
 
 - (void)zoomMultiple:(float)multiple maxMultiple:(float)fMultiple {
+    
+    if (rsetRect == NO) {
+        //如果刷新裁剪画面前操作过变倍，则demo后续变倍计算会有问题。demo这里简单做了限制，未刷新前不允许变倍。可以在刷新后重置变倍参数来解决 （目前的变倍算法不允许在操作变倍之后，再改动位置和大小。如果要改动，则需要优化变倍算法。优化算法暂无，候补，APP上层逻辑）
+        return;
+    }
     
     //计算实际需要缩放的倍数
     //实际倍数范围的跨度除以显示倍数范围的跨度
@@ -146,22 +158,39 @@
     }
 }
 
-#pragma mark 预览收到视频宽高比信息，可以用来刷新播放画面的宽高
+#pragma mark- 打开视频预览回调  预览收到视频宽高比信息，可以用来刷新播放画面的宽高
 -(void)mediaPlayer:(MediaplayerControl*)mediaPlayer width:(int)width htight:(int)height {
     NSLog(@"width = %d; height = %d",width, height);
     DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: mediaPlayer.devID];
     dev.imageWidth = width;
     dev.imageHeight = height;
-    
-    [self playScreenChaned];
 }
 
-#pragma mark  缓冲
+
+#pragma mark - 打开视频预览回调 -视频缓冲中
 -(void)mediaPlayer:(MediaplayerControl*)mediaPlayer buffering:(BOOL)isBuffering ratioDetail:(double)ratioDetail {
     //ratioDetail 画面比例
+    [self playScreenChaned];
+}
+#pragma mark 打开视频预览 自定义信息帧回调，通过这个判断是什么模式在预览
+-(void)mediaPlayer:(MediaplayerControl*)mediaPlayer Hardandsoft:(int)Hardandsoft Hardmodel:(int)Hardmodel {
+    //一路码流双目
+    if(Hardmodel == XMVR_TYPE_TWO_LENSES){
+       //说明当前是双目拼接设备，即便设备没有多目属性，demo这里依然设置为可以双目裁剪，并展示裁剪后的效果 （部分设备目前配置的有双目拼接支持3目效果）
+        DeviceObject *dev = [[DeviceControl getInstance] GetDeviceObjectBySN: mediaPlayer.devID];
+        if (dev.threeScreen.length == 0) {
+            //多目拼接设备，但是未获取到支持多目裁剪效果，则这里直接赋值为支持
+            dev.threeScreen = @"2";
+        }
+        [self playScreenChaned];
+        [[DeviceControl getInstance] saveDeviceList];
+    }
 }
 
 - (void)initSubView {
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     //配置播放视图
     //
     self.playView = [self getMediaplayView:channel.deviceMac channel:channel.channelNumber windowNumber:0];
@@ -209,7 +238,6 @@
     [self resetZoomView];
     
 }
-
 
 //初始化播放视图
 - (PlayView*) getMediaplayView:(NSString*)deviceMac channel:(int)channel windowNumber:(int)number {

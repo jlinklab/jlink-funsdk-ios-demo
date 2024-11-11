@@ -71,7 +71,7 @@
                    //支持APP裁剪3画面分屏
                     NSDictionary *dicThreeScreen = JFSafeDictionary(dicPropCode, @"threeScreen");
                     NSString *usedValue = JFSafeDictionary(JFSafeDictionary(dicThreeScreen, @"propValue"), @"usedValue");
-                    if ([usedValue intValue] == 3) {
+                    if (usedValue != @"none") {
                         device.threeScreen = usedValue;
                     }
                 }

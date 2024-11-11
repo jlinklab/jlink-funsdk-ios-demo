@@ -17,10 +17,15 @@
 @end
 
 #import "ConfigControllerBase.h"
+
+typedef void(^GetSystemInfoBlock)(int result);
+
 @interface SystemInfoConfig : ConfigControllerBase
 
+@property (nonatomic, copy) GetSystemInfoBlock getSystemInfoBlock;
 @property (nonatomic, assign) id <SystemInfoConfigDelegate> delegate;
 
 #pragma mark - 通过设备序列号获取设备Systeminfo
 - (void)getSystemInfo;
+- (void)getSystemInfoCompletion:(GetSystemInfoBlock)completion;
 @end

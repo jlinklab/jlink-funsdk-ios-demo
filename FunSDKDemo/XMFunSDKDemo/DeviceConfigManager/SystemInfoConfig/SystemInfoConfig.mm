@@ -25,6 +25,13 @@
     [self GetConfig];
 }
 
+- (void)getSystemInfoCompletion:(GetSystemInfoBlock)completion {
+    self.getSystemInfoBlock = completion;
+    ChannelObject *channel = [[DeviceControl getInstance] getSelectChannel];
+    CfgParam* paramSysInfo = [[CfgParam alloc] initWithName:@"SystemInfo" andDevId:channel.deviceMac andChannel:-1 andConfig:&sysInfo andOnce:YES andSaveLocal:NO];
+    [self AddConfig:paramSysInfo];
+    [self GetConfig];
+}
 
 #pragma mark - 3、解析配置信息后回调
 - (void)OnGetConfig:(CfgParam *)param {
@@ -50,6 +57,9 @@
         }
         if ([self.delegate respondsToSelector:@selector(SystemInfoConfigGetResult:)]) {
             [self.delegate SystemInfoConfigGetResult:param.errorCode];
+        }
+        if (self.getSystemInfoBlock) {
+            self.getSystemInfoBlock(param.errorCode);
         }
     }
 }
