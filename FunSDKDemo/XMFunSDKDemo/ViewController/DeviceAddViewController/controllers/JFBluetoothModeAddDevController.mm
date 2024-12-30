@@ -19,6 +19,8 @@
 /** 用于存储蓝牙设备 */
 @property (nonatomic, strong) NSMutableArray <XMSearchedDev *>*bluetoothSource;
 
+@property (nonatomic,copy) NSString *currentDevVersion;
+
 @end
 
 @implementation JFBluetoothModeAddDevController
@@ -57,7 +59,8 @@
             // 搜索蓝牙设备
             [[BlueToothToolManager sharedBlueToothToolManager] startSearch];
             @XMWeakify(self)
-            [BlueToothToolManager sharedBlueToothToolManager].blueToothFoundDevice = ^(NSString * _Nonnull pid, NSString * _Nonnull name, NSString * _Nonnull mac) {
+            [BlueToothToolManager sharedBlueToothToolManager].blueToothFoundDevice = ^(NSString * _Nonnull pid, NSString * _Nonnull name, NSString * _Nonnull mac, NSString * _Nonnull sn, CBPeripheral * _Nonnull peripheral, NSDictionary * _Nonnull advertisementDic, NSString * _Nonnull version) {
+                weak_self.currentDevVersion = version;
                 [weak_self searchedBlueTooth:pid name:name mac:mac];
             };
             return;
@@ -91,7 +94,8 @@
             // 搜索蓝牙设备
             [[BlueToothToolManager sharedBlueToothToolManager] startSearch];
             @XMWeakify(self)
-            [BlueToothToolManager sharedBlueToothToolManager].blueToothFoundDevice = ^(NSString * _Nonnull pid, NSString * _Nonnull name, NSString * _Nonnull mac) {
+            [BlueToothToolManager sharedBlueToothToolManager].blueToothFoundDevice = ^(NSString * _Nonnull pid, NSString * _Nonnull name, NSString * _Nonnull mac, NSString * _Nonnull sn, CBPeripheral * _Nonnull peripheral, NSDictionary * _Nonnull advertisementDic, NSString * _Nonnull version) {
+                weak_self.currentDevVersion = version;
                 [weak_self searchedBlueTooth:pid name:name mac:mac];
             };
             XMLog(@"[JF]开关开了😊！");

@@ -91,5 +91,8 @@ typedef enum device_type {
 /**缓存上下左右反转配置*/
 - (void)setPTZUpsideDownValue:(int)valueUD leftRightReverseValue:(int)valueLR modifyCfg:(int)valueModify channel:(int)channel;
 
+//MARK: - 是否蓝牙配网设备
+- (BOOL)isMeshBLE;
++ (BOOL)isMeshBLE:(NSString*)pid;
 
 @end

@@ -67,4 +67,11 @@ NSDate *YYNSDateFromString(__unsafe_unretained NSString *string);
 
 ///将UTC时间转成手机当前时间
 + (NSString *)convertUTCtoLocalTime:(NSString *)utcTime;
+
+//MARK: 10进制转16进制字符串(带长度)
++ (NSString *)hexStringFromNum:(int)num fill:(BOOL)fill len:(int)len;
++ (NSString *)xm_hexStringWithDecimalNum:(int)decimalNum fill:(BOOL)fill;
+
+//MARK: 16进制字符串转10进制字符串
++ (NSString *)decimalStringFromHexString:(NSString *)string;
 @end

@@ -374,4 +374,46 @@ NSDate *YYNSDateFromString(__unsafe_unretained NSString *string) {
     
     return localTime;
 }
+
+//MARK: 10进制转16进制字符串(带长度)
++ (NSString *)hexStringFromNum:(int)num fill:(BOOL)fill len:(int)len{
+    NSString *hexString = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",num]];
+    if(!fill){
+        return hexString;
+    }
+    int length = (int)hexString.length;
+    length = len - length;
+    NSString *strFillIn = @"";
+    for (int i = 0; i < length ; i++) {
+        strFillIn = [strFillIn stringByAppendingString:@"0"];
+    }
+    NSString *result = [NSString stringWithFormat:@"0x%@%@",strFillIn,hexString];
+    
+    return result;
+}
++ (NSString *)xm_hexStringWithDecimalNum:(int)decimalNum fill:(BOOL)fill{
+    // copy from main project
+    NSString *hexString = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",decimalNum]];
+    if(!fill){
+        return hexString;
+    }
+    int length = (int)hexString.length;
+    length = 8 - length;
+    NSString *strFillIn = @"";
+    for (int i = 0; i < length ; i++) {
+        strFillIn = [strFillIn stringByAppendingString:@"0"];
+    }
+    NSString *result = [NSString stringWithFormat:@"0x%@%@",strFillIn,hexString];
+    
+    return result;
+}
+
+//MARK: 16进制字符串转10进制字符串
++ (NSString *)decimalStringFromHexString:(NSString *)string{
+    if (!string) {
+        return @"0";
+    }
+    NSString * decimalStr = [NSString stringWithFormat:@"%lu",strtoul([string UTF8String],0,16)];
+    return decimalStr;
+}
 @end

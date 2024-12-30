@@ -23,6 +23,8 @@
 /** 配网成功后的外设 信息更全 */
 @property (nonatomic, strong) XMSearchedDev *pairedPeripheral;
 
+@property (nonatomic,copy) NSString *currentDevVersion;
+
 /** wifi */
 @property (nonatomic, copy) NSString * wifiName;
 /** wifi pwd */
@@ -70,7 +72,7 @@
     // 1、链接成功
     self.blueToothToolManager.blueToothConnectSuccessBlock = ^{
         XMLog(@"[JF]连接蓝牙设备成功!");
-        [self.blueToothToolManager startAddBlueToothDevice:self.wifiName password:self.wifiPwd mac:[NSString xm_deviceMacAddress]];
+        [self.blueToothToolManager startAddBlueToothDevice:self.wifiName password:self.wifiPwd mac:[NSString xm_deviceMacAddress] version:self.currentDevVersion];
     };
     // 2、连接设备失败回调
     self.blueToothToolManager.blueToothConnectFailedBlock = ^(NSError * _Nonnull error) {
@@ -93,9 +95,29 @@
         XMLog(@"[JF]连接蓝牙设备成功，userName:%@, password:%@, sn:%@, ip:%@, mac:%@, token:%@", userName, password, sn, ip, mac, token);
     };
     // 5、蓝牙设备配网失败
-    self.blueToothToolManager.blueToothResponseFailedBlock = ^(NSString * _Nonnull result) {
-        [self.blueToothToolManager cancelConnection];
+    self.blueToothToolManager.blueToothResponseFailedBlock = ^(JFNetPairingTranscation *resultTranscation) {
+        NSString *result = resultTranscation.result;
         if (53 == [result integerValue]) {
+            if (!resultTranscation.passwordErrorNeedRestart) {
+                [SVProgressHUD dismiss];
+                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"" message:TS("TR_Device_Ddd_Connect_Network_Wrong_Pwd_Error_Tip")  preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:TS("Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                }];
+                UIAlertAction *actionOK = [UIAlertAction actionWithTitle:TS("OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    UITextField *pswTF = [alertVC.textFields objectAtIndex:0];
+                    self.wifiPwd = (NSString *)pswTF.text;
+                    [self.blueToothToolManager startAddBlueToothDevice:self.wifiName password:self.wifiPwd mac:[NSString xm_deviceMacAddress] version:self.currentDevVersion];
+                }];
+                [alertVC addAction:actionCancel];
+                [alertVC addAction:actionOK];
+                //密码输入框
+                [alertVC addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                    textField.placeholder = TS("Please input password");
+                }];
+                [[VCManager getCurrentVC] presentViewController:alertVC animated:YES completion:nil];
+                return;
+            }
             [UIAlertController xm_showAlertWithMessage:TS("TR_Device_Ddd_Connect_Network_Wrong_Pwd_Error_Tip") actionTitle:TS("OK") action:^{
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SVProgressHUD dismiss];
@@ -103,15 +125,18 @@
                 });
             }];
         }
-        if (50 == [result integerValue] || 51 == [result integerValue] || 52 == [result integerValue]) {
-            //50:未知错误 51:未找到热点 52:握手失败
+        
+        if (50 == [result integerValue] || 51 == [result integerValue] || 52 == [result integerValue] ||  55 == [result intValue]) {
+            //50:未知错误 51:未找到热点 52:握手失败  55:V3版本未知错误
             [UIAlertController xm_showAlertWithMessage:TS("TR_Device_Add_Connect_Wifi_Failed_With_Empty_Data") actionTitle:TS("OK") action:^{
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SVProgressHUD dismiss];
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 });
             }];
+            [self.blueToothToolManager cancelConnection];
         }
+        
         XMLog(@"[JF]");
     };
 }
@@ -186,9 +211,9 @@
         memcpy(pDevsInfo.sSn, [sn cStringUsingEncoding:NSASCIIStringEncoding], 2*[sn length]);
         Fun_AddLANDevsToCache(&pDevsInfo, 1);
         BlueToothToolManager *manager = [BlueToothToolManager sharedBlueToothToolManager];
-        [manager cancelConnection];
         //
         [self addIOTDeviceWithUserName:userName passWord:password devID:sn token:token ip:ip mac:mac];
+        [manager cancelConnection];
     }else{
         [SVProgressHUD showErrorWithStatus:TS("add_failed")];
     }

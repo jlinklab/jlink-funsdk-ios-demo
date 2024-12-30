@@ -101,4 +101,15 @@
     return nil;
 }
 
+//MARK: - 是否蓝牙配网设备
+- (BOOL)isMeshBLE{
+    if (self.sPid && self.sPid.length > 0) {
+        return ([self.sPid isEqualToString:@"HABLK0012000100H"]|| [self.sPid isEqualToString:@"HABLK0013000100I"]|| [self.sPid isEqualToString:@"HABLK00140001006"])? YES:NO;
+    }
+    return NO;
+    
+}
++ (BOOL)isMeshBLE:(NSString*)pid {
+    return ([pid isEqualToString:@"HABLK0012000100H"]|| [pid isEqualToString:@"HABLK0013000100I"]|| [pid isEqualToString:@"HABLK00140001006"])? YES:NO;
+}
 @end

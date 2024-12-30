@@ -170,6 +170,7 @@ typedef enum EFUN_ATTR
     EFUN_ATTR_SET_RPS_PROTOCOL_MODE = 43, ///< 设置设备端和APP端连接RPSAccess服务器的协议模式，默认 E_RPS_PTL_MODE_AUTO 详见@enume ERPSProtocolMode
     EFUN_ATTR_SET_RECV_ALARM_PUSH_ALL_INFO = 44, ///< 接收内部报警推送服务推送全部内容  0:默认格式(SDK内部自组) 1:SDK内部自组格式+"AllPushInfo"(推送全部内容) ps:如果存在"MessageType"是"MSG_SEND_REQ的话，只有"CustomInfo"字段(与"AllPushInfo"互斥且内容相同)
     EFUN_ATTR_SET_DEVSN_QUERY_STATUS_TYPE_MASK_VALUE = 45, ///< 设置查询序列号设备状态类型掩码值 详见@enum EDevStatusType    默认值:-1   注意：设置的是全局属性，影响全部非低功耗序列号添加的设备查询
+    EFUN_ATTR_ENABLE_REAL_TIME_BUFFER_ADJUSTMENT = 46, ///< 实时预览的动态缓存调整功能  TRUE(非0):开启 FALSE(0):关闭 *默认TRUE(开启)
 }EFUN_ATTR;
 
 typedef enum EOOBJECT_ID
@@ -454,6 +455,12 @@ XSDK_API int FUN_InitNetSDK(const int nCustom = 0, const char *pServerAddr = NUL
  * @details 1.清空录像缩略图下载缓存队列 2.清除所有设备连接信息 3.清空设备状态 4.清空设备authcode
  */
 XSDK_API void FUN_UnInitNetSDK();
+
+#ifdef OS_GTEST
+typedef int (*POnMsgFunctionResult)(int hSender, UI_HANDLE hWnd, int nId, int nParam1, int nParam2, int nParam3, const char *szParam, const void *pData, int nDataLen, int nSeq);
+/** @brief 注册回调函数 */
+int Fun_RegisterCallBack(POnMsgFunctionResult pResult);
+#endif
 
 /**@brief 云账户系统初始化
  * @details 开发平台账户系统初始化
@@ -2167,7 +2174,10 @@ XSDK_API void FUN_DevStopTalk(FUN_HANDLE hPlayer);
  *    	 "dstheight" : 80, ///< 输出源高度 80~【默认值:srcheight】
  *    	 "fps" : 8, ///< 帧率【默认值:10】
  *    	 "gopsize" : 2, ///< I帧间隔 2是I帧帧率倍数不是个数【默认值:2】
+ *       "bitrate" : 0, ///< 比特率 【默认值：w*h*3】（目前只支持设置H264,MJPG）
  *    	 "qp" : 27, ///< 量化参数，值越大，图片质量越低 【默认值:27】
+ *       "qmin" : 10, ///< 设置最小量化参数。量化参数 (QP) 越小，输出质量越高，压缩率越低，取值范围：0~31，默认值:10（目前只支持设置H264,MJPG）
+ *    	 "qmax" : 51, ///< 设置最大量化参数。量化参数越大，输出质量越低，压缩率越高，取值范围：0~100，默认值:51（目前只支持设置H264,MJPG）
  *    	 "preset" : 2, ///< 编码器的预设配置，值越大编码速度越慢，图片质量越高【默认值:2】【注意：仅支持设置H264】
  *    },
  *    "audioinfo"
@@ -2844,6 +2854,15 @@ XSDK_API int Fun_StopStorePlayingMediaData(FUN_HANDLE hPlayer);
 
 //设置播放流畅度
 XSDK_API int FUN_MediaSetFluency(FUN_HANDLE hPlayer, int nLevel, int nSeq);  // nLevel : EDECODE_TYPE
+
+/**
+ * @brief 设置最大帧间隔时间
+ * @details 默认间隔值为0，不起使用；间隔值>0时，如果2帧间间隔大于此值，按间隔值播放。
+ * @param hPlayer 播放句柄
+ * @param nMaxIntervalMs 最大间隔时间  ms
+ */
+XSDK_API int FUN_SetMaxFrameIntervalMs(FUN_HANDLE hPlayer, int nMaxIntervalMs);
+
 XSDK_API int FUN_MediaGetThumbnail(FUN_HANDLE hPlayer, const char *szOutFileName, int nSeq);
 XSDK_API int FUN_MediaGetDecParam(const char *szFilePath, unsigned char *pOutBuffer, int nBufMaxSize);
 XSDK_API int FUN_MediaGetFishParam(const char * szFilePath, FishEyeFrameParam * pInfo);
@@ -3286,6 +3305,8 @@ XSDK_API int Fun_SysAIService(UI_HANDLE hUser, const char *szReqJson, int nSeq =
 
 
 XSDK_API time_t ToTime_t(SDK_SYSTEM_TIME *pDvrTime);
+
+XSDK_API H264_DVR_TIME *ToH264_DVR_TIME(H264_DVR_TIME *pDvrTime, time_t t);
 
 /**
  * @brief 探测当前网络是否仅支持ipv6

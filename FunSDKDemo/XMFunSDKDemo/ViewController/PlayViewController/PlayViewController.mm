@@ -571,6 +571,11 @@
     }
 }
 
+#pragma mark  播放信息
+-(void)mediaPlayer:(MediaplayerControl*)mediaPlayer info1:(int)nInfo info2:(NSString*)strInfo {
+    NSLog(@"当前播放信息 = %@",strInfo);
+}
+
 #pragma mark 收到暂停播放结果消息
 -(void)mediaPlayer:(MediaplayerControl*)mediaPlayer pauseOrResumeResult:(int)result {
     if (result == 2) { //暂停预览

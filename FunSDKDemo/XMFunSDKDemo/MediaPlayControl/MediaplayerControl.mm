@@ -385,7 +385,7 @@
                 }else{
                     FUN_SetIntAttr(self.player, EOA_MEDIA_YUV_USER, self.msgHandle);//返回Yuv数据
                     FUN_SetIntAttr(self.player, EOA_SET_MEDIA_VIEW_VISUAL, 0);//自己画画面
-                    self.IsYuv = YES;
+//                    self.IsYuv = YES;
                 }
                 // 圆心偏差横坐标  单位:像素点
                 short centerOffsetX = pFishFrameInfo->centerOffsetX;

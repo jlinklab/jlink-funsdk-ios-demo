@@ -65,6 +65,7 @@
 		1F9170362CCA7647003B70C1 /* MultilePlayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F9170342CCA7647003B70C1 /* MultilePlayViewController.mm */; };
 		1F9170372CCA7647003B70C1 /* MultilePlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F9170352CCA7647003B70C1 /* MultilePlayViewController.xib */; };
 		1F91703A2CCA7A27003B70C1 /* MultileMediaplayerControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F9170392CCA7A27003B70C1 /* MultileMediaplayerControl.mm */; };
+		1F91975F2D02D6E10054CCFF /* JFNetPairingTranscation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F91975E2D02D6E10054CCFF /* JFNetPairingTranscation.m */; };
 		1F9BA8C022C1BAF100D7E6BA /* CruiseConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F9BA8BF22C1BAF100D7E6BA /* CruiseConfig.mm */; };
 		1F9BA8C322C1BBC800D7E6BA /* CruiseDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9BA8C222C1BBC800D7E6BA /* CruiseDataSource.m */; };
 		1F9BA8CB22C1ED9900D7E6BA /* CruiseViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F9BA8CA22C1ED9900D7E6BA /* CruiseViewController.mm */; };
@@ -840,7 +841,7 @@
 		C1E557D22A72027E006F5171 /* JFDevConfigHelper+utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1E557D12A72027E006F5171 /* JFDevConfigHelper+utils.mm */; };
 		C1E557DB2A735493006F5171 /* JFDevConfigServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E557DA2A735493006F5171 /* JFDevConfigServiceModel.m */; };
 		C1E557E22A736D51006F5171 /* BlueToothToolManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1E557DE2A736D50006F5171 /* BlueToothToolManager.mm */; };
-		C1E557E32A736D51006F5171 /* BlueToothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E557E12A736D51006F5171 /* BlueToothManager.m */; };
+		C1E557E32A736D51006F5171 /* BlueToothManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1E557E12A736D51006F5171 /* BlueToothManager.mm */; };
 		C1E557E62A7386E1006F5171 /* TransferModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1E557E42A7386E1006F5171 /* TransferModel.mm */; };
 		C1E557E92A73872E006F5171 /* NSDate+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E557E72A73872E006F5171 /* NSDate+Ex.m */; };
 		C1EDEF6C2A74BE20008F7ABE /* JFUserAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EDEF6B2A74BE20008F7ABE /* JFUserAuthorizationManager.m */; };
@@ -993,6 +994,8 @@
 		1F9170352CCA7647003B70C1 /* MultilePlayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultilePlayViewController.xib; sourceTree = "<group>"; };
 		1F9170382CCA7A27003B70C1 /* MultileMediaplayerControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultileMediaplayerControl.h; sourceTree = "<group>"; };
 		1F9170392CCA7A27003B70C1 /* MultileMediaplayerControl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MultileMediaplayerControl.mm; sourceTree = "<group>"; };
+		1F91975D2D02D6E10054CCFF /* JFNetPairingTranscation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JFNetPairingTranscation.h; sourceTree = "<group>"; };
+		1F91975E2D02D6E10054CCFF /* JFNetPairingTranscation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JFNetPairingTranscation.m; sourceTree = "<group>"; };
 		1F9BA8BE22C1BAF100D7E6BA /* CruiseConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CruiseConfig.h; sourceTree = "<group>"; };
 		1F9BA8BF22C1BAF100D7E6BA /* CruiseConfig.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CruiseConfig.mm; sourceTree = "<group>"; };
 		1F9BA8C122C1BBC800D7E6BA /* CruiseDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CruiseDataSource.h; sourceTree = "<group>"; };
@@ -2570,7 +2573,7 @@
 		C1E557DE2A736D50006F5171 /* BlueToothToolManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BlueToothToolManager.mm; sourceTree = "<group>"; };
 		C1E557DF2A736D50006F5171 /* BlueToothToolManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueToothToolManager.h; sourceTree = "<group>"; };
 		C1E557E02A736D51006F5171 /* BlueToothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueToothManager.h; sourceTree = "<group>"; };
-		C1E557E12A736D51006F5171 /* BlueToothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueToothManager.m; sourceTree = "<group>"; };
+		C1E557E12A736D51006F5171 /* BlueToothManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BlueToothManager.mm; sourceTree = "<group>"; };
 		C1E557E42A7386E1006F5171 /* TransferModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TransferModel.mm; sourceTree = "<group>"; };
 		C1E557E52A7386E1006F5171 /* TransferModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferModel.h; sourceTree = "<group>"; };
 		C1E557E72A73872E006F5171 /* NSDate+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Ex.m"; sourceTree = "<group>"; };
@@ -6837,11 +6840,13 @@
 				C1E557E52A7386E1006F5171 /* TransferModel.h */,
 				C1E557E42A7386E1006F5171 /* TransferModel.mm */,
 				C1E557E02A736D51006F5171 /* BlueToothManager.h */,
-				C1E557E12A736D51006F5171 /* BlueToothManager.m */,
+				C1E557E12A736D51006F5171 /* BlueToothManager.mm */,
 				C1E557DF2A736D50006F5171 /* BlueToothToolManager.h */,
 				C1E557DE2A736D50006F5171 /* BlueToothToolManager.mm */,
 				C1EDEF6A2A74BE20008F7ABE /* JFUserAuthorizationManager.h */,
 				C1EDEF6B2A74BE20008F7ABE /* JFUserAuthorizationManager.m */,
+				1F91975D2D02D6E10054CCFF /* JFNetPairingTranscation.h */,
+				1F91975E2D02D6E10054CCFF /* JFNetPairingTranscation.m */,
 			);
 			path = bluetoothManager;
 			sourceTree = "<group>";
@@ -7256,6 +7261,7 @@
 				1FF6AC1F2A3207620012A0CE /* ZXExpandedProductParsedResult.m in Sources */,
 				1FF6AB512A3207620012A0CE /* ZXLuminanceSource.m in Sources */,
 				1F9DE9792C93175000C9D065 /* JFSegment.m in Sources */,
+				1F91975F2D02D6E10054CCFF /* JFNetPairingTranscation.m in Sources */,
 				1FF6AB9C2A3207620012A0CE /* ZXPDF417BarcodeRow.m in Sources */,
 				CF6A2E49299F2BC3005663A7 /* FunSDKBaseViewController.mm in Sources */,
 				1F9DE8E62C91359100C9D065 /* JFAOVIntelligentDetectVC.m in Sources */,
@@ -7671,7 +7677,7 @@
 				96C6B4FC21BB6869000B32E7 /* DataSource.m in Sources */,
 				1FC0F15323A0DBC40076F742 /* AlarmAreaTypeView.m in Sources */,
 				1FF6ABC52A3207620012A0CE /* ZXMaxiCodeBitMatrixParser.m in Sources */,
-				C1E557E32A736D51006F5171 /* BlueToothManager.m in Sources */,
+				C1E557E32A736D51006F5171 /* BlueToothManager.mm in Sources */,
 				6C15D5B0228D4EDC00AFDE31 /* AudioInputConfig.mm in Sources */,
 				225F08AE2C6B779300DB7907 /* HumanDetectManager.mm in Sources */,
 				96C6B4F321BB6869000B32E7 /* RecordInfo.m in Sources */,

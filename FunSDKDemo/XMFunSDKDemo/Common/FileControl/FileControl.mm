@@ -12,7 +12,8 @@
 
 - (NSMutableArray *)getLocalImage {
     NSString *path = [NSString getPhotoPath];
-    NSMutableArray *imageList = (NSMutableArray*)[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    NSMutableArray *imageList = [NSMutableArray arrayWithArray:array];
     if (!imageList) {
         return [NSMutableArray array];
     }
@@ -28,7 +29,8 @@
 }
 - (NSMutableArray *)getLocalVideo {
     NSString *path = [NSString getVideoPath];
-    NSMutableArray *videoList = (NSMutableArray*)[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    NSMutableArray *videoList = [NSMutableArray arrayWithArray:array];
     if (!videoList) {
         return [NSMutableArray array];
     }

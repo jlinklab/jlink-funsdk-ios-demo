@@ -152,7 +152,7 @@ XSDK_API int AS_UserIDAlarmUnSubscribe(UI_HANDLE hUser, const char *szReqJson, i
  * @param szReqJson 请求信息(JSON格式)，参考如下：
  * @example
  * {
- *   "msg": "alarm_query",
+ *   "msg": "alarm_query", ///< 需userid校验时使用alarm_query_user，分享的设备需要APP主动调用接口Fun_SysSetDevMasterAccount传入其muserid（userid校验暂时不支持报警类型过滤）
  *   "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *   "sn": "c142dd39f8222e1d",
  *   "am": "1",    ///<【可选】未携带此字段则不下发图片url，协议标识（用于标识客户端是否支持https，1 表示支持https下发的下载地址为https，0 表示不支持http下发的下载地址为http，其他将返回错误）
@@ -182,7 +182,7 @@ XSDK_API int AS_QueryAlarmMsgList(UI_HANDLE hUser, const char *szReqJson, int nS
  * @param szReqJson 请求信息(JSON格式)，参考如下：
  * @example
  * {
- *   "msg": "alarm_query",
+ *   "msg": "alarm_query", ///< 需userid校验时使用alarm_query_user，分享的设备需要APP主动调用接口Fun_SysSetDevMasterAccount传入其muserid（userid校验暂时不支持报警类型过滤）
  *   "timeout" : 8000, ///< 【可选】超时时间 默认:8000ms
  *   "sn": "4ad15e3168fb9061",
  *   "am": "1",    ///<【可选】未携带此字段则不下发图片url，协议标识（用于标识客户端是否支持https，1 表示支持https下发的下载地址为https，0 表示不支持http下发的下载地址为http，其他将返回错误）
