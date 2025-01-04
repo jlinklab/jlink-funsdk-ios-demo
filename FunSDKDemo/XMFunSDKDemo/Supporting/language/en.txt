@@ -1081,3 +1081,7 @@ alarm_time=Alarm Period
 time_day=24H Alarm
 time_diy=Custom Alarm
 Not_Open=Not Open
+TR_Today=Today
+TR_Setting_Last_Week=Last Week
+TR_Setting_Signal=Signal
+TR_Setting_Power_Level=Battery level

@@ -10,6 +10,7 @@
 #import "DoorBellModel.h"
 #import "CfgStatusManager.h"
 #import "NSDate+Ex.h"
+#import "JFDeviceTransaction.h"
 
 @interface JFAOVBatteryManagementAffairManager ()
 
@@ -54,7 +55,6 @@
             if (result >= 0) {
                 [weakSelf getConfigSuccess:@"JFDeviceLogInfoManager"];
             }else{
-                [MessageUI ShowErrorInt:result];
                 [weakSelf getConfigFailed:@"JFDeviceLogInfoManager"];
             }
         }];
@@ -65,29 +65,31 @@
             if (result >= 0) {
                 [weakSelf getConfigSuccess:@"JFDeviceLogInfoManager7"];
             }else{
-                [MessageUI ShowErrorInt:result];
                 [weakSelf getConfigFailed:@"JFDeviceLogInfoManager7"];
             }
         }];
         
+        //强制校验目前有前提 必须token设备才强制校验
+        BOOL forceCheckUserID = YES;
+        if (![JFDeviceTransaction tokenDeviceForForceUsrIDCheckWithDeviceID:self.devID]) {
+            forceCheckUserID = NO;
+        }
         //获取1天的报警消息
         NSArray *time1Seconds = [NSDate getRecentDaysStartAndEndDateTimeAccurateToSecond:1];
         [self.alarmNumberStatisticsOneDayManager requestAlarmNumberWithDeviceID:self.devID channel:-1 startTime:[time1Seconds objectAtIndex:0] endTime:[time1Seconds objectAtIndex:1] eventS:@[] label:@[] completed:^(int result) {
             if (result >= 0) {
                 [weakSelf getConfigSuccess:@"JFAlarmNumberStatisticsManager"];
             }else{
-                [MessageUI ShowErrorInt:result];
                 [weakSelf getConfigFailed:@"JFAlarmNumberStatisticsManager"];
             }
         }];
         
         //获取7天的报警消息
         NSArray *time7Seconds = [NSDate getRecentDaysStartAndEndDateTimeAccurateToSecond:7];
-        [self.alarmNumberStatisticsSevenDayManager requestAlarmNumberWithDeviceID:self.devID channel:-1 startTime:[time7Seconds objectAtIndex:0] endTime:[time7Seconds objectAtIndex:1] eventS:@[] label:@[] completed:^(int result) {
+        [self.alarmNumberStatisticsSevenDayManager requestAlarmNumberWithDeviceID:self.devID channel:-1 startTime:[time7Seconds objectAtIndex:0] endTime:[time7Seconds objectAtIndex:1] eventS:@[] label:@[]  completed:^(int result) {
             if (result >= 0) {
                 [weakSelf getConfigSuccess:@"JFAlarmNumberStatisticsManager7"];
             }else{
-                [MessageUI ShowErrorInt:result];
                 [weakSelf getConfigFailed:@"JFAlarmNumberStatisticsManager7"];
             }
         }];
@@ -108,11 +110,64 @@
     }else{
         [self getConfigSuccess:@"DevLowElectrModeManager"];
         [self getConfigSuccess:@"AbilityAovAbility"];
-        [self getConfigSuccess:@"JFDeviceLogInfoManager"];
-        [self getConfigSuccess:@"JFDeviceLogInfoManager7"];
-        [self getConfigSuccess:@"JFAlarmNumberStatisticsManager"];
-        [self getConfigSuccess:@"JFAlarmNumberStatisticsManager7"];
-        [self getConfigSuccess:@"SystemLowPowerWorkTimeManager"];
+        //获取一天内的日志信息
+        NSArray *time1 = [NSDate getRecentDaysStartAndEndDateTime:1];
+        [self.deviceLogInfoOneDayManager requestDeviceLogWithDevice:self.devID startTime:[time1 objectAtIndex:0] endTime:[time1 objectAtIndex:1] completed:^(int result) {
+            if (result >= 0) {
+                [weakSelf getConfigSuccess:@"JFDeviceLogInfoManager"];
+            }else{
+                [weakSelf getConfigFailed:@"JFDeviceLogInfoManager"];
+            }
+        }];
+        
+        //获取7天内的日志信息
+        NSArray *time7 = [NSDate getRecentDaysStartAndEndDateTime:7];
+        [self.deviceLogInfoSevenDayManager requestDeviceLogWithDevice:self.devID startTime:[time7 objectAtIndex:0] endTime:[time7 objectAtIndex:1] completed:^(int result) {
+            if (result >= 0) {
+                [weakSelf getConfigSuccess:@"JFDeviceLogInfoManager7"];
+            }else{
+                [weakSelf getConfigFailed:@"JFDeviceLogInfoManager7"];
+            }
+        }];
+        
+        //强制校验目前有前提 必须token设备才强制校验
+        BOOL forceCheckUserID = YES;
+        if (![JFDeviceTransaction tokenDeviceForForceUsrIDCheckWithDeviceID:self.devID]) {
+            forceCheckUserID = NO;
+        }
+        //获取1天的报警消息
+        NSArray *time1Seconds = [NSDate getRecentDaysStartAndEndDateTimeAccurateToSecond:1];
+        [self.alarmNumberStatisticsOneDayManager requestAlarmNumberWithDeviceID:self.devID channel:-1 startTime:[time1Seconds objectAtIndex:0] endTime:[time1Seconds objectAtIndex:1] eventS:@[] label:@[]  completed:^(int result) {
+            if (result >= 0) {
+                [weakSelf getConfigSuccess:@"JFAlarmNumberStatisticsManager"];
+            }else{
+                [weakSelf getConfigFailed:@"JFAlarmNumberStatisticsManager"];
+            }
+        }];
+        
+        //获取7天的报警消息
+        NSArray *time7Seconds = [NSDate getRecentDaysStartAndEndDateTimeAccurateToSecond:7];
+        [self.alarmNumberStatisticsSevenDayManager requestAlarmNumberWithDeviceID:self.devID channel:-1 startTime:[time7Seconds objectAtIndex:0] endTime:[time7Seconds objectAtIndex:1] eventS:@[] label:@[]  completed:^(int result) {
+            if (result >= 0) {
+                [weakSelf getConfigSuccess:@"JFAlarmNumberStatisticsManager7"];
+            }else{
+                [weakSelf getConfigFailed:@"JFAlarmNumberStatisticsManager7"];
+            }
+        }];
+        
+        //预览唤醒时间
+        if (self.supportLowPowerWorkTime) {
+            [self.systemLowPowerWorkTimeManager requestSystemLowPowerWorkTimeWithDevice:self.devID completed:^(int result) {
+                if (result >= 0) {
+                    [weakSelf getConfigSuccess:@"SystemLowPowerWorkTimeManager"];
+                }else{
+                    [MessageUI ShowErrorInt:result];
+                    [weakSelf getConfigFailed:@"SystemLowPowerWorkTimeManager"];
+                }
+            }];
+        }else{
+            [self getConfigSuccess:@"SystemLowPowerWorkTimeManager"];
+        }
     }
     
     //获取电池电量信息 非UI阻塞
@@ -218,9 +273,13 @@
 
 ///配置回去失败时 调用
 - (void)getConfigFailed:(NSString *)cfgName{
-    if (self.ConfigRequestFailedCallBack) {
-        self.ConfigRequestFailedCallBack();
+    // 如果是获取一天或者七点的电量信息和 报警信息的，获取失败不用返回
+    if ([cfgName isEqualToString:@"DevLowElectrModeManager"] || [cfgName isEqualToString:@"SystemLowPowerWorkTimeManager"] || [cfgName isEqualToString:@"AbilityAovAbility"] ) {
+        if (self.ConfigRequestFailedCallBack) {
+            self.ConfigRequestFailedCallBack();
+        }
     }
+    
 }
 
 //MARK: - LazyLoad

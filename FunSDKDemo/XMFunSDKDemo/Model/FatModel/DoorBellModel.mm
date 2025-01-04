@@ -511,7 +511,7 @@ static const int kGetBatterySeqOnce = 209;          // 单次获取电量标识
 {
     // 准备停止设备的主动上报 并从正在上报字典中移除
     // 判断设备是否已经在主动上报
-    if (self.dicUploadingDevice) {
+    if (self.dicUploadingDevice && [[self.dicUploadingDevice allKeys] containsObject:devMac]) {
         [self.dicUploadingDevice removeObjectForKey:devMac];
     }
             

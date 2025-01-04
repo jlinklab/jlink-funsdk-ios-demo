@@ -15,8 +15,11 @@
     if (self) {
         self.backgroundColor = UIColor.clearColor;
         self.axisColor = JFColor(@"#C5C5C7");
-        self.lineColor = NormalFontColor;
+        self.lineColor = GlobalMainColor;
         self.lineWidth = 1;
+        
+        self.gradientStartColor = JFColor(@"#12B5B0");
+        self.gradientEndColor = JFColor(@"#12B5B0");
     
         self.maxValueX = 24;
         self.maxValueY = 100;

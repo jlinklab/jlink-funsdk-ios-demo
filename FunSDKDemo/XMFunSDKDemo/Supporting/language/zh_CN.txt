@@ -1127,3 +1127,7 @@ alarm_time=报警时段
 time_day=全天报警
 time_diy=自定义报警
 Not_Open=未开启
+TR_Today=今天
+TR_Setting_Last_Week=近一周
+TR_Setting_Signal=信号
+TR_Setting_Power_Level=电池统计

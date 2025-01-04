@@ -90,27 +90,26 @@
 
 ///成功回调
 - (void)successAction{
-    NSArray *list = [[self.arrayFinal reverseObjectEnumerator] allObjects];
-    
+    NSArray *list = [NSArray arrayWithArray:[[self.arrayFinal reverseObjectEnumerator] allObjects]];
+    int count = list.count;
     //过滤需要的电量和信号数据
-    for (int i = 0; i < list.count; i++) {
+    for (int j = 0; j < count; j++) {
         
-        NSDictionary *dic = [list objectAtIndex:i];
+        NSDictionary *dic = [list objectAtIndex:j];
         NSString *logLevel = [dic objectForKey:@"logLevel"];
         NSString *serviceName = [dic objectForKey:@"serviceName"];
         NSDictionary *logInfo = [NSString dictionaryWithJsonString:[dic objectForKey:@"logInfo"]];
         if ([logLevel isEqualToString:@"INF"] && [serviceName isEqualToString:@"NSS"] && logInfo && [logInfo isKindOfClass:[NSDictionary class]]) {
             NSNumber *numberBL = [logInfo objectForKey:@"bl"];
             NSNumber *numberSS4G = [logInfo objectForKey:@"ss4g"];
-            NSString *time = [dic objectForKey:@"time"];
-            //不是当前时区时间的不需要转换
-            if (![[dic objectForKey:@"localTime"] boolValue]) {
-                time = [NSString convertUTCtoLocalTime:time];
-            }
+            //推荐使用UTC时间
+            NSString *time = [NSString convertUTCtoLocalTime:[dic objectForKey:@"utcTime"]];
             if (numberBL) {
                 NSMutableDictionary *dicFliter = [NSMutableDictionary dictionaryWithCapacity:0];
                 [dicFliter setObject:numberBL forKey:@"value"];
-                [dicFliter setObject:time forKey:@"time"];                
+                if (time) {
+                    [dicFliter setObject:time forKey:@"time"];
+                }
                 CGFloat percentX = [self calculatePercentageBetweenStartTime:self.startTime endTime:self.endTime currentTime:time];
                 [dicFliter setObject:[NSNumber numberWithFloat:percentX] forKey:@"x_percent"];
                 [dicFliter setObject:[NSNumber numberWithFloat:(100-[numberBL intValue]) / 100.0] forKey:@"y_percent"];
@@ -119,7 +118,9 @@
             if (numberSS4G) {
                 NSMutableDictionary *dicFliter = [NSMutableDictionary dictionaryWithCapacity:0];
                 [dicFliter setObject:numberSS4G forKey:@"value"];
-                [dicFliter setObject:time forKey:@"time"];
+                if (time) {
+                    [dicFliter setObject:time forKey:@"time"];
+                }
                 CGFloat percent = [self calculatePercentageBetweenStartTime:self.startTime endTime:self.endTime currentTime:time];
                 [dicFliter setObject:[NSNumber numberWithFloat:percent] forKey:@"x_percent"];
                 [dicFliter setObject:[NSNumber numberWithFloat:((3-[numberSS4G intValue]) / 3.0) > 1 ? 1 : ((3-[numberSS4G intValue]) / 3.0)] forKey:@"y_percent"];
@@ -203,7 +204,6 @@
                 NSMutableArray *arrayList = [JFSafeDictionary(dicData, @"list") mutableCopy];
                 NSMutableArray *arraylastList = [JFSafeDictionary(dicData, @"lastList") mutableCopy];
 
-                
                 if (!arrayList) {
                     if (self.getBatteryInfoFromShadowServerCallBack) {
                         self.getBatteryInfoFromShadowServerCallBack(-1);
@@ -212,8 +212,8 @@
                 }
                 
                 [arrayList sortUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
-                    NSString *dateTimeString1 = [obj1 objectForKey:@"time"];
-                    NSString *dateTimeString2 = [obj2 objectForKey:@"time"];
+                    NSString *dateTimeString1 = [obj1 objectForKey:@"utcTime"];
+                    NSString *dateTimeString2 = [obj2 objectForKey:@"utcTime"];
                     // 创建日期格式化对象
                     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
@@ -230,7 +230,7 @@
                     return  result;
                 }];
                 
-                NSLog(@"EMSG_SYS_SERVICE_GET_LOGS page:%i %@ %@",self.page,[[arrayList firstObject] objectForKey:@"time"],[[arrayList lastObject] objectForKey:@"time"]);
+                NSLog(@"EMSG_SYS_SERVICE_GET_LOGS page:%i %@ %@",self.page,[[arrayList firstObject] objectForKey:@"utcTime"],[[arrayList lastObject] objectForKey:@"utcTime"]);
                 //如果获取到的数量大于等于最大限制 继续请求
                 if (arrayList.count >= 5000) {
                     [self.arrayFinal addObjectsFromArray:arrayList];
@@ -254,14 +254,12 @@
                             NSArray *time7 = [NSDate getRecentDaysStartAndEndDateTime:7];
                             newTime = [time7 objectAtIndex:0];
                         }
-
-                        
-                        [dic setObject:newTime forKey:@"time"];
-                        //标记这个是当前时区的时间
-                        [dic setObject:[NSNumber numberWithBool:YES] forKey:@"localTime"];
-                        [self.arrayFinal addObject:dic];
-    
-    
+                        // 将当前时间转化成UTC时间
+                        NSString *newUTCTime = [NSString convertLocalTimeToUTC:newTime];
+                        if (newUTCTime) {
+                            [dic setObject:newTime forKey:@"utcTime"];
+                            [self.arrayFinal addObject:dic];
+                        }
                     }
                     [self successAction];
                 }

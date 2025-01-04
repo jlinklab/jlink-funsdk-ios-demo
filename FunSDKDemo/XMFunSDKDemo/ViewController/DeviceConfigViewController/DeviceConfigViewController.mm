@@ -482,10 +482,15 @@
     }
     else if ([titleStr isEqualToString:TS("TR_Setting_Battery_Management")]){
         //电池管理
-        if (devObject.sysFunction.BatteryManager == NO) {
-            //设备不支持低功耗设备电池管理,AOV设备一般支持完整的功能，其他低功耗设备可能只支持电池电量
+        if ([devObject getDeviceTypeLowPowerConsumption]) {
+            //低功耗设备
+            if (devObject.sysFunction.BatteryManager == NO) {
+                //支持完整的电池管理功能
+            }else{
+                //不支持低功耗设备电池管理,可能只支持电池电量等部分功能
+            }
+        }else{
             [SVProgressHUD showErrorWithStatus:TS("EE_MNETSDK_NOTSUPPORT")];
-            return;
         }
         JFAOVBatteryManagementVC *vc = [[JFAOVBatteryManagementVC alloc] init];
         vc.supportLowPowerWorkTime = devObject.sysFunction.LowPowerWorkTime;

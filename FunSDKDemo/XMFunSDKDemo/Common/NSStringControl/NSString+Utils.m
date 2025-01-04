@@ -359,20 +359,64 @@ NSDate *YYNSDateFromString(__unsafe_unretained NSString *string) {
     return idStr;
 }
 
-///将UTC时间转成手机当前时间
+/// 将UTC时间转成手机当前时间：注意格式 精确到毫秒
 + (NSString *)convertUTCtoLocalTime:(NSString *)utcTime {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-    NSCalendar *calender = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:calender.locale.localeIdentifier]];
+    if (!utcTime || utcTime.length == 0) {
+            NSLog(@"输入的 UTC 时间字符串为空");
+            return nil;
+        }
+        
+    NSDateFormatter *utcFormatter = [[NSDateFormatter alloc] init];
+    utcFormatter.locale = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian].locale;
+    utcFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    utcFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
     
-    NSDate *date = [dateFormatter dateFromString:utcTime];
+    NSDate *date = [utcFormatter dateFromString:utcTime];
+    if (!date) {
+        NSLog(@"无法解析 UTC 时间字符串");
+        return nil;
+    }
     
-    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
-    NSString *localTime = [dateFormatter stringFromDate:date];
+    NSDateFormatter *localFormatter = [[NSDateFormatter alloc] init];
+    localFormatter.locale = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian].locale;
+    localFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.SSS";
+    localFormatter.timeZone = [NSTimeZone localTimeZone];
+    
+    NSString *localTime = [localFormatter stringFromDate:date];
     
     return localTime;
+}
+
+/// 将当前时区时间转换为 UTC 时间：注意格式 精确到毫秒
++ (NSString *)convertLocalTimeToUTC:(NSString *)localTime {
+    if (!localTime || localTime.length == 0) {
+            NSLog(@"输入的本地时间字符串为空");
+            return nil;
+    }
+        
+    // 1. 创建本地时间格式化器
+    NSDateFormatter *localFormatter = [[NSDateFormatter alloc] init];
+    localFormatter.locale = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian].locale;
+    localFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.SSS"; // 输入的本地时间格式
+    localFormatter.timeZone = [NSTimeZone localTimeZone];
+    
+    // 2. 将本地时间字符串解析为 NSDate 对象
+    NSDate *date = [localFormatter dateFromString:localTime];
+    if (!date) {
+        NSLog(@"无法解析本地时间字符串");
+        return nil;
+    }
+    
+    // 3. 创建 UTC 时间格式化器
+    NSDateFormatter *utcFormatter = [[NSDateFormatter alloc] init];
+    utcFormatter.locale = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian].locale;
+    utcFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    utcFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+    
+    // 4. 转换为 UTC 时间字符串
+    NSString *utcTime = [utcFormatter stringFromDate:date];
+    
+    return utcTime;
 }
 
 //MARK: 10进制转16进制字符串(带长度)

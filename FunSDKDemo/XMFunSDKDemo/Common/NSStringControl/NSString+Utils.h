@@ -67,6 +67,8 @@ NSDate *YYNSDateFromString(__unsafe_unretained NSString *string);
 
 ///将UTC时间转成手机当前时间
 + (NSString *)convertUTCtoLocalTime:(NSString *)utcTime;
+/// 将当前时区时间转换为 UTC 时间：注意格式 精确到毫秒
++ (NSString *)convertLocalTimeToUTC:(NSString *)localTime;
 
 //MARK: 10进制转16进制字符串(带长度)
 + (NSString *)hexStringFromNum:(int)num fill:(BOOL)fill len:(int)len;

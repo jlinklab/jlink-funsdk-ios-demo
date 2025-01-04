@@ -238,7 +238,7 @@
             if (dict) {
                 NSString *msg = [dict objectForKey:@"msg"];
                 if ([msg isEqualToString:@"Success"]) {
-                    NSLog(@"二维码配网成功");
+                    NSLog(@"二维码配网从服务端搜索到设备");
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"refreshDeviceStatus" object:nil userInfo:nil]];
                         [SVProgressHUD show];

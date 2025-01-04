@@ -27,6 +27,10 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
 @property (nonatomic,weak) JFTopTitleBottomSliderCell *lastSliderCell;
 ///电池电量统计Footer
 @property (nonatomic,strong) UIView *batteryInfoFooter;
+///tableviewfooter标题
+@property (nonatomic,strong) UILabel *lbTitle;
+///tableviewfooter白色底
+@property (nonatomic,strong) UIView *whiteBG;
 ///电量线性统计图
 @property (nonatomic,strong) JFLineChartView *batteryChart;
 ///信号线性统计图
@@ -51,7 +55,7 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
 @end
 @implementation JFAOVBatteryManagemenView
 
-- (instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         //默认值
@@ -74,30 +78,144 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     return self;
 }
 
-- (void)setSupportLowPowerWorkTime:(BOOL)supportLowPowerWorkTime{
-    if (_supportLowPowerWorkTime != supportLowPowerWorkTime) {
-        _supportLowPowerWorkTime = supportLowPowerWorkTime;
+/// 更新电池信息显示能力
+- (void)updateTableFooterBatteryInfoAbility:(JFBatteryInfoAbility)ability support:(BOOL)support {
+    NSString *key = [NSString stringWithFormat:@"%i",(int)ability];
+    if (support) {
+        [self.dicInfoAbility setObject:key forKey:key];
+    }else {
+        [self.dicInfoAbility removeObjectForKey:key];
+    }
+}
+
+/// 根据能力刷新UI区域
+- (void)updateTableFooterFromAbility {
+    if (self.dicInfoAbility.allKeys.count > 0) {
+        CGFloat titleTopLeftTopOffset = 20;//标题顶部边距
+        CGFloat titleTopLeftHeight = 20;//标题高度
+        CGFloat whiteBGTopOffset = 10;//白色背景顶部距离标题底部边距
+        CGFloat segmentTopOffset = 15;//选择框距离白色背景顶部边距
+        CGFloat segmentHeight = 30;//选择框高度
+        CGFloat chartViewTopOffset = 20;//图表距离顶部边距
+        CGFloat chartHeight = (SCREEN_WIDTH - 2 * cTableViewFilletLFBorder) * 0.618;//图表高度
+        CGFloat previewAcountViewTopOffset = 15;//预览时间图表距离顶部边距
+        CGFloat previewAccountViewHeight = 80;//预览时间图表高度
+        CGFloat alarmCountViewTopOffset = 15;//图表距离白色背景顶部边距
+        CGFloat alarmCountViewHeight = 80;//报警数量展示view高度
         
-        [self updateFooter];
-    }
-}
-
-- (void)updateFooter{
-    if (!self.notAOVDevice) {
-        self.batteryInfoFooter = nil;
+        UIView *nextUITopConstraintView = self.segmentedControl;
+        // 白色背景view高度
+        CGFloat whiteBGHeight = segmentTopOffset + segmentHeight;
+        // 是否支持电量图
+        if ([self.dicInfoAbility objectForKey:[NSString stringWithFormat:@"%i",(int)JFBatteryInfo_BatteryChart]]) {
+            whiteBGHeight = whiteBGHeight + chartViewTopOffset + chartHeight;
+            [self.batteryChart mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_batteryInfoFooter);
+                make.right.equalTo(_batteryInfoFooter);
+                make.top.equalTo(nextUITopConstraintView.mas_bottom).mas_offset(chartViewTopOffset);
+                make.height.mas_equalTo(chartHeight);
+            }];
+            self.batteryChart.hidden = NO;
+            nextUITopConstraintView = self.batteryChart;
+        }else {
+            [self.batteryChart mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_batteryInfoFooter);
+                make.right.equalTo(_batteryInfoFooter);
+                make.top.equalTo(nextUITopConstraintView.mas_bottom).mas_offset(chartViewTopOffset);
+                make.height.mas_equalTo(0);
+            }];
+            self.batteryChart.hidden = YES;
+        }
+        // 是否支持信号图
+        if ([self.dicInfoAbility objectForKey:[NSString stringWithFormat:@"%i",(int)JFBatteryInfo_SignalChart]]) {
+            whiteBGHeight = whiteBGHeight + chartViewTopOffset + chartHeight;
+            [self.signalChart mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_batteryInfoFooter);
+                make.right.equalTo(_batteryInfoFooter);
+                make.top.equalTo(nextUITopConstraintView.mas_bottom).mas_offset(chartViewTopOffset);
+                make.height.mas_equalTo(chartHeight);
+            }];
+            self.signalChart.hidden = NO;
+            nextUITopConstraintView = self.signalChart;
+        }else {
+            [self.signalChart mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_batteryInfoFooter);
+                make.right.equalTo(_batteryInfoFooter);
+                make.top.equalTo(nextUITopConstraintView.mas_bottom).mas_offset(chartViewTopOffset);
+                make.height.mas_equalTo(0);
+            }];
+            self.signalChart.hidden = YES;
+        }
+        // 是否支持预览时间和唤醒时间
+        if ([self.dicInfoAbility objectForKey:[NSString stringWithFormat:@"%i",(int)JFBatteryInfo_PreviewTimeStatistics]]) {
+            whiteBGHeight = whiteBGHeight + (previewAcountViewTopOffset + previewAccountViewHeight) * 2;
+            [self.previewCountView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_batteryInfoFooter).mas_offset(15);;
+                make.right.equalTo(_batteryInfoFooter).mas_offset(-15);
+                make.top.equalTo(nextUITopConstraintView.mas_bottom).mas_offset(alarmCountViewTopOffset);
+                make.height.mas_equalTo(previewAccountViewHeight);
+            }];
+            [self.wakeUpCountView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_batteryInfoFooter).mas_offset(15);;
+                make.right.equalTo(_batteryInfoFooter).mas_offset(-15);
+                make.top.equalTo(self.previewCountView.mas_bottom).mas_offset(alarmCountViewTopOffset);
+                make.height.mas_equalTo(previewAccountViewHeight);
+            }];
+            self.previewCountView.hidden = NO;
+            self.wakeUpCountView.hidden = NO;
+            nextUITopConstraintView = self.wakeUpCountView;
+        }else {
+            [self.previewCountView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_batteryInfoFooter).mas_offset(15);;
+                make.right.equalTo(_batteryInfoFooter).mas_offset(-15);
+                make.top.equalTo(nextUITopConstraintView.mas_bottom).mas_offset(alarmCountViewTopOffset);
+                make.height.mas_equalTo(0);
+            }];
+            [self.wakeUpCountView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_batteryInfoFooter).mas_offset(15);;
+                make.right.equalTo(_batteryInfoFooter).mas_offset(-15);
+                make.top.equalTo(self.previewCountView.mas_bottom).mas_offset(alarmCountViewTopOffset);
+                make.height.mas_equalTo(0);
+            }];
+            self.previewCountView.hidden = YES;
+            self.wakeUpCountView.hidden = YES;
+        }
+        // 是否支持报警次数
+        if ([self.dicInfoAbility objectForKey:[NSString stringWithFormat:@"%i",(int)JFBatteryInfo_AlarmFrequencyStatistics]]) {
+            whiteBGHeight = whiteBGHeight + previewAcountViewTopOffset + previewAccountViewHeight;
+            [self.alarmCountView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_batteryInfoFooter).mas_offset(15);;
+                make.right.equalTo(_batteryInfoFooter).mas_offset(-15);
+                make.top.equalTo(nextUITopConstraintView.mas_bottom).mas_offset(alarmCountViewTopOffset);
+                make.height.mas_equalTo(alarmCountViewHeight);
+            }];
+            self.alarmCountView.hidden = NO;
+            nextUITopConstraintView = self.alarmCountView;
+        }else {
+            [self.alarmCountView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_batteryInfoFooter).mas_offset(15);;
+                make.right.equalTo(_batteryInfoFooter).mas_offset(-15);
+                make.top.equalTo(nextUITopConstraintView.mas_bottom).mas_offset(alarmCountViewTopOffset);
+                make.height.mas_equalTo(0);
+            }];
+            self.alarmCountView.hidden = YES;
+        }
+        whiteBGHeight = whiteBGHeight + segmentTopOffset;
+        [self.whiteBG mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_batteryInfoFooter);
+            make.right.equalTo(_batteryInfoFooter);
+            make.top.equalTo(self.lbTitle.mas_bottom).mas_offset(10);
+            make.height.mas_equalTo(whiteBGHeight);
+        }];
+        self.batteryInfoFooter.frame = CGRectMake(0, 0, SCREEN_WIDTH - 2 * cTableViewFilletLFBorder, titleTopLeftTopOffset + titleTopLeftHeight + whiteBGTopOffset + whiteBGHeight);
         self.tbList.tableFooterView = self.batteryInfoFooter;
-    }
-}
-
-- (void)setNotAOVDevice:(BOOL)notAOVDevice{
-    _notAOVDevice = notAOVDevice;
-    if (notAOVDevice) {
+    }else {
         self.tbList.tableFooterView = [[UIView alloc] init];
     }
 }
 
 ///更新配置项是否需要显示或隐藏
-- (void)updateConfigListVisiable:(BOOL)visiable cfgNames:(NSArray *)cfgNames{
+- (void)updateConfigListVisiable:(BOOL)visiable cfgNames:(NSArray *)cfgNames {
     NSMutableArray *dataSource = [NSMutableArray arrayWithCapacity:0];
     for (int i = 0; i < self.cfgOrderList.count; i++) {
         OrderListItem *item = [self.cfgOrderList objectAtIndex:i];
@@ -112,7 +230,7 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
 }
 
 /// 计算cell需要的高度
-- (CGFloat)cellHeightWithTitle:(NSString *)title titleFont:(UIFont *)titleFont subTitle:(NSString *)subTitle subTitleFont:(UIFont *)subTitleFont maxWidht:(CGFloat)maxWdith tbOffset:(CGFloat)tbOffset{
+- (CGFloat)cellHeightWithTitle:(NSString *)title titleFont:(UIFont *)titleFont subTitle:(NSString *)subTitle subTitleFont:(UIFont *)subTitleFont maxWidht:(CGFloat)maxWdith tbOffset:(CGFloat)tbOffset {
     CGFloat titleHeight = 0,subTitleHeight = 0;
     if (title.length > 0) {
         titleHeight = [UIServiceManager getTextHeightFromContent:title maxWidth:maxWdith font:titleFont];
@@ -125,16 +243,132 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
 }
 
 ///更新列表
-- (void)updateTableList{
+- (void)updateTableList {
     [self.tbList reloadData];
     
-    //预览时间和唤醒时间
-    [self updatePreviewSeconds:self.previewSecondsOneDay wakeUpSeconds:self.wakeUpSecondsOneDay];
-    //报警次数
-    self.lbAlarmCount.text = [NSString stringWithFormat:@"%i",self.alarmNumberOneDay];
+    //配置电量
+    NSMutableArray *yNames = [NSMutableArray arrayWithCapacity:0];
+    [yNames addObject:@"0%"];
+    [yNames addObject:@"20%"];
+    [yNames addObject:@"40%"];
+    [yNames addObject:@"60%"];
+    [yNames addObject:@"80%"];
+    [yNames addObject:@"100%"];
+    NSMutableArray *xNames = [NSMutableArray arrayWithCapacity:0];
+    
+    self.batteryChart.lineView.yAxisLineNumbers = (int)yNames.count - 1;
+    self.batteryChart.lbTitle.text = TS("TR_Setting_Power_Level");
+    
+    NSMutableArray *pointsPowerArr = [NSMutableArray arrayWithCapacity:0];
+    if (self.segIndex == 0) {//一天的信息
+        [xNames addObject:@"0"];
+        [xNames addObject:@"4"];
+        [xNames addObject:@"8"];
+        [xNames addObject:@"12"];
+        [xNames addObject:@"16"];
+        [xNames addObject:@"20"];
+        [xNames addObject:@"24"];
+        self.batteryChart.lbRightTitleX.text = TS("sHour");
+        for (int i = 0; i < self.arrayPowerOneDay.count; i++) {
+            NSDictionary *dicInfo = [self.arrayPowerOneDay objectAtIndex:i];
+            CGFloat xPoint = [[NSString stringWithFormat:@"%@",[dicInfo objectForKey:@"x_percent"]] floatValue] ;
+            CGFloat yPoint = [[NSString stringWithFormat:@"%@",[dicInfo objectForKey:@"y_percent"]] floatValue] ;
+
+            CGPoint point = CGPointMake(xPoint, yPoint);
+            NSValue *value = [NSValue valueWithCGPoint:point];
+            [pointsPowerArr addObject:value];
+        }
+    }else{//一周的信息
+        //获取近7天时间
+       [xNames addObjectsFromArray:[NSDate getPastSevenDays]];
+        self.batteryChart.lbRightTitleX.text = TS("day");
+        for (int i = 0; i < self.arrayPowerSevenDay.count; i++) {
+            NSDictionary *dicInfo = [self.arrayPowerSevenDay objectAtIndex:i];
+             
+            CGFloat xPoint = [[NSString stringWithFormat:@"%@",[dicInfo objectForKey:@"x_percent"]] floatValue] ;
+            CGFloat yPoint = [[NSString stringWithFormat:@"%@",[dicInfo objectForKey:@"y_percent"]] floatValue] ;
+
+            CGPoint point = CGPointMake(xPoint, yPoint);
+            NSValue *value = [NSValue valueWithCGPoint:point];
+            [pointsPowerArr addObject:value];
+        }
+    }
+    [self.batteryChart updateXYNames:xNames yNames:yNames];
+//    self.batteryChart.lineView.points = [@[[NSValue valueWithCGPoint:CGPointMake(0, 0.6)],[NSValue valueWithCGPoint:CGPointMake(0.1, 0.3)],[NSValue valueWithCGPoint:CGPointMake(0.15, 0.5)],[NSValue valueWithCGPoint:CGPointMake(0.2, 0.0)],[NSValue valueWithCGPoint:CGPointMake(0.3, 0.2)],[NSValue valueWithCGPoint:CGPointMake(0.35, 0.6)],[NSValue valueWithCGPoint:CGPointMake(0.4, 0.6)],[NSValue valueWithCGPoint:CGPointMake(0.5, 0.7)],[NSValue valueWithCGPoint:CGPointMake(0.8, 0.1)],[NSValue valueWithCGPoint:CGPointMake(0.9, 0)],[NSValue valueWithCGPoint:CGPointMake(1, 0.5)]] mutableCopy];
+    
+    
+    self.batteryChart.lineView.points = [pointsPowerArr  mutableCopy];
+    [self.batteryChart.lineView updateLine];
+    
+    //配置信号
+    NSMutableArray *yNames2 = [NSMutableArray arrayWithCapacity:0];
+    [yNames2 addObject:@"0%"];
+    [yNames2 addObject:@"20%"];
+    [yNames2 addObject:@"40%"];
+    [yNames2 addObject:@"60%"];
+    [yNames2 addObject:@"80%"];
+    [yNames2 addObject:@"100%"];
+    NSMutableArray *xNames2 = [NSMutableArray arrayWithCapacity:0];
+    
+    self.signalChart.lineView.yAxisLineNumbers = (int)yNames2.count - 1;
+    self.signalChart.lbTitle.text = TS("TR_Setting_Signal");
+    
+    NSMutableArray *pointsSignalArr = [NSMutableArray arrayWithCapacity:0];
+
+    if (self.segIndex == 0) {//一天的信息
+        [xNames2 addObject:@"0"];
+        [xNames2 addObject:@"4"];
+        [xNames2 addObject:@"8"];
+        [xNames2 addObject:@"12"];
+        [xNames2 addObject:@"16"];
+        [xNames2 addObject:@"20"];
+        [xNames2 addObject:@"24"];
+        self.signalChart.lbRightTitleX.text = TS("sHour");
+        
+        for (int i = 0; i < self.arraySignalOneDay.count; i++) {
+            NSDictionary *dicInfo = [self.arraySignalOneDay objectAtIndex:i];
+            CGFloat xPoint = [[NSString stringWithFormat:@"%@",[dicInfo objectForKey:@"x_percent"]] floatValue] ;
+            CGFloat yPoint = [[NSString stringWithFormat:@"%@",[dicInfo objectForKey:@"y_percent"]] floatValue] ;
+
+            CGPoint point = CGPointMake(xPoint, yPoint);
+            NSValue *value = [NSValue valueWithCGPoint:point];
+            [pointsSignalArr addObject:value];
+        }
+        
+        //预览时间和唤醒时间
+        [self updatePreviewSeconds:self.previewSecondsOneDay wakeUpSeconds:self.wakeUpSecondsOneDay];
+        //报警次数
+        self.lbAlarmCount.text = [NSString stringWithFormat:@"%i",self.alarmNumberOneDay];
+    }else{//一周的信息
+        self.signalChart.lbRightTitleX.text = TS("day");
+        //获取近7天时间
+        [xNames2 addObjectsFromArray:[NSDate getPastSevenDays]];
+        for (int i = 0; i < self.arraySignalSevenDay.count; i++) {
+            NSDictionary *dicInfo = [self.arraySignalSevenDay objectAtIndex:i];
+             
+            CGFloat xPoint = [[NSString stringWithFormat:@"%@",[dicInfo objectForKey:@"x_percent"]] floatValue] ;
+            CGFloat yPoint = [[NSString stringWithFormat:@"%@",[dicInfo objectForKey:@"y_percent"]] floatValue] ;
+
+            CGPoint point = CGPointMake(xPoint, yPoint);
+            NSValue *value = [NSValue valueWithCGPoint:point];
+            [pointsSignalArr addObject:value];
+        }
+        
+        //预览时间和唤醒时间
+        [self updatePreviewSeconds:self.previewSecondsSevenDay wakeUpSeconds:self.wakeUpSecondsSevenDay];
+        //报警次数
+        self.lbAlarmCount.text = [NSString stringWithFormat:@"%i",self.alarmNumberSevenDay];
+    }
+    
+    [self.signalChart updateXYNames:xNames2 yNames:yNames2];
+    self.signalChart.lineView.points = [pointsSignalArr mutableCopy];
+    self.signalChart.lineView.lineColor = GlobalMainColor;
+    self.signalChart.lineView.gradientStartColor = JFColor(@"#3478F6");
+    self.signalChart.lineView.gradientEndColor = JFColor(@"#3478F6");
+    [self.signalChart.lineView updateLine];
 }
 
-- (void)updatePreviewSeconds:(int)previewSeconds wakeUpSeconds:(int)wakeUpSeconds{
+- (void)updatePreviewSeconds:(int)previewSeconds wakeUpSeconds:(int)wakeUpSeconds {
     self.lbPreviewCount.text = [self timeDescriptionFromSeconds:previewSeconds];
     self.lbWakeUpCount.text = [self timeDescriptionFromSeconds:wakeUpSeconds];
     
@@ -185,17 +419,17 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
 }
 
 //MARK: - JFSegmentDelegate
-- (void)segmentSelectedIndexChanged:(int)index{
+- (void)segmentSelectedIndexChanged:(int)index {
     self.segIndex = index;
     [self updateTableList];
 }
 
 //MARK: - Delegate
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderListItem *item = [self.dataSource objectAtIndex:indexPath.row];
     NSString *title = item.titleName;
     NSString *subTitle = item.subTitle;
@@ -258,7 +492,7 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderListItem *item = [self.dataSource objectAtIndex:indexPath.row];
     NSString *title = item.titleName;
     NSString *titleRight = @"";
@@ -292,25 +526,29 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     return 50;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OrderListItem *item = [self.dataSource objectAtIndex:indexPath.row];
 }
 
+//MARK: 更新电池统计footer内容和高度
+- (void)updateTableFooter {
+    
+}
+
 //MARK: - LazyLoad
-- (UITableView *)tbList{
+- (UITableView *)tbList {
     if (!_tbList) {
         _tbList = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_tbList registerClass:[JFLeftTitleRightImageTitleCell class] forCellReuseIdentifier:kJFLeftTitleRightImageTitleCell];
         [_tbList registerClass:[JFTopTitleBottomSliderCell class] forCellReuseIdentifier:kJFTopTitleBottomSliderCell];
         _tbList.dataSource = self;
         _tbList.delegate = self;
-//        [_tbList setCellSectionDefaultHeight];
         _tbList.showsVerticalScrollIndicator = NO;
         _tbList.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tbList.sectionHeaderHeight = 0;
@@ -321,7 +559,7 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     return _tbList;
 }
 
-- (NSMutableArray *)cfgOrderList{
+- (NSMutableArray *)cfgOrderList {
     if (!_cfgOrderList) {
         /*
          */
@@ -350,7 +588,7 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     return _cfgOrderList;
 }
 
-- (NSMutableArray *)dataSource{
+- (NSMutableArray *)dataSource {
     if (!_dataSource) {
         _dataSource = [NSMutableArray arrayWithCapacity:0];
         [self updateConfigListVisiable:NO cfgNames:@[]];
@@ -359,7 +597,7 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     return _dataSource;
 }
 
-- (UIView *)batteryInfoFooter{
+- (UIView *)batteryInfoFooter {
     if (!_batteryInfoFooter) {
         CGFloat titleTopLeftTopOffset = 20;//标题顶部边距
         CGFloat titleTopLeftHeight = 20;//标题高度
@@ -372,80 +610,79 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
         CGFloat previewAccountViewHeight = 80;//预览时间图表高度
         CGFloat alarmCountViewTopOffset = 15;//图表距离白色背景顶部边距
         CGFloat alarmCountViewHeight = 80;//报警数量展示view高度
-        if (!self.supportLowPowerWorkTime) {
-            previewAcountViewTopOffset = 0;
-            previewAccountViewHeight = 0;
-        }
-        CGFloat whiteBGHeight = segmentTopOffset + segmentHeight + chartViewTopOffset * 2 + chartHeight * 2 + previewAcountViewTopOffset + previewAccountViewHeight + alarmCountViewTopOffset + alarmCountViewHeight + segmentTopOffset;//白色背景view高度
-        _batteryInfoFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 2 * cTableViewFilletLFBorder,0)];
+        // 白色背景view高度
+        CGFloat whiteBGHeight = segmentTopOffset + segmentHeight + chartViewTopOffset * 2 + chartHeight * 2 + previewAcountViewTopOffset + previewAccountViewHeight + alarmCountViewTopOffset + alarmCountViewHeight + segmentTopOffset;
+        _batteryInfoFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 2 * cTableViewFilletLFBorder, titleTopLeftTopOffset + titleTopLeftHeight + whiteBGTopOffset + whiteBGHeight)];
         _batteryInfoFooter.backgroundColor = UIColor.clearColor;
         
-        UILabel *lbTitle = [[UILabel alloc] init];
-        lbTitle.text = TS("TR_Setting_Battery_Statistic");
-        lbTitle.font = JFFont(13);
-        lbTitle.textColor = JFColor(@"#777777");
-        lbTitle.numberOfLines = 1;
-        [_batteryInfoFooter addSubview:lbTitle];
-        [lbTitle mas_remakeConstraints:^(MASConstraintMaker *make) {
+        self.lbTitle = [[UILabel alloc] init];
+        self.lbTitle.text = TS("TR_Setting_Battery_Statistic");
+        self.lbTitle.font = JFFont(13);
+        self.lbTitle.textColor = JFColor(@"#777777");
+        self.lbTitle.numberOfLines = 1;
+        [_batteryInfoFooter addSubview:self.lbTitle];
+        [self.lbTitle mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_batteryInfoFooter).mas_offset(12.5);
-            make.height.mas_equalTo(0);
+            make.height.mas_equalTo(titleTopLeftHeight);
             make.right.equalTo(_batteryInfoFooter);
             make.top.mas_equalTo(titleTopLeftTopOffset);
         }];
         
-        UIView *whiteBG = [[UIView alloc] init];
-        whiteBG.backgroundColor = UIColor.whiteColor;
-        whiteBG.layer.cornerRadius = 10;
-        whiteBG.layer.masksToBounds = YES;
-        [_batteryInfoFooter addSubview:whiteBG];
-        [whiteBG mas_remakeConstraints:^(MASConstraintMaker *make) {
+        self.whiteBG = [[UIView alloc] init];
+        self.whiteBG.backgroundColor = UIColor.whiteColor;
+        self.whiteBG.layer.cornerRadius = 10;
+        self.whiteBG.layer.masksToBounds = YES;
+        [_batteryInfoFooter addSubview:self.whiteBG];
+        [self.whiteBG mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_batteryInfoFooter);
             make.right.equalTo(_batteryInfoFooter);
-            make.top.equalTo(lbTitle.mas_bottom).mas_offset(10);
+            make.top.equalTo(self.lbTitle.mas_bottom).mas_offset(10);
             make.height.mas_equalTo(whiteBGHeight);
         }];
         
         NSArray *segmentedArray = [NSArray arrayWithObjects:TS("TR_Today"),TS("TR_Setting_Last_Week"),nil];
         self.segmentedControl = [[JFSegment alloc] initWithItemNames:segmentedArray frame:CGRectMake(0, 0, SCREEN_WIDTH - 30 - 30, 44)];
         self.segmentedControl.delegate = self;
-        [whiteBG addSubview:self.segmentedControl];
+        [self.whiteBG addSubview:self.segmentedControl];
         [self.segmentedControl mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(whiteBG).mas_offset(15);
-            make.right.equalTo(whiteBG).mas_offset(-15);
-            make.top.equalTo(whiteBG).mas_offset(segmentTopOffset);
+            make.left.equalTo(self.whiteBG).mas_offset(15);
+            make.right.equalTo(self.whiteBG).mas_offset(-15);
+            make.top.equalTo(self.whiteBG).mas_offset(segmentTopOffset);
             make.height.mas_equalTo(segmentHeight);
         }];
         
+        [self.whiteBG addSubview:self.batteryChart];
         [self.batteryChart mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_batteryInfoFooter);
             make.right.equalTo(_batteryInfoFooter);
             make.top.equalTo(self.segmentedControl.mas_bottom).mas_offset(chartViewTopOffset);
-            make.height.mas_equalTo(0);
+            make.height.mas_equalTo(chartHeight);
         }];
+        [self.whiteBG addSubview:self.signalChart];
         [self.signalChart mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_batteryInfoFooter);
             make.right.equalTo(_batteryInfoFooter);
             make.top.equalTo(self.batteryChart.mas_bottom).mas_offset(chartViewTopOffset);
-            make.height.mas_equalTo(0);
+            make.height.mas_equalTo(chartHeight);
         }];
         
-        [whiteBG addSubview:self.previewCountView];
+        [self.whiteBG addSubview:self.previewCountView];
         [self.previewCountView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_batteryInfoFooter).mas_offset(15);;
-            make.right.equalTo(_batteryInfoFooter.mas_centerX).mas_offset(-5);
-            make.top.equalTo(self.signalChart.mas_bottom).mas_offset(previewAcountViewTopOffset);
+            make.right.equalTo(_batteryInfoFooter).mas_offset(-15);
+            make.top.equalTo(self.signalChart.mas_bottom).mas_offset(alarmCountViewTopOffset);
             make.height.mas_equalTo(previewAccountViewHeight);
         }];
         
-        [whiteBG addSubview:self.wakeUpCountView];
+        [self.whiteBG addSubview:self.wakeUpCountView];
         [self.wakeUpCountView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_batteryInfoFooter).mas_offset(-15);;
-            make.left.equalTo(_batteryInfoFooter.mas_centerX).mas_offset(5);
-            make.top.equalTo(self.signalChart.mas_bottom).mas_offset(previewAcountViewTopOffset);
+            make.left.equalTo(_batteryInfoFooter).mas_offset(15);;
+            make.right.equalTo(_batteryInfoFooter).mas_offset(-15);
+            make.top.equalTo(self.previewCountView.mas_bottom).mas_offset(alarmCountViewTopOffset);
             make.height.mas_equalTo(previewAccountViewHeight);
         }];
         
-        [whiteBG addSubview:self.alarmCountView];
+        [self.whiteBG addSubview:self.alarmCountView];
         [self.alarmCountView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_batteryInfoFooter).mas_offset(15);;
             make.right.equalTo(_batteryInfoFooter).mas_offset(-15);
@@ -457,25 +694,23 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     return _batteryInfoFooter;
 }
 
-- (JFLineChartView *)batteryChart{
+- (JFLineChartView *)batteryChart {
     if (!_batteryChart) {
-        //_batteryChart = [[JFLineChartView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 2 * cTableViewFilletLFBorder, (SCREEN_WIDTH - 2 * cTableViewFilletLFBorder) * 0.618)];
-        _batteryChart = [[JFLineChartView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 2 * cTableViewFilletLFBorder, 0)];
+        _batteryChart = [[JFLineChartView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 2 * cTableViewFilletLFBorder, (SCREEN_WIDTH - 2 * cTableViewFilletLFBorder) * 0.618)];
     }
     
     return _batteryChart;
 }
 
-- (JFLineChartView *)signalChart{
+- (JFLineChartView *)signalChart {
     if (!_signalChart) {
-        //_signalChart = [[JFLineChartView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 2 * cTableViewFilletLFBorder, (SCREEN_WIDTH - 2 * cTableViewFilletLFBorder) * 0.618)];
-        _signalChart = [[JFLineChartView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 2 * cTableViewFilletLFBorder, 0)];
+        _signalChart = [[JFLineChartView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 2 * cTableViewFilletLFBorder, (SCREEN_WIDTH - 2 * cTableViewFilletLFBorder) * 0.618)];
     }
     
     return _signalChart;
 }
 
-- (UIView *)previewCountView{
+- (UIView *)previewCountView {
     if (!_previewCountView) {
         _previewCountView = [[UIView alloc] init];
         _previewCountView.backgroundColor = JFColor(@"#E4EAFC");
@@ -494,7 +729,7 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
         }];
         
         //文字可用宽度
-        CGFloat titleWidthAvailable = (SCREEN_WIDTH - 2 * cTableViewFilletLFBorder - 2 * 15 - 4 * 15 - 10) * 0.5;
+        CGFloat titleWidthAvailable = SCREEN_WIDTH - 2 * cTableViewFilletLFBorder - 4 * 15;
         CGSize size = CGSizeMake(MAXFLOAT, 30);
         CGRect rect = [TS("TR_Setting_Preview_Time") boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:JFFont(15)} context:nil];
         BOOL needSmallFont = NO;
@@ -526,18 +761,18 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     return _previewCountView;
 }
 
-- (UILabel *)lbPreviewCount{
+- (UILabel *)lbPreviewCount {
     if (!_lbPreviewCount) {
         _lbPreviewCount = [[UILabel alloc] init];
         _lbPreviewCount.font = JFFontWeightAndSize(@"Semibold", 20);
-        _lbPreviewCount.textColor = JFColor(@"#6B4D3E");
+        _lbPreviewCount.textColor = JFColor(@"#444E89");
         _lbPreviewCount.text = @"0";
     }
     
     return _lbPreviewCount;
 }
 
-- (UIView *)wakeUpCountView{
+- (UIView *)wakeUpCountView {
     if (!_wakeUpCountView) {
         _wakeUpCountView = [[UIView alloc] init];
         _wakeUpCountView.backgroundColor = JFColor(@"#E3F2FD");
@@ -556,7 +791,7 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
         }];
         
         //文字可用宽度
-        CGFloat titleWidthAvailable = (SCREEN_WIDTH - 2 * cTableViewFilletLFBorder - 2 * 15 - 4 * 15 - 10) * 0.5;
+        CGFloat titleWidthAvailable = SCREEN_WIDTH - 2 * cTableViewFilletLFBorder - 4 * 15;
         CGSize size = CGSizeMake(MAXFLOAT, 30);
         CGRect rect = [TS("TR_Setting_Wake_Up_Time") boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:JFFont(15)} context:nil];
         BOOL needSmallFont = NO;
@@ -588,18 +823,18 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     return _wakeUpCountView;
 }
 
-- (UILabel *)lbWakeUpCount{
+- (UILabel *)lbWakeUpCount {
     if (!_lbWakeUpCount) {
         _lbWakeUpCount = [[UILabel alloc] init];
         _lbWakeUpCount.font = JFFontWeightAndSize(@"Semibold", 20);
-        _lbWakeUpCount.textColor = JFColor(@"#6B4D3E");
+        _lbWakeUpCount.textColor = JFColor(@"#2D454D");
         _lbWakeUpCount.text = @"0";
     }
     
     return _lbWakeUpCount;
 }
 
-- (UIView *)alarmCountView{
+- (UIView *)alarmCountView {
     if (!_alarmCountView) {
         _alarmCountView = [[UIView alloc] init];
         _alarmCountView.backgroundColor = JFColor(@"#FBEAE4");
@@ -641,7 +876,7 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     return _alarmCountView;
 }
 
-- (UILabel *)lbAlarmCount{
+- (UILabel *)lbAlarmCount {
     if (!_lbAlarmCount) {
         _lbAlarmCount = [[UILabel alloc] init];
         _lbAlarmCount.font = JFFontWeightAndSize(@"Semibold", 20);
@@ -650,6 +885,14 @@ static NSString *const kJFTopTitleBottomSliderCell = @"kJFTopTitleBottomSliderCe
     }
     
     return _lbAlarmCount;
+}
+
+- (NSMutableDictionary *)dicInfoAbility {
+    if (!_dicInfoAbility) {
+        _dicInfoAbility = [NSMutableDictionary dictionaryWithCapacity:0];
+    }
+    
+    return _dicInfoAbility;
 }
 
 @end

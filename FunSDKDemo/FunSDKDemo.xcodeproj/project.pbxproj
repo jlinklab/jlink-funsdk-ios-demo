@@ -159,6 +159,7 @@
 		1FC0F15623A0DBC40076F742 /* DisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC0F13D23A0DBC40076F742 /* DisplayView.m */; };
 		1FC0F15723A0DBC40076F742 /* BaseJConfigController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1FC0F14023A0DBC40076F742 /* BaseJConfigController.mm */; };
 		1FC0F15823A0DBC40076F742 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC0F14223A0DBC40076F742 /* GTMNSString+HTML.m */; };
+		1FD928882D27DA8900D03F71 /* JFDeviceTransaction.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1FD928872D27DA8900D03F71 /* JFDeviceTransaction.mm */; };
 		1FE52D5F2B8DB31E00C00A79 /* DoubleEyesManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52D5D2B8DB31E00C00A79 /* DoubleEyesManager.mm */; };
 		1FF6AB482A3207620012A0CE /* ZXPlanarYUVLuminanceSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6A9592A3207620012A0CE /* ZXPlanarYUVLuminanceSource.m */; };
 		1FF6AB492A3207620012A0CE /* ZXByteMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6A95C2A3207620012A0CE /* ZXByteMatrix.m */; };
@@ -1183,6 +1184,8 @@
 		1FC0F14123A0DBC40076F742 /* BaseJConfigController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseJConfigController.h; sourceTree = "<group>"; };
 		1FC0F14223A0DBC40076F742 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		1FC0F14323A0DBC40076F742 /* DisplayViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayViewDelegate.h; sourceTree = "<group>"; };
+		1FD928862D27DA8900D03F71 /* JFDeviceTransaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JFDeviceTransaction.h; sourceTree = "<group>"; };
+		1FD928872D27DA8900D03F71 /* JFDeviceTransaction.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = JFDeviceTransaction.mm; sourceTree = "<group>"; };
 		1FE52D5D2B8DB31E00C00A79 /* DoubleEyesManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DoubleEyesManager.mm; sourceTree = "<group>"; };
 		1FE52D5E2B8DB31E00C00A79 /* DoubleEyesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubleEyesManager.h; sourceTree = "<group>"; };
 		1FF6A9572A3207620012A0CE /* ZXMultiFormatReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMultiFormatReader.h; sourceTree = "<group>"; };
@@ -5713,6 +5716,8 @@
 				1FF6C29226DF0A85007927A3 /* DataEncrypt.mm */,
 				22D125882C2BAC7200632D0D /* FunSDKBaseView.h */,
 				22D125892C2BAC7200632D0D /* FunSDKBaseView.mm */,
+				1FD928862D27DA8900D03F71 /* JFDeviceTransaction.h */,
+				1FD928872D27DA8900D03F71 /* JFDeviceTransaction.mm */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -7735,6 +7740,7 @@
 				96C6B58321BB6869000B32E7 /* UserInputCell.m in Sources */,
 				96C6B4D721BB6869000B32E7 /* LanguageManager.mm in Sources */,
 				6C05D90422D32A7A00BCDB07 /* AutoCruiseVC.mm in Sources */,
+				1FD928882D27DA8900D03F71 /* JFDeviceTransaction.mm in Sources */,
 				1F71923F2AC15A36008E3414 /* SubscribeManager.mm in Sources */,
 				96C6B4F921BB6869000B32E7 /* PasswordConfig.mm in Sources */,
 				96C6B58C21BB6869000B32E7 /* RegisterView.m in Sources */,

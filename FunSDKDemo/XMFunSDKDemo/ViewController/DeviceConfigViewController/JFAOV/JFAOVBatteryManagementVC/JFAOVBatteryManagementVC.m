@@ -10,7 +10,6 @@
 #import "JFAOVBatteryManagemenView.h"
 #import "JFAOVBatteryManagementAffairManager.h"
 
-
 @interface JFAOVBatteryManagementVC () <JFAOVBatteryManagemenViewDelegate>
 
 /**导航栏按钮*/
@@ -76,7 +75,9 @@
             self.contentView.lowElectrMin = [self.affairManager.abilityManager lowElectrMin];
             self.contentView.alarmNumberOneDay = self.affairManager.alarmNumberStatisticsOneDayManager.alarmNumber;
             self.contentView.alarmNumberSevenDay = self.affairManager.alarmNumberStatisticsSevenDayManager.alarmNumber;
-            self.contentView.supportLowPowerWorkTime = self.supportLowPowerWorkTime;
+            [self.contentView updateTableFooterBatteryInfoAbility:JFBatteryInfo_PreviewTimeStatistics support:self.supportLowPowerWorkTime];
+            [self.contentView updateTableFooterBatteryInfoAbility:JFBatteryInfo_WakeUpTimeStatistics support:self.supportLowPowerWorkTime];
+            [self.contentView updateTableFooterBatteryInfoAbility:JFBatteryInfo_AlarmFrequencyStatistics support:YES];
             if (self.supportLowPowerWorkTime) {
                 NSArray *previews = [self.affairManager.systemLowPowerWorkTimeManager realViewTime];
                 int previewSeconds = 0;
@@ -99,11 +100,55 @@
         if ([self.affairManager configRequestedWithName:@"JFDeviceLogInfoManager"]) {
             self.contentView.arrayPowerOneDay = self.affairManager.deviceLogInfoOneDayManager.arrayPower;
             self.contentView.arraySignalOneDay = self.affairManager.deviceLogInfoOneDayManager.arraySignal;
+            [self.contentView updateTableFooterBatteryInfoAbility:JFBatteryInfo_BatteryChart support:self.affairManager.deviceLogInfoOneDayManager.arrayPower.count > 0 ? YES : NO];
+            [self.contentView updateTableFooterBatteryInfoAbility:JFBatteryInfo_SignalChart support:self.affairManager.deviceLogInfoOneDayManager.arraySignal.count > 0 ? YES : NO];
         }
         if ([self.affairManager configRequestedWithName:@"JFDeviceLogInfoManager7"]) {
             self.contentView.arrayPowerSevenDay = self.affairManager.deviceLogInfoSevenDayManager.arrayPower;
             self.contentView.arraySignalSevenDay = self.affairManager.deviceLogInfoSevenDayManager.arraySignal;
         }
+        
+        [self.contentView updateTableFooterFromAbility];
+    }else {
+        //设备配置都获取到就先显示
+        if ([self.affairManager configRequestedWithName:@"JFAlarmNumberStatisticsManager"] && \
+            [self.affairManager configRequestedWithName:@"JFAlarmNumberStatisticsManager7"] && \
+            [self.affairManager configRequestedWithName:@"SystemLowPowerWorkTimeManager"]) {
+            self.contentView.alarmNumberOneDay = self.affairManager.alarmNumberStatisticsOneDayManager.alarmNumber;
+            self.contentView.alarmNumberSevenDay = self.affairManager.alarmNumberStatisticsSevenDayManager.alarmNumber;
+            [self.contentView updateTableFooterBatteryInfoAbility:JFBatteryInfo_PreviewTimeStatistics support:self.supportLowPowerWorkTime];
+            [self.contentView updateTableFooterBatteryInfoAbility:JFBatteryInfo_WakeUpTimeStatistics support:self.supportLowPowerWorkTime];
+            [self.contentView updateTableFooterBatteryInfoAbility:JFBatteryInfo_AlarmFrequencyStatistics support:YES];
+            if (self.supportLowPowerWorkTime) {
+                NSArray *previews = [self.affairManager.systemLowPowerWorkTimeManager realViewTime];
+                int previewSeconds = 0;
+                for (int i = 0; i < previews.count; i++) {
+                    previewSeconds = previewSeconds + [[previews objectAtIndex:i] intValue];
+                }
+                NSArray *wakeUps = [self.affairManager.systemLowPowerWorkTimeManager wakeupTime];
+                int wakeUpSeconds = 0;
+                for (int i = 0; i < wakeUps.count; i++) {
+                    wakeUpSeconds = wakeUpSeconds + [[wakeUps objectAtIndex:i] intValue];
+                }
+                self.contentView.previewSecondsOneDay = [[previews lastObject] intValue];
+                self.contentView.previewSecondsSevenDay = previewSeconds;
+                self.contentView.wakeUpSecondsOneDay = [[wakeUps lastObject] intValue];
+                self.contentView.wakeUpSecondsSevenDay = wakeUpSeconds;
+            }
+        }
+        
+        if ([self.affairManager configRequestedWithName:@"JFDeviceLogInfoManager"]) {
+            self.contentView.arrayPowerOneDay = self.affairManager.deviceLogInfoOneDayManager.arrayPower;
+            self.contentView.arraySignalOneDay = self.affairManager.deviceLogInfoOneDayManager.arraySignal;
+            [self.contentView updateTableFooterBatteryInfoAbility:JFBatteryInfo_BatteryChart support:self.affairManager.deviceLogInfoOneDayManager.arrayPower.count > 0 ? YES : NO];
+            [self.contentView updateTableFooterBatteryInfoAbility:JFBatteryInfo_SignalChart support:self.affairManager.deviceLogInfoOneDayManager.arraySignal.count > 0 ? YES : NO];
+        }
+        if ([self.affairManager configRequestedWithName:@"JFDeviceLogInfoManager7"]) {
+            self.contentView.arrayPowerSevenDay = self.affairManager.deviceLogInfoSevenDayManager.arrayPower;
+            self.contentView.arraySignalSevenDay = self.affairManager.deviceLogInfoSevenDayManager.arraySignal;
+        }
+        
+        [self.contentView updateTableFooterFromAbility];
     }
     
     [self.contentView updateTableList];
@@ -130,7 +175,7 @@
     if (!_btnNavBack) {
         _btnNavBack = [UIButton buttonWithType:UIButtonTypeSystem];
         _btnNavBack.frame = CGRectMake(0, 0, 32, 32);
-        [_btnNavBack setBackgroundImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+        [_btnNavBack setBackgroundImage:[UIImage imageNamed:@"UserLoginView-back-nor"] forState:UIControlStateNormal];
         [_btnNavBack addTarget:self action:@selector(btnNavBackClicked) forControlEvents:UIControlEventTouchUpInside];
     }
     
