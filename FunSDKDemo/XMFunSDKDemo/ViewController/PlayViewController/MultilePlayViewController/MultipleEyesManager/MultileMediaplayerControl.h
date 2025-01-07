@@ -12,6 +12,8 @@
 //多目播放窗口模式
 typedef NS_ENUM(NSInteger,JFMultipleEyesPlayViewWindowMode) {
     //假3目的竖屏模式 一路码流上下分屏的设备
+    /// 竖屏 原始模式  画中画，小画面在大画面中
+    JFMultipleEyesPlayViewWindowMode_20 = 20,
     /// 竖屏 原始模式 上下两个窗口
     JFMultipleEyesPlayViewWindowMode_Fake_Portrait_Original = 2000,
     ///竖屏 从上往下上面两个小窗口底部一个大的

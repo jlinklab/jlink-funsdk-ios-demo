@@ -163,6 +163,10 @@
     NSString *macString = @"020000000000";
     NSString *ipString = [self getIPAddress]; //获取手机的网络的ip地址
     NSArray *ipArray = [ipString componentsSeparatedByString:@"."];
+    if ([ipString containsString:@":"]) {
+        //ipv6,需特殊处理
+        NSArray *ipArray = [ipString componentsSeparatedByString:@":"];
+    }
     self.sRandom = [self randomStringWithLength:10]; //生成随机码
     
     NSString *infoString = [NSString stringWithFormat:@"S:%@\nP:%@\nE:1\nM:%@\nI:%@\nB:%@\n",self.wifiTF.text,self.passwordTF.text,macString,[ipArray lastObject],self.sRandom];

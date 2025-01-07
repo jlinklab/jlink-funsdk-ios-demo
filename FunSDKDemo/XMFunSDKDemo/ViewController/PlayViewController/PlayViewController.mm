@@ -80,6 +80,8 @@
     
     JFPIDManager *pidManager;
     
+    BOOL leaveLive;
+    
 }
 
 //导航栏右边的设置按钮
@@ -137,6 +139,7 @@
     [self getConfig];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartPlayAllDeviceType) name:@"ReStartPlay" object:nil];
+    
 }
 // 兼容门铃的重新播放 从未激活状态进入时 需要判断设备类型 选择是否需要唤醒操作
 -(void)restartPlayAllDeviceType
@@ -242,7 +245,9 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    if (leaveLive == YES) {
+        [self startRealPlay];
+    }
 }
 
 #pragma mark - 全屏处理
@@ -925,6 +930,7 @@ UIPinchGestureRecognizer *twoFingerPinch;//硬解码捏合手势
 
 #pragma mark - 跳转到设备配置界面
 - (void)pushToDeviceConfigViewController {
+    leaveLive = YES;
     [mediaPlayer stop];
     DeviceConfigViewController *devConfigVC = [[DeviceConfigViewController alloc] init];
     [self.navigationController pushViewController:devConfigVC animated:YES];

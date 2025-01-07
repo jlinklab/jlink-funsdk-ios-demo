@@ -1131,3 +1131,6 @@ TR_Today=今天
 TR_Setting_Last_Week=近一周
 TR_Setting_Signal=信号
 TR_Setting_Power_Level=电池统计
+Pip_Wnd_Show=画中画
+double_screen=双画面
+three_screen=三画面

@@ -80,6 +80,10 @@
         }
         
     }
+    if (sender.selectedSegmentIndex == 2) {
+        //画中画
+        [self updateMediaViewWithWindowMode:JFMultipleEyesPlayViewWindowMode_20];
+    }
 }
 
 #pragma mark - 模式和窗口设置函数
@@ -125,6 +129,24 @@
         [self rsetPlayViewRect:control2];
         //分割画面设置为显示
         control2.renderWnd.hidden = NO;
+    }else if (mode == JFMultipleEyesPlayViewWindowMode_20) {
+        
+        //主视图，这里设置显示原始画面下半部分
+        mediaControl = [self getMediaplayerControl:channel.deviceMac channel:channel.channelNumber windowNumber:0];
+        [mediaControl updateWindowDisplayMode:JF_MEFD_Bottom_Half_Mode playWindowMode:mode];
+        //刷新播放主画面frame
+        [self rsetPlayViewRect:mediaControl];
+        
+        //分割视图1,这里设置显示原始画面上半部分
+        MultileMediaplayerControl *control1 = [self getMediaplayerControl:channel.deviceMac channel:channel.channelNumber windowNumber:1];
+        [control1 updateWindowDisplayMode:JF_MEFD_Top_Half_Mode playWindowMode:mode];
+        //刷新播放分割画面frame
+        [self rsetPlayViewRect:control1];
+        
+        MultileMediaplayerControl *control2 = [self getMediaplayerControl:channel.deviceMac channel:channel.channelNumber windowNumber:2];
+        //2目模式下，第三个画面设置为隐藏
+        control2.renderWnd.hidden = YES;
+        
     }
     
 }
@@ -153,7 +175,7 @@
         }
     }
     //三目效果
-    if (mediaControl.playWindowMode == JFMultipleEyesPlayViewWindowMode_Fake_Portrait_Two_Small_Up_List) {
+    else if (mediaControl.playWindowMode == JFMultipleEyesPlayViewWindowMode_Fake_Portrait_Two_Small_Up_List) {
         
         mainY = y + height/4.0 +5; //（额外往下放平移5的高度，用来明确区分上下部分画面）
         
@@ -170,6 +192,22 @@
             mediaControl.renderWnd.frame = CGRectMake(ScreenWidth/2.00, y, ScreenWidth/2.0, height/4.0);
         }
     }
+    //画中画效果
+    else if (mediaControl.playWindowMode == JFMultipleEyesPlayViewWindowMode_20) {
+        
+        if (mediaControl.windowNumber == 0) {
+            //主视图，位置为固定播放画面下半部分
+            mediaControl.renderWnd.frame = CGRectMake(0, y, ScreenWidth, height/2.0);
+        }
+        else if (mediaControl.windowNumber == 1) {
+            //分割视图1,位置为固定播放画面上半部分
+            //设置分割试图为小视图，并且位置在主画面左下角
+            float width2 = ScreenWidth/3.0, height2 = height/6.0; //设置高小画面宽高
+            float x2 = 10, y2 = y+height/2.0 - height2 - 10;; //设置小画面x和y坐标
+            mediaControl.renderWnd.frame = CGRectMake(x2, y2, width2, height2);
+        }
+    }
+    
 }
 #pragma mark - 预览结果回调
 -(void)mediaPlayer:(MediaplayerControl*)mediaPlayer startResult:(int)result DSSResult:(int)dssResult{
@@ -195,6 +233,11 @@
 }
 
 - (void)configSubView {
+    
+    [self.playScreenControl setTitle:TS("double_screen") forSegmentAtIndex:0];
+    [self.playScreenControl setTitle:TS("three_screen") forSegmentAtIndex:1];
+    [self.playScreenControl setTitle:TS("Pip_Wnd_Show") forSegmentAtIndex:2];
+
     //初始化主播放画面    Init main playView
     self.playView = [self getMediaplayView:channel.deviceMac channel:channel.channelNumber windowNumber:0];
 }
